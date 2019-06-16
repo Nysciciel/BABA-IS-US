@@ -5,38 +5,42 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.managers.GameStateManager;
-import com.mygdx.game.objets.Baba;
+import com.mygdx.game.*;
 
 public class LevelState extends GameState{
 	
-	private Baba baba;
+	private Level lvl;
 
 	protected LevelState(GameStateManager gms) {
 		super(gms);
 		
-		this.baba = new Baba(100,100);
+		this.lvl = new Level("C:\\Users\\Happy\\Desktop\\paf\\BabaIsUs\\core\\assets\\level.txt");
 	}
 
 	@Override
 	protected void handleInput() {
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			baba.goRight();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			lvl.moveYou(2);
+			lvl.reset();
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			baba.goUp();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			lvl.moveYou(1);
+			lvl.reset();
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			baba.goLeft();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			lvl.moveYou(0);
+			lvl.reset();
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			baba.goDown();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+			lvl.moveYou(3);
+			lvl.reset();
 		}
 	}
 
 	@Override
 	public void update(float dt) {
 		this.handleInput();
-		this.baba.update(dt);
+		lvl.update();
 	}
 
 	@Override
@@ -47,13 +51,17 @@ public class LevelState extends GameState{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		sb.begin();
-		sb.draw(baba.getTexture(), baba.getPosition().x, baba.getPosition().y);
+		lvl.draw(sb);
+		
+		
 		sb.end();
 	}
 
 	@Override
 	public void dispose() {
-		baba.dispose();
+		
+		
+		lvl.dispose();
 	}
 
 }
