@@ -121,7 +121,7 @@ public abstract class Item {
 		int previous_orientation = this.orientation;
 		this.orientation = orientation;
 		boolean result = this.move();
-		if (!result) {
+		if (!result || !isPush) {
 			this.orientation = previous_orientation;
 		}
 

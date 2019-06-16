@@ -34,20 +34,20 @@ public class Level {
 				for (int index2 = 0; index2<length; index2++) {
 					switch(lines[index1].charAt(index2)) {
 					case 'e':
-						items[index1][index2] = new ArrayList<Item>();
-						items[index1][index2].add(new Empty(this, index2, index1,0));
+						items[height - 1 -index1][index2] = new ArrayList<Item>();
+						items[height - 1 -index1][index2].add(new Empty(this, index2, height - 1 -index1,0));
 						break;
 					case 'b':
-						items[index1][index2] = new ArrayList<Item>();
-						items[index1][index2].add(new Baba(this, index2, index1,0));
+						items[height - 1 -index1][index2] = new ArrayList<Item>();
+						items[height - 1 -index1][index2].add(new Baba(this, index2, height - 1 -index1,0));
 						break;
 					case 'w':
-						items[index1][index2] = new ArrayList<Item>();
-						items[index1][index2].add(new Wall(this, index2, index1,0));
+						items[height - 1 -index1][index2] = new ArrayList<Item>();
+						items[height - 1 -index1][index2].add(new Wall(this, index2, height - 1 -index1,0));
 						break;
 					case 'r':
-						items[index1][index2] = new ArrayList<Item>();
-						items[index1][index2].add(new Rock(this, index2, index1,0));
+						items[height - 1 -index1][index2] = new ArrayList<Item>();
+						items[height - 1 -index1][index2].add(new Rock(this, index2, height - 1 -index1,0));
 						break;
 					}
 				}
