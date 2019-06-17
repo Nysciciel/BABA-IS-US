@@ -99,4 +99,6 @@ public abstract class Item {
 	public void orient(int direction) {
 		orientation = direction;
 	}
+	
+	
 }

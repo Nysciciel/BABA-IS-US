@@ -10,6 +10,9 @@ public class Location {
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
+	
+	
+	
 
 	public Location(ArrayList<Item> items, Location[][] locationMatrix, int x, int y) {
 		this.items = items;
@@ -39,7 +42,29 @@ public class Location {
 		}
 	}
 
+	public boolean hasYou() {
+		for(Item i:items) {
+			if (i.isYou()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public void orientYou(int direction) {
+		for(Item i:items) {
+			if (i.isYou()) {
+				i.orient(direction);
+			}
+		}
+	}
+
+
+
+
 	public boolean pleaseCanIGo(int direction) {
+
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
 			if (i.isStop() || i.isPull()) {
