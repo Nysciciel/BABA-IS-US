@@ -174,6 +174,10 @@ public abstract class Item {
 	public boolean isyou() {
 		return isYou;
 	}
+	
+	public boolean isText() {
+		return false;
+	}
 
 	public void reset() {
 		hasmoved = false;

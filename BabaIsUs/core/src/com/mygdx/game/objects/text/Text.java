@@ -28,5 +28,10 @@ public abstract class Text extends Item {
 	public boolean isProperty() {
 		return false;
 	}
+	
+	@Override
+	public boolean isText() {
+		return true;
+	}
 
 }
