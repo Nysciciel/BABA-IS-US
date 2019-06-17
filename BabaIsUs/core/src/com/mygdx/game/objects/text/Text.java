@@ -13,5 +13,20 @@ public abstract class Text extends Item {
 			this.isPush = true;
 	}
 	
+	public boolean isOperator() {
+		return false;
+	}
+	
+	public boolean isItemRef() {
+		return false;
+	}
+	
+	public boolean isRelation() {
+		return false;
+	}
+	
+	public boolean isProperty() {
+		return false;
+	}
 
 }

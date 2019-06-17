@@ -8,5 +8,11 @@ public abstract class Property extends Text {
 		super(lvl, x, y, orientation);
 
 	}
+	
+	@Override
+	public boolean isProperty() {
+		return true;
+	}
+
 
 }

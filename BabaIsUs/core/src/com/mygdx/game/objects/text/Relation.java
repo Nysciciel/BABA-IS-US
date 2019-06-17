@@ -8,5 +8,10 @@ public abstract class Relation extends Text {
 		super(lvl, x, y, orientation);
 
 	}
+	
+	@Override
+	public boolean isRelation() {
+		return true;
+	}
 
 }

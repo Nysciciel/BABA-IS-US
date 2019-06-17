@@ -6,7 +6,11 @@ public abstract class Operator extends Text {
 
 	public Operator(Level lvl, int x, int y, int orientation) {
 		super(lvl, x, y, orientation);
-
+	}
+	
+	@Override
+	public boolean isOperator() {
+		return true;
 	}
 
 }
