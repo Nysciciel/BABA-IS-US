@@ -7,8 +7,7 @@ public class Rock extends Item {
 	public Rock(Level lvl,
 			int x, int y, int orientation) {
 		super(lvl, x, y, orientation);
-		defaultisPush = true;
-		isPush = defaultisPush;
+		isPush = true;
 	}
 	@Override
 	public void update() {
