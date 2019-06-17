@@ -1,5 +1,6 @@
 package com.mygdx.game;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +12,7 @@ public class Level {
 	private ArrayList<Item>[][] items;
 	private int height;
 	private int length;
+	private HashSet<Rule> rules;
 
 	public Level(String filename) {
 
@@ -62,6 +64,22 @@ public class Level {
 
 
 	}
+	
+	public void readRules() {
+		// lecture par ligne
+		for (int y = 0; y<height; y++) {
+			for (int x = 0; x<length; x++) {
+				
+			}
+		}
+		//lecture par colonne
+		for (int index1 = 0; index1<length; index1++) {
+			for (int index2 = 0; index2<height; index2++) {
+				
+			}
+		}
+	}
+	
 
 	public void del(Item item, int x, int y) {
 		items[y][x].remove(item);
