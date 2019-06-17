@@ -7,8 +7,7 @@ public class Baba extends Item{
 	public Baba(Level lvl,
 			int x, int y, int orientation) {
 		super(lvl, x, y, orientation);
-		defaultisYou = true;
-		isYou = defaultisYou;
+		isYou = true;
 	}
 	@Override
 	public void update() {

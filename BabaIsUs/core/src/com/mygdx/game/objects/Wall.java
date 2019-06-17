@@ -7,8 +7,7 @@ public class Wall extends Item {
 	public Wall(Level lvl,
 			int x, int y, int orientation) {
 		super(lvl, x, y, orientation);
-		defaultisStop = true;
-		isStop = defaultisStop;
+		isStop = true;
 	}
 	@Override
 	public void update() {
