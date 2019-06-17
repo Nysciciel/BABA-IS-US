@@ -20,21 +20,24 @@ public class Level {
 
 		try {
 			Scanner scanner = new Scanner(new File(filename));
-			scanner.useDelimiter("\\A");
-			String all = scanner.next();
+			ArrayList <String> lines = new ArrayList <String>();
+			while(scanner.hasNext()) {
+				lines.add(scanner.nextLine());
+			}
+			
 			scanner.close();
 			
-			String[] lines = all.split(System.getProperty("line.separator"));
 			
-			height = lines.length;
-			length = lines[0].length();
+			
+			height = lines.size();
+			length = lines.get(0).length();
 			
 
 			items = new ArrayList[height][length];
-			
+			System.out.println(lines.get(0));
 			for (int index1 = 0; index1<height; index1++) {
 				for (int index2 = 0; index2<length; index2++) {
-					switch(lines[index1].charAt(index2)) {
+					switch(lines.get(index1).charAt(index2)) {
 					case 'e':
 						items[height - 1 -index1][index2] = new ArrayList<Item>();
 						items[height - 1 -index1][index2].add(new Empty(this, index2, height - 1 -index1,0));
