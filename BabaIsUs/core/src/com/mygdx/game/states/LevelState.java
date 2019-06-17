@@ -14,7 +14,7 @@ public class LevelState extends GameState{
 	protected LevelState(GameStateManager gms) {
 		super(gms);
 		
-		this.lvl = new Level("C:\\Users\\Happy\\Desktop\\paf\\BabaIsUs\\core\\assets\\level.txt");
+		this.lvl = new Level("level.txt");
 	}
 
 	@Override
