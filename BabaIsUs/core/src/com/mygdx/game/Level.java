@@ -22,7 +22,7 @@ public class Level {
 			String all = scanner.next();
 			scanner.close();
 			
-			String[] lines = all.split(System.getProperty("line.separator"));
+			String[] lines = all.split("\n");
 			
 			height = lines.length;
 			length = lines[0].length();
