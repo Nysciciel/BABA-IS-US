@@ -20,11 +20,6 @@ public abstract class Item {
 	protected boolean isWin;
 	protected boolean isStop;
 
-	protected boolean defaultisPush = false;
-	protected boolean defaultisYou = false;
-	protected boolean defaultisWin = false;
-	protected boolean defaultisStop = false;
-
 	protected int x;
 	protected int y;
 	protected int orientation;
@@ -40,10 +35,10 @@ public abstract class Item {
 		this.y = y;
 		this.orientation= orientation;
 
-		isPush = defaultisPush;
-		isYou = defaultisYou;
-		isWin = defaultisWin;
-		isStop = defaultisStop;
+		isPush = false;
+		isYou = false;
+		isWin = false;
+		isStop = false;
 
 		update();
 	}
