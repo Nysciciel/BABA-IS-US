@@ -21,4 +21,8 @@ public class AutomatonState extends HashSet<AutomatonState> {
 		return false;
 	}
 
+	public boolean isAnd() {
+		return false;
+	}
+
 }

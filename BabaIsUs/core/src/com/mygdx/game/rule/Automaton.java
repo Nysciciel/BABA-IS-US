@@ -15,12 +15,14 @@ public class Automaton {
 	AutomatonState stateIs;
 	AutomatonState stateO;
 	HashSet<AutomatonState> states;
+	AutomatonStateAnd stateAnd;
 	
 	public Automaton() {
 		
 		firstState = new AutomatonState();
 		finalState = new StateF();
 		stateA = new AutomatonStateItem();
+		stateAnd = new AutomatonStateAnd();
 		stateOn = new AutomatonState();
 		stateIs = new AutomatonState();
 		stateO = new AutomatonState();
@@ -46,7 +48,16 @@ public class Automaton {
 			if (text.isIs())
 				return setCurrentState(stateIs);
 			if (text.isRelation())
-				return setCurrentState(stateO);			
+				return setCurrentState(stateO);		
+			if (text.isAnd())
+				return setCurrentState(stateAnd);
+		}
+		
+		if (currentState == stateAnd) {
+			if (text.isNot())
+				return setCurrentState(stateAnd);
+			if (text.isItemRef())
+				return setCurrentState(stateA);
 		}
 		
 		if (currentState == stateOn) {
@@ -91,6 +102,10 @@ public class Automaton {
 
 	public boolean isFinal() {
 		return currentState.isFinal();
+	}
+	
+	public boolean isAnd() {
+		return currentState.isAnd();
 	}
 
 }

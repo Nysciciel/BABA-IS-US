@@ -23,7 +23,9 @@ public class RuleStackList extends ArrayList<RuleStack> {
 						rules.add(new Rule(ruleStack));
 						ruleStack.pop(); //pop and go back to the previous state
 					}
+					
 					else {
+						// TODO : handle the AND issue
 						RuleStack newRuleStack = ruleStack.clone();
 						newRuleStack.pop(); //pop and go back to the previous state
 						this.add(newRuleStack);
