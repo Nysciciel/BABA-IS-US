@@ -22,4 +22,15 @@ public class Baba extends Item{
 	public boolean isPull() {
 		return false;
 	}
+	
+	@Override
+	public boolean isMove() {
+		return false;
+	}
+	
+
+	@Override
+	public boolean isDefeat() {
+		return false;
+	}
 }

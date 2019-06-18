@@ -166,17 +166,12 @@ public class Location {
 	}
 
 
-	public void endturn() {
-
-		ArrayList<Item> toMove = new ArrayList<Item>();
+	private void checkDeaths() {
+		
 		ArrayList<Item> toKill = new ArrayList<Item>();
-
+		
 		for(Item i:items) {
-			if(i.isSink() && items.size()>1 ) {
-				ArrayList<Item> items = new ArrayList<Item>();
-				items.add(new Empty(this,x,y,0));
-				this.items = items;
-			}
+
 			if(i.isDefeat()) {
 				for(Item j:items) {
 					if(j.isYou()) {
@@ -184,12 +179,34 @@ public class Location {
 					}
 				}
 			}
+			
+			
+			if(i.isSink() && items.size()>1 ) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				items.add(new Empty(this,x,y,0));
+				this.items = items;
+			}
+			
+			
+		}
+		for(Item i:toKill) {
+			this.del(i);
+		}
+	}
+	
+	private void checkMove() {
+		
+		ArrayList<Item> toMove = new ArrayList<Item>();
+		
+		for(Item i:items) {
+
 			if(i.isMove() && !i.hasmoved()) {
 				if(next(i.getOrientation())==null || !(next(i.getOrientation()).pleaseCanIGo(i.getOrientation()))){
 					i.orient((i.getOrientation()+2)%4);
 				}
 				toMove.add(i);
 			}
+
 		}
 		for(Item i:toMove) {
 			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
@@ -197,11 +214,18 @@ public class Location {
 				i.moved();
 			}
 		}
-		for(Item i:toKill) {
-			this.del(i);
-		}
+
 	}
 	
+	
+	public void endturn() {
+
+		checkDeaths();
+		checkMove();
+		checkDeaths();
+		
+	}
+
 	public void reset() {
 		for(Item j:items) {
 			j.reset();
