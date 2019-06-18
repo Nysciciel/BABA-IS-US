@@ -7,6 +7,7 @@ import com.mygdx.game.objects.text.Text;
 public class Automaton {
 	
 	AutomatonState currentState;
+	AutomatonState previousState;
 	AutomatonState firstState;
 	StateF finalState;
 	AutomatonState stateA;
@@ -19,7 +20,7 @@ public class Automaton {
 		
 		firstState = new AutomatonState();
 		finalState = new StateF();
-		stateA = new AutomatonState();
+		stateA = new AutomatonStateItem();
 		stateOn = new AutomatonState();
 		stateIs = new AutomatonState();
 		stateO = new AutomatonState();
@@ -29,6 +30,8 @@ public class Automaton {
 	}
 	
 	public AutomatonState nextHop(Text text) {
+		
+		previousState = currentState;
 		
 		if (currentState == firstState) {
 			if (text.isNot())
@@ -80,6 +83,14 @@ public class Automaton {
 		Automaton a = new Automaton();
 		a.setCurrentState(currentState);
 		return a;
+	}
+
+	public void goBackToPreviousState() {
+		currentState = previousState;
+	}
+
+	public boolean isFinal() {
+		return currentState.isFinal();
 	}
 
 }

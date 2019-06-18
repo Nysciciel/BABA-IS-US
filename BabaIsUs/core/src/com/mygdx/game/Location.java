@@ -71,6 +71,16 @@ public class Location {
 		}
 		return textList;
 	}
+	
+	public boolean thereIsAOn() {
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isOn()) 
+					return true;
+		}
+		return false;
+	}
 
 
 	public boolean pleaseCanIGo(int direction) {

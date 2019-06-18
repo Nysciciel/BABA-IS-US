@@ -3,6 +3,7 @@ package com.mygdx.game.rule;
 import java.util.LinkedList;
 
 import com.mygdx.game.objects.Item;
+import com.mygdx.game.objects.text.Text;
 
 public class RuleStack {
 	
@@ -13,7 +14,6 @@ public class RuleStack {
 		super();
 		automaton = new Automaton();
 		stack = new LinkedList<Item>();
-		
 	}
 	
 	
@@ -29,4 +29,33 @@ public class RuleStack {
 		
 		return new RuleStack(a, s);
 	}
+	
+	public boolean isNextHopAWell(Text text) {		
+		
+		AutomatonState nextState;
+		nextState = automaton.nextHop(text);
+		
+		return nextState.isWell();
+	}
+	
+	public void add(Item item) {
+		stack.add(item);
+	}
+
+
+	public boolean isItemState() {
+		return automaton.currentState.isItemState();
+	}
+
+
+	public void pop() {
+		stack.pop();
+		automaton.goBackToPreviousState();
+	}
+
+
+	public boolean isFinal() {
+		return automaton.isFinal();
+	}
+
 }

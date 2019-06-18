@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Rule;
 import com.mygdx.game.rule.RuleStack;
 import com.mygdx.game.rule.RuleStackList;
@@ -70,17 +71,22 @@ public class Level {
 	public void readRules() {
 		
 		ArrayList<RuleStack> currentRules; 
+		boolean thereIsAnOnOrNearOrFacing = false;
 		
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
-			currentRules = new RuleStackList();
+			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
+				
+				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				((RuleStackList) currentRules).buildNext(textList, thereIsAnOnOrNearOrFacing);
+				thereIsAnOnOrNearOrFacing = locationMatrix[y][x].thereIsAOn();
 				
 			}
 		}
 		//lecture par colonne
 		for (int x = 0; x<length; x++) {
-			currentRules = new RuleStackList();
+			currentRules = new RuleStackList(rules);
 			for (int y = 0; y<height; y++) {
 				
 			}
@@ -88,67 +94,21 @@ public class Level {
 	}
 	
 
-
-
-
-
-	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
-
-
-		if (list.size()==1) {
-			return list;
-		}
-		Location first = null;
-		for(Location i:list) {
-			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou()) || (list.indexOf(i.next(direction))==-1)) {
-					first = i;
-
-					break;
-				}
-			}
-		}
-
-		if (first==null) {
-			first = list.get(0);
-		}
-
-		list.remove(first);
-		ArrayList<Location> beginning = new ArrayList<Location>();
-		beginning.add(first);
-		beginning.addAll(prioritySort(list, direction));
-		return beginning;
-	}
-
-
-
 	public void moveYou(int direction) {
 		ArrayList<Item> toMove = new ArrayList<Item>();
-		ArrayList<Location> found = new ArrayList<Location>();
+		ArrayList<Item> found = new ArrayList<Item>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				if (locationMatrix[y][x].hasYou()) {
-					found.add(locationMatrix[y][x]);
+				found = locationMatrix[y][x].moveYou(direction);
+				if(found != null) {
+					for(Item i:found) {
+						toMove.add(i);
+					}
 				}
 			}
 		}
-
-
-
-
-
-		System.out.println("");
-
-		found = prioritySort(found, direction);
-
-
-		for(Location i:found) {
-			ArrayList<Item> res = i.moveYou(direction);
-			if (res!=null) {
-				for(Item j:res) {
-					j.goforward();
-				}
-			}
+		for(Item i:toMove) {
+			i.goforward();
 		}
 	}
 

@@ -17,4 +17,8 @@ public class AutomatonState extends HashSet<AutomatonState> {
 		return false;
 	}
 
+	public boolean isItemState() {
+		return false;
+	}
+
 }

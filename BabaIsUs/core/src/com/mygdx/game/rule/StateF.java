@@ -1,6 +1,6 @@
 package com.mygdx.game.rule;
 
-public class StateF extends AutomatonState {
+public class StateF extends AutomatonStateItem {
 	
 	public StateF() {
 		super();

@@ -48,4 +48,9 @@ public abstract class Text extends Item {
 	public boolean isRelation() {
 		return false;
 	}
+
+	public boolean isAnd() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

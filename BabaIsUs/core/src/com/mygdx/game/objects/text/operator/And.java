@@ -9,4 +9,9 @@ public class And extends Operator {
 		super(loc, x, y, orientation);
 
 	}
+	
+	@Override
+	public boolean isAnd() {
+		return true;
+	}
 }
