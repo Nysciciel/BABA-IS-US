@@ -16,10 +16,12 @@ import java.util.concurrent.BlockingQueue;
 public class Server{
 	
 	BlockingQueue<Integer> data;
+	ServerCallBack callBackFunction;
 	
-	public Server(BlockingQueue<Integer> bq) {
+	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
 		
 		this.data = bq;
+		callBackFunction = callBack;
         
 		 final ServerSocket serveurSocket  ;
 	     final Socket clientSocket ;
@@ -61,7 +63,7 @@ public class Server{
 	             try {
 	            	 while(true) {
 	            		 in.read(b);
-			             System.out.println("Client : "+ b[0]);
+	            		 callBackFunction.ServerCallBack(b[0]);
 	            	 }
 	             } catch (IOException e) {
 	                  e.printStackTrace();

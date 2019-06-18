@@ -15,14 +15,16 @@ import java.util.concurrent.BlockingQueue;
 public class Client {
 	
 	BlockingQueue<Integer> data;
+	ServerCallBack callBackFunction;
 	
-	public Client(BlockingQueue<Integer> bq) {
+	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack) {
 		
 		final Socket clientSocket;
 		final InputStream in;
 	    final OutputStream out;
 	    
 	    data = bq;
+	    callBackFunction = callBack;
 	    
 	    try {
 	         clientSocket = new Socket(InetAddress.getLocalHost(),5000);
@@ -57,7 +59,7 @@ public class Client {
 		             try {
 		            	 while(true) {
 		            		 in.read(b);
-				             System.out.println("Client : "+ b[0]);
+		            		 callBackFunction.ServerCallBack(b[0]);
 		            	 }
 		             } catch (IOException e) {
 		                  e.printStackTrace();
