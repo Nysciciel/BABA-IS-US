@@ -16,4 +16,5 @@ public class On extends Operator {
 		return true;
 	}
 
+	}
 }

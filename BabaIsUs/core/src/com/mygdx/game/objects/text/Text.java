@@ -48,5 +48,12 @@ public abstract class Text extends Item {
 	public boolean isPush() {
 		return true;
 	}
-
+	
+	public boolean isItemRef() {
+		return false;
+	}
+	
+	public boolean isRelation() {
+		return false;
+	}
 }
