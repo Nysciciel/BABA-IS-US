@@ -66,8 +66,12 @@ public class Level {
 	}
 
 	public void readRules() {
+		
+		ArrayList<RuleStack> currentRules; 
+		
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
+			currentRules = new ArrayList<RuleStack>();
 			for (int x = 0; x<length; x++) {
 
 			}
