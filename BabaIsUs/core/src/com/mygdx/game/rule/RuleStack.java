@@ -1,24 +1,28 @@
 package com.mygdx.game.rule;
 
-import java.util.Stack;
+import java.util.LinkedList;
 
 import com.mygdx.game.objects.Item;
 
-public class RuleStack extends Stack<Item> {
+public class RuleStack {
 	
-	private boolean hasRelation;
-	
+	Automaton automaton;
+	LinkedList<Item> stack;
+		
 	public RuleStack() {
 		super();
-		hasRelation = false;
+		automaton = new Automaton();
+		stack = new LinkedList<Item>();
+		
 	}
 	
-	public boolean getHasRelation() {
-		return hasRelation;
+	
+	public RuleStack(Automaton a, LinkedList<Item> s) {
+		automaton = a;
+		stack = s;
 	}
 	
-	public void setHasRelation(boolean b) {
-		hasRelation = b;
+	public RuleStack clone() {
+		return new RuleStack(automaton, stack);
 	}
-
 }

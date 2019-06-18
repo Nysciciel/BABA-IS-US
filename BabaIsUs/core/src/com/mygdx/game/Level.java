@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.rule.Rule;
 import com.mygdx.game.rule.RuleStack;
+import com.mygdx.game.rule.RuleStackList;
 
 import java.io.File;
 
@@ -75,16 +76,15 @@ public class Level {
 		
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
-			currentRules = new ArrayList<RuleStack>();
+			currentRules = new RuleStackList();
 			for (int x = 0; x<length; x++) {
-				
 				
 				
 			}
 		}
 		//lecture par colonne
 		for (int x = 0; x<length; x++) {
-			currentRules = new ArrayList<RuleStack>();
+			currentRules = new RuleStackList();
 			for (int y = 0; y<height; y++) {
 				
 			}
