@@ -15,14 +15,6 @@ public abstract class Text extends Item {
 		return false;
 	}
 	
-	public boolean isItemRef() {
-		return false;
-	}
-	
-	public boolean isRelation() {
-		return false;
-	}
-	
 	public boolean isProperty() {
 		return false;
 	}

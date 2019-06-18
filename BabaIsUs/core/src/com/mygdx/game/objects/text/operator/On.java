@@ -6,7 +6,7 @@ import com.mygdx.game.objects.text.Operator;
 
 public class On extends Operator {
 
-	
+
 	public On(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
@@ -16,5 +16,4 @@ public class On extends Operator {
 		return true;
 	}
 
-	}
 }
