@@ -94,6 +94,33 @@ public abstract class Item {
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
+	
+	public void advance() {
+		
+		//same as go forward except it doesn't pull the one behind
+		//useful for when a push&pull chain is getting pushed
+		
+		loc.del(this);
+
+		switch(orientation) {
+		case(0):
+			x-=1;
+		break;
+		case(1):
+			y+=1;
+		break;
+		case(2):
+			x+=1;
+		break;
+		case(3):
+			y-=1;
+		break;
+		default:
+		}
+
+		loc = loc.next(orientation);
+		loc.add(this);
+	}
 
 	public boolean isempty() {
 		return false;

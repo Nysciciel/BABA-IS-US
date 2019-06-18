@@ -79,7 +79,7 @@ public class Location {
 				if (next(direction).pleaseCanIGo(direction)) {
 					for(Item i:pushable) {
 						i.orient(direction);
-						i.goforward();
+						i.advance();
 						return true;
 					}
 				}
