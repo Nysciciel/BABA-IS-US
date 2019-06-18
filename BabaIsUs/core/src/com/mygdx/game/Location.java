@@ -21,6 +21,7 @@ public class Location {
 		this.y = y;
 	}
 
+	
 	public Location next(int direction) {
 		try {
 			switch(direction) {
@@ -42,6 +43,7 @@ public class Location {
 		}
 	}
 
+	
 	public boolean hasYou() {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -61,13 +63,11 @@ public class Location {
 	}
 
 
-
-
 	public boolean pleaseCanIGo(int direction) {
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
-			if (i.isStop() || i.isPull()) {
+			if (i.isStop() || (i.isPull() && !(i.isPush()))) {
 				return false;
 			}
 			if (i.isPush()) {
@@ -98,6 +98,7 @@ public class Location {
 		}
 	}
 
+	
 	public void add(Item item) {
 		for(Item i:items) {
 			if (i.isempty()) {
@@ -107,7 +108,8 @@ public class Location {
 		items.add(item);
 	}
 
-	public ArrayList<Item> moveYou(int direction) {
+	
+	public ArrayList<Item> move(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -124,28 +126,50 @@ public class Location {
 		}
 		return null;
 	}
+	
+	public ArrayList<Item> getPulled(int direction) {
+		ArrayList<Item> pulls = new ArrayList<Item>();
+		for(Item i:items) {
+			if (i.isPull()) {
+				pulls.add(i);
+				i.orient(direction);
+			}
+		}
+		if (pulls.size()>0) {
+			if (next(direction)!=null) {
+				if (next(direction).pleaseCanIGo(direction)) {
+					return pulls;
+				}
+			}
+		}
+		return null;
+	}
 
+	
 	public void update() {
 		for(Item i:items) {
 			i.update();
 		}
 	}
 
+	
 	public void dispose() {
 		for(Item i:items) {
 			i.dispose();
 		}
 	}
 
+	
 	public void draw(SpriteBatch sb) {
 		for(Item i:items) {
 			i.draw(sb);
 		}
 	}
 
-	public void reset() {
+	
+	public void endturn() {
 		for(Item i:items) {
-			i.reset();
+			
 		}
 	}
 }

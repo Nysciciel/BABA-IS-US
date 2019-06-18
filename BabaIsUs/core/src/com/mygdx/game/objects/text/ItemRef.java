@@ -14,5 +14,4 @@ public abstract class ItemRef extends com.mygdx.game.objects.text.Text {
 	public boolean isItemRef() {
 		return true;
 	}
-	}
 }

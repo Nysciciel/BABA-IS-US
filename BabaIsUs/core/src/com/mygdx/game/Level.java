@@ -85,9 +85,6 @@ public class Level {
 	}
 
 
-
-
-
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
 
 
@@ -129,17 +126,11 @@ public class Level {
 			}
 		}
 
-
-
-
-
-		System.out.println("");
-
 		found = prioritySort(found, direction);
 
 
 		for(Location i:found) {
-			ArrayList<Item> res = i.moveYou(direction);
+			ArrayList<Item> res = i.move(direction);
 			if (res!=null) {
 				for(Item j:res) {
 					j.goforward();
@@ -172,10 +163,11 @@ public class Level {
 		}
 	}
 
-	public void reset() {
+	
+	public void endturn() {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].reset();
+				locationMatrix[y][x].endturn();
 			}
 		}
 	}

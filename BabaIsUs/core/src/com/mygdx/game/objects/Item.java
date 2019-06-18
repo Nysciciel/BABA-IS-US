@@ -60,11 +60,20 @@ public abstract class Item {
 	public void update() {
 	}
 	
-	
 	public void goforward() {
 
-
+		
 		loc.del(this);
+		
+		if (loc.next((orientation+2)%4)!=null) {
+			
+			ArrayList<Item> res = loc.next((orientation+2)%4).getPulled(orientation);
+			if (res!=null) {
+				for(Item j:res) {
+					j.goforward();
+				}
+			}
+		}
 
 		switch(orientation) {
 		case(0):
@@ -90,8 +99,10 @@ public abstract class Item {
 		return false;
 	}
 
-	public void reset() {
+	public boolean isText() {
+		return false;
 	}
+	
 	public void draw(SpriteBatch sb) {
 		sb.draw(texture, x*32, y*32);
 	}

@@ -13,12 +13,11 @@ public class Rock extends Item {
 		this.texture = new Texture("rock" + Integer.toString(orientation)+".png");
 	}
 	@Override
-	public boolean isPush() {
+	public boolean isPull() {
 		return true;
 	}
-	
 	@Override
-	public boolean isYou() {
+	public boolean isPush() {
 		return true;
 	}
 }

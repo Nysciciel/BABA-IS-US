@@ -13,6 +13,4 @@ public abstract class Relation extends Text {
 	public boolean isRelation() {
 		return true;
 	}
-
-	}
 }

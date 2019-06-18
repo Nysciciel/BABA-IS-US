@@ -21,19 +21,22 @@ public class LevelState extends GameState{
 	protected void handleInput() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
-			lvl.reset();
+			lvl.endturn();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou(1);
-			lvl.reset();
+			lvl.endturn();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou(0);
-			lvl.reset();
+			lvl.endturn();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou(3);
-			lvl.reset();
+			lvl.endturn();
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE )) {
+			lvl.endturn();
 		}
 	}
 
