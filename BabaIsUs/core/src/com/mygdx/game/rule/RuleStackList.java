@@ -14,39 +14,78 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		this.rules = rules;
 	}
 
-	public void buildNext(ArrayList<Text> textList, boolean thereIsAnOnOrNearOrFacing) {
+	public void buildNext(ArrayList<Text> textList, boolean thereIsAnOnOrNearOrFacingOrAnd) {
 		
+		ArrayList<RuleStack> toBeRemoved = new ArrayList<RuleStack>();
+		// And handling in case of a final State
 		if (thereIsAnd(textList))
-			for (RuleStack ruleStack : this) {
-				if (ruleStack.isItemState()) {
-					if (ruleStack.isFinal()) {
+			for (RuleStack ruleStack : this) {	
+				if (ruleStack.isFinal()) {
+						System.out.println("And + final");
 						rules.add(new Rule(ruleStack));
 						ruleStack.pop(); //pop and go back to the previous state
-					}
-					
-					else {
-						// TODO : handle the AND issue
-						RuleStack newRuleStack = ruleStack.clone();
-						newRuleStack.pop(); //pop and go back to the previous state
-						this.add(newRuleStack);
-					}
 				}
 			}
-		
-		for (Text text : textList) {
+		// End of Logic phrases when not AND
+		else {
 			for (RuleStack ruleStack : this) {
-				RuleStack divRuleStack = ruleStack.clone();
-				if (!divRuleStack.isNextHopAWell(text));
-					this.add(divRuleStack);
+				if (ruleStack.isFinal()) {
+					System.out.println("just final");
+					rules.add(new Rule(ruleStack));
+					toBeRemoved.add(ruleStack);
+				}
 			}
 		}
+		this.removeAll(toBeRemoved);
 		
-		if (!thereIsAnOnOrNearOrFacing)
+		
+		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
+		// Create a new Stack for each RuleStack that has an automaton in the AND state
+		for (RuleStack ruleStack : this) {
+			if (ruleStack.isAnd())
+				for (Text text : textList) {
+					RuleStack newRuleStack = new RuleStack();
+					if (!newRuleStack.isNextHopAWell(text)) {
+						newRuleStacks.add(newRuleStack);
+						System.out.println("and -> new stack");
+					}
+				}
+		}
+		this.addAll(newRuleStacks);
+		
+		
+		newRuleStacks = new ArrayList<RuleStack>();
+		toBeRemoved = new ArrayList<RuleStack>();
+		// next state if not a well
+		for (RuleStack ruleStack : this) {
+			toBeRemoved.add(ruleStack);
+			for (Text text : textList) {	
+				RuleStack divRuleStack = ruleStack.clone();
+				if (!divRuleStack.isNextHopAWell(text)) {
+					if (!text.isAnd())
+						divRuleStack.add(text);
+					newRuleStacks.add(divRuleStack);
+					System.out.println("next State + add");
+				}	
+			}
+		}
+		this.removeAll(toBeRemoved);
+		this.addAll(newRuleStacks);
+		
+		
+		newRuleStacks = new ArrayList<RuleStack>();
+		// init new Stacks with an Item ref that is not following 
+		if (!thereIsAnOnOrNearOrFacingOrAnd)
 			for (Text text : textList) {
 				RuleStack ruleStack = new RuleStack();
-				if (!ruleStack.isNextHopAWell(text));
-					this.add(ruleStack);
+				if (!ruleStack.isNextHopAWell(text)) {
+					ruleStack.add(text);
+					newRuleStacks.add(ruleStack);
+					System.out.println("init new stack");
+				}
 			}
+		this.addAll(newRuleStacks);
+
 	}
 	
 	private boolean thereIsAnd(ArrayList<Text> textList) {
@@ -55,6 +94,17 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				return true;
 		}
 		return false;
+	}
+
+	public void show() {
+		for (RuleStack stack : this)
+			stack.showPhrase();
+	}
+
+	public void currentStates() {
+		
+		for (RuleStack stack : this)
+			stack.printCurrentState();
 	}
 
 }

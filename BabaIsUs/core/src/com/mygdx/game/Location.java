@@ -168,6 +168,15 @@ public class Location {
 			i.reset();
 		}
 	}
+
+	public boolean thereIsAAnd() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isAnd()) 
+					return true;
+		}
+		return false;
+	}
 }
 
 

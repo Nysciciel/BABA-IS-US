@@ -1,12 +1,12 @@
 package com.mygdx.game.rule;
 
-import java.util.HashSet;
-
-public class AutomatonState extends HashSet<AutomatonState> {
+public class AutomatonState {
 	
+	private String label;	
 	
-	public AutomatonState() {
+	public AutomatonState(String label) {
 		super();
+		this.label = label;
 	}
 	
 	public boolean isWell() {
@@ -23,6 +23,10 @@ public class AutomatonState extends HashSet<AutomatonState> {
 
 	public boolean isAnd() {
 		return false;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 
 }

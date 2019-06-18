@@ -19,80 +19,87 @@ public class Automaton {
 	
 	public Automaton() {
 		
-		firstState = new AutomatonState();
-		finalState = new StateF();
-		stateA = new AutomatonStateItem();
-		stateAnd = new AutomatonStateAnd();
-		stateOn = new AutomatonState();
-		stateIs = new AutomatonState();
-		stateO = new AutomatonState();
+		firstState = new AutomatonState("firstState");
+		finalState = new StateF("finalState");
+		stateA = new AutomatonStateItem("stateA");
+		stateAnd = new AutomatonStateAnd("stateAnd");
+		stateOn = new AutomatonState("stateOn");
+		stateIs = new AutomatonState("stateIs");
+		stateO = new AutomatonState("stateO");
 		
 		currentState = firstState;
-		
+		// System.out.println("Automaton generated. Current state : "+currentState.toString());
 	}
 	
 	public AutomatonState nextHop(Text text) {
 		
+		System.out.println("****** NEXT HOP ******"+this.toString());
+		
 		previousState = currentState;
 		
-		if (currentState == firstState) {
+		if (currentState.getLabel() == "firstState") {
+			System.out.println("first State");
 			if (text.isNot())
-				return setCurrentState(currentState);
+				return currentState = (currentState);
 			if (text.isItemRef())
-				return setCurrentState(stateA);
+				return currentState = (stateA);
 		}
 		
-		if (currentState == stateA) {
+		if (currentState.getLabel() == "stateA") {
+			System.out.println("State A");
 			if (text.isOn())
-				return setCurrentState(stateOn);
+				return currentState = (stateOn);
 			if (text.isIs())
-				return setCurrentState(stateIs);
+				return currentState = (stateIs);
 			if (text.isRelation())
-				return setCurrentState(stateO);		
+				return currentState = (stateO);		
 			if (text.isAnd())
-				return setCurrentState(stateAnd);
+				return currentState = (stateAnd);
 		}
 		
-		if (currentState == stateAnd) {
+		if (currentState.getLabel() == "stateAnd") {
+			System.out.println("State And");
 			if (text.isNot())
-				return setCurrentState(stateAnd);
+				return currentState = (stateAnd);
 			if (text.isItemRef())
-				return setCurrentState(stateA);
+				return currentState = (stateA);
 		}
 		
-		if (currentState == stateOn) {
+		if (currentState.getLabel() == "stateOn") {
+			System.out.println("State On");
 			if (text.isItemRef())
-				return setCurrentState(stateA);
+				return currentState = (stateA);
 			if (text.isNot())
-				return setCurrentState(currentState);
+				return currentState = (currentState);
 		}
 
-		if (currentState == stateIs) {
+		if (currentState.getLabel() == "stateIs") {
+			System.out.println("State Is");
 			if (text.isNot())
-				return setCurrentState(currentState);
+				return currentState = (currentState);
 			if (text.isItemRef() || text.isProperty())
-				return setCurrentState(finalState);
+				return currentState = (finalState);
 		}
 
-		if (currentState == stateO) {
+		if (currentState.getLabel() == "stateO") {
+			System.out.println("State O");
 			if (text.isNot())
-				return setCurrentState(currentState);
+				return currentState = (currentState);
 			if (text.isItemRef())
-				return setCurrentState(finalState);
+				return currentState = (finalState);
 		}
 
-		return setCurrentState(new WellState());
+		return currentState = (new WellState("well"));
 	}
 	
-	public AutomatonState setCurrentState(AutomatonState newState) {
+	public void setCurrentState(AutomatonState newState) {
 		currentState = newState;
-		return newState;
 	}
 	
 	public Automaton clone() {
 		
 		Automaton a = new Automaton();
-		a.setCurrentState(currentState);
+		a.setCurrentState(new AutomatonState(this.currentState.getLabel()));
 		return a;
 	}
 
@@ -108,4 +115,7 @@ public class Automaton {
 		return currentState.isAnd();
 	}
 
+	public void printState() {
+		System.out.print(currentState.toString()+"   ");
+	}
 }

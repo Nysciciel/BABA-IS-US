@@ -2,8 +2,8 @@ package com.mygdx.game.rule;
 
 public class StateF extends AutomatonStateItem {
 	
-	public StateF() {
-		super();
+	public StateF(String label) {
+		super(label);
 	}
 	
 	@Override

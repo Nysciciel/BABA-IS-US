@@ -2,8 +2,8 @@ package com.mygdx.game.rule;
 
 public class WellState extends AutomatonState {
 	
-	public WellState() {
-		super();
+	public WellState(String label) {
+		super(label);
 	}
 	
 	@Override

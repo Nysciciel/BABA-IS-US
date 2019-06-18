@@ -53,4 +53,9 @@ public abstract class Text extends Item {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getName();
+	}
 }

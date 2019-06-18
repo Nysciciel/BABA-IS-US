@@ -8,23 +8,23 @@ import com.mygdx.game.objects.text.Text;
 public class RuleStack {
 	
 	Automaton automaton;
-	LinkedList<Item> stack;
+	LinkedList<Text> stack;
 		
 	public RuleStack() {
 		super();
 		automaton = new Automaton();
-		stack = new LinkedList<Item>();
+		stack = new LinkedList<Text>();
 	}
 	
 	
-	public RuleStack(Automaton a, LinkedList<Item> s) {
+	public RuleStack(Automaton a, LinkedList<Text> s) {
 		automaton = a;
 		stack = s;
 	}
 	
 	public RuleStack clone() {
 		
-		LinkedList<Item> s = new LinkedList<Item>(stack);
+		LinkedList<Text> s = new LinkedList<Text>(stack);
 		Automaton a = automaton.clone();
 		
 		return new RuleStack(a, s);
@@ -38,8 +38,8 @@ public class RuleStack {
 		return nextState.isWell();
 	}
 	
-	public void add(Item item) {
-		stack.add(item);
+	public void add(Text text) {
+		stack.add(text);
 	}
 
 
@@ -57,5 +57,23 @@ public class RuleStack {
 	public boolean isFinal() {
 		return automaton.isFinal();
 	}
+
+
+	public boolean isAnd() {
+		return automaton.isAnd();
+	}
+
+
+	public void showPhrase() {
+		for (Text text : stack)
+			System.out.print(text.toString() + "     ");
+		System.out.println();
+	}
+
+
+	public void printCurrentState() {
+		automaton.printState();
+	}
+
 
 }

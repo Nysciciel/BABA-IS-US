@@ -3,7 +3,15 @@ package com.mygdx.game.rule;
 public class Rule {
 
 	public Rule(RuleStack ruleStack) {
-		// TODO build the rule
+		
+		System.out.println("");
+		System.out.println("+++++++++++++++++++++++++Here is the Rule++++++++++++++++++++++++++");
+		
+		// show elements
+		ruleStack.showPhrase();
+		System.out.println("===================================================================");
+		System.out.println("");
+		
 	}
 	
 	

@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.rule.RuleTextReaderTest;
 import com.mygdx.game.states.MainMenu;
 
 public class BABAisUS extends ApplicationAdapter {
@@ -15,11 +16,13 @@ public class BABAisUS extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		
 		this.gsm = new GameStateManager();
 		this.sb = new SpriteBatch();
 		
 		this.gsm.push(new MainMenu(gsm));
-	
+		
+		RuleTextReaderTest test = new RuleTextReaderTest();
 	}
 
 	@Override
