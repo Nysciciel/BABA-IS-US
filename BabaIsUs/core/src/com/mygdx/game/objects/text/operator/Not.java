@@ -9,4 +9,8 @@ public class Not extends Operator {
 		super(lvl, x, y, orientation);
 	}
 
+	@Override
+	public boolean isNot() {
+		return true;
+	}
 }

@@ -34,4 +34,16 @@ public abstract class Text extends Item {
 		return true;
 	}
 
+	public boolean isNot() {
+		return false;
+	}
+
+	public boolean isOn() {
+		return false;
+	}
+
+	public boolean isIs() {
+		return false;
+	}
+
 }

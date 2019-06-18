@@ -9,5 +9,10 @@ public class Is extends Relation {
 		super(lvl, x, y, orientation);
 
 	}
+	
+	@Override
+	public boolean isIs() {
+		return true;
+	}
 
 }
