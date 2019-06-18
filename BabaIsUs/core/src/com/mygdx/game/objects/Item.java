@@ -92,9 +92,7 @@ public abstract class Item {
 
 	public void reset() {
 	}
-	public void draw(SpriteBatch sb) {
-		sb.draw(texture, x*32, y*32);
-	}
+	public abstract void render(SpriteBatch sb) ;
 	
 	public void orient(int direction) {
 		orientation = direction;

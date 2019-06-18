@@ -137,9 +137,9 @@ public class Location {
 		}
 	}
 
-	public void draw(SpriteBatch sb) {
+	public void render(SpriteBatch sb) {
 		for(Item i:items) {
-			i.draw(sb);
+			i.render(sb);
 		}
 	}
 

@@ -164,10 +164,10 @@ public class Level {
 		}
 	}
 
-	public void draw(SpriteBatch sb) {
+	public void render(SpriteBatch sb) {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].draw(sb);
+				locationMatrix[y][x].render(sb);
 			}
 		}
 	}

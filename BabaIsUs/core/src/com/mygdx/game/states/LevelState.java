@@ -45,22 +45,11 @@ public class LevelState extends GameState{
 
 	@Override
 	public void render(SpriteBatch sb) {
-	
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		sb.begin();
-		lvl.draw(sb);
-		
-		
-		sb.end();
+		lvl.render(sb);
 	}
 
 	@Override
 	public void dispose() {
-		
-		
 		lvl.dispose();
 	}
 
