@@ -23,6 +23,10 @@ public class RuleStack {
 	}
 	
 	public RuleStack clone() {
-		return new RuleStack(automaton, stack);
+		
+		LinkedList<Item> s = new LinkedList<Item>(stack);
+		Automaton a = automaton.clone();
+		
+		return new RuleStack(a, s);
 	}
 }

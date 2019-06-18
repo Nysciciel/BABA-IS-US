@@ -74,5 +74,12 @@ public class Automaton {
 		currentState = newState;
 		return newState;
 	}
+	
+	public Automaton clone() {
+		
+		Automaton a = new Automaton();
+		a.setCurrentState(currentState);
+		return a;
+	}
 
 }

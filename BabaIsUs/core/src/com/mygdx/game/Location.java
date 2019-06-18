@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.Text;
 
 public class Location {
 	protected Location[][] locationMatrix;
@@ -60,7 +61,16 @@ public class Location {
 		}
 	}
 
-
+	public ArrayList<Text> giveTextItems(){
+		
+		ArrayList<Text> textList = new ArrayList<Text>();
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				textList.add((Text) item);
+		}
+		return textList;
+	}
 
 
 	public boolean pleaseCanIGo(int direction) {
