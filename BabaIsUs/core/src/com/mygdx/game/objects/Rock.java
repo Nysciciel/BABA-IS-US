@@ -14,10 +14,14 @@ public class Rock extends Item {
 	}
 	@Override
 	public boolean isPull() {
-		return true;
+		return false;
 	}
 	@Override
 	public boolean isPush() {
 		return true;
+	}
+	@Override
+	public boolean isYou() {
+		return false;
 	}
 }

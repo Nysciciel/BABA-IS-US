@@ -16,7 +16,6 @@ public class Level {
 	public Level(String filename) {
 
 
-
 		try {
 			Scanner scanner = new Scanner(new File(filename));
 			ArrayList <String> lines = new ArrayList <String>();
@@ -50,6 +49,15 @@ public class Level {
 					case 'r':
 						loc.add(new Rock(loc, x, height - 1 -y,0));
 						break;
+					case 'a':
+						loc.add(new Water(loc, x, height - 1 -y,0));
+						break;
+					case 'k':
+						loc.add(new Keke(loc, x, height - 1 -y,0));
+						break;
+					case 's':
+						loc.add(new Skull(loc, x, height - 1 -y,0));
+						break;
 					}
 					locationMatrix[height - 1 -y][x] = loc;
 				}
@@ -66,9 +74,9 @@ public class Level {
 	}
 
 	public void readRules() {
-		
+
 		ArrayList<RuleStack> currentRules; 
-		
+
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
 			currentRules = new ArrayList<RuleStack>();
@@ -87,6 +95,9 @@ public class Level {
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
 
+		if (list.size()==0) {
+			return null;
+		}
 
 		if (list.size()==1) {
 			return list;
@@ -116,7 +127,6 @@ public class Level {
 
 
 	public void moveYou(int direction) {
-		ArrayList<Item> toMove = new ArrayList<Item>();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -128,12 +138,13 @@ public class Level {
 
 		found = prioritySort(found, direction);
 
-
-		for(Location i:found) {
-			ArrayList<Item> res = i.move(direction);
-			if (res!=null) {
-				for(Item j:res) {
-					j.goforward();
+		if (found != null) {
+			for(Location i:found) {
+				ArrayList<Item> res = i.move(direction);
+				if (res!=null) {
+					for(Item j:res) {
+						j.goforward();
+					}
 				}
 			}
 		}
@@ -163,11 +174,16 @@ public class Level {
 		}
 	}
 
-	
+
 	public void endturn() {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].endturn();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].reset();
 			}
 		}
 	}

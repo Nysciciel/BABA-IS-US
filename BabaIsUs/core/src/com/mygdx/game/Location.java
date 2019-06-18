@@ -10,9 +10,9 @@ public class Location {
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
-	
-	
-	
+
+
+
 
 	public Location(ArrayList<Item> items, Location[][] locationMatrix, int x, int y) {
 		this.items = items;
@@ -21,7 +21,7 @@ public class Location {
 		this.y = y;
 	}
 
-	
+
 	public Location next(int direction) {
 		try {
 			switch(direction) {
@@ -43,7 +43,7 @@ public class Location {
 		}
 	}
 
-	
+
 	public boolean hasYou() {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -52,8 +52,8 @@ public class Location {
 		}
 		return false;
 	}
-	
-	
+
+
 	public void orientYou(int direction) {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -92,13 +92,12 @@ public class Location {
 
 	public void del(Item item) {
 		items.remove(item);
-		item.dispose();
 		if (items.size()==0) {
 			this.add(new Empty(this, x, y, 0));
 		}
 	}
 
-	
+
 	public void add(Item item) {
 		for(Item i:items) {
 			if (i.isempty()) {
@@ -108,7 +107,7 @@ public class Location {
 		items.add(item);
 	}
 
-	
+
 	public ArrayList<Item> move(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
@@ -126,7 +125,7 @@ public class Location {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Item> getPulled(int direction) {
 		ArrayList<Item> pulls = new ArrayList<Item>();
 		for(Item i:items) {
@@ -145,31 +144,67 @@ public class Location {
 		return null;
 	}
 
-	
+
 	public void update() {
 		for(Item i:items) {
 			i.update();
 		}
 	}
 
-	
+
 	public void dispose() {
 		for(Item i:items) {
 			i.dispose();
 		}
 	}
 
-	
+
 	public void draw(SpriteBatch sb) {
 		for(Item i:items) {
 			i.draw(sb);
 		}
 	}
 
-	
+
 	public void endturn() {
+
+		ArrayList<Item> toMove = new ArrayList<Item>();
+		ArrayList<Item> toKill = new ArrayList<Item>();
+
 		for(Item i:items) {
-			
+			if(i.isSink() && items.size()>1 ) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				items.add(new Empty(this,x,y,0));
+				this.items = items;
+			}
+			if(i.isDefeat()) {
+				for(Item j:items) {
+					if(j.isYou()) {
+						toKill.add(j);
+					}
+				}
+			}
+			if(i.isMove() && !i.hasmoved()) {
+				if(next(i.getOrientation())==null || !(next(i.getOrientation()).pleaseCanIGo(i.getOrientation()))){
+					i.orient((i.getOrientation()+2)%4);
+				}
+				toMove.add(i);
+			}
+		}
+		for(Item i:toMove) {
+			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
+				i.goforward();
+				i.moved();
+			}
+		}
+		for(Item i:toKill) {
+			this.del(i);
+		}
+	}
+	
+	public void reset() {
+		for(Item j:items) {
+			j.reset();
 		}
 	}
 }

@@ -3,23 +3,23 @@ package com.mygdx.game.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.*;
 
-public class Baba extends Item{
-	public Baba(Location loc,
+public class Keke extends Item{
+	public Keke(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
 	@Override
 	public void update() {
-		this.texture = new Texture("baba" + Integer.toString(orientation)+".png");
+		this.texture = new Texture("Keke" + Integer.toString(orientation)+".png");
 	}
 	
 	@Override
-	public boolean isYou() {
+	public boolean isMove() {
 		return true;
 	}
 	
 	@Override
-	public boolean isPull() {
-		return false;
+	public boolean isPush() {
+		return true;
 	}
 }

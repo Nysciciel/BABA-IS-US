@@ -35,7 +35,7 @@ public class LevelState extends GameState{
 			lvl.moveYou(3);
 			lvl.endturn();
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE )) {
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER )) {
 			lvl.endturn();
 		}
 	}

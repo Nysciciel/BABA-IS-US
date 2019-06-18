@@ -26,12 +26,23 @@ public abstract class Item {
 	public boolean isPull() {
 		return false;
 	}
+	public boolean isSink() {
+		return false;
+	}
+	public boolean isDefeat() {
+		return false;
+	}
+	public boolean isMove() {
+		return false;
+	}
 	
 
 	protected int x;
 	protected int y;
 	protected int orientation;
 	protected Location loc;
+	
+	protected boolean hasmoved = false;
 
 
 
@@ -51,6 +62,10 @@ public abstract class Item {
 
 	public Vector2 getPosition() {
 		return new Vector2(x,y);
+	}
+	
+	public int getOrientation() {
+		return orientation;
 	}
 
 	public void dispose() {
@@ -138,5 +153,16 @@ public abstract class Item {
 		orientation = direction;
 	}
 	
+	public boolean hasmoved() {
+		return hasmoved;
+	}
+	
+	public void reset() {
+		hasmoved = false;
+	}
+	
+	public void moved() {
+		hasmoved = true;
+	}
 	
 }
