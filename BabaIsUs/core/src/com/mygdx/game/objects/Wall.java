@@ -9,10 +9,6 @@ public class Wall extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public void update() {
-		this.texture = new Texture("wall" + Integer.toString(orientation)+".png");
-	}
-	@Override
 	public boolean isStop() {
 		return true;
 	}

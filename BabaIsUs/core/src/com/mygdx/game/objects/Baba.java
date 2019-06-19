@@ -8,13 +8,25 @@ public class Baba extends Item{
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	@Override
-	public void update() {
-		this.texture = new Texture("baba" + Integer.toString(orientation)+".png");
-	}
 	
 	@Override
 	public boolean isYou() {
 		return true;
+	}
+	
+	@Override
+	public boolean isPull() {
+		return false;
+	}
+	
+	@Override
+	public boolean isMove() {
+		return false;
+	}
+	
+
+	@Override
+	public boolean isDefeat() {
+		return false;
 	}
 }
