@@ -47,14 +47,17 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				
 		// Create a new Stack for each RuleStack that has an automaton in the AND state
 		for (RuleStack ruleStack : this) {
-			if (ruleStack.isAnd())
+			if (ruleStack.isAnd()) {
 				for (Text text : textList) {
 					RuleStack newRuleStack = new RuleStack();
 					if (!newRuleStack.isNextHopAWell(text)) {
+						newRuleStack.add(text); //*
 						newRuleStacks.add(newRuleStack);
 						System.out.println("and -> new stack");
 					}
 				}
+				
+			}
 		}		
 		
 		toBeRemoved = new ArrayList<RuleStack>();
@@ -64,7 +67,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			for (Text text : textList) {	
 				RuleStack divRuleStack = ruleStack.clone();
 				if (!divRuleStack.isNextHopAWell(text)) {
-					if (!text.isAnd())
+					if (!text.isAnd() && !ruleStack.isAnd())
 						divRuleStack.add(text);
 					newRuleStacks.add(divRuleStack);
 					System.out.println("next State + add");
@@ -72,10 +75,8 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			}
 		}
 		this.removeAll(toBeRemoved);
-		this.addAll(newRuleStacks);
 		
 		
-		newRuleStacks = new ArrayList<RuleStack>();
 		// init new Stacks with an Item ref that is not following 
 		if (!thereIsAnOnOrNearOrFacingOrAnd)
 			for (Text text : textList) {
@@ -100,7 +101,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 
 	public void show() {
 		for (RuleStack stack : this)
-			stack.showPhrase();
+			stack.show();
 	}
 
 	public void currentStates() {

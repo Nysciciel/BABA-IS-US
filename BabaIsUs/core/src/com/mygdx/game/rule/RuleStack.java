@@ -65,8 +65,11 @@ public class RuleStack {
 
 
 	public void showPhrase() {
-		for (Text text : stack)
-			System.out.print(text.getClass().getSimpleName() + "     ");
+		if (stack.isEmpty())
+			System.out.print("_");
+		else
+			for (Text text : stack)
+				System.out.print(text.getClass().getSimpleName() + "     ");
 		System.out.println();
 	}
 
@@ -78,6 +81,13 @@ public class RuleStack {
 
 	public boolean isRelation() {
 		return stack.getLast().isRelation();
+	}
+
+
+	public void show() {
+		
+		printCurrentState();
+		showPhrase();
 	}
 
 

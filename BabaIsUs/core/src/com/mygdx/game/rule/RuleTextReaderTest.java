@@ -6,6 +6,7 @@ import java.util.HashSet;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.item_ref.KekeText;
+import com.mygdx.game.objects.text.item_ref.MeText;
 import com.mygdx.game.objects.text.item_ref.WallText;
 import com.mygdx.game.objects.text.operator.And;
 import com.mygdx.game.objects.text.property.You;
@@ -28,9 +29,17 @@ public class RuleTextReaderTest {
 		textLigne.add(dgfgl);
 		
 		ArrayList<Text> dgfgl2 = new ArrayList<Text>();
-		dgfgl2.add(new Is(null, 0, 0, 0));
+		dgfgl2.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl2);
+		/*
+		ArrayList<Text> dgfgl7 = new ArrayList<Text>();
+		dgfgl7.add(new MeText(null, 0, 0, 0));
+		textLigne.add(dgfgl7);
 		
+		ArrayList<Text> dgfgl8 = new ArrayList<Text>();
+		dgfgl8.add(new And(null, 0, 0, 0));
+		textLigne.add(dgfgl8);
+		*/
 		ArrayList<Text> dgfgl3 = new ArrayList<Text>();
 		dgfgl3.add(new WallText(null, 0, 0, 0));
 		dgfgl3.add(new KekeText(null, 0, 0, 0));
@@ -52,6 +61,7 @@ public class RuleTextReaderTest {
 		dgfgl57.add(new You(null, 0, 0, 0));
 		textLigne.add(dgfgl57);
 		
+		
 		textLigne.add(new ArrayList<Text>());
 		
 		readRules();
@@ -60,6 +70,7 @@ public class RuleTextReaderTest {
 	
 	public void readRules() {
 		
+			
 			System.out.println("readRules");
 			
 		    RuleStackList currentRules; 
@@ -68,6 +79,8 @@ public class RuleTextReaderTest {
 			currentRules = new RuleStackList(rules);
 			for (ArrayList<Text> textList : textLigne) {
 				
+				System.out.println();
+				System.out.println();
 				System.out.print("            READING : ");
 				for (Text text : textList) {
 					text.show();

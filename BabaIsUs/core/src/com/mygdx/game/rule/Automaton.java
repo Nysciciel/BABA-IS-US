@@ -116,6 +116,6 @@ public class Automaton {
 	}
 
 	public void printState() {
-		System.out.print(currentState.toString()+"   ");
+		System.out.print(" __"+currentState.toString()+"   ");
 	}
 }
