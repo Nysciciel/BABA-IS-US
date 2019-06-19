@@ -20,7 +20,7 @@ public class Wall extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public boolean isPush() {
+	public boolean isStop() {
 		return true;
 	}
 

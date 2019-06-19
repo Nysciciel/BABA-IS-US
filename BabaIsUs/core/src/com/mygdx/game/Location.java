@@ -252,7 +252,7 @@ public class Location {
 			if(i.isShift()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((isFloat != j.isFloat()) && !i.hasShifted()) {
+					if((isFloat == j.isFloat()) && !i.hasShifted() && i!=j) {
 						toMove.add(j);
 						j.orient(i.getOrientation());
 					}
