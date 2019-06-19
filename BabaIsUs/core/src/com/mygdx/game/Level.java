@@ -13,8 +13,9 @@ public class Level {
 	private int length;
 	private HashSet<Rule> rules;
 
-	public Level(String filename) {
+	private ArrayList<Location[][]> history;
 
+	public Level(String filename) {
 
 
 		try {
@@ -30,13 +31,14 @@ public class Level {
 
 			height = lines.size();
 			length = lines.get(0).length();
+			history = new ArrayList<Location[][]>();
 
 
 			locationMatrix = new Location[height][length];
 			for (int y = 0; y<height; y++) {
 				for (int x = 0; x<length; x++) {
 					ArrayList<Item> items = new ArrayList<Item>();
-					Location loc = new Location(items, locationMatrix, x, height - 1 -y);
+					Location loc = new Location(items, this, x, height - 1 -y);
 					switch(lines.get(y).charAt(x)) {
 					case 'e':
 						loc.add(new Empty(loc, x, height - 1 -y,0));
@@ -50,10 +52,21 @@ public class Level {
 					case 'r':
 						loc.add(new Rock(loc, x, height - 1 -y,0));
 						break;
+					case 'a':
+						loc.add(new Water(loc, x, height - 1 -y,0));
+						break;
+					case 'k':
+						loc.add(new Keke(loc, x, height - 1 -y,0));
+						break;
+					case 's':
+						loc.add(new Skull(loc, x, height - 1 -y,0));
+						break;
 					}
 					locationMatrix[height - 1 -y][x] = loc;
 				}
 			}
+
+			history.add(this.matrixCopy());
 
 
 		}
@@ -66,9 +79,9 @@ public class Level {
 	}
 
 	public void readRules() {
-		
+
 		ArrayList<RuleStack> currentRules; 
-		
+
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
 			currentRules = new ArrayList<RuleStack>();
@@ -85,11 +98,11 @@ public class Level {
 	}
 
 
-
-
-
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
 
+		if (list.size()==0) {
+			return null;
+		}
 
 		if (list.size()==1) {
 			return list;
@@ -119,7 +132,6 @@ public class Level {
 
 
 	public void moveYou(int direction) {
-		ArrayList<Item> toMove = new ArrayList<Item>();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -129,20 +141,15 @@ public class Level {
 			}
 		}
 
-
-
-
-
-		System.out.println("");
-
 		found = prioritySort(found, direction);
 
-
-		for(Location i:found) {
-			ArrayList<Item> res = i.moveYou(direction);
-			if (res!=null) {
-				for(Item j:res) {
-					j.goforward();
+		if (found != null) {
+			for(Location i:found) {
+				ArrayList<Item> res = i.move(direction);
+				if (res!=null) {
+					for(Item j:res) {
+						j.goforward();
+					}
 				}
 			}
 		}
@@ -172,12 +179,51 @@ public class Level {
 		}
 	}
 
-	public void reset() {
+
+	public void endturn() {
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkMove();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].reset();
 			}
 		}
+		history.add(this.matrixCopy());
+	}
+
+	public void rollback() {
+		if (history.size()>1) {
+			locationMatrix = history.get(history.size()-2);
+			locationMatrix = this.matrixCopy();
+			history.remove(history.size()-1);
+		}
+	}
+
+	public Location[][] getLocationMatrix(){
+		return locationMatrix;
+	}
+
+	public Location[][] matrixCopy(){
+		Location[][] matrix = new Location[height][length];
+		for(int y=0; y < height; y++) {
+			for(int x=0; x < length; x++) {
+				matrix[y][x] = locationMatrix[y][x].copy();
+			}
+		}
+		return matrix;
 	}
 
 }

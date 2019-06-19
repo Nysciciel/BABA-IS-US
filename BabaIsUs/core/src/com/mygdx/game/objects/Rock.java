@@ -13,17 +13,16 @@ public class Rock extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public void update() {
-		this.texture = new Texture("rock" + Integer.toString(orientation)+".png");
+	public boolean isPull() {
+		return false;
 	}
 	@Override
 	public boolean isPush() {
 		return true;
 	}
-	
 	@Override
 	public boolean isYou() {
-		return true;
+		return false;
 	}
 
 	public void render(SpriteBatch sb){
