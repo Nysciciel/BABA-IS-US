@@ -187,6 +187,13 @@ public class Location {
 				this.items = items;
 			}
 
+			if(i.isHot() ) {
+				for(Item j:items) {
+					if(j.isMelt()) {
+						toKill.add(j);
+					}
+				}
+			}
 
 		}
 		for(Item i:toKill) {

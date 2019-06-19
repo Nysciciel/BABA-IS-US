@@ -35,6 +35,12 @@ public abstract class Item {
 	public boolean isMove() {
 		return false;
 	}
+	public boolean isHot() {
+		return false;
+	}
+	public boolean isMelt() {
+		return false;
+	}
 
 
 	protected int x;
