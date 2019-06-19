@@ -152,7 +152,12 @@ public abstract class Item {
 	public boolean isText() {
 		return false;
 	}
-	public abstract void render(SpriteBatch sb);
+	public void render(SpriteBatch sb){
+		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
+		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
+		int size = Math.min(h_ratio,w_ratio);
+		sb.draw(texture,x*size,y*size,size,size);
+	}
 	
 	public void orient(int direction) {
 		orientation = direction;

@@ -25,10 +25,6 @@ public class Wall extends Item {
 	}
 
 	public void render(SpriteBatch sb){
-		String s = "";
-		if(loc.getLevelHeigh()-1==y){
-
-		}
 		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheet" + Integer.toString(orientation)+ ".txt"));
 		animation = new Animation(1/3f, textureAtlas.getRegions());
 		elapsedTime += Gdx.graphics.getDeltaTime();
