@@ -28,19 +28,19 @@ public class Level implements Screen {
         // TODO Auto-generated method stub
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             lvl.moveYou(2);
-            lvl.reset();
+            
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             lvl.moveYou(1);
-            lvl.reset();
+
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             lvl.moveYou(0);
-            lvl.reset();
+
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             lvl.moveYou(3);
-            lvl.reset();
+
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);

@@ -1,44 +1,46 @@
 package com.mygdx.game.objects;
-
+import com.mygdx.game.*;
 import java.util.ArrayList;
-
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Level;
-
-
-
+import com.mygdx.game.*;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public abstract class Item {
 
 	protected Texture texture;
 
-	protected boolean isPush;
-	protected boolean isYou;
-	protected boolean isWin;
-	protected boolean isStop;
+	public boolean isPush() {
+		return false;
+	}
+	public boolean isYou() {
+		return false;
+	}
+	public boolean isWin() {
+		return false;
+	}
+	public boolean isStop() {
+		return false;
+	}
+	public boolean isPull() {
+		return false;
+	}
+	
 
 	protected int x;
 	protected int y;
 	protected int orientation;
-	protected Level lvl;
-
-	protected boolean hasmoved = false;
+	protected Location loc;
 
 
-	public Item(Level lvl,
+
+	public Item(Location loc,
 			int x, int y, int orientation) {
-		this.lvl = lvl;
+		this.loc = loc;
 		this.x = x;
 		this.y = y;
 		this.orientation= orientation;
-
-		isPush = false;
-		isYou = false;
-		isWin = false;
-		isStop = false;
 
 		update();
 	}
@@ -57,76 +59,12 @@ public abstract class Item {
 
 	public void update() {
 	}
-
-
-	public boolean move() {
-		if(isPush) {
-			if (this.facinglocation()!=null) {
-				ArrayList<Item> target = this.facinglocation();
-				boolean possible = true;
-				for (int index = 0; index < target.size(); index++) {
-					if (!target.get(index).move(orientation)) {
-						possible = false;
-					}
-				}
-				if (possible){
-					this.goforward();
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-			else {
-				return false;
-			}
-		}
-		if (isStop) {
-			return false;
-		}
-		return true;
-	}
-
-
-	public void moveAsyou(int orientation) {
-		this.orientation = orientation;
-		this.moveAsyou();
-	}
-
-	public void moveAsyou() {
-		if (!hasmoved) {
-			if (this.facinglocation()!=null) {
-				ArrayList<Item> target = this.facinglocation();
-				boolean possible = true;
-				for (int index = 0; index < target.size(); index++) {
-					if (!target.get(index).move(orientation)) {
-						possible = false;
-					}
-				}
-				if (possible){
-					this.goforward();
-					hasmoved = true;
-				}
-			}
-		}
-	}
-
-
-	public boolean move(int orientation) {
-		int previous_orientation = this.orientation;
-		this.orientation = orientation;
-		boolean result = this.move();
-		if (!result || !isPush) {
-			this.orientation = previous_orientation;
-		}
-
-		return result;
-	}
-
+	
+	
 	public void goforward() {
 
 
-		lvl.del(this,x,y);
+		loc.del(this);
 
 		switch(orientation) {
 		case(0):
@@ -144,42 +82,23 @@ public abstract class Item {
 		default:
 		}
 
-		lvl.add(this,x,y);
-		lvl.checkempty(x, y);
+		loc = loc.next(orientation);
+		loc.add(this);
 	}
 
-	public ArrayList<Item> facinglocation() {
-		try {
-			switch(orientation) {
-			case(0):
-				return lvl.getlocation(x-1,y);
-			case(1):
-				return lvl.getlocation(x,y+1);
-			case(2):
-				return lvl.getlocation(x+1,y);
-			case(3):
-				return lvl.getlocation(x,y-1);
-			default:
-				return null;
-			}
-		}
-		catch(Exception e) {
-			return null;
-		}
-	}
 	public boolean isempty() {
 		return false;
 	}
 
-	public boolean isyou() {
-		return isYou;
+	public void reset() {
+	}
+	public void draw(SpriteBatch sb) {
+		sb.draw(texture, x*32, y*32);
 	}
 	
-	public boolean isText() {
-		return false;
+	public void orient(int direction) {
+		orientation = direction;
 	}
-
-	public void reset() {
-		hasmoved = false;
-	}
+	
+	
 }

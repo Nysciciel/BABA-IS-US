@@ -1,20 +1,19 @@
 package com.mygdx.game.objects.text;
 
-import com.mygdx.game.Level;
-import com.mygdx.game.objects.Item;
+import com.mygdx.game.*;
+import com.mygdx.game.objects.*;
 
 public abstract class Text extends Item {
 	
 	protected String label;
 
-	public Text(Level lvl, int x, int y, int orientation) {
-				
-		super(lvl, x, y, orientation);
-			this.isPush = true;
+	public Text(Location loc, int x, int y, int orientation) {
+		super(loc, x, y, orientation);
 	}
 	
-	public boolean isOperator() {
-		return false;
+	@Override
+	public boolean isPush() {
+		return true;
 	}
 	
 	public boolean isItemRef() {
@@ -24,14 +23,4 @@ public abstract class Text extends Item {
 	public boolean isRelation() {
 		return false;
 	}
-	
-	public boolean isProperty() {
-		return false;
-	}
-	
-	@Override
-	public boolean isText() {
-		return true;
-	}
-
 }
