@@ -13,6 +13,8 @@ public class Level {
 	private int length;
 	private HashSet<Rule> rules;
 
+	private ArrayList<Location[][]> history;
+
 	public Level(String filename) {
 
 
@@ -29,13 +31,14 @@ public class Level {
 
 			height = lines.size();
 			length = lines.get(0).length();
+			history = new ArrayList<Location[][]>();
 
 
 			locationMatrix = new Location[height][length];
 			for (int y = 0; y<height; y++) {
 				for (int x = 0; x<length; x++) {
 					ArrayList<Item> items = new ArrayList<Item>();
-					Location loc = new Location(items, locationMatrix, x, height - 1 -y);
+					Location loc = new Location(items, this, x, height - 1 -y);
 					switch(lines.get(y).charAt(x)) {
 					case 'e':
 						loc.add(new Empty(loc, x, height - 1 -y,0));
@@ -62,6 +65,8 @@ public class Level {
 					locationMatrix[height - 1 -y][x] = loc;
 				}
 			}
+
+			history.add(this.matrixCopy());
 
 
 		}
@@ -186,6 +191,28 @@ public class Level {
 				locationMatrix[y][x].reset();
 			}
 		}
+		history.add(this.matrixCopy());
+	}
+
+	public void rollback() {
+		if (history.size()>1) {
+			locationMatrix = history.get(history.size()-2);
+			history.remove(history.size()-1);
+		}
+	}
+
+	public Location[][] getLocationMatrix(){
+		return locationMatrix;
+	}
+
+	public Location[][] matrixCopy(){
+		Location[][] matrix = new Location[height][length];
+		for(int y=0; y < height; y++) {
+			for(int x=0; x < length; x++) {
+				matrix[y][x] = locationMatrix[y][x].copy();
+			}
+		}
+		return matrix;
 	}
 
 }

@@ -38,6 +38,9 @@ public class LevelState extends GameState{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER )) {
 			lvl.endturn();
 		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.Z )) {
+			lvl.rollback();
+		}
 	}
 
 	@Override

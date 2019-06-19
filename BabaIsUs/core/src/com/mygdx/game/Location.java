@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 
 public class Location {
-	protected Location[][] locationMatrix;
+	protected Level lvl;
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
@@ -14,9 +14,9 @@ public class Location {
 
 
 
-	public Location(ArrayList<Item> items, Location[][] locationMatrix, int x, int y) {
+	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
-		this.locationMatrix = locationMatrix;
+		this.lvl = lvl;
 		this.x = x;
 		this.y = y;
 	}
@@ -27,13 +27,13 @@ public class Location {
 			switch(direction) {
 
 			case(0):
-				return locationMatrix[y][x-1];
+				return lvl.getLocationMatrix()[y][x-1];
 			case(1):
-				return locationMatrix[y+1][x];
+				return lvl.getLocationMatrix()[y+1][x];
 			case(2):
-				return locationMatrix[y][x+1];
+				return lvl.getLocationMatrix()[y][x+1];
 			case(3):
-				return locationMatrix[y-1][x];
+				return lvl.getLocationMatrix()[y-1][x];
 			default:
 				return null;
 			}
@@ -167,9 +167,9 @@ public class Location {
 
 
 	private void checkDeaths() {
-		
+
 		ArrayList<Item> toKill = new ArrayList<Item>();
-		
+
 		for(Item i:items) {
 
 			if(i.isDefeat()) {
@@ -179,25 +179,25 @@ public class Location {
 					}
 				}
 			}
-			
-			
+
+
 			if(i.isSink() && items.size()>1 ) {
 				ArrayList<Item> items = new ArrayList<Item>();
 				items.add(new Empty(this,x,y,0));
 				this.items = items;
 			}
-			
-			
+
+
 		}
 		for(Item i:toKill) {
 			this.del(i);
 		}
 	}
-	
+
 	private void checkMove() {
-		
+
 		ArrayList<Item> toMove = new ArrayList<Item>();
-		
+
 		for(Item i:items) {
 
 			if(i.isMove() && !i.hasmoved()) {
@@ -216,14 +216,15 @@ public class Location {
 		}
 
 	}
-	
-	
+
+
 	public void endturn() {
 
 		checkDeaths();
 		checkMove();
-		checkDeaths();
 		
+		checkDeaths();
+
 	}
 
 	public void reset() {
@@ -231,6 +232,29 @@ public class Location {
 			j.reset();
 		}
 	}
+
+	public Location copy() {
+
+		ArrayList<Item> items = new ArrayList<Item>();
+		for(int x=0; x < this.items.size(); x++) {
+			items.add(this.items.get(x).copy());
+		}
+		try {
+			Location loc = (Location)getClass().getConstructors()[0].newInstance(items,lvl,x,y);
+			loc.setLocation();
+			return loc;
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
+	
+	public void setLocation() {
+		for(Item i:items) {
+			i.setLocation(this);
+		}
+	}
+
 }
 
 

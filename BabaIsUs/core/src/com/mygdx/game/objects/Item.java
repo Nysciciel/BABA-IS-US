@@ -35,13 +35,13 @@ public abstract class Item {
 	public boolean isMove() {
 		return false;
 	}
-	
+
 
 	protected int x;
 	protected int y;
 	protected int orientation;
 	protected Location loc;
-	
+
 	protected boolean hasmoved = false;
 
 
@@ -63,7 +63,7 @@ public abstract class Item {
 	public Vector2 getPosition() {
 		return new Vector2(x,y);
 	}
-	
+
 	public int getOrientation() {
 		return orientation;
 	}
@@ -75,14 +75,14 @@ public abstract class Item {
 	public void update() {
 		this.texture = new Texture(getClass().getSimpleName() + Integer.toString(orientation)+".png");
 	}
-	
+
 	public void goforward() {
 
-		
+
 		loc.del(this);
-		
+
 		if (loc.next((orientation+2)%4)!=null) {
-			
+
 			ArrayList<Item> res = loc.next((orientation+2)%4).getPulled(orientation);
 			if (res!=null) {
 				for(Item j:res) {
@@ -110,12 +110,12 @@ public abstract class Item {
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
-	
+
 	public void advance() {
-		
+
 		//same as go forward except it doesn't pull the one behind
 		//useful for when a push&pull chain is getting pushed
-		
+
 		loc.del(this);
 
 		switch(orientation) {
@@ -145,25 +145,38 @@ public abstract class Item {
 	public boolean isText() {
 		return false;
 	}
-	
+
 	public void draw(SpriteBatch sb) {
 		sb.draw(texture, x*32, y*32);
 	}
-	
+
 	public void orient(int direction) {
 		orientation = direction;
 	}
-	
+
 	public boolean hasmoved() {
 		return hasmoved;
 	}
-	
+
 	public void reset() {
 		hasmoved = false;
 	}
-	
+
 	public void moved() {
 		hasmoved = true;
 	}
+
+	public Item copy() {
+		try {
+			return (Item)getClass().getConstructors()[0].newInstance(null,x,y,orientation);
+		}
+		catch(Exception e) {
+			return null;
+		}
+	}
 	
+	public void setLocation(Location loc) {
+		this.loc = loc;
+	}
+
 }
