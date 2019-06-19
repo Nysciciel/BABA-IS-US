@@ -18,16 +18,16 @@ public class LevelState extends GameState implements ServerCallBack{
 	
 	
 	
-	private Client client;
+	//private Client client;
 	
-	private BlockingQueue<Integer> data;
+	//private BlockingQueue<Integer> data;
 	
 	
 
 	protected LevelState(GameStateManager gms) {
 		super(gms);
-		data = new ArrayBlockingQueue<Integer>(1);
-		client = new Client(data,this,"137.194.90.186");
+		//data = new ArrayBlockingQueue<Integer>(1);
+		//client = new Client(data,this,"192.168.43.114");
 		
 		
 		this.lvl = new Level("level.txt");
@@ -41,38 +41,46 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
 			lvl.endturn();
+			/*
 			try {
 				data.put(2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou(1);
 			lvl.endturn();
+			/*
 			try {
 				data.put(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou(0);
 			lvl.endturn();
+			/*
 			try {
 				data.put(0);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou(3);
 			lvl.endturn();
+			/*
 			try {
 				data.put(3);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER )) {
 			lvl.endturn();

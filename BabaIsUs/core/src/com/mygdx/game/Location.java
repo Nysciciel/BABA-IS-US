@@ -166,7 +166,7 @@ public class Location {
 	}
 
 
-	private void checkDeaths() {
+	public void checkDeaths() {
 
 		ArrayList<Item> toKill = new ArrayList<Item>();
 
@@ -194,7 +194,7 @@ public class Location {
 		}
 	}
 
-	private void checkMove() {
+	public void checkMove() {
 
 		ArrayList<Item> toMove = new ArrayList<Item>();
 
@@ -216,16 +216,8 @@ public class Location {
 		}
 
 	}
-
-
-	public void endturn() {
-
-		checkDeaths();
-		checkMove();
-		
-		checkDeaths();
-
-	}
+	
+	
 
 	public void reset() {
 		for(Item j:items) {

@@ -183,7 +183,17 @@ public class Level {
 	public void endturn() {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].endturn();
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkMove();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkDeaths();
 			}
 		}
 		for (int x = 0; x<length;x++) {
@@ -197,6 +207,7 @@ public class Level {
 	public void rollback() {
 		if (history.size()>1) {
 			locationMatrix = history.get(history.size()-2);
+			locationMatrix = this.matrixCopy();
 			history.remove(history.size()-1);
 		}
 	}
