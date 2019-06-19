@@ -34,7 +34,10 @@ public class Rock extends Item {
 
 	public void render(SpriteBatch sb){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
-		animation = new Animation(1/3f, textureAtlas.getRegions());
+		TextureRegion[] orientedWall = new TextureRegion[2];
+		orientedWall[0]=textureAtlas.findRegion("Rock0");
+		orientedWall[1]=textureAtlas.findRegion("Rock1");
+		animation = new Animation(1/3f, orientedWall);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());

@@ -26,8 +26,11 @@ public class Baba extends Item{
 	}
 
 	public void render(SpriteBatch sb){
-		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheet" + Integer.toString(orientation)+ ".txt"));
-		animation = new Animation(1/3f, textureAtlas.getRegions());
+		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheetU.txt"));
+		TextureRegion[] orientedBaba = new TextureRegion[2];
+		orientedBaba[0] = textureAtlas.findRegion("Fox"+orientation+"-0");
+		orientedBaba[1] = textureAtlas.findRegion("Fox"+orientation+"-1");
+		animation = new Animation(1/3f, orientedBaba);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
