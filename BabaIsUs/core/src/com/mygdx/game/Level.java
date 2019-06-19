@@ -198,6 +198,11 @@ public class Level {
 		}
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkWin();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].reset();
 			}
 		}
@@ -224,6 +229,12 @@ public class Level {
 			}
 		}
 		return matrix;
+	}
+
+	public void reset() {
+		locationMatrix = history.get(0);
+		history = new ArrayList<Location[][]>();
+		history.add(this.matrixCopy());
 	}
 
 }

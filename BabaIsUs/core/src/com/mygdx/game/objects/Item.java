@@ -42,6 +42,9 @@ public abstract class Item {
 	public boolean isMelt() {
 		return false;
 	}
+	public boolean isFloat() {
+		return false;
+	}
 
 
 	protected int x;

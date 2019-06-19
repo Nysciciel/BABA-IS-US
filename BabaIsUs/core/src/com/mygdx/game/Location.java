@@ -179,8 +179,9 @@ public class Location {
 		for(Item i:items) {
 
 			if(i.isDefeat()) {
+				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou()) {
+					if(j.isYou() && (isFloat != j.isFloat())) {
 						toKill.add(j);
 					}
 				}
@@ -188,14 +189,18 @@ public class Location {
 
 
 			if(i.isSink() && items.size()>1 ) {
-				ArrayList<Item> items = new ArrayList<Item>();
-				items.add(new Empty(this,x,y,0));
-				this.items = items;
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if((isFloat != j.isFloat())) {
+						toKill.add(j);
+					}
+				}
 			}
 
-			if(i.isHot() ) {
+			if(i.isHot()) {
+				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isMelt()) {
+					if(j.isMelt() && (isFloat != j.isFloat())) {
 						toKill.add(j);
 					}
 				}
@@ -229,8 +234,24 @@ public class Location {
 		}
 
 	}
-	
-	
+
+	public void checkWin() {
+
+		for(Item i:items) {
+
+			if(i.isWin()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if(j.isYou() && (isFloat != j.isFloat())) {
+						System.out.println("YOU WIN MOTHERFUCKER");;
+					}
+				}
+			}
+		}
+
+	}
+
+
 
 	public void reset() {
 		for(Item j:items) {
@@ -253,7 +274,7 @@ public class Location {
 			return null;
 		}
 	}
-	
+
 	public void setLocation() {
 		for(Item i:items) {
 			i.setLocation(this);
