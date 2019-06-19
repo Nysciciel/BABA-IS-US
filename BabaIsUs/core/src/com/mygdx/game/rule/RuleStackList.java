@@ -103,7 +103,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 
 		System.out.println("            44444444444444444444");
 		// init new Stacks with an Item ref that is not following  ON / NEAR / FACING / AND
-		if (!thereIsAnOnOrNearOrFacingOrAnd && !thereIsANot)
+		if ((!thereIsAnOnOrNearOrFacingOrAnd && !thereIsANot) || (this.isEmpty() && newRuleStacks.isEmpty()))
 			for (Text text : textList) {
 				RuleStack ruleStack = new RuleStack();
 				if (!ruleStack.isNextHopAWell(text)) {

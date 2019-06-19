@@ -23,12 +23,31 @@ public class RuleTextReaderTest {
 		textLigne = new ArrayList<ArrayList<Text>>();
 		
 		
+		ArrayList<Text> dgfglkedsgl = new ArrayList<Text>();
+		dgfglkedsgl.add(new On(null, 0, 0, 0));
+		textLigne.add(dgfglkedsgl);
+		
+		
+		
+		ArrayList<Text> lqsvh = new ArrayList<Text>();
+		lqsvh.add(new Not(null, 0, 0, 0));
+		textLigne.add(lqsvh);
+		
+		ArrayList<Text> dgfgl5 = new ArrayList<Text>();
+		dgfgl5.add(new BabaText(null, 0, 0, 0));
+		textLigne.add(dgfgl5);
+		
+		ArrayList<Text> KSUFPU = new ArrayList<Text>();
+		KSUFPU.add(new And(null, 0, 0, 0));
+		KSUFPU.add(new On(null, 0, 0, 0));
+		textLigne.add(KSUFPU);
+		
 		ArrayList<Text> dgfgl = new ArrayList<Text>();
-		dgfgl.add(new BabaText(null, 0, 0, 0));
+		dgfgl.add(new KekeText(null, 0, 0, 0));
 		textLigne.add(dgfgl);
 		
 		ArrayList<Text> dgfgl2 = new ArrayList<Text>();
-		dgfgl2.add(new And(null, 0, 0, 0));
+		dgfgl2.add(new Is(null, 0, 0, 0));
 		textLigne.add(dgfgl2);
 		
 		
@@ -37,30 +56,38 @@ public class RuleTextReaderTest {
 		dgfgl7.add(new Not(null, 0, 0, 0));
 		textLigne.add(dgfgl7);
 		
-		/*
+		
+		
 		ArrayList<Text> dgfgl8 = new ArrayList<Text>();
-		dgfgl8.add(new And(null, 0, 0, 0));
+		dgfgl8.add(new You(null, 0, 0, 0));
 		textLigne.add(dgfgl8);
-		*/
+		
+		ArrayList<Text> dgfgl13 = new ArrayList<Text>();
+		dgfgl13.add(new And(null, 0, 0, 0));
+		textLigne.add(dgfgl13);
+		
+		ArrayList<Text> dgfgl56 = new ArrayList<Text>();
+		dgfgl56.add(new On(null, 0, 0, 0));
+		textLigne.add(dgfgl56);
+		
+		
 		ArrayList<Text> dgfgl3 = new ArrayList<Text>();
-		dgfgl3.add(new WallText(null, 0, 0, 0));
 		dgfgl3.add(new KekeText(null, 0, 0, 0));
 		textLigne.add(dgfgl3);
 		
+		
+		
+		
 		ArrayList<Text> dgfgl4 = new ArrayList<Text>();
-		dgfgl4.add(new Is(null, 0, 0, 0));
+		dgfgl4.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl4);
 		
-		/*
 		
-		ArrayList<Text> dgfgl5 = new ArrayList<Text>();
-		dgfgl5.add(new BabaText(null, 0, 0, 0));
-		textLigne.add(dgfgl5);
 		
-		ArrayList<Text> dgfgl56 = new ArrayList<Text>();
-		dgfgl56.add(new And(null, 0, 0, 0));
-		textLigne.add(dgfgl56);
-		*/
+		
+		
+		
+		
 		ArrayList<Text> dgfgl57 = new ArrayList<Text>();
 		dgfgl57.add(new You(null, 0, 0, 0));
 		textLigne.add(dgfgl57);
