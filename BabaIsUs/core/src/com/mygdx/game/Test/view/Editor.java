@@ -20,6 +20,11 @@ public class Editor implements Screen {
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         this.edt = new com.mygdx.game.Editor("level.txt");
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 
     @Override

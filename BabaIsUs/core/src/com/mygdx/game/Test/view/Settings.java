@@ -23,7 +23,12 @@ public class Settings implements Screen {
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         this.background = new Texture("Menu_background.jpg");
+        Gdx.input.setInputProcessor(stage);
 
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 
     @Override

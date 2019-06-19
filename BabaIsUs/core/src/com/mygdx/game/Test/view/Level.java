@@ -21,6 +21,11 @@ public class Level implements Screen {
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         this.lvl = new com.mygdx.game.Level("level.txt");
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 
     @Override

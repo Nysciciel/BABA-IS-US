@@ -30,6 +30,10 @@ public class Menu implements Screen {
 
     }
 
+    public Stage getStage(){
+        return stage;
+    }
+
     @Override
     public void show() {
         // TODO Auto-generated method stub
