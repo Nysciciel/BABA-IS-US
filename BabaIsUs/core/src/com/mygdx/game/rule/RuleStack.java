@@ -49,7 +49,7 @@ public class RuleStack {
 
 
 	public void pop() {
-		stack.pop();
+		stack.removeLast();
 		automaton.goBackToPreviousState();
 	}
 
@@ -66,13 +66,18 @@ public class RuleStack {
 
 	public void showPhrase() {
 		for (Text text : stack)
-			System.out.print(text.toString() + "     ");
+			System.out.print(text.getClass().getSimpleName() + "     ");
 		System.out.println();
 	}
 
 
 	public void printCurrentState() {
 		automaton.printState();
+	}
+
+
+	public boolean isRelation() {
+		return stack.getLast().isRelation();
 	}
 
 

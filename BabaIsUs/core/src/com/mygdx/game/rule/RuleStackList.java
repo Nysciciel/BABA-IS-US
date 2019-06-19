@@ -17,13 +17,20 @@ public class RuleStackList extends ArrayList<RuleStack> {
 	public void buildNext(ArrayList<Text> textList, boolean thereIsAnOnOrNearOrFacingOrAnd) {
 		
 		ArrayList<RuleStack> toBeRemoved = new ArrayList<RuleStack>();
+		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
+
 		// And handling in case of a final State
 		if (thereIsAnd(textList))
 			for (RuleStack ruleStack : this) {	
 				if (ruleStack.isFinal()) {
 						System.out.println("And + final");
 						rules.add(new Rule(ruleStack));
-						ruleStack.pop(); //pop and go back to the previous state
+						while(!ruleStack.isRelation()) {
+							ruleStack.pop(); //pop and go back to the previous state
+							System.out.print("pop : ");
+							ruleStack.showPhrase();
+						}
+						newRuleStacks.add(ruleStack);
 				}
 			}
 		// End of Logic phrases when not AND
@@ -37,9 +44,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			}
 		}
 		this.removeAll(toBeRemoved);
-		
-		
-		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
+				
 		// Create a new Stack for each RuleStack that has an automaton in the AND state
 		for (RuleStack ruleStack : this) {
 			if (ruleStack.isAnd())
@@ -50,11 +55,8 @@ public class RuleStackList extends ArrayList<RuleStack> {
 						System.out.println("and -> new stack");
 					}
 				}
-		}
-		this.addAll(newRuleStacks);
+		}		
 		
-		
-		newRuleStacks = new ArrayList<RuleStack>();
 		toBeRemoved = new ArrayList<RuleStack>();
 		// next state if not a well
 		for (RuleStack ruleStack : this) {

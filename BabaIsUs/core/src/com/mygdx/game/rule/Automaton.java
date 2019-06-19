@@ -52,7 +52,7 @@ public class Automaton {
 			if (text.isIs())
 				return currentState = (stateIs);
 			if (text.isRelation())
-				return currentState = (stateO);		
+				return currentState = (stateO);			
 			if (text.isAnd())
 				return currentState = (stateAnd);
 		}
@@ -61,7 +61,7 @@ public class Automaton {
 			System.out.println("State And");
 			if (text.isNot())
 				return currentState = (stateAnd);
-			if (text.isItemRef())
+			if (text.isItemRef(							))
 				return currentState = (stateA);
 		}
 		

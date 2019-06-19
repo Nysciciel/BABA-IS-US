@@ -52,6 +52,8 @@ public class RuleTextReaderTest {
 		dgfgl57.add(new You(null, 0, 0, 0));
 		textLigne.add(dgfgl57);
 		
+		textLigne.add(new ArrayList<Text>());
+		
 		readRules();
 
 	}
@@ -65,9 +67,18 @@ public class RuleTextReaderTest {
 			
 			currentRules = new RuleStackList(rules);
 			for (ArrayList<Text> textList : textLigne) {
-				System.out.println(textList);
+				
+				System.out.print("            READING : ");
+				for (Text text : textList) {
+					text.show();
+					System.out.print("    ");
+				}
+				System.out.println();
+				
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd);
-				thereIsAnOnOrNearOrFacingOrAnd = thereIsAOn(textList) ||thereIsAAnd(textList);
+				if (!thereIsANot(textList))
+					thereIsAnOnOrNearOrFacingOrAnd = thereIsAOn(textList) ||thereIsAAnd(textList);
+				System.out.println("           show stacks :");
 				currentRules.show();
 				System.out.println("-------------------------------");
 				System.out.println(currentRules.toString());
@@ -79,6 +90,14 @@ public class RuleTextReaderTest {
 			}
 	}
 	
+	private boolean thereIsANot(ArrayList<Text> textList) {
+		
+		for (Text text : textList)
+			if (text.isNot())
+				return true;		
+		return false;
+	}
+
 	public boolean thereIsAOn(ArrayList<Text> textList) {
 		
 		for (Text text : textList)

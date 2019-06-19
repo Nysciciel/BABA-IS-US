@@ -56,6 +56,10 @@ public abstract class Text extends Item {
 	
 	@Override
 	public String toString() {
-		return this.getClass().getName();
+		return this.getClass().getSimpleName();
+	}
+	
+	public void show() {
+		System.out.print(toString());
 	}
 }
