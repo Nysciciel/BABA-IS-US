@@ -47,6 +47,7 @@ public class Editor implements Screen {
     @Override
     public void resize(int width, int height) {
         // TODO Auto-generated method stub
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     @Override

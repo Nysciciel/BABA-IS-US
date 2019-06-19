@@ -38,7 +38,7 @@ public class Menu implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
@@ -46,10 +46,16 @@ public class Menu implements Screen {
         TextButton newLevel = new TextButton("new Level", skin);
         TextButton editor = new TextButton("play Editor", skin);
         TextButton exit = new TextButton("Exit", skin);
+        TextButton settings = new TextButton("Settings", skin);
+        TextButton multiplayer = new TextButton("Multiplayer", skin);
 
         table.add(newLevel).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(editor).fillX().uniformX();
+        table.row();
+        table.add(multiplayer).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(settings).fillX().uniformX();
         table.row();
         table.add(exit).fillX().uniformX();
 
@@ -70,6 +76,18 @@ public class Menu implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 parent.screenChoice(MainTest.EDITOR);
+            }
+        });
+        multiplayer.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                parent.screenChoice(MainTest.MULTIPLAYER);
+            }
+        });
+        settings.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                parent.screenChoice(MainTest.SETTINGS);
             }
         });
     }
