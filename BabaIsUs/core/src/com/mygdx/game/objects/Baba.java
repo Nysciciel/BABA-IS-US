@@ -37,7 +37,7 @@ public class Baba extends Item{
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test, x*size, y*size,size,size);
+		sb.draw(test,x*size,y*size,size,size);
 	}
 
 	public void dispose(){
