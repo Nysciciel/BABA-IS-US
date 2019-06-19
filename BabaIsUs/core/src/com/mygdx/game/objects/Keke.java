@@ -18,4 +18,9 @@ public class Keke extends Item{
 	public boolean isPush() {
 		return true;
 	}
+	
+	@Override
+	public boolean isWin() {
+		return true;
+	}
 }

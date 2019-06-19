@@ -82,11 +82,14 @@ public class LevelState extends GameState implements ServerCallBack{
 			}
 			*/
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER )) {
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER ) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE )) {
 			lvl.endturn();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Z )) {
 			lvl.rollback();
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.R )) {
+			lvl.reset();
 		}
 	}
 

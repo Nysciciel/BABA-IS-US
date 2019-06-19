@@ -11,9 +11,6 @@ public class Location {
 	protected int x;
 	protected int y;
 
-
-
-
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
 		this.lvl = lvl;
@@ -54,7 +51,6 @@ public class Location {
 		}
 	}
 
-
 	public boolean hasYou() {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -64,7 +60,6 @@ public class Location {
 		return false;
 	}
 
-
 	public void orientYou(int direction) {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -73,8 +68,13 @@ public class Location {
 		}
 	}
 
-
 	public boolean pleaseCanIGo(int direction) {
+
+		if (this.allAreShut() && this.next((2+direction)%4).allAreOpen()) {
+			return true;
+		}
+
+
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
@@ -100,7 +100,6 @@ public class Location {
 		return true;
 	}
 
-
 	public void del(Item item) {
 		items.remove(item);
 		if (items.size()==0) {
@@ -108,16 +107,18 @@ public class Location {
 		}
 	}
 
-
 	public void add(Item item) {
+		Item toRemove = null;
 		for(Item i:items) {
 			if (i.isempty()) {
-				this.del(i);
+				toRemove = i;
 			}
+		}
+		if(toRemove != null) {
+			items.remove(toRemove);
 		}
 		items.add(item);
 	}
-
 
 	public ArrayList<Item> move(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
@@ -155,13 +156,11 @@ public class Location {
 		return null;
 	}
 
-
 	public void update() {
 		for(Item i:items) {
 			i.update();
 		}
 	}
-
 
 	public void dispose() {
 		for(Item i:items) {
@@ -175,36 +174,68 @@ public class Location {
 		}
 	}
 
-
 	public void checkDeaths() {
+		
+		this.checkLocks();
 
 		ArrayList<Item> toKill = new ArrayList<Item>();
 
 		for(Item i:items) {
 
 			if(i.isDefeat()) {
+				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou()) {
-						toKill.add(j);
+					if(j.isYou() && (isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
 					}
 				}
 			}
 
 
 			if(i.isSink() && items.size()>1 ) {
-				ArrayList<Item> items = new ArrayList<Item>();
-				items.add(new Empty(this,x,y,0));
-				this.items = items;
-			}
-
-			if(i.isHot() ) {
+				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isMelt()) {
-						toKill.add(j);
+					if((isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
 					}
 				}
 			}
 
+			if(i.isHot()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if(j.isMelt() && (isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
+					}
+				}
+			}
+		}
+		for(Item i:toKill) {
+			this.del(i);
+		}
+	}
+
+	public void checkLocks() {
+		ArrayList<Item> toKill = new ArrayList<Item>();
+		for(Item i:items) {
+			if(i.isShut()) {
+				for(Item j:items) {
+					if(j.isOpen()) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
+						if(toKill.indexOf(i)==-1) {
+							toKill.add(i);
+						}
+					}
+				}
+			}
 		}
 		for(Item i:toKill) {
 			this.del(i);
@@ -214,16 +245,36 @@ public class Location {
 	public void checkMove() {
 
 		ArrayList<Item> toMove = new ArrayList<Item>();
+		ArrayList<Item> toShift = new ArrayList<Item>();
 
 		for(Item i:items) {
 
-			if(i.isMove() && !i.hasmoved()) {
+			if(i.isShift()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if((isFloat != j.isFloat()) && !i.hasShifted()) {
+						toMove.add(j);
+						j.orient(i.getOrientation());
+					}
+				}
+			}
+
+		}
+		for(Item i:items) {
+
+			if(i.isMove() && !i.hasMoved()) {
 				if(next(i.getOrientation())==null || !(next(i.getOrientation()).pleaseCanIGo(i.getOrientation()))){
 					i.orient((i.getOrientation()+2)%4);
 				}
 				toMove.add(i);
 			}
 
+		}
+		for(Item i:toShift) {
+			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
+				i.goforward();
+				i.shifted();
+			}
 		}
 		for(Item i:toMove) {
 			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
@@ -233,8 +284,22 @@ public class Location {
 		}
 
 	}
-	
-	
+
+	public void checkWin() {
+
+		for(Item i:items) {
+
+			if(i.isWin()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if(j.isYou() && (isFloat != j.isFloat())) {
+						System.out.println("YOU WIN MOTHERFUCKER");;
+					}
+				}
+			}
+		}
+
+	}
 
 	public void reset() {
 		for(Item j:items) {
@@ -257,11 +322,29 @@ public class Location {
 			return null;
 		}
 	}
-	
+
 	public void setLocation() {
 		for(Item i:items) {
 			i.setLocation(this);
 		}
+	}
+	
+	public boolean allAreOpen() {
+		for(Item i:items) {
+			if(!(i.isOpen())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean allAreShut() {
+		for(Item i:items) {
+			if(!(i.isShut())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
