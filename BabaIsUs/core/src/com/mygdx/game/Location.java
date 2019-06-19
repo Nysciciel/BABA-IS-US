@@ -177,6 +177,15 @@ public class Location {
 		}
 		return false;
 	}
+
+	public boolean thereIsANot() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isNot()) 
+					return true;
+		}
+		return false;
+	}
 }
 
 

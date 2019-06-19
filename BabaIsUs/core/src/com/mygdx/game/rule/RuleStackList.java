@@ -14,7 +14,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		this.rules = rules;
 	}
 
-	public void buildNext(ArrayList<Text> textList, boolean thereIsAnOnOrNearOrFacingOrAnd) {
+	public void buildNext(ArrayList<Text> textList, boolean thereIsAnOnOrNearOrFacingOrAnd, boolean thereIsANot) {
 		
 		ArrayList<RuleStack> toBeRemoved = new ArrayList<RuleStack>();
 		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
@@ -46,6 +46,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		this.removeAll(toBeRemoved);
 				
 		// Create a new Stack for each RuleStack that has an automaton in the AND state
+		/*
 		for (RuleStack ruleStack : this) {
 			if (ruleStack.isAnd()) {
 				for (Text text : textList) {
@@ -59,34 +60,33 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				
 			}
 		}		
+		*/
 		
 		toBeRemoved = new ArrayList<RuleStack>();
 		// next state if not a well
 		for (RuleStack ruleStack : this) {
 			toBeRemoved.add(ruleStack);
-			if (ruleStack.isAnd()) {
+			if (ruleStack.isAnd() && atLeastOneItemRef(textList) && thereIsAnOnOrNearOrFacingOrAnd) {
 				RuleStack divRuleStack = ruleStack.clone();
 				divRuleStack.isNextHopAWell(null);
 				newRuleStacks.add(divRuleStack);
 				System.out.println("save stacks in AND state");
-				
 			}
-			else
-				for (Text text : textList) {	
-					RuleStack divRuleStack = ruleStack.clone();
-					if (!divRuleStack.isNextHopAWell(text)) {
-						if (!text.isAnd() && !ruleStack.isAnd())
-							divRuleStack.add(text);
-						newRuleStacks.add(divRuleStack);
-						System.out.println("next State + add");
-					}	
-				}
+			for (Text text : textList) {	
+				RuleStack divRuleStack = ruleStack.clone();
+				if (!divRuleStack.isNextHopAWell(text)) {
+					if (!text.isAnd() && (!ruleStack.isAnd() || (ruleStack.isAnd() && !text.isItemRef() && !thereIsAnOnOrNearOrFacingOrAnd)))
+						divRuleStack.add(text);
+					newRuleStacks.add(divRuleStack);
+					System.out.println("next State + add");
+				}	
+			}
 		}
 		this.removeAll(toBeRemoved);
 		
 		
-		// init new Stacks with an Item ref that is not following 
-		if (!thereIsAnOnOrNearOrFacingOrAnd)
+		// init new Stacks with an Item ref that is not following  ON / NEAR / FACING / AND
+		if (!thereIsAnOnOrNearOrFacingOrAnd && !thereIsANot)
 			for (Text text : textList) {
 				RuleStack ruleStack = new RuleStack();
 				if (!ruleStack.isNextHopAWell(text)) {
@@ -104,6 +104,13 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			if (text.isAnd())
 				return true;
 		}
+		return false;
+	}
+	
+	private boolean atLeastOneItemRef(ArrayList<Text> textList) {
+		for (Text text : textList)
+			if (text.isItemRef())
+				return true;
 		return false;
 	}
 

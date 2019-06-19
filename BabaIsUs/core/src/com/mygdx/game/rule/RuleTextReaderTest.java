@@ -3,14 +3,12 @@ package com.mygdx.game.rule;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import com.mygdx.game.objects.text.Text;
-import com.mygdx.game.objects.text.item_ref.BabaText;
-import com.mygdx.game.objects.text.item_ref.KekeText;
-import com.mygdx.game.objects.text.item_ref.MeText;
-import com.mygdx.game.objects.text.item_ref.WallText;
-import com.mygdx.game.objects.text.operator.And;
-import com.mygdx.game.objects.text.property.You;
-import com.mygdx.game.objects.text.relation.Is;
+
+import com.mygdx.game.objects.text.item_ref.*;
+import com.mygdx.game.objects.text.operator.*;
+import com.mygdx.game.objects.text.relation.*;
+import com.mygdx.game.objects.text.property.*;
+import com.mygdx.game.objects.text.*;
 
 public class RuleTextReaderTest {
 	
@@ -23,7 +21,8 @@ public class RuleTextReaderTest {
 		rules = new HashSet<Rule>();
 		
 		textLigne = new ArrayList<ArrayList<Text>>();
-
+		
+		/*
 		ArrayList<Text> dgfgl = new ArrayList<Text>();
 		dgfgl.add(new BabaText(null, 0, 0, 0));
 		textLigne.add(dgfgl);
@@ -31,11 +30,13 @@ public class RuleTextReaderTest {
 		ArrayList<Text> dgfgl2 = new ArrayList<Text>();
 		dgfgl2.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl2);
-		/*
+		*/
+		
 		ArrayList<Text> dgfgl7 = new ArrayList<Text>();
-		dgfgl7.add(new MeText(null, 0, 0, 0));
+		dgfgl7.add(new Not(null, 0, 0, 0));
 		textLigne.add(dgfgl7);
 		
+		/*
 		ArrayList<Text> dgfgl8 = new ArrayList<Text>();
 		dgfgl8.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl8);
@@ -75,6 +76,7 @@ public class RuleTextReaderTest {
 			
 		    RuleStackList currentRules; 
 			boolean thereIsAnOnOrNearOrFacingOrAnd = false;
+			boolean thereIsANot_ = false;
 			
 			currentRules = new RuleStackList(rules);
 			for (ArrayList<Text> textList : textLigne) {
@@ -88,9 +90,15 @@ public class RuleTextReaderTest {
 				}
 				System.out.println();
 				
-				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd);
-				if (!thereIsANot(textList))
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot_);
+				if (!thereIsANot(textList)) {
 					thereIsAnOnOrNearOrFacingOrAnd = thereIsAOn(textList) ||thereIsAAnd(textList);
+					thereIsANot_ = false;
+				}
+				else {
+					thereIsANot_ = true;
+				}
+				
 				System.out.println("           show stacks :");
 				currentRules.show();
 				System.out.println("-------------------------------");

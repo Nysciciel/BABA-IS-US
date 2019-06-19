@@ -72,6 +72,7 @@ public class Level {
 		
 		RuleStackList currentRules; 
 		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
+		boolean thereIsANot = false;
 		
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
@@ -79,8 +80,9 @@ public class Level {
 			for (int x = 0; x<length; x++) {
 				
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
-				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd);
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
+				thereIsANot = locationMatrix[y][x].thereIsANot();
 				
 			}
 		}
