@@ -22,11 +22,11 @@ public class Location {
 	}
 
 	public int getLevelHeigh(){
-		return(locationMatrix.length);
+		return(lvl.getLocationMatrix().length);
 	}
 
 	public int getLevelWidth(){
-		return(locationMatrix[0].length);
+		return(lvl.getLocationMatrix()[0].length);
 	}
 
 	public Location next(int direction) {
