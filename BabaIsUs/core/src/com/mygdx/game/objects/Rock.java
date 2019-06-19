@@ -9,10 +9,6 @@ public class Rock extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public void update() {
-		this.texture = new Texture("rock" + Integer.toString(orientation)+".png");
-	}
-	@Override
 	public boolean isPull() {
 		return false;
 	}

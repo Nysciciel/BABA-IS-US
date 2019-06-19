@@ -13,8 +13,4 @@ public class Empty extends Item{
 	public boolean isempty() {
 		return true;
 	}
-	@Override
-	public void update() {
-		this.texture = new Texture("empty" + Integer.toString(orientation)+".png");
-	}
 }

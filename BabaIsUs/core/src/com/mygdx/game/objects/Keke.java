@@ -8,10 +8,6 @@ public class Keke extends Item{
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	@Override
-	public void update() {
-		this.texture = new Texture("Keke" + Integer.toString(orientation)+".png");
-	}
 	
 	@Override
 	public boolean isMove() {

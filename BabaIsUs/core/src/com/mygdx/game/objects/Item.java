@@ -73,6 +73,7 @@ public abstract class Item {
 	}
 
 	public void update() {
+		this.texture = new Texture(getClass().getSimpleName() + Integer.toString(orientation)+".png");
 	}
 	
 	public void goforward() {

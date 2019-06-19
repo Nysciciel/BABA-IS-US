@@ -67,7 +67,7 @@ public class Location {
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
-			if (i.isStop() || (i.isPull() && !(i.isPush()))) {
+			if ((i.isStop()&&!i.isPush()) || (i.isPull() && !(i.isPush()))) {
 				return false;
 			}
 			if (i.isPush()) {

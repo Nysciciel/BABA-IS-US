@@ -9,10 +9,6 @@ public class Water extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public void update() {
-		this.texture = new Texture("Water" + Integer.toString(orientation)+".png");
-	}
-	@Override
 	public boolean isSink() {
 		return true;
 	}

@@ -8,10 +8,6 @@ public class Skull extends Item{
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	@Override
-	public void update() {
-		this.texture = new Texture("Skull" + Integer.toString(orientation)+".png");
-	}
 	
 	@Override
 	public boolean isDefeat() {
