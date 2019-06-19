@@ -22,7 +22,7 @@ public class RuleTextReaderTest {
 		
 		textLigne = new ArrayList<ArrayList<Text>>();
 		
-		/*
+		
 		ArrayList<Text> dgfgl = new ArrayList<Text>();
 		dgfgl.add(new BabaText(null, 0, 0, 0));
 		textLigne.add(dgfgl);
@@ -30,7 +30,8 @@ public class RuleTextReaderTest {
 		ArrayList<Text> dgfgl2 = new ArrayList<Text>();
 		dgfgl2.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl2);
-		*/
+		
+		
 		
 		ArrayList<Text> dgfgl7 = new ArrayList<Text>();
 		dgfgl7.add(new Not(null, 0, 0, 0));
@@ -50,6 +51,8 @@ public class RuleTextReaderTest {
 		dgfgl4.add(new Is(null, 0, 0, 0));
 		textLigne.add(dgfgl4);
 		
+		/*
+		
 		ArrayList<Text> dgfgl5 = new ArrayList<Text>();
 		dgfgl5.add(new BabaText(null, 0, 0, 0));
 		textLigne.add(dgfgl5);
@@ -57,7 +60,7 @@ public class RuleTextReaderTest {
 		ArrayList<Text> dgfgl56 = new ArrayList<Text>();
 		dgfgl56.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl56);
-		
+		*/
 		ArrayList<Text> dgfgl57 = new ArrayList<Text>();
 		dgfgl57.add(new You(null, 0, 0, 0));
 		textLigne.add(dgfgl57);
@@ -103,8 +106,8 @@ public class RuleTextReaderTest {
 				currentRules.show();
 				System.out.println("-------------------------------");
 				System.out.println(currentRules.toString());
-				System.out.print("Current States : ");
-				currentRules.currentStates();
+				//System.out.print("Current States : ");
+				//currentRules.currentStates();
 				System.out.println();
 				
 				
