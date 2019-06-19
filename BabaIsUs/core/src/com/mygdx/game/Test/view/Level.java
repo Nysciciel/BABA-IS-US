@@ -28,7 +28,7 @@ public class Level implements Screen {
         // TODO Auto-generated method stub
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             lvl.moveYou(2);
-            
+
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             lvl.moveYou(1);
