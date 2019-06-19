@@ -59,10 +59,11 @@ public class Automaton {
 		
 		if (currentState.getLabel() == "stateAnd") {
 			System.out.println("State And");
+			if (text == null || text.isItemRef())
+				return currentState = (stateA);
 			if (text.isNot())
 				return currentState = (stateAnd);
-			if (text.isItemRef(							))
-				return currentState = (stateA);
+			
 		}
 		
 		if (currentState.getLabel() == "stateOn") {

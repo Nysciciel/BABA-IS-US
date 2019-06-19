@@ -64,15 +64,23 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		// next state if not a well
 		for (RuleStack ruleStack : this) {
 			toBeRemoved.add(ruleStack);
-			for (Text text : textList) {	
+			if (ruleStack.isAnd()) {
 				RuleStack divRuleStack = ruleStack.clone();
-				if (!divRuleStack.isNextHopAWell(text)) {
-					if (!text.isAnd() && !ruleStack.isAnd())
-						divRuleStack.add(text);
-					newRuleStacks.add(divRuleStack);
-					System.out.println("next State + add");
-				}	
+				divRuleStack.isNextHopAWell(null);
+				newRuleStacks.add(divRuleStack);
+				System.out.println("save stacks in AND state");
+				
 			}
+			else
+				for (Text text : textList) {	
+					RuleStack divRuleStack = ruleStack.clone();
+					if (!divRuleStack.isNextHopAWell(text)) {
+						if (!text.isAnd() && !ruleStack.isAnd())
+							divRuleStack.add(text);
+						newRuleStacks.add(divRuleStack);
+						System.out.println("next State + add");
+					}	
+				}
 		}
 		this.removeAll(toBeRemoved);
 		
