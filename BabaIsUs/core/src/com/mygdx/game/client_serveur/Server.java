@@ -63,7 +63,7 @@ public class Server{
 	             try {
 	            	 while(true) {
 	            		 in.read(b);
-	            		 callBackFunction.ServerCallBack(b[0]);
+	            		 callBackFunction.dataReceived(b[0]);
 	            	 }
 	             } catch (IOException e) {
 	                  e.printStackTrace();

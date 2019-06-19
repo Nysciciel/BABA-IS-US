@@ -17,7 +17,7 @@ public class Client {
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
 	
-	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack) {
+	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack, String ip_addr) {
 		
 		final Socket clientSocket;
 		final InputStream in;
@@ -27,7 +27,7 @@ public class Client {
 	    callBackFunction = callBack;
 	    
 	    try {
-	         clientSocket = new Socket(InetAddress.getLocalHost(),5000);
+	         clientSocket = new Socket(ip_addr,5000);
 	   
 	         out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
@@ -59,7 +59,7 @@ public class Client {
 		             try {
 		            	 while(true) {
 		            		 in.read(b);
-		            		 callBackFunction.ServerCallBack(b[0]);
+		            		 callBackFunction.dataReceived(b[0]);
 		            	 }
 		             } catch (IOException e) {
 		                  e.printStackTrace();
