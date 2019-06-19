@@ -9,7 +9,7 @@ import com.mygdx.game.utils.Constants;
 
 
 public abstract class Item {
-
+	protected float animationChrono=0;
 	protected Texture texture;
 
 	public boolean isPush() {
@@ -95,7 +95,7 @@ public abstract class Item {
 
 	public void goforward() {
 
-
+		animationChrono = 0;
 		loc.del(this);
 
 		if (loc.next((orientation+2)%4)!=null) {
@@ -132,7 +132,7 @@ public abstract class Item {
 
 		//same as go forward except it doesn't pull the one behind
 		//useful for when a push&pull chain is getting pushed
-
+		animationChrono = 0;
 		loc.del(this);
 
 		switch(orientation) {

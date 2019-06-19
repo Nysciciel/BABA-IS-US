@@ -26,6 +26,7 @@ public class Baba extends Item{
 	}
 
 	public void render(SpriteBatch sb){
+		animationChrono +=Gdx.graphics.getDeltaTime();
 		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheetU.txt"));
 		TextureRegion[] orientedBaba = new TextureRegion[2];
 		orientedBaba[0] = textureAtlas.findRegion("Fox"+orientation+"-0");
@@ -36,7 +37,25 @@ public class Baba extends Item{
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,x*size,y*size,size,size);
+		if(animationChrono<0.2){
+			System.out.println(animationChrono);
+			switch(orientation){
+				case(0):
+					sb.draw(test, (x+1-animationChrono*5) * size, y * size, size, size);
+					break;
+				case(1):
+					sb.draw(test, x * size, (y-1+animationChrono*5) * size, size, size);
+					break;
+				case(2):
+					sb.draw(test, (x-1+animationChrono*5) * size, y * size, size, size);
+					break;
+				case(3):
+					sb.draw(test, x * size, (y+1-animationChrono*5) * size, size, size);
+					break;
+			}
+		}else {
+			sb.draw(test, x * size, y * size, size, size);
+		}
 	}
 
 	public void dispose(){
