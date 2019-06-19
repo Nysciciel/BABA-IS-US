@@ -41,18 +41,38 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
 			lvl.endturn();
+			try {
+				data.put(2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou(1);
 			lvl.endturn();
+			try {
+				data.put(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou(0);
 			lvl.endturn();
+			try {
+				data.put(0);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou(3);
 			lvl.endturn();
+			try {
+				data.put(3);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER )) {
 			lvl.endturn();
