@@ -21,6 +21,14 @@ public class Location {
 		this.y = y;
 	}
 
+	public int getLevelHeigh(){
+		return(locationMatrix.length);
+	}
+
+	public int getLevelWidth(){
+		return(locationMatrix[0].length);
+	}
+
 	public Location next(int direction) {
 		try {
 			switch(direction) {
