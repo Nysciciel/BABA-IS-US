@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 
@@ -159,7 +160,7 @@ public class Location {
 	}
 
 
-	public void draw(SpriteBatch sb) {
+	public void draw(Batch sb) {
 		for(Item i:items) {
 			i.draw(sb);
 		}

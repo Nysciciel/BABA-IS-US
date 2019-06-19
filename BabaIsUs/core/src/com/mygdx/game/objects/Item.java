@@ -1,4 +1,5 @@
 package com.mygdx.game.objects;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.*;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
@@ -146,7 +147,7 @@ public abstract class Item {
 		return false;
 	}
 
-	public void draw(SpriteBatch sb) {
+	public void draw(Batch sb) {
 		sb.draw(texture, x*32, y*32);
 	}
 

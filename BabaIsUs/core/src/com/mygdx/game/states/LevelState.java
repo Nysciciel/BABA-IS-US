@@ -115,7 +115,7 @@ public class LevelState extends GameState implements ServerCallBack{
 	}
 
 <<<<<<< HEAD
-}*/
+}
 
 	@Override
 	public void dataReceived(int data) {
@@ -123,5 +123,5 @@ public class LevelState extends GameState implements ServerCallBack{
 		System.out.println(data);
 	}
 
-}
+}*/
 

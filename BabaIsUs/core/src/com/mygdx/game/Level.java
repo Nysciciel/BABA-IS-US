@@ -3,11 +3,9 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
-<<<<<<< HEAD
+
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-=======
->>>>>>> 36aa44934f51c5751e865c8507c038cdc03026f0
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
@@ -16,12 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import java.io.File;
 
 public class Level {
-<<<<<<< HEAD
 
-	private ArrayList<Item>[][] items;
-=======
 	private Location[][] locationMatrix;
->>>>>>> 36aa44934f51c5751e865c8507c038cdc03026f0
 	private int height;
 	private int length;
 	private HashSet<Rule> rules;
@@ -90,8 +84,7 @@ public class Level {
 
 
 	}
-
-<<<<<<< HEAD
+	/*
 	public Level(int hauteur, int largeur) {
 		this.height = hauteur;
 		this.length = largeur;
@@ -104,10 +97,8 @@ public class Level {
 				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
 			}
 		}
-	}
-	
-=======
->>>>>>> 36aa44934f51c5751e865c8507c038cdc03026f0
+	}*/
+
 	public void readRules() {
 
 		ArrayList<RuleStack> currentRules; 
@@ -200,22 +191,12 @@ public class Level {
 			}
 		}
 	}
-<<<<<<< HEAD
-	
-	public void draw(Batch sb) {
-		for (int index1 = 0; index1<length;index1++) {
-			for (int index2 = 0; index2<height;index2++) {
-				for (int index3 = 0; index3<items[index2][index1].size();index3++) {
-					Item item = items[index2][index1].get(index3);
-					sb.draw(item.getTexture(), item.getPosition().x*32, item.getPosition().y*32);
-				}
-=======
 
-	public void draw(SpriteBatch sb) {
+
+	public void draw(Batch sb) {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].draw(sb);
->>>>>>> 36aa44934f51c5751e865c8507c038cdc03026f0
 			}
 		}
 	}

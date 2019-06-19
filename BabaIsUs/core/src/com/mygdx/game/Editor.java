@@ -14,7 +14,7 @@ public class Editor extends Level {
         super(filename);
     }
 
-    public Editor(int hauteur, int largeur){
+  /* public Editor(int hauteur, int largeur){
         super(hauteur,largeur);
-    }
+    }*/
 }
