@@ -45,16 +45,23 @@ public abstract class Item {
 	public boolean isFloat() {
 		return false;
 	}
-
+	public boolean isShift() {
+		return false;
+	}
+	public boolean isShut() {
+		return false;
+	}
+	public boolean isOpen() {
+		return false;
+	}
 
 	protected int x;
 	protected int y;
 	protected int orientation;
 	protected Location loc;
 
-	protected boolean hasmoved = false;
-
-
+	protected boolean hasMoved = false;
+	protected boolean hasShifted = false;
 
 	public Item(Location loc,
 			int x, int y, int orientation) {
@@ -155,6 +162,7 @@ public abstract class Item {
 	public boolean isText() {
 		return false;
 	}
+	
 	public void render(SpriteBatch sb){
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
@@ -166,16 +174,25 @@ public abstract class Item {
 		orientation = direction;
 	}
 
-	public boolean hasmoved() {
-		return hasmoved;
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	public void reset() {
-		hasmoved = false;
+		hasMoved = false;
+		hasShifted = false;
 	}
 
 	public void moved() {
-		hasmoved = true;
+		hasMoved = true;
+	}
+	
+	public boolean hasShifted() {
+		return hasShifted;
+	}
+
+	public void shifted() {
+		hasShifted = true;
 	}
 
 	public Item copy() {
