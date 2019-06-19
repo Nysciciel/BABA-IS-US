@@ -1,14 +1,19 @@
 package com.mygdx.game;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
+import com.badlogic.gdx.scenes.scene2d.*;
 
 import java.io.File;
 
 public class Level {
+
 	private ArrayList<Item>[][] items;
 	private int height;
 	private int length;
@@ -66,6 +71,20 @@ public class Level {
 		}
 
 
+	}
+
+	public Level(int hauteur, int largeur) {
+		this.height = hauteur;
+		this.length = largeur;
+
+		items = new ArrayList[height][length];
+
+		for (int index1 = 0; index1 < height; index1++) {
+			for (int index2 = 0; index2 < length; index2++) {
+				items[height - 1 - index1][index2] = new ArrayList<Item>();
+				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
+			}
+		}
 	}
 	
 	public void readRules() {
@@ -167,7 +186,7 @@ public class Level {
 		}
 	}
 	
-	public void draw(SpriteBatch sb) {
+	public void draw(Batch sb) {
 		for (int index1 = 0; index1<length;index1++) {
 			for (int index2 = 0; index2<height;index2++) {
 				for (int index3 = 0; index3<items[index2][index1].size();index3++) {

@@ -1,4 +1,4 @@
-package com.mygdx.game.states;
+/*package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,11 +13,11 @@ public class LevelState extends GameState{
 
 	protected LevelState(GameStateManager gms) {
 		super(gms);
-		
+
 		this.lvl = new Level("level.txt");
 	}
 
-	@Override
+	//@Override
 	protected void handleInput() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
@@ -35,15 +35,18 @@ public class LevelState extends GameState{
 			lvl.moveYou(3);
 			lvl.reset();
 		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+			this.gsm.set(new MainMenu(gsm));
+		}
 	}
 
-	@Override
+	//@Override
 	public void update(float dt) {
 		this.handleInput();
 		lvl.update();
 	}
 
-	@Override
+	//@Override
 	public void render(SpriteBatch sb) {
 	
 		
@@ -57,11 +60,9 @@ public class LevelState extends GameState{
 		sb.end();
 	}
 
-	@Override
+	//@Override
 	public void dispose() {
-		
-		
 		lvl.dispose();
 	}
 
-}
+}*/

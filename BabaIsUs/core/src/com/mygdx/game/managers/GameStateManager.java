@@ -1,4 +1,4 @@
-package com.mygdx.game.managers;
+/*package com.mygdx.game.managers;
 
 import java.util.Stack;
 
@@ -28,4 +28,4 @@ public class GameStateManager {
 	public void render(SpriteBatch sb) {
 		this.gameStates.peek().render(sb);
 	}
-}
+}*/
