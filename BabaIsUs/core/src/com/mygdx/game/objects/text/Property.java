@@ -13,7 +13,5 @@ public abstract class Property extends Text {
 	public boolean isProperty() {
 		return true;
 	}
-
-
 }
 

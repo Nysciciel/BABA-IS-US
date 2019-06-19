@@ -1,7 +1,7 @@
 package com.mygdx.game.objects.text;
 
 import com.mygdx.game.Level;
-import com.mygdx.game.Location;
+ import com.mygdx.game.Location;
 
 public abstract class Relation extends Text {
 
@@ -13,6 +13,5 @@ public abstract class Relation extends Text {
 	public boolean isRelation() {
 		return true;
 	}
-
 }
 
