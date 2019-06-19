@@ -21,6 +21,10 @@ public class Location {
 		this.y = y;
 	}
 
+	public ArrayList<Item> getItems(){
+		return(items);
+	}
+
 	public int getLevelHeigh(){
 		return(lvl.getLocationMatrix().length);
 	}

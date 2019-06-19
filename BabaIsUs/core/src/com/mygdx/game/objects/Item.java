@@ -188,4 +188,18 @@ public abstract class Item {
 		this.loc = loc;
 	}
 
+	boolean isNeighbourEqual(int orientation){
+		Location NeigLoc = loc.next(orientation);
+		if(NeigLoc == null){
+			return(true);
+		}else{
+			for (Item i : NeigLoc.getItems()) {
+				if (i.getClass().getSimpleName().equals(this.getClass().getSimpleName())) {
+					return (true);
+				}
+			}
+		}
+		return(false);
+	}
+
 }

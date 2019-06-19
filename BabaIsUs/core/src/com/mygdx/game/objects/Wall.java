@@ -20,13 +20,22 @@ public class Wall extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public boolean isStop() {
+	public boolean isPush() {
 		return true;
 	}
 
 	public void render(SpriteBatch sb){
-		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheet" + Integer.toString(orientation)+ ".txt"));
-		animation = new Animation(1/3f, textureAtlas.getRegions());
+		String s = "";
+		for(int i=0;i<=3;i++){
+			if(isNeighbourEqual(i)){
+				s += i;
+			}
+		}
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
+		TextureRegion[] orientedWall = new TextureRegion[2];
+		orientedWall[0]=textureAtlas.findRegion("Wall-" + s + "-0");
+		orientedWall[1]=textureAtlas.findRegion("Wall-" + s + "-1");
+		animation = new Animation(1/3f, orientedWall);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
