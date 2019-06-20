@@ -177,7 +177,7 @@ public class Level {
 
 		if (found != null) {
 			for(Location i:found) {
-				ArrayList<Item> res = i.move(direction);
+				ArrayList<Item> res = i.move1(direction);
 				if (res!=null) {
 					for(Item j:res) {
 						j.goforward();
@@ -201,7 +201,7 @@ public class Level {
 
 		if (found != null) {
 			for(Location i:found) {
-				ArrayList<Item> res = i.move(direction);
+				ArrayList<Item> res = i.move2(direction);
 				if (res!=null) {
 					for(Item j:res) {
 						j.goforward();
