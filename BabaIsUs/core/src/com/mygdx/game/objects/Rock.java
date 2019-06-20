@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Rock extends Item {
 	private TextureAtlas textureAtlas;
@@ -28,11 +29,11 @@ public class Rock extends Item {
 		return true;
 	}
 	@Override
-	public boolean isYou() {
+	public boolean isYou2() {
 		return false;
 	}
 
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
 		TextureRegion[] orientedWall = new TextureRegion[2];
 		orientedWall[0]=textureAtlas.findRegion("Rock0");

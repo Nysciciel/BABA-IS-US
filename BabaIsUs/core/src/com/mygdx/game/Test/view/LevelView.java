@@ -49,20 +49,20 @@ public class LevelView implements Screen,ServerCallBack {
             lvl.rollback();
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            lvl.moveYou(2);
+            lvl.moveYou1(2);
             lvl.endturn();
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            lvl.moveYou(1);
+            lvl.moveYou1(1);
             lvl.endturn();
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            lvl.moveYou(0);
+            lvl.moveYou1(0);
             lvl.endturn();
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            lvl.moveYou(3);
+            lvl.moveYou1(3);
             lvl.endturn();
 
         }

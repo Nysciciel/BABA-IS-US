@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public abstract class Item {
@@ -16,7 +17,10 @@ public abstract class Item {
 	public boolean isPush() {
 		return false;
 	}
-	public boolean isYou() {
+	public boolean isYou1() {
+		return false;
+	}
+	public boolean isYou2() {
 		return false;
 	}
 	public boolean isWin() {
@@ -169,11 +173,6 @@ public abstract class Item {
 		return false;
 	}
 
-/*
-	public void draw(Batch sb) {
-		sb.draw(texture, x * 32, y * 32);
-	}*/
-	
 	public void render(Batch sb){
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
@@ -181,7 +180,7 @@ public abstract class Item {
 		sb.draw(texture,x*size,y*size,size,size);
 
 	}
-	
+
 	public void orient(int direction) {
 		orientation = direction;
 	}
@@ -198,7 +197,7 @@ public abstract class Item {
 	public void moved() {
 		hasMoved = true;
 	}
-	
+
 	public boolean hasShifted() {
 		return hasShifted;
 	}
@@ -215,7 +214,7 @@ public abstract class Item {
 			return null;
 		}
 	}
-	
+
 	public void setLocation(Location loc) {
 		this.loc = loc;
 	}
@@ -232,5 +231,20 @@ public abstract class Item {
 			}
 		}
 		return(false);
+	}
+
+	public boolean isOn(Class item) {
+		return loc.isOn(item);
+	}
+
+	public boolean isNear(Class item) {
+		return loc.isNear(item);
+	}
+
+	public boolean isFacing(Class item) {
+		if (loc.next(orientation) != null) {
+			return loc.next(orientation).isOn(item);
+		}
+		return false;
 	}
 }

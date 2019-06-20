@@ -21,11 +21,13 @@ public class ClientView implements Screen,ServerCallBack {
     private Client client;
     private Server server;
     private BlockingQueue<Integer> data;
+    private int movePoto;
 
 
 
     public ClientView(MainTest mainTest, String ip_addr) {
 
+    	this.movePoto = -1;
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
 
@@ -50,7 +52,7 @@ public class ClientView implements Screen,ServerCallBack {
             lvl.rollback();
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            lvl.moveYou(2);
+            lvl.moveYou2(2);
             lvl.endturn();
 
             try {
@@ -61,7 +63,7 @@ public class ClientView implements Screen,ServerCallBack {
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            lvl.moveYou(1);
+            lvl.moveYou2(1);
             lvl.endturn();
 
             try {
@@ -73,7 +75,7 @@ public class ClientView implements Screen,ServerCallBack {
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            lvl.moveYou(0);
+            lvl.moveYou2(0);
             lvl.endturn();
 
             try {
@@ -84,7 +86,7 @@ public class ClientView implements Screen,ServerCallBack {
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            lvl.moveYou(3);
+            lvl.moveYou2(3);
             lvl.endturn();
 
             try {
@@ -97,6 +99,11 @@ public class ClientView implements Screen,ServerCallBack {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
         }
+        if(movePoto != -1) {
+            lvl.moveYou1(movePoto);
+            movePoto = -1;
+            lvl.endturn();
+    }
         lvl.update();
     }
 
@@ -142,6 +149,6 @@ public class ClientView implements Screen,ServerCallBack {
 
     @Override
     public void dataReceived(int data) {
-        System.out.println(data);
+        movePoto = data;
     }
 }
