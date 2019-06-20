@@ -26,7 +26,7 @@ public class Logic extends LogicHashtable {
 		facing = facing2;
 		onNot = onNot2;
 		nearNot = nearNot2;
-		facing = facing2;.		
+		facing = facing2;		
 	}
 
 	public boolean getTruth(Location loc) {
@@ -35,19 +35,19 @@ public class Logic extends LogicHashtable {
 		return value;
 	}
 	
-	public boolean onTruth() {
+	public boolean onTruth(Location loc) {
 			
 		// TODO
-		return true;
+		return;
 	}
 	
-	public boolean nearTruth() {
+	public boolean nearTruth(Location loc) {
 		
 		// TODO
 		return true;
 	}
 	
-	public boolean facingTruth() {
+	public boolean facingTruth(Location loc) {
 		
 		// TODO
 		return true;
