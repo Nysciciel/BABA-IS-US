@@ -231,17 +231,17 @@ public abstract class Item {
 		return this.getClass().getSimpleName();
 	}
 
-	public boolean isOn(Class item) {
-		return loc.isOn(item);
+	public boolean isOnLocation(Class item) {
+		return loc.isOnLocation(item);
 	}
 
-	public boolean isNear(Class item) {
-		return loc.isNear(item);
+	public boolean isNearLocation(Class item) {
+		return loc.isNearLocation(item);
 	}
 
-	public boolean isFacing(Class item) {
+	public boolean isFacingLocation(Class item) {
 		if (loc.next(orientation) != null) {
-			return loc.next(orientation).isOn(item);
+			return loc.next(orientation).isOnLocation(item);
 		}
 		return false;
 	}

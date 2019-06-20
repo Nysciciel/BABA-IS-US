@@ -29,27 +29,62 @@ public class Logic extends LogicHashtable {
 		facing = facing2;		
 	}
 
-	public boolean getTruth(Location loc) {
-		
-		// TODO
-		return value;
+	public boolean getTruth(Item item) {
+		return value && onTruth(item) && nearTruth(item) && facingTruth(item);
 	}
 	
-	public boolean onTruth(Location loc) {
+	public boolean onTruth(Item item) {
 			
-		// TODO
+		boolean b = true;
+		
+		for (Class c : on) {
+			b &= item.isOnLocation(c);
+			if (!b)
+				return false;
+		}
+		for (Class c : onNot) {
+			b &= !item.isOnLocation(c);
+			if (!b)
+				return false;
+		}
+		
 		return true;
 	}
 	
-	public boolean nearTruth(Location loc) {
+	public boolean nearTruth(Item item) {
 		
-		// TODO
+		boolean b = true;
+		
+		for (Class c : near) {
+			b &= item.isOnLocation(c);
+			if (!b)
+				return false;
+		}
+		for (Class c : nearNot) {
+			b &= !item.isOnLocation(c);
+			if (!b)
+				return false;
+		}
+		
 		return true;
 	}
 	
-	public boolean facingTruth(Location loc) {
+	public boolean facingTruth(Item item) {
 		
-		// TODO
+
+		boolean b = true;
+		
+		for (Class c : near) {
+			b &= item.isFacingLocation(c);
+			if (!b)
+				return false;
+		}
+		for (Class c : nearNot) {
+			b &= !item.isFacingLocation(c);
+			if (!b)
+				return false;
+		}
+		
 		return true;
 	}
 
