@@ -98,7 +98,7 @@ public class Level {
 
 	public void readRules() {
 		
-		// TODO : reinitialize the rules (RuleSet) before !
+		rules = new RuleSet();
 		
 		RuleStackList currentRules; 
 		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
