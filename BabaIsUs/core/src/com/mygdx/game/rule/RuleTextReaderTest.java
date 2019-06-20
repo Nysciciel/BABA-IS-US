@@ -12,13 +12,13 @@ import com.mygdx.game.objects.text.*;
 
 public class RuleTextReaderTest {
 	
-	private HashSet<Rule> rules;
+	private RuleSet rules;
 	private ArrayList<ArrayList<Text>> textLigne;
 
 	
 	public RuleTextReaderTest() {
 		
-		rules = new HashSet<Rule>();
+		rules = new RuleSet();
 		
 		textLigne = new ArrayList<ArrayList<Text>>();
 		
@@ -76,17 +76,10 @@ public class RuleTextReaderTest {
 		textLigne.add(dgfgl3);
 		
 		
-		
-		
 		ArrayList<Text> dgfgl4 = new ArrayList<Text>();
 		dgfgl4.add(new And(null, 0, 0, 0));
 		textLigne.add(dgfgl4);
-		
-		
-		
-		
-		
-		
+			
 		
 		ArrayList<Text> dgfgl57 = new ArrayList<Text>();
 		dgfgl57.add(new You(null, 0, 0, 0));
@@ -100,7 +93,6 @@ public class RuleTextReaderTest {
 	}
 	
 	public void readRules() {
-		
 			
 			System.out.println("readRules");
 			
@@ -135,9 +127,7 @@ public class RuleTextReaderTest {
 				System.out.println(currentRules.toString());
 				//System.out.print("Current States : ");
 				//currentRules.currentStates();
-				System.out.println();
-				
-				
+				System.out.println();				
 			}
 	}
 	

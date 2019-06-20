@@ -12,7 +12,6 @@ public class Not extends Operator {
 
 	public Not(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

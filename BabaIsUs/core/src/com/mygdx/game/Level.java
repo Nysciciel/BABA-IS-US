@@ -1,11 +1,15 @@
 package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Scanner;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.rule.Logic;
+import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.Rule;
+import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.rule.RuleStack;
 import com.mygdx.game.rule.RuleStackList;
 
@@ -15,13 +19,18 @@ public class Level {
 	private Location[][] locationMatrix;
 	private int height;
 	private int length;
-	private HashSet<Rule> rules;
+	private RuleSet rules;
+	private LogicHashtable ruleTable;
+	private ArrayList<Class> props;
 
 	private ArrayList<Location[][]> history;
 
 	public Level(String filename) {
-
-
+		
+		props = new ArrayList<Class>();
+		
+		props.add(Baba.class);props.add(Empty.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);
+		
 		try {
 			Scanner scanner = new Scanner(new File(filename));
 			ArrayList <String> lines = new ArrayList <String>();
@@ -83,6 +92,8 @@ public class Level {
 
 	public void readRules() {
 		
+		// TODO : reinitialize the rules (RuleSet) before !
+		
 		RuleStackList currentRules; 
 		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
 		boolean thereIsANot = false;
@@ -107,6 +118,12 @@ public class Level {
 				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
 		}
+	}
+	
+	public void makeRuleTable() {
+		
+		ruleTable = new LogicHashtable(rules, props);
+		// TODO
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){

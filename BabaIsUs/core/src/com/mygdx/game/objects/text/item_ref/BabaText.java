@@ -20,5 +20,4 @@ public class BabaText extends ItemRef {
 		int size = Math.min(h_ratio,w_ratio);
 		sb.draw(texture,x*size,y*size,size,size);
 	}
-
 }

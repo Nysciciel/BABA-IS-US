@@ -7,9 +7,9 @@ import com.mygdx.game.objects.text.Text;
 
 public class RuleStackList extends ArrayList<RuleStack> {
 
-	private HashSet<Rule> rules;
+	private RuleSet rules;
 
-	public RuleStackList(HashSet<Rule> rules) {
+	public RuleStackList(RuleSet rules) {
 		super();
 		this.rules = rules;
 	}
@@ -27,7 +27,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			for (RuleStack ruleStack : this) {	
 				if (ruleStack.isFinal()) {
 					System.out.println("And + final");
-					rules.add(new Rule(ruleStack));
+					rules.add(new Rule(ruleStack, rules));
 					while(!ruleStack.isRelation()) {
 						ruleStack.pop(); //pop and go back to the previous state
 						System.out.print("pop : ");
@@ -41,7 +41,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			for (RuleStack ruleStack : this) {
 				if (ruleStack.isFinal()) {
 					System.out.println("just final");
-					rules.add(new Rule(ruleStack));
+					rules.add(new Rule(ruleStack, rules));
 					toBeRemoved.add(ruleStack);
 				}
 			}
