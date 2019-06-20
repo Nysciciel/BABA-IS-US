@@ -17,7 +17,7 @@ public abstract class Item {
 	protected Texture texture;
 	protected LogicHashtable ruleTable;
 
-	public boolean isPush() {
+	private boolean propertyAssert(String key) {
 		try {
 			Logic affirm = (Logic) ruleTable.get("Push").get(getCategory());
 			Logic restrict = (Logic) ruleTable.get("Push").get("Not").get(getCategory());
@@ -27,44 +27,55 @@ public abstract class Item {
 			return false;
 		}
 	}
+
+	public boolean isPush() {
+		return propertyAssert("Push");
+	}
 	public boolean isYou() {
-		return false;
+		return propertyAssert("You");
 	}
 	public boolean isWin() {
-		return false;
+		return propertyAssert("Win");
 	}
 	public boolean isStop() {
-		return false;
+		return propertyAssert("Stop");
 	}
 	public boolean isPull() {
-		return false;
+		return propertyAssert("Pull");
 	}
 	public boolean isSink() {
-		return false;
+		return propertyAssert("Sink");
 	}
 	public boolean isDefeat() {
-		return false;
+		return propertyAssert("Defeat");
 	}
 	public boolean isMove() {
-		return false;
+		return propertyAssert("Move");
 	}
 	public boolean isHot() {
-		return false;
+		return propertyAssert("Hot");
 	}
 	public boolean isMelt() {
-		return false;
+		return propertyAssert("Melt");
 	}
 	public boolean isFloat() {
-		return false;
+		return propertyAssert("Float");
 	}
 	public boolean isShift() {
-		return false;
+		return propertyAssert("Shift");
 	}
 	public boolean isShut() {
-		return false;
+		return propertyAssert("Shut");
 	}
 	public boolean isOpen() {
-		return false;
+		return propertyAssert("Open");
+	}
+	
+	private ArrayList<Class> hasToTranformTo(){
+		
+		
+		
+		return null;		
 	}
 
 	protected int x;
@@ -239,11 +250,11 @@ public abstract class Item {
 		}
 		return(false);
 	}
-	
+
 	public String getName() {
 		return this.getClass().getSimpleName();
 	}
-	
+
 	public String getCategory() {
 		return getName();
 	}
