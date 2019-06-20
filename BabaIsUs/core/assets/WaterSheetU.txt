@@ -1,5 +1,5 @@
 WaterSheetU.png
-size: 1024, 32
+size: 1088, 32
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -73,14 +73,14 @@ Water-02-0
   orig: 32, 32
   offset: 0, 0
   index: -1
-Water-2-1
+Water-02-1
   rotate: false
   xy: 320, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Water-02-1
+Water-2-1
   rotate: false
   xy: 352, 0
   size: 32, 32
@@ -103,14 +103,14 @@ Water-3-0
   index: -1
 Water-3-1
   rotate: false
-  xy: 480, 0
+  xy: 448, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Water-03-1
   rotate: false
-  xy: 448, 0
+  xy: 480, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -131,26 +131,26 @@ Water-12-0
   index: -1
 Water-12-1
   rotate: false
-  xy: 576, 0
+  xy: 608, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Water-012-1
   rotate: false
-  xy: 608, 0
+  xy: 576, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Water-13-0
+Water-013-0
   rotate: false
   xy: 672, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Water-013-0
+Water-13-0
   rotate: false
   xy: 640, 0
   size: 32, 32
@@ -187,28 +187,35 @@ Water-23-0
   index: -1
 Water-023-1
   rotate: false
-  xy: 864, 0
+  xy: 832, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Water-23-1
   rotate: false
-  xy: 832, 0
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-Water-123-0
-  rotate: false
-  xy: 928, 0
+  xy: 864, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 Water-0123-0
   rotate: false
+  xy: 928, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Water-123-0
+  rotate: false
   xy: 896, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Water-0123-1
+  rotate: false
+  xy: 992, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -220,9 +227,16 @@ Water-123-1
   orig: 32, 32
   offset: 0, 0
   index: -1
-Water-0123-1
+WaterFish-0
   rotate: false
-  xy: 992, 0
+  xy: 1024, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+WaterFish-1
+  rotate: false
+  xy: 1056, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

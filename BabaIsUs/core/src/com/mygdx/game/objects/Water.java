@@ -10,41 +10,47 @@ import com.mygdx.game.*;
 import com.mygdx.game.utils.Constants;
 
 public class Water extends Item {
-	private TextureAtlas textureAtlas;
-	private Animation animation;
-	private float elapsedTime = 0;
+	private float fishTime = 2;
 
 	public Water(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
+		textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName() + "SheetU.txt"));
 	}
 	@Override
 	public boolean isPush() {
 		return true;
 	}
 
-	public void render(SpriteBatch sb){
+	public String[] getSpriteUsed(){
 		String s = "";
 		for(int i=0;i<=3;i++){
 			if(isNeighbourEqual(i)){
 				s += i;
 			}
 		}
-		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
-		TextureRegion[] orientedWall = new TextureRegion[2];
-		orientedWall[0]=textureAtlas.findRegion("Water-" + s + "-0");
-		orientedWall[1]=textureAtlas.findRegion("Water-" + s + "-1");
-		animation = new Animation(1/3f, orientedWall);
-		elapsedTime += Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,x*size,y*size,size,size);
+		double fishRand = Math.random();
+		if(fishRand<0.005 && fishTime>1){
+			fishTime = 0;
+		}
+		if(s.equals("0123") && fishTime<0.6) {
+			fishTime += Gdx.graphics.getDeltaTime();
+			String[] spriteUsed = new String[2];
+			spriteUsed[0]="WaterFish-0";
+			spriteUsed[1]="WaterFish-1";
+			return(spriteUsed);
+		}else {
+			fishTime += Gdx.graphics.getDeltaTime();
+			String[] spriteUsed = new String[2];
+			spriteUsed[0]="Water-" + s + "-0";
+			spriteUsed[1]="Water-" + s + "-1";
+			return(spriteUsed);
+		}
 	}
 
-	public void dispose(){
-		textureAtlas.dispose();
-		texture.dispose();
+	public float[] getAffichePos(){
+		float[] tab = {x,y};
+		return(tab);
 	}
+
 }

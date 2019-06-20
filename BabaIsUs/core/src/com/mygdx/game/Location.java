@@ -156,12 +156,6 @@ public class Location {
 		return null;
 	}
 
-	public void update() {
-		for(Item i:items) {
-			i.update();
-		}
-	}
-
 	public void dispose() {
 		for(Item i:items) {
 			i.dispose();

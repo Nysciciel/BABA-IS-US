@@ -96,7 +96,6 @@ public class LevelState extends GameState implements ServerCallBack{
 	@Override
 	public void update(float dt) {
 		this.handleInput();
-		lvl.update();
 	}
 
 	@Override
