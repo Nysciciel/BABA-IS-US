@@ -19,6 +19,7 @@ public class Rock extends Item {
 	public Rock(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
+		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
 	}
 	@Override
 	public boolean isPull() {
@@ -33,23 +34,21 @@ public class Rock extends Item {
 		return true;
 	}
 
-	public void render(Batch sb){
-		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
-		TextureRegion[] orientedWall = new TextureRegion[2];
-		orientedWall[0]=textureAtlas.findRegion("Rock0");
-		orientedWall[1]=textureAtlas.findRegion("Rock1");
-		animation = new Animation(1/3f, orientedWall);
-		elapsedTime += Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,x*size,y*size,size,size);
+	@Override
+	public boolean isYou() {
+		return false;
 	}
 
-	public void dispose(){
-		textureAtlas.dispose();
-		texture.dispose();
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Rock0";
+		spriteUsed[1]="Rock1";
+		return(spriteUsed);
+	}
+
+	public float[] getAffichePos(){
+		float[] tab = {x,y};
+		return(tab);
 	}
 
 }
