@@ -23,10 +23,12 @@ public class Baba extends Item{
 	private Animation animation;
 	private float elapsedTime = 0;
 	
+	/*
 	@Override
 	public boolean isYou() {
 		return true;
 	}
+	*/
 
 	public void render(SpriteBatch sb){
 		animationChrono +=Gdx.graphics.getDeltaTime();

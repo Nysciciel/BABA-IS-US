@@ -79,7 +79,7 @@ public abstract class Item {
 			return transform;
 		
 		for (Class c : ruleTable.getProps()) {
-			// TODO :  getSimpleName wrong for Text objects
+			// TODO :  getSimpleName wrong for Text objects ?
 			// TODO : verify order !!!!!!!!
 			if (((Logic)(ruleTable.get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
 					&& !((Logic)(ruleTable.get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))

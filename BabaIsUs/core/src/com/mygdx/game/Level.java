@@ -6,6 +6,9 @@ import java.util.Scanner;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.property.You;
+import com.mygdx.game.objects.text.relation.Is;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.Rule;
@@ -46,6 +49,8 @@ public class Level {
 			height = lines.size();
 			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
+			System.out.println(length);
+			System.out.println(height);
 
 			
 			locationMatrix = new Location[height][length];
@@ -81,7 +86,9 @@ public class Level {
 			}
 			
 			// Test de text
-			//locationMatrix[0][0].add(new Baba());
+			locationMatrix[0][0].add(new BabaText(locationMatrix[0][0], getRuleTable(), 0, height-1,0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][0], getRuleTable(), 0, height-2,0));
+			locationMatrix[2][0].add(new You(locationMatrix[2][0], getRuleTable(), 0, height-3,0));
 
 			history.add(this.matrixCopy());
 
@@ -101,14 +108,23 @@ public class Level {
 		rules = new RuleSet();
 		
 		RuleStackList currentRules; 
-		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
-		boolean thereIsANot = false;
+		boolean thereIsAnOnOrNearOrFacingOrAnd;
+		boolean thereIsANot;
 
 		// lecture par ligne
-		for (int y = 0; y<height; y++) {
+		for (int y = height-1; y>0; y--) {
+			
+			thereIsAnOnOrNearOrFacingOrAnd = false;
+			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				
+							
+				for (Text text : textList) {
+					text.show();
+					System.out.println("  "+x+"  "+y+"  ");
+				}
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();				
@@ -117,9 +133,16 @@ public class Level {
 		}
 		//lecture par colonne
 		for (int x = 0; x<length; x++) {
+			thereIsAnOnOrNearOrFacingOrAnd = false;
+			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
-			for (int y = 0; y<height; y++) {
+			for (int y = height-1; y>0; y--) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				
+				for (Text text : textList) {
+					text.show();
+					System.out.println("  "+x+"  "+y+"  ");
+				}
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();
@@ -130,9 +153,12 @@ public class Level {
 	
 
 	public void interpretRules() {
-		
-		 ruleTable = new LogicHashtable(rules, props);
-		
+
+		System.out.println("################################## __Construction__    ################################################");
+		ruleTable = new LogicHashtable(rules, props);
+		System.out.println("##################################  __RuleTable__    ################################################");
+		System.out.println(ruleTable.toString());
+
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){

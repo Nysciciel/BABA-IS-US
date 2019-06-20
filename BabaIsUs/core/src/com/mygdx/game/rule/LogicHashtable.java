@@ -16,6 +16,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 		this.setProps(props);
 		
 		for (Rule rule : rules) {
+			
+			rule.show();
 									
 			int length = rule.getTextList().size();
 			ArrayList<ArrayList<String>> keys = new ArrayList<ArrayList<String>>();
