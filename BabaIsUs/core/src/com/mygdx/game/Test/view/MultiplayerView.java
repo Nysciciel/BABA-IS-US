@@ -12,8 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
 import javafx.stage.Popup;
+import com.mygdx.game.client_serveur.*;
 
-public class Multiplayer implements Screen {
+public class MultiplayerView implements Screen {
 
 
     private MainTest parent; // a field to store our orchestrator
@@ -21,7 +22,7 @@ public class Multiplayer implements Screen {
     private Texture background;
 
     // our constructor with a Box2DTutorial argument
-    public Multiplayer(MainTest mainTest) {
+    public MultiplayerView(MainTest mainTest) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
@@ -69,7 +70,7 @@ public class Multiplayer implements Screen {
         host.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-
+                parent.screenChoice(MainTest.SERVER);
             }
         });
 
@@ -87,6 +88,9 @@ public class Multiplayer implements Screen {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 String IP = address.getText();
                 System.out.println(IP);
+                MainTest.ip_addr = IP;
+                parent.screenChoice(MainTest.CLIENT);
+
                 // Popup test = new Popup(IP);
             }
         });

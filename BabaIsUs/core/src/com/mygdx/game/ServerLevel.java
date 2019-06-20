@@ -8,9 +8,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Editor extends Level {
+public class ServerLevel extends Level {
 
-    public Editor(String filename) {
+    public ServerLevel(String filename) {
         super(filename);
     }
 

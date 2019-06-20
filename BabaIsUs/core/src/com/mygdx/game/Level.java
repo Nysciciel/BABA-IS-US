@@ -90,7 +90,7 @@ public class Level {
 
 	}
 	/*
-	public Level(int hauteur, int largeur) {
+	public LevelView(int hauteur, int largeur) {
 		this.height = hauteur;
 		this.length = largeur;
 
@@ -204,7 +204,7 @@ public class Level {
 	}
 
 
-	public void render(SpriteBatch sb) {
+	public void render(Batch sb) {
 
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {

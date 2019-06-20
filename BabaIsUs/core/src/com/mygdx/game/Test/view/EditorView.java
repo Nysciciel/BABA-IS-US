@@ -8,14 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
 
-public class Editor implements Screen {
+public class EditorView implements Screen {
 
     private MainTest parent; // a field to store our orchestrator
     private Stage stage;
     private com.mygdx.game.Editor edt;
 
     // our constructor with a Box2DTutorial argument
-    public Editor(MainTest mainTest) {
+    public EditorView(MainTest mainTest) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
@@ -44,7 +44,7 @@ public class Editor implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        edt.draw(stage.getBatch());
+        edt.render(stage.getBatch());
         stage.getBatch().end();
         stage.draw();
     }

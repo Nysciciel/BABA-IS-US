@@ -174,7 +174,7 @@ public abstract class Item {
 		sb.draw(texture, x * 32, y * 32);
 	}*/
 	
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);

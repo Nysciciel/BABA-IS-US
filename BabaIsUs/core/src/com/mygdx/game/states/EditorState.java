@@ -14,8 +14,8 @@ import com.mygdx.game.utils.MyTextInputListener;
 
 public class EditorState extends GameState{
 
-    private Editor edt;
-    private Level lvl;
+    private EditorView edt;
+    private LevelView lvl;
 
 
     protected EditorState(GameStateManager gms) {
@@ -31,7 +31,7 @@ public class EditorState extends GameState{
                 result = text.split(",");
                 this.hauteur = Integer.parseInt(result[0]);
                 this.largeur = Integer.parseInt(result[1]);
-                edt = new Editor(hauteur,largeur);
+                edt = new EditorView(hauteur,largeur);
             }
 
             @Override
@@ -39,7 +39,7 @@ public class EditorState extends GameState{
 
             }
         }, "Dimension du niveau à éditer", "10,10", "");
-        this.edt = new Editor("level.txt");
+        this.edt = new EditorView("level.txt");
     }
 
 

@@ -14,7 +14,7 @@ import com.mygdx.game.client_serveur.*;
 
 public class LevelState extends GameState implements ServerCallBack{
 	
-	private Level lvl;
+	private LevelView lvl;
 	
 	
 	
@@ -34,7 +34,7 @@ public class LevelState extends GameState implements ServerCallBack{
 		//client = new Client(data,this,"192.168.43.114");
 
 
-		this.lvl = new Level("level.txt");
+		this.lvl = new LevelView("level.txt");
 		
 		
 		

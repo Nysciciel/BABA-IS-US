@@ -194,7 +194,7 @@ public class Location {
 	}
 
 
-	public void render(SpriteBatch sb) {
+	public void render(Batch sb) {
 		for(Item i:items) {
 			i.render(sb);
 		}
