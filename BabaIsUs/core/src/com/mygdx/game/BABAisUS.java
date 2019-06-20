@@ -1,4 +1,4 @@
-package com.mygdx.game;
+/*package com.mygdx.game;
 
 
 
@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.rule.RuleTextReaderTest;
 import com.mygdx.game.states.MainMenu;
+import com.mygdx.game.states.MainMenu2;
 
 public class BABAisUS extends ApplicationAdapter {
 	private GameStateManager gsm;
@@ -21,9 +22,14 @@ public class BABAisUS extends ApplicationAdapter {
 		this.gsm = new GameStateManager();
 		this.sb = new SpriteBatch();
 		
+
+		//this.gsm.push(new MainMenu2(gsm));
+	
+
 		this.gsm.push(new MainMenu(gsm));
 		
 		//RuleTextReaderTest test = new RuleTextReaderTest();
+
 	}
 
 	@Override
@@ -42,4 +48,4 @@ public class BABAisUS extends ApplicationAdapter {
 		this.sb.dispose();
 		gsm.dispose();
 	}
-}
+}*/

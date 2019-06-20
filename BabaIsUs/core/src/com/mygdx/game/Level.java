@@ -1,17 +1,26 @@
 package com.mygdx.game;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
+
+
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
+
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Rule;
 import com.mygdx.game.rule.RuleStack;
 import com.mygdx.game.rule.RuleStackList;
 
+
 import java.io.File;
 
 public class Level {
+
 	private Location[][] locationMatrix;
 	private int height;
 	private int length;
@@ -80,6 +89,20 @@ public class Level {
 		}
 
 	}
+	/*
+	public LevelView(int hauteur, int largeur) {
+		this.height = hauteur;
+		this.length = largeur;
+
+		items = new ArrayList[height][length];
+
+		for (int index1 = 0; index1 < height; index1++) {
+			for (int index2 = 0; index2 < length; index2++) {
+				items[height - 1 - index1][index2] = new ArrayList<Item>();
+				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
+			}
+		}
+	}*/
 
 	public void readRules() {
 		
@@ -180,7 +203,9 @@ public class Level {
 		}
 	}
 
-	public void render(SpriteBatch sb) {
+
+	public void render(Batch sb) {
+
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].render(sb);

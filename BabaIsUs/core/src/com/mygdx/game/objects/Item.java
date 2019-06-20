@@ -1,4 +1,5 @@
 package com.mygdx.game.objects;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.*;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
@@ -173,6 +174,7 @@ public abstract class Item {
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);
 		sb.draw(texture,x*size,y*size,size,size);
+
 	}
 
 	public void orient(int direction) {
