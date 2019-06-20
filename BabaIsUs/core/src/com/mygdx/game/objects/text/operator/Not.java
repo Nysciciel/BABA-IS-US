@@ -29,4 +29,9 @@ public class Not extends Operator {
 		return(tab);
 	}
 
+	@Override
+	public boolean isNot() {
+		return true;
+	}
+
 }

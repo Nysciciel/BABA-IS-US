@@ -17,12 +17,12 @@ public class Skull extends Item{
 	
 	@Override
 	public boolean isDefeat() {
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean isMove() {
-		return true;
+		return false;
 	}
 
 	public String[] getSpriteUsed(){

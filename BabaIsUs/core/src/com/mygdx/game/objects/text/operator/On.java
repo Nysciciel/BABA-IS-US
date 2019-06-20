@@ -12,6 +12,7 @@ import com.mygdx.game.utils.Constants;
 
 public class On extends Operator {
 
+
 	public On(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
@@ -22,6 +23,11 @@ public class On extends Operator {
 		spriteUsed[0]="Rock0";
 		spriteUsed[1]="Rock1";
 		return(spriteUsed);
+	}
+
+	@Override
+	public boolean isOn() {
+		return true;
 	}
 
 	public float[] getAffichePos(){

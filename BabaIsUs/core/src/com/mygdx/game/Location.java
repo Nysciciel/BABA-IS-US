@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.Text;
 
 public class Location {
 	protected Level lvl;
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
+	
+	
+	
 
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
@@ -68,13 +72,33 @@ public class Location {
 		}
 	}
 
+	public ArrayList<Text> giveTextItems(){
+		
+		ArrayList<Text> textList = new ArrayList<Text>();
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				textList.add((Text) item);
+		}
+		return textList;
+	}
+	
+	public boolean thereIsAOn() {
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isOn()) 
+					return true;
+		}
+		return false;
+	}
+
+
 	public boolean pleaseCanIGo(int direction) {
 
 		if (this.allAreShut() && this.next((2+direction)%4).allAreOpen()) {
 			return true;
 		}
-
-
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
@@ -246,7 +270,7 @@ public class Location {
 			if(i.isShift()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((isFloat != j.isFloat()) && !i.hasShifted()) {
+					if((isFloat == j.isFloat()) && !i.hasShifted() && i!=j) {
 						toMove.add(j);
 						j.orient(i.getOrientation());
 					}
@@ -331,6 +355,26 @@ public class Location {
 		}
 		return true;
 	}
+
+
+	public boolean thereIsAAnd() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isAnd()) 
+					return true;
+		}
+		return false;
+	}
+
+	public boolean thereIsANot() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isNot()) 
+					return true;
+		}
+		return false;
+	}
+
 	
 	public boolean allAreShut() {
 		for(Item i:items) {
@@ -340,7 +384,6 @@ public class Location {
 		}
 		return true;
 	}
-
 }
 
 

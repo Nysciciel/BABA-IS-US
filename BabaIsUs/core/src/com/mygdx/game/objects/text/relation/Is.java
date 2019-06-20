@@ -27,6 +27,10 @@ public class Is extends Relation {
 	public float[] getAffichePos(){
 		float[] tab = {x,y};
 		return(tab);
+	
+	@Override
+	public boolean isIs() {
+		return true;
 	}
 
 }

@@ -14,3 +14,4 @@ public abstract class Relation extends Text {
 		return true;
 	}
 }
+

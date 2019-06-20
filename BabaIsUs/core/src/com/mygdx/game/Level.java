@@ -4,6 +4,10 @@ import java.util.HashSet;
 import java.util.Scanner;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.rule.Rule;
+import com.mygdx.game.rule.RuleStack;
+import com.mygdx.game.rule.RuleStackList;
 
 import java.io.File;
 
@@ -75,28 +79,35 @@ public class Level {
 			e.printStackTrace();
 		}
 
-
 	}
 
 	public void readRules() {
-
-		ArrayList<RuleStack> currentRules; 
+		
+		RuleStackList currentRules; 
+		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
+		boolean thereIsANot = false;
 
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
-			currentRules = new ArrayList<RuleStack>();
+			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
-
+				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
+				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
+				thereIsANot = locationMatrix[y][x].thereIsANot();				
 			}
 		}
 		//lecture par colonne
-		for (int index1 = 0; index1<length; index1++) {
-			for (int index2 = 0; index2<height; index2++) {
-
+		for (int x = 0; x<length; x++) {
+			currentRules = new RuleStackList(rules);
+			for (int y = 0; y<height; y++) {
+				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
+				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
+				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
 		}
 	}
-
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
 
@@ -128,8 +139,6 @@ public class Level {
 		beginning.addAll(prioritySort(list, direction));
 		return beginning;
 	}
-
-
 
 	public void moveYou(int direction) {
 		ArrayList<Location> found = new ArrayList<Location>();

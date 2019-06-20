@@ -11,10 +11,37 @@ public abstract class Text extends Item {
 		super(loc, x, y, orientation);
 	}
 	
+	public boolean isOperator() {
+		return false;
+	}
+	
+	public boolean isProperty() {
+		return false;
+	}
+	
+	@Override
+	public boolean isText() {
+		return true;
+	}
+
+
+	public boolean isNot() {
+		return false;
+	}
+
+	public boolean isOn() {
+		return false;
+	}
+
+	public boolean isIs() {
+		return false;
+	}
+
 	@Override
 	public boolean isPush() {
 		return true;
 	}
+
 	
 	public boolean isItemRef() {
 		return false;
@@ -22,5 +49,19 @@ public abstract class Text extends Item {
 	
 	public boolean isRelation() {
 		return false;
+	}
+
+	public boolean isAnd() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
+	
+	public void show() {
+		System.out.print(toString());
 	}
 }
