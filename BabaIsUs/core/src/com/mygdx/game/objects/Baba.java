@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Baba extends Item{
 	private TextureAtlas textureAtlas;
@@ -21,11 +22,11 @@ public class Baba extends Item{
 	}
 	
 	@Override
-	public boolean isYou() {
+	public boolean isYou1() {
 		return true;
 	}
 
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheetU.txt"));
 		TextureRegion[] orientedBaba = new TextureRegion[2];
@@ -38,7 +39,6 @@ public class Baba extends Item{
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);
 		if(animationChrono<0.2){
-			System.out.println(animationChrono);
 			switch(orientation){
 				case(0):
 					sb.draw(test, (x+1-animationChrono*5) * size, y * size, size, size);

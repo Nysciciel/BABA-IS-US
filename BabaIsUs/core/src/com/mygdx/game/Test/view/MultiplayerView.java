@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
-import javafx.stage.Popup;
 import com.mygdx.game.client_serveur.*;
 
 public class MultiplayerView implements Screen {
@@ -51,8 +50,8 @@ public class MultiplayerView implements Screen {
 
         TextButton host = new TextButton("Host a game", skin);
         TextButton connect = new TextButton("Connect to an already existing game", skin);
-        TextField address = new TextField("IP address", skin);
-        TextButton okBut = new TextButton("OK", skin);
+        final TextField address = new TextField("IP address", skin);
+        final TextButton okBut = new TextButton("OK", skin);
         address.setVisible(false);
         okBut.setVisible(false);
         table.add(host).fillX().uniformX();

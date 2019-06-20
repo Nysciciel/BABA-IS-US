@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.*;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Empty extends Item{
 	public Empty(Location loc,
@@ -22,7 +23,7 @@ public class Empty extends Item{
 		this.texture = new Texture("empty" + Integer.toString(orientation)+".png");
 	}
 
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);

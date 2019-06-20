@@ -38,7 +38,6 @@ public class ServerView implements Screen,ServerCallBack {
         this.movePoto = -1;
         this.enabled = true;
         this.background = new Texture("Menu_background.jpg");
-        System.out.println("ON EST DANS LA SERVERVIEW POTOOOOOOOOOOOOOOOOOOOOOO");
         this.slvl = new com.mygdx.game.ServerLevel("level.txt");
         this.thread = new ServerThread(data,this,slvl);
         Gdx.input.setInputProcessor(stage);
@@ -56,16 +55,15 @@ public class ServerView implements Screen,ServerCallBack {
             parent.screenChoice(MainTest.MENU);
         }
         if(enabled) {
-            System.out.println(movePoto);
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 slvl.endturn();
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
                 slvl.rollback();
             }
-          /*  if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                lvl.moveYou(2);
-                lvl.endturn();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+                slvl.moveYou1(2);
+                slvl.endturn();
 
                 try {
                     data.put(2);
@@ -75,8 +73,8 @@ public class ServerView implements Screen,ServerCallBack {
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                lvl.moveYou(1);
-                lvl.endturn();
+                slvl.moveYou1(1);
+                slvl.endturn();
 
                 try {
                     data.put(1);
@@ -87,8 +85,8 @@ public class ServerView implements Screen,ServerCallBack {
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-                lvl.moveYou(0);
-                lvl.endturn();
+                slvl.moveYou1(0);
+                slvl.endturn();
 
                 try {
                     data.put(0);
@@ -98,8 +96,8 @@ public class ServerView implements Screen,ServerCallBack {
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-                lvl.moveYou(3);
-                lvl.endturn();
+                slvl.moveYou1(3);
+                slvl.endturn();
 
                 try {
                     data.put(3);
@@ -107,9 +105,9 @@ public class ServerView implements Screen,ServerCallBack {
                     e.printStackTrace();
                 }
 
-            }*/
+            }
             if(movePoto != -1) {
-                    slvl.moveYou(movePoto);
+                    slvl.moveYou2(movePoto);
                     movePoto = -1;
                     slvl.endturn();
             }
@@ -168,7 +166,6 @@ public class ServerView implements Screen,ServerCallBack {
     @Override
     public void dataReceived(int data) {
         movePoto = data;
-        System.out.println(movePoto);
     }
 }
 

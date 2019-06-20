@@ -144,7 +144,7 @@ public class Level {
 		Location first = null;
 		for(Location i:list) {
 			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou()) || (list.indexOf(i.next(direction))==-1)) {
+				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
 					first = i;
 
 					break;
@@ -163,11 +163,35 @@ public class Level {
 		return beginning;
 	}
 
-	public void moveYou(int direction) {
+	public void moveYou1(int direction) {
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				if (locationMatrix[y][x].hasYou()) {
+				if (locationMatrix[y][x].hasYou1()) {
+					found.add(locationMatrix[y][x]);
+				}
+			}
+		}
+
+		found = prioritySort(found, direction);
+
+		if (found != null) {
+			for(Location i:found) {
+				ArrayList<Item> res = i.move(direction);
+				if (res!=null) {
+					for(Item j:res) {
+						j.goforward();
+					}
+				}
+			}
+		}
+	}
+	
+	public void moveYou2(int direction) {
+		ArrayList<Location> found = new ArrayList<Location>();
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				if (locationMatrix[y][x].hasYou2()) {
 					found.add(locationMatrix[y][x]);
 				}
 			}

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Water extends Item {
 	private TextureAtlas textureAtlas;
@@ -23,7 +24,7 @@ public class Water extends Item {
 		return true;
 	}
 
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		String s = "";
 		for(int i=0;i<=3;i++){
 			if(isNeighbourEqual(i)){
