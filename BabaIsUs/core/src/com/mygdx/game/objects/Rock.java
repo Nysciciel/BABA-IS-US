@@ -22,15 +22,15 @@ public class Rock extends Item {
 	}
 	@Override
 	public boolean isPull() {
-		return true;
+		return false;
 	}
 	@Override
 	public boolean isPush() {
-		return true;
+		return false;
 	}
 	@Override
 	public boolean isYou2() {
-		return false;
+		return true;
 	}
 
 	public void render(Batch sb){
