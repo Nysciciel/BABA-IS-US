@@ -154,10 +154,28 @@ public class Location {
 		items.add(item);
 	}
 
-	public ArrayList<Item> move(int direction) {
+	public ArrayList<Item> move1(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
-			if (i.isYou1() || i.isYou2()) {
+			if (i.isYou1()) {
+				yous.add(i);
+				i.orient(direction);
+			}
+		}
+		if (yous.size()>0) {
+			if (next(direction)!=null) {
+				if (next(direction).pleaseCanIGo(direction)) {
+					return yous;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Item> move2(int direction) {
+		ArrayList<Item> yous = new ArrayList<Item>();
+		for(Item i:items) {
+			if (i.isYou2()) {
 				yous.add(i);
 				i.orient(direction);
 			}
