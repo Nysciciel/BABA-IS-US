@@ -20,7 +20,11 @@ public class Baba extends Item{
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	
+	@Override
+	public boolean isPush(){
+		return true;
+	}
+
 	@Override
 	public boolean isYou1() {
 		return true;
