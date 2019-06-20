@@ -211,14 +211,6 @@ public class Level {
 		}
 	}
 
-	public void update() {
-		for (int x = 0; x<length;x++) {
-			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].update();
-			}
-		}
-	}
-
 	public void dispose() {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {

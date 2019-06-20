@@ -69,7 +69,6 @@ public class LevelView implements Screen,ServerCallBack {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
         }
-        lvl.update();
     }
 
     @Override

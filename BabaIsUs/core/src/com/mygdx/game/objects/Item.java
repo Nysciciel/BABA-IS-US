@@ -1,5 +1,8 @@
 package com.mygdx.game.objects;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +15,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class Item {
 	protected float animationChrono=0;
-	protected Texture texture;
+	protected TextureAtlas textureAtlas ;
+	protected Animation animation;
+	protected float elapsedTime = 0;
 
 	public boolean isPush() {
 		return false;
@@ -75,11 +80,6 @@ public abstract class Item {
 		this.y = y;
 		this.orientation= orientation;
 
-		update();
-	}
-
-	public Texture getTexture() {
-		return this.texture;
 	}
 
 	public Vector2 getPosition() {
@@ -91,16 +91,7 @@ public abstract class Item {
 	}
 
 	public void dispose() {
-		texture.dispose();
-	}
-
-	public void update() {
-		try {
-			this.texture = new Texture(getClass().getSimpleName() + Integer.toString(orientation)+".png");
-		}
-		catch(Exception e) {
-			this.texture = new Texture("Baba" + Integer.toString(orientation)+".png");
-		}
+		textureAtlas.dispose();
 	}
 
 	public void goforward() {
@@ -174,13 +165,24 @@ public abstract class Item {
 	}
 
 	public void render(Batch sb){
+		String[] spriteUsed = getSpriteUsed();
+		int length = spriteUsed.length;
+		TextureRegion[] orientedWall = new TextureRegion[length];
+		for(int i=0;i<length;i++) {
+			orientedWall[i] = textureAtlas.findRegion(spriteUsed[i]);
+		}
+		animation = new Animation(1/3f, orientedWall);
+		elapsedTime += Gdx.graphics.getDeltaTime();
+		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
 		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(texture,x*size,y*size,size,size);
-
+		sb.draw(test,getAffichePos()[0]*size,getAffichePos()[1]*size,size,size);
 	}
 
+	public abstract String[] getSpriteUsed();
+	public abstract float[] getAffichePos();
+	
 	public void orient(int direction) {
 		orientation = direction;
 	}

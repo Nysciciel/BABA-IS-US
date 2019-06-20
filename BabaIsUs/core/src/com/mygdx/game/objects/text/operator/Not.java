@@ -2,7 +2,9 @@ package com.mygdx.game.objects.text.operator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.Level;
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.Operator;
@@ -12,20 +14,24 @@ public class Not extends Operator {
 
 	public Not(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		// TODO Auto-generated constructor stub
+		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
+	}
+
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Rock0";
+		spriteUsed[1]="Rock1";
+		return(spriteUsed);
+	}
+
+	public float[] getAffichePos(){
+		float[] tab = {x,y};
+		return(tab);
 	}
 
 	@Override
 	public boolean isNot() {
 		return true;
-	}
-
-
-	public void render(SpriteBatch sb){
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(texture,x*size,y*size,size,size);
 	}
 
 }
