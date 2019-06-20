@@ -30,12 +30,11 @@ public class Rock extends Item {
 		return false;
 	}
 	@Override
-	public boolean isYou2() {
+	public boolean isMove() {
 		return true;
 	}
-
 	@Override
-	public boolean isYou() {
+	public boolean isYou2() {
 		return false;
 	}
 

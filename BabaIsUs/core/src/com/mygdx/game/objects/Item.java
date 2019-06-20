@@ -164,7 +164,7 @@ public abstract class Item {
 		return false;
 	}
 
-	public void render(SpriteBatch sb){
+	public void render(Batch sb){
 		String[] spriteUsed = getSpriteUsed();
 		int length = spriteUsed.length;
 		TextureRegion[] orientedWall = new TextureRegion[length];

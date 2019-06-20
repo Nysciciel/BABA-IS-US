@@ -29,6 +29,11 @@ public class Keke extends Item{
 	public boolean isWin() {
 		return false;
 	}
+	
+	@Override
+	public boolean isYou2() {
+		return true;
+	}
 
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
