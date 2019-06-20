@@ -8,8 +8,12 @@ import java.util.List;
 import com.mygdx.game.objects.text.Text;
 
 public class LogicHashtable extends Hashtable<String, LogicHashtable> {
+	
+	private ArrayList<Class> props;
 
 	public LogicHashtable(RuleSet rules, ArrayList<Class> props) {
+		
+		this.setProps(props);
 		
 		for (Rule rule : rules) {
 									
@@ -163,6 +167,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 	
 	public LogicHashtable() {
 		super();
+		props = new ArrayList<Class>();
 	}
 
 	public LogicHashtable(List<ArrayList<String>> keys, ArrayList<Class> on, ArrayList<Class> near,
@@ -178,6 +183,14 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			}
 		}
 
+	}
+
+	public ArrayList<Class> getProps() {
+		return props;
+	}
+
+	public void setProps(ArrayList<Class> props) {
+		this.props = props;
 	}
 
 	

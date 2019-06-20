@@ -73,7 +73,18 @@ public abstract class Item {
 	
 	private ArrayList<Class> hasToTranformTo(){
 		
+		ArrayList<Class> transform = new ArrayList<Class>();
 		
+		if (ruleTable.get("Is").get(this.getCategory()).get(this.getCategory()) == null)
+			return transform;
+		
+		for (Class c : ruleTable.getProps()) {
+			// TODO :  getSimpleName wrong for Text objects
+			// TODO : verify order !!!!!!!!
+			if (((Logic)(ruleTable.get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
+					&& !((Logic)(ruleTable.get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
+				transform.add(c);
+		}
 		
 		return null;		
 	}
