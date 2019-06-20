@@ -226,4 +226,8 @@ public abstract class Item {
 		}
 		return(false);
 	}
+	
+	public String getName() {
+		return this.getClass().getSimpleName();
+	}
 }

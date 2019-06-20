@@ -91,4 +91,9 @@ public class RuleStack {
 	}
 
 
+	public LinkedList<Text> getStack() {
+		return stack;
+	}
+
+
 }
