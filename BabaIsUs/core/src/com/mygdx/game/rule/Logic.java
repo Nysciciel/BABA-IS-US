@@ -38,7 +38,7 @@ public class Logic extends LogicHashtable {
 	public boolean onTruth(Location loc) {
 			
 		// TODO
-		return;
+		return true;
 	}
 	
 	public boolean nearTruth(Location loc) {

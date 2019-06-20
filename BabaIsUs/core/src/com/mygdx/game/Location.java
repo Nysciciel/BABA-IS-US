@@ -390,6 +390,25 @@ public class Location {
 		}
 		return true;
 	}
+	
+	public boolean isOn(Class<Item> item) {
+		for(Item i:items) {
+			if(item.isInstance(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isNear(Class<Item> item) {
+		for(int i=0; i!=3; i++) {
+			if (this.next(i) != null && this.next(i).isOn(item)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
+
 
 
