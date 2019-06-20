@@ -8,4 +8,10 @@ public abstract class Property extends Text {
 	public Property(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
+	
+	@Override
+	public boolean isProperty() {
+		return true;
+	}
 }
+

@@ -9,7 +9,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
+
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.rule.Rule;
+import com.mygdx.game.rule.RuleStack;
+import com.mygdx.game.rule.RuleStackList;
+
 
 import java.io.File;
 
@@ -82,7 +88,6 @@ public class Level {
 			e.printStackTrace();
 		}
 
-
 	}
 	/*
 	public Level(int hauteur, int largeur) {
@@ -100,24 +105,32 @@ public class Level {
 	}*/
 
 	public void readRules() {
-
-		ArrayList<RuleStack> currentRules; 
+		
+		RuleStackList currentRules; 
+		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
+		boolean thereIsANot = false;
 
 		// lecture par ligne
 		for (int y = 0; y<height; y++) {
-			currentRules = new ArrayList<RuleStack>();
+			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
-
+				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
+				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
+				thereIsANot = locationMatrix[y][x].thereIsANot();				
 			}
 		}
 		//lecture par colonne
-		for (int index1 = 0; index1<length; index1++) {
-			for (int index2 = 0; index2<height; index2++) {
-
+		for (int x = 0; x<length; x++) {
+			currentRules = new RuleStackList(rules);
+			for (int y = 0; y<height; y++) {
+				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
+				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
+				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
 		}
 	}
-
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
 
@@ -149,8 +162,6 @@ public class Level {
 		beginning.addAll(prioritySort(list, direction));
 		return beginning;
 	}
-
-
 
 	public void moveYou(int direction) {
 		ArrayList<Location> found = new ArrayList<Location>();
@@ -193,10 +204,11 @@ public class Level {
 	}
 
 
-	public void draw(Batch sb) {
+	public void render(SpriteBatch sb) {
+
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].draw(sb);
+				locationMatrix[y][x].render(sb);
 			}
 		}
 	}
@@ -205,7 +217,22 @@ public class Level {
 	public void endturn() {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].endturn();
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkMove();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].checkWin();
 			}
 		}
 		for (int x = 0; x<length;x++) {
@@ -219,6 +246,7 @@ public class Level {
 	public void rollback() {
 		if (history.size()>1) {
 			locationMatrix = history.get(history.size()-2);
+			locationMatrix = this.matrixCopy();
 			history.remove(history.size()-1);
 		}
 	}
@@ -235,6 +263,12 @@ public class Level {
 			}
 		}
 		return matrix;
+	}
+
+	public void reset() {
+		locationMatrix = history.get(0);
+		history = new ArrayList<Location[][]>();
+		history.add(this.matrixCopy());
 	}
 
 }

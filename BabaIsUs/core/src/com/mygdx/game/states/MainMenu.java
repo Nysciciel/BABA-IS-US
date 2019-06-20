@@ -60,14 +60,9 @@ public class MainMenu extends GameState{
 	@Override
 	public void render(SpriteBatch sb) {
 		sb.setProjectionMatrix(this.camera.combined);
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		sb.begin();
+
 		sb.draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
 		this.gameTitleText.draw(sb, this.gameTitleGlyph, this.camera.viewportWidth/2 - this.gameTitleGlyph.width/2, this.camera.viewportHeight/2);
-		sb.end();
 	}
 
 	@Override

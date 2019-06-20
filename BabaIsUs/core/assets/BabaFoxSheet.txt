@@ -1,0 +1,19 @@
+BabaFoxSheet.png
+size: 64, 32
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Fox1
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Fox2
+  rotate: false
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

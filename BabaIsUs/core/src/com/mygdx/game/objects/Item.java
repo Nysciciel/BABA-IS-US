@@ -6,10 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.utils.Constants;
 
 
 public abstract class Item {
-
+	protected float animationChrono=0;
 	protected Texture texture;
 
 	public boolean isPush() {
@@ -36,16 +37,32 @@ public abstract class Item {
 	public boolean isMove() {
 		return false;
 	}
-
+	public boolean isHot() {
+		return false;
+	}
+	public boolean isMelt() {
+		return false;
+	}
+	public boolean isFloat() {
+		return false;
+	}
+	public boolean isShift() {
+		return false;
+	}
+	public boolean isShut() {
+		return false;
+	}
+	public boolean isOpen() {
+		return false;
+	}
 
 	protected int x;
 	protected int y;
 	protected int orientation;
 	protected Location loc;
 
-	protected boolean hasmoved = false;
-
-
+	protected boolean hasMoved = false;
+	protected boolean hasShifted = false;
 
 	public Item(Location loc,
 			int x, int y, int orientation) {
@@ -74,12 +91,17 @@ public abstract class Item {
 	}
 
 	public void update() {
-		this.texture = new Texture(getClass().getSimpleName() + Integer.toString(orientation)+".png");
+		try {
+			this.texture = new Texture(getClass().getSimpleName() + Integer.toString(orientation)+".png");
+		}
+		catch(Exception e) {
+			this.texture = new Texture("Baba" + Integer.toString(orientation)+".png");
+		}
 	}
 
 	public void goforward() {
 
-
+		animationChrono = 0;
 		loc.del(this);
 
 		if (loc.next((orientation+2)%4)!=null) {
@@ -116,7 +138,7 @@ public abstract class Item {
 
 		//same as go forward except it doesn't pull the one behind
 		//useful for when a push&pull chain is getting pushed
-
+		animationChrono = 0;
 		loc.del(this);
 
 		switch(orientation) {
@@ -147,24 +169,42 @@ public abstract class Item {
 		return false;
 	}
 
+/*
 	public void draw(Batch sb) {
-		sb.draw(texture, x*32, y*32);
-	}
+		sb.draw(texture, x * 32, y * 32);
+	}*/
+	
+	public void render(SpriteBatch sb){
+		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
+		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
+		int size = Math.min(h_ratio,w_ratio);
+		sb.draw(texture,x*size,y*size,size,size);
 
+	}
+	
 	public void orient(int direction) {
 		orientation = direction;
 	}
 
-	public boolean hasmoved() {
-		return hasmoved;
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	public void reset() {
-		hasmoved = false;
+		hasMoved = false;
+		hasShifted = false;
 	}
 
 	public void moved() {
-		hasmoved = true;
+		hasMoved = true;
+	}
+	
+	public boolean hasShifted() {
+		return hasShifted;
+	}
+
+	public void shifted() {
+		hasShifted = true;
 	}
 
 	public Item copy() {
@@ -180,4 +220,17 @@ public abstract class Item {
 		this.loc = loc;
 	}
 
+	boolean isNeighbourEqual(int orientation){
+		Location NeigLoc = loc.next(orientation);
+		if(NeigLoc == null){
+			return(true);
+		}else{
+			for (Item i : NeigLoc.getItems()) {
+				if (i.getClass().getSimpleName().equals(this.getClass().getSimpleName())) {
+					return (true);
+				}
+			}
+		}
+		return(false);
+	}
 }

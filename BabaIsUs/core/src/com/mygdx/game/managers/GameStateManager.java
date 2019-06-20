@@ -28,4 +28,12 @@ public class GameStateManager {
 	public void render(SpriteBatch sb) {
 		this.gameStates.peek().render(sb);
 	}
+
+
+
+
+	public void dispose(){
+		this.gameStates.peek().dispose();
+	}
 }*/
+

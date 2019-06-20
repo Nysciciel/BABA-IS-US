@@ -10,12 +10,17 @@ public class Keke extends Item{
 	}
 	
 	@Override
-	public boolean isMove() {
+	public boolean isShift() {
 		return true;
 	}
 	
 	@Override
 	public boolean isPush() {
-		return true;
+		return false;
+	}
+	
+	@Override
+	public boolean isWin() {
+		return false;
 	}
 }

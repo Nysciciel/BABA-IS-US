@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.Text;
 
 public class Location {
 	protected Level lvl;
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
-
-
-
+	
+	
+	
 
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
@@ -22,6 +23,17 @@ public class Location {
 		this.y = y;
 	}
 
+	public ArrayList<Item> getItems(){
+		return(items);
+	}
+
+	public int getLevelHeigh(){
+		return(lvl.getLocationMatrix().length);
+	}
+
+	public int getLevelWidth(){
+		return(lvl.getLocationMatrix()[0].length);
+	}
 
 	public Location next(int direction) {
 		try {
@@ -44,7 +56,6 @@ public class Location {
 		}
 	}
 
-
 	public boolean hasYou() {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -54,7 +65,6 @@ public class Location {
 		return false;
 	}
 
-
 	public void orientYou(int direction) {
 		for(Item i:items) {
 			if (i.isYou()) {
@@ -63,8 +73,33 @@ public class Location {
 		}
 	}
 
+	public ArrayList<Text> giveTextItems(){
+		
+		ArrayList<Text> textList = new ArrayList<Text>();
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				textList.add((Text) item);
+		}
+		return textList;
+	}
+	
+	public boolean thereIsAOn() {
+		
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isOn()) 
+					return true;
+		}
+		return false;
+	}
+
 
 	public boolean pleaseCanIGo(int direction) {
+
+		if (this.allAreShut() && this.next((2+direction)%4).allAreOpen()) {
+			return true;
+		}
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
@@ -90,7 +125,6 @@ public class Location {
 		return true;
 	}
 
-
 	public void del(Item item) {
 		items.remove(item);
 		if (items.size()==0) {
@@ -98,16 +132,18 @@ public class Location {
 		}
 	}
 
-
 	public void add(Item item) {
+		Item toRemove = null;
 		for(Item i:items) {
 			if (i.isempty()) {
-				this.del(i);
+				toRemove = i;
 			}
+		}
+		if(toRemove != null) {
+			items.remove(toRemove);
 		}
 		items.add(item);
 	}
-
 
 	public ArrayList<Item> move(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
@@ -145,13 +181,11 @@ public class Location {
 		return null;
 	}
 
-
 	public void update() {
 		for(Item i:items) {
 			i.update();
 		}
 	}
-
 
 	public void dispose() {
 		for(Item i:items) {
@@ -160,54 +194,113 @@ public class Location {
 	}
 
 
-	public void draw(Batch sb) {
+	public void render(SpriteBatch sb) {
 		for(Item i:items) {
-			i.draw(sb);
+			i.render(sb);
 		}
 	}
 
-
-	private void checkDeaths() {
+	public void checkDeaths() {
+		
+		this.checkLocks();
 
 		ArrayList<Item> toKill = new ArrayList<Item>();
 
 		for(Item i:items) {
 
 			if(i.isDefeat()) {
+				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou()) {
-						toKill.add(j);
+					if(j.isYou() && (isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
 					}
 				}
 			}
 
 
 			if(i.isSink() && items.size()>1 ) {
-				ArrayList<Item> items = new ArrayList<Item>();
-				items.add(new Empty(this,x,y,0));
-				this.items = items;
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if((isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
+					}
+				}
 			}
 
-
+			if(i.isHot()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if(j.isMelt() && (isFloat == j.isFloat())) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
+					}
+				}
+			}
 		}
 		for(Item i:toKill) {
 			this.del(i);
 		}
 	}
 
-	private void checkMove() {
+	public void checkLocks() {
+		ArrayList<Item> toKill = new ArrayList<Item>();
+		for(Item i:items) {
+			if(i.isShut()) {
+				for(Item j:items) {
+					if(j.isOpen()) {
+						if(toKill.indexOf(j)==-1) {
+							toKill.add(j);
+						}
+						if(toKill.indexOf(i)==-1) {
+							toKill.add(i);
+						}
+					}
+				}
+			}
+		}
+		for(Item i:toKill) {
+			this.del(i);
+		}
+	}
+
+	public void checkMove() {
 
 		ArrayList<Item> toMove = new ArrayList<Item>();
+		ArrayList<Item> toShift = new ArrayList<Item>();
 
 		for(Item i:items) {
 
-			if(i.isMove() && !i.hasmoved()) {
+			if(i.isShift()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if((isFloat == j.isFloat()) && !i.hasShifted() && i!=j) {
+						toMove.add(j);
+						j.orient(i.getOrientation());
+					}
+				}
+			}
+
+		}
+		for(Item i:items) {
+
+			if(i.isMove() && !i.hasMoved()) {
 				if(next(i.getOrientation())==null || !(next(i.getOrientation()).pleaseCanIGo(i.getOrientation()))){
 					i.orient((i.getOrientation()+2)%4);
 				}
 				toMove.add(i);
 			}
 
+		}
+		for(Item i:toShift) {
+			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
+				i.goforward();
+				i.shifted();
+			}
 		}
 		for(Item i:toMove) {
 			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
@@ -218,13 +311,19 @@ public class Location {
 
 	}
 
+	public void checkWin() {
 
-	public void endturn() {
+		for(Item i:items) {
 
-		checkDeaths();
-		checkMove();
-		
-		checkDeaths();
+			if(i.isWin()) {
+				boolean isFloat = i.isFloat();
+				for(Item j:items) {
+					if(j.isYou() && (isFloat != j.isFloat())) {
+						System.out.println("YOU WIN MOTHERFUCKER");;
+					}
+				}
+			}
+		}
 
 	}
 
@@ -249,13 +348,50 @@ public class Location {
 			return null;
 		}
 	}
-	
+
 	public void setLocation() {
 		for(Item i:items) {
 			i.setLocation(this);
 		}
 	}
+	
+	public boolean allAreOpen() {
+		for(Item i:items) {
+			if(!(i.isOpen())) {
+				return false;
+			}
+		}
+		return true;
+	}
 
+
+	public boolean thereIsAAnd() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isAnd()) 
+					return true;
+		}
+		return false;
+	}
+
+	public boolean thereIsANot() {
+		for (Item item : items) {
+			if (item instanceof Text)
+				if (((Text)item).isNot()) 
+					return true;
+		}
+		return false;
+	}
+
+	
+	public boolean allAreShut() {
+		for(Item i:items) {
+			if(!(i.isShut())) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
 
 
