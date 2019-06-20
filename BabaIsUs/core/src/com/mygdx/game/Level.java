@@ -113,6 +113,7 @@ public class Level {
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();				
 			}
+			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 		//lecture par colonne
 		for (int x = 0; x<length; x++) {
@@ -123,13 +124,14 @@ public class Level {
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
+			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 	}
 	
 
 	public void interpretRules() {
 		
-		ruleTable = new LogicHashtable(rules, props);
+		 ruleTable = new LogicHashtable(rules, props);
 		
 	}
 
