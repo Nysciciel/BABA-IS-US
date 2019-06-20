@@ -30,6 +30,7 @@ public class Level {
 		props = new ArrayList<Class>();
 		
 		props.add(Baba.class);props.add(Empty.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);
+		this.ruleTable = new LogicHashtable();
 		
 		try {
 			Scanner scanner = new Scanner(new File(filename));
@@ -46,7 +47,7 @@ public class Level {
 			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
 
-
+			
 			locationMatrix = new Location[height][length];
 			for (int y = 0; y<height; y++) {
 				for (int x = 0; x<length; x++) {
@@ -78,6 +79,9 @@ public class Level {
 					locationMatrix[height - 1 -y][x] = loc;
 				}
 			}
+			
+			// Test de text
+			//locationMatrix[0][0].add(new Baba());
 
 			history.add(this.matrixCopy());
 
@@ -88,7 +92,7 @@ public class Level {
 			e.printStackTrace();
 		}
 		
-		this.ruleTable = new LogicHashtable();
+		
 
 	}
 
@@ -123,7 +127,7 @@ public class Level {
 	}
 	
 
-	private void interpretRules() {
+	public void interpretRules() {
 		
 		ruleTable = new LogicHashtable(rules, props);
 		

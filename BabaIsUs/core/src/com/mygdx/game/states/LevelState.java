@@ -41,6 +41,7 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
 			lvl.endturn();
+			updateRules();
 			/*
 			try {
 				data.put(2);
@@ -52,6 +53,7 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou(1);
 			lvl.endturn();
+			updateRules();
 			/*
 			try {
 				data.put(1);
@@ -63,6 +65,7 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou(0);
 			lvl.endturn();
+			updateRules();
 			/*
 			try {
 				data.put(0);
@@ -74,6 +77,7 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou(3);
 			lvl.endturn();
+			updateRules();
 			/*
 			try {
 				data.put(3);
@@ -84,15 +88,22 @@ public class LevelState extends GameState implements ServerCallBack{
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER ) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE )) {
 			lvl.endturn();
+			updateRules();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Z )) {
 			lvl.rollback();
+			updateRules();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.R )) {
 			lvl.reset();
+			updateRules();
 		}
 	}
-
+	
+	private void updateRules() {
+		lvl.readRules();
+		lvl.interpretRules();
+	}
 	@Override
 	public void update(float dt) {
 		this.handleInput();
