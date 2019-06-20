@@ -2,13 +2,16 @@ package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 
 public class Skull extends Item{
-	public Skull(Location loc,
-			int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+
+	public Skull(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
+		super(loc, ruleTable, x, y, orientation);
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public boolean isDefeat() {
 		return false;

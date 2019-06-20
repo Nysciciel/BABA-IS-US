@@ -37,7 +37,7 @@ public class Level {
 			while(scanner.hasNext()) {
 				lines.add(scanner.nextLine());
 			}
-
+			
 			scanner.close();
 
 
@@ -54,25 +54,25 @@ public class Level {
 					Location loc = new Location(items, this, x, height - 1 -y);
 					switch(lines.get(y).charAt(x)) {
 					case 'e':
-						loc.add(new Empty(loc, x, height - 1 -y,0));
+						loc.add(new Empty(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 'b':
-						loc.add(new Baba(loc, x, height - 1 -y,0));
+						loc.add(new Baba(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 'w':
-						loc.add(new Wall(loc, x, height - 1 -y,0));
+						loc.add(new Wall(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 'r':
-						loc.add(new Rock(loc, x, height - 1 -y,0));
+						loc.add(new Rock(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 'a':
-						loc.add(new Water(loc, x, height - 1 -y,0));
+						loc.add(new Water(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 'k':
-						loc.add(new Keke(loc, x, height - 1 -y,0));
+						loc.add(new Keke(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					case 's':
-						loc.add(new Skull(loc, x, height - 1 -y,0));
+						loc.add(new Skull(loc, getRuleTable(), x, height - 1 -y,0));
 						break;
 					}
 					locationMatrix[height - 1 -y][x] = loc;
@@ -87,6 +87,8 @@ public class Level {
 			System.out.println("Error while loading level");
 			e.printStackTrace();
 		}
+		
+		this.ruleTable = new LogicHashtable();
 
 	}
 
@@ -120,10 +122,11 @@ public class Level {
 		}
 	}
 	
-	public void makeRuleTable() {
+
+	private void interpretRules() {
 		
 		ruleTable = new LogicHashtable(rules, props);
-		// TODO
+		
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
@@ -261,6 +264,10 @@ public class Level {
 		locationMatrix = history.get(0);
 		history = new ArrayList<Location[][]>();
 		history.add(this.matrixCopy());
+	}
+
+	public LogicHashtable getRuleTable() {
+		return ruleTable;
 	}
 
 }

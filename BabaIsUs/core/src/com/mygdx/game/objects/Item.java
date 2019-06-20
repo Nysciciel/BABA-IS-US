@@ -1,5 +1,9 @@
 package com.mygdx.game.objects;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.Logic;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
+
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -11,9 +15,17 @@ import com.mygdx.game.utils.Constants;
 public abstract class Item {
 	protected float animationChrono=0;
 	protected Texture texture;
+	protected LogicHashtable ruleTable;
 
 	public boolean isPush() {
-		return false;
+		try {
+			Logic affirm = (Logic) ruleTable.get("Push").get(getCategory());
+			Logic restrict = (Logic) ruleTable.get("Push").get("Not").get(getCategory());
+			return affirm.getTruth(this) && !restrict.getTruth(this);
+		}
+		catch(Exception e) {
+			return false;
+		}
 	}
 	public boolean isYou() {
 		return false;
@@ -63,12 +75,13 @@ public abstract class Item {
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
 
-	public Item(Location loc,
+	public Item(Location loc, LogicHashtable ruleTable,
 			int x, int y, int orientation) {
 		this.loc = loc;
 		this.x = x;
 		this.y = y;
 		this.orientation= orientation;
+		this.ruleTable = ruleTable;
 
 		update();
 	}
@@ -229,6 +242,10 @@ public abstract class Item {
 	
 	public String getName() {
 		return this.getClass().getSimpleName();
+	}
+	
+	public String getCategory() {
+		return getName();
 	}
 
 	public boolean isOnLocation(Class item) {

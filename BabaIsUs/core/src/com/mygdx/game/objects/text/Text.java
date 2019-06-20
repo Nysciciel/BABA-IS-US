@@ -2,16 +2,19 @@ package com.mygdx.game.objects.text;
 
 import com.mygdx.game.*;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 
 public abstract class Text extends Item {
 	
-	protected String label;
-	private Class refClass;
-
-	public Text(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Text(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
+		super(loc, ruleTable, x, y, orientation);
+		// TODO Auto-generated constructor stub
 	}
-	
+
+	protected String label;
+	protected Class refClass;
+
 	public boolean isOperator() {
 		return false;
 	}
@@ -60,6 +63,11 @@ public abstract class Text extends Item {
 	public String toString() {
 		
 		return this.getName();
+	}
+	
+	@Override
+	public String getCategory() {
+		return "Text";
 	}
 	
 	public void show() {

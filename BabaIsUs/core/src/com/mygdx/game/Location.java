@@ -11,9 +11,6 @@ public class Location {
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
-	
-	
-	
 
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
@@ -127,7 +124,7 @@ public class Location {
 	public void del(Item item) {
 		items.remove(item);
 		if (items.size()==0) {
-			this.add(new Empty(this, x, y, 0));
+			this.add(new Empty(this, lvl.getRuleTable(), x, y, 0));
 		}
 	}
 
