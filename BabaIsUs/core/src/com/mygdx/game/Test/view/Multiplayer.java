@@ -41,44 +41,26 @@ public class Multiplayer implements Screen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
 
-
-        TextButton okBut = new TextButton("OK", skin);
-        TextButton cancelBut= new TextButton("Cancel", skin);
-
-
-        Table table2 = new Table();
-        table2.setFillParent(true);
-        table2.setVisible(false);
-        table2.right().top();
-        stage.addActor(table2);
-
-        TextField hosting = new TextField("You are hosting a game", skin);
-        hosting.isPasswordMode();
-        table2.add(hosting).fillX().uniformX();
-        table2.row().pad(10, 0, 10, 0);
-        table2.add(okBut).fillX().uniformX();
-        table2.add(cancelBut).fillX().uniformX();
-
         Table table = new Table();
         table.setFillParent(true);
         //table.setDebug(true);
         table.setVisible(true);
-        table.right().bottom();
         stage.addActor(table);
-
-
 
 
         TextButton host = new TextButton("Host a game", skin);
         TextButton connect = new TextButton("Connect to an already existing game", skin);
-
-
+        TextField address = new TextField("IP address", skin);
+        TextButton okBut = new TextButton("OK", skin);
+        address.setVisible(false);
+        okBut.setVisible(false);
         table.add(host).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(connect).fillX().uniformX();
-
-        DialogTest dial = new DialogTest("Confirm Exit",skin);
-        dial.hide();
+        table.row();
+        table.add(address);
+        table.row().pad(10, 0, 10, 0);
+        table.add(okBut);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
@@ -87,16 +69,15 @@ public class Multiplayer implements Screen {
         host.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-              //  stage.addActor(dial);
-                table.setVisible(false);
-                dial.show(stage);
+
             }
         });
 
         connect.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                table2.setVisible(true);
+                address.setVisible(true);
+                okBut.setVisible(true);
                // Popup test = new Popup(IP);
             }
         });
@@ -104,15 +85,12 @@ public class Multiplayer implements Screen {
         okBut.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                String IP = hosting.getText();
+                String IP = address.getText();
+                System.out.println(IP);
+                // Popup test = new Popup(IP);
             }
         });
-        cancelBut.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
 
-            }
-        });
 
     }
 
