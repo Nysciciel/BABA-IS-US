@@ -12,7 +12,7 @@ public class Wall extends Item {
 	}
 
 	@Override
-	public boolean isMove() {
+	public boolean isPush() {
 		return true;
 	}
 

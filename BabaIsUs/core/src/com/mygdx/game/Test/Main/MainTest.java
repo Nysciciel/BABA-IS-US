@@ -3,7 +3,12 @@ package com.mygdx.game.Test.Main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Level;
+import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.view.*;
+
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
 
 public class MainTest extends Game {
 
@@ -14,7 +19,11 @@ public class MainTest extends Game {
     private ClientView client;
     private Settings settings;
     private MultiplayerView multiplayerView;
+    private LoadingView loading;
    // private EndScreen endScreen;
+    private ServerThread thread;
+    private BlockingQueue<Integer> data;
+    private ServerLevel level;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -23,7 +32,9 @@ public class MainTest extends Game {
     public final static int MULTIPLAYER =4;
     public final static int SERVER = 5;
     public final static int CLIENT = 6;
+    public final static int LOADING = 7;
     public static String ip_addr;
+  //  public static ServerThread thread;
  //   public final static int ENDGAME = 3;
     @Override
     public void create() {
@@ -64,7 +75,10 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage5);
                 break;
             case SERVER:
-                if(server == null) server = new ServerView(this);
+                this.thread = loading.getThread();
+                this.data = loading.getData();
+                this.level = loading.getSlvl();
+                if(server == null) server = new ServerView(this,thread,data,level);
                 this.setScreen(server);
                 Stage stage6 = server.getStage();
                 Gdx.input.setInputProcessor(stage6);
@@ -74,6 +88,12 @@ public class MainTest extends Game {
                 this.setScreen(client);
                 Stage stage7 = client.getStage();
                 Gdx.input.setInputProcessor(stage7);
+                break;
+            case LOADING:
+                if(loading == null) loading = new LoadingView(this);
+                this.setScreen(loading);
+                Stage stage8 = loading.getStage();
+                Gdx.input.setInputProcessor(stage8);
                 break;
         }
     }
