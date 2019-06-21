@@ -18,15 +18,29 @@ public abstract class Item {
 	protected LogicHashtable ruleTable;
 
 	private boolean propertyAssert(String key) {
+		
+		Logic affirm;
+		Logic restrict;
+		
 		try {
-			Logic affirm = (Logic) ruleTable.get(key).get(getCategory());
-			Logic restrict = (Logic) ruleTable.get(key).get("Not").get(getCategory());
-			System.out.println("Acheived to this point @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-			return affirm.getTruth(this) && !restrict.getTruth(this);
+		affirm = (Logic) getRuleTable().get(key).get(getCategory());
+		if (affirm == null)
+			return false;
 		}
 		catch(Exception e) {
 			return false;
 		}
+		
+		try{
+			restrict = (Logic) getRuleTable().get(key).get("Not").get(getCategory());
+			if (restrict == null)
+				return affirm.getTruth(this);
+		}
+		catch(Exception e) {
+			return affirm.getTruth(this);
+		}
+		
+		return affirm.getTruth(this) && !restrict.getTruth(this);
 	}
 
 	public boolean isPush() {
@@ -86,7 +100,6 @@ public abstract class Item {
 					&& !((Logic)(ruleTable.get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
 				transform.add(c);
 		}
-		
 		return null;		
 	}
 
@@ -291,6 +304,6 @@ public abstract class Item {
 	}
 
 	public LogicHashtable getRuleTable() {
-		return ruleTable;
+		return loc.getLevel().getRuleTable();
 	}
 }

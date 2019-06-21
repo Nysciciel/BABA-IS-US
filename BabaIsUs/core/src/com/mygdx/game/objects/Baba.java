@@ -29,11 +29,11 @@ public class Baba extends Item{
 	public boolean isYou() {
 		try {
 
-			System.out.println(ruleTable);
-			System.out.println(""+((Logic)ruleTable.get("You").get("Baba")).getTruth(this));
-			System.out.println("On"+((Logic)ruleTable.get("You").get("Baba")).onTruth(this));
-			System.out.println("Near"+((Logic)ruleTable.get("You").get("Baba")).nearTruth(this));
-			System.out.println("Facing"+((Logic)ruleTable.get("You").get("Baba")).facingTruth(this));
+			System.out.println(getRuleTable());
+			System.out.println(" "+((Logic)getRuleTable().get("You").get("Baba")).getTruth(this));
+			System.out.println("On "+((Logic)getRuleTable().get("You").get("Baba")).onTruth(this));
+			System.out.println("Near "+((Logic)getRuleTable().get("You").get("Baba")).nearTruth(this));
+			System.out.println("Facing "+((Logic)getRuleTable().get("You").get("Baba")).facingTruth(this));
 		}
 		catch(Exception e) {
 			System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Nope");

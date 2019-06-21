@@ -165,6 +165,8 @@ public class Level {
 	}
 	
 	public void updateRules() {
+		System.out.println("Joy and Hapiness \n " + getRuleTable());
+		;
 		readRules();
 		interpretRules();
 	}

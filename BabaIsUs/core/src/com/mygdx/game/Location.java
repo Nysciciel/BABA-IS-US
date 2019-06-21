@@ -405,6 +405,10 @@ public class Location {
 		}
 		return false;
 	}	
+	
+	public Level getLevel() {
+		return lvl;
+	}
 }
 
 
