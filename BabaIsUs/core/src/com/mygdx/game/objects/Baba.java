@@ -20,7 +20,7 @@ public class Baba extends Item{
 	}
 	@Override
 	public boolean isPush(){
-		return true;
+		return false;
 	}
 
 	@Override

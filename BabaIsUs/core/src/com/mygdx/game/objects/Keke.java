@@ -17,7 +17,7 @@ public class Keke extends Item{
 	
 	@Override
 	public boolean isShift() {
-		return true;
+		return false;
 	}
 	
 	@Override
