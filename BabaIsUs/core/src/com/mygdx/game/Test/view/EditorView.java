@@ -107,7 +107,7 @@ public class EditorView implements Screen {
         editor.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		System.out.println(selectedItem);
-        		editor.setItem(selectedItem, (int) (x/32), (int)(y/32), 0 );
+        		editor.setItem(selectedItem, (int) (x), (int)(y), 0 );
         		return true;
         	}
         	
@@ -174,7 +174,10 @@ public class EditorView implements Screen {
         			selectedItem = ObjectList.ROCK;
         			break;
         		case "water":
-        			//selectedItem = ObjectList.KEKE;
+        			selectedItem = ObjectList.WATER;
+        			break;
+        		case "wall":
+        			selectedItem = ObjectList.WALL;
         			break;
         		}
         		return true;
@@ -188,10 +191,10 @@ public class EditorView implements Screen {
         		nom = nom.substring(nom.indexOf(" ")+1);
         		switch(nom) {
         		case "babatext":
-        			
+        			//selectedItem = ObjectList.ROCK;
         			break;
         		case "rocktext":
-        			//selectedItem = ObjectList.KEKE;
+        			//selectedItem = ObjectList.ROCKTEXT;
         			break;
         		}
         		return true;
