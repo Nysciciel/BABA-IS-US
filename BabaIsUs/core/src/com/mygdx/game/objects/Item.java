@@ -64,6 +64,9 @@ public abstract class Item {
 	public boolean isOpen() {
 		return false;
 	}
+	public boolean isWeak() {
+		return false;
+	}
 
 	protected int x;
 	protected int y;

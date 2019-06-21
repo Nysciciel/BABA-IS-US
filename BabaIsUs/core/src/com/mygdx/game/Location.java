@@ -12,9 +12,9 @@ public class Location {
 	protected ArrayList<Item> items;
 	protected int x;
 	protected int y;
-	
-	
-	
+
+
+
 
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
@@ -64,7 +64,7 @@ public class Location {
 		}
 		return false;
 	}
-	
+
 	public boolean hasYou2() {
 		for(Item i:items) {
 			if (i.isYou2()) {
@@ -83,18 +83,18 @@ public class Location {
 	}
 
 	public ArrayList<Text> giveTextItems(){
-		
+
 		ArrayList<Text> textList = new ArrayList<Text>();
-		
+
 		for (Item item : items) {
 			if (item instanceof Text)
 				textList.add((Text) item);
 		}
 		return textList;
 	}
-	
+
 	public boolean thereIsAOn() {
-		
+
 		for (Item item : items) {
 			if (item instanceof Text)
 				if (((Text)item).isOn()) 
@@ -112,6 +112,9 @@ public class Location {
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
+			if (((i.isStop()&&!i.isPush()) || (i.isPull() && !(i.isPush()))) && next((2+direction)%4).allAreWeak()) {
+				return true;
+			}
 			if ((i.isStop()&&!i.isPush()) || (i.isPull() && !(i.isPush()))) {
 				return false;
 			}
@@ -171,7 +174,7 @@ public class Location {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Item> move2(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
@@ -222,7 +225,7 @@ public class Location {
 	}
 
 	public void checkDeaths() {
-		
+
 		this.checkLocks();
 
 		ArrayList<Item> toKill = new ArrayList<Item>();
@@ -261,6 +264,9 @@ public class Location {
 						}
 					}
 				}
+			}
+			if(i.isWeak() && this.items.size()>1) {
+				toKill.add(i);
 			}
 		}
 		for(Item i:toKill) {
@@ -377,10 +383,19 @@ public class Location {
 			i.setLocation(this);
 		}
 	}
-	
+
 	public boolean allAreOpen() {
 		for(Item i:items) {
 			if(!(i.isOpen())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean allAreWeak() {
+		for(Item i:items) {
+			if(!(i.isWeak())) {
 				return false;
 			}
 		}
@@ -406,7 +421,7 @@ public class Location {
 		return false;
 	}
 
-	
+
 	public boolean allAreShut() {
 		for(Item i:items) {
 			if(!(i.isShut())) {
@@ -415,7 +430,7 @@ public class Location {
 		}
 		return true;
 	}
-	
+
 	public boolean isOn(Class<Item> item) {
 		for(Item i:items) {
 			if(item.isInstance(i)) {
@@ -424,7 +439,7 @@ public class Location {
 		}
 		return false;
 	}
-	
+
 	public boolean isNear(Class<Item> item) {
 		for(int i=0; i!=3; i++) {
 			if (this.next(i) != null && this.next(i).isOn(item)) {
