@@ -107,7 +107,6 @@ public abstract class Item {
 	public boolean isOpen() {
 		return propertyAssert("Open");
 	}
-	
 	public boolean isWeak() {
 		return propertyAssert("Weak");
 	}
@@ -168,7 +167,7 @@ public abstract class Item {
 		loc.add(this);
 	}
 
-	public boolean isempty() {
+	public boolean isEmpty() {
 		return false;
 	}
 

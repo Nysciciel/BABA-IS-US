@@ -8,6 +8,7 @@ public class Skull extends Item{
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public boolean isDefeat() {

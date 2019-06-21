@@ -9,6 +9,8 @@ import com.mygdx.game.objects.*;
 
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.item_ref.WallText;
+import com.mygdx.game.objects.text.property.Stop;
 import com.mygdx.game.objects.text.property.You;
 import com.mygdx.game.objects.text.relation.Is;
 import com.mygdx.game.rule.LogicHashtable;
@@ -100,10 +102,17 @@ public class Level {
 				}
 			}
 			
-			// Test de text
+			// BABA IS YOU
 			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
+			
+			
+			// WALL IS STOP
+			locationMatrix[0][10].add(new Stop(locationMatrix[0][10], 0));
+			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
+			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
+			
 
 			history.add(this.matrixCopy());
 			
@@ -198,10 +207,9 @@ public class Level {
 	}
 	
 	public void updateRules() {
-		System.out.println("Joy and Hapiness \n " + getRuleTable());
-		;
+		
 		readRules();
-		interpretRules();
+		interpretRules();		
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
@@ -328,6 +336,8 @@ public class Level {
 			}
 		}
 		history.add(this.matrixCopy());
+		
+		updateRules();
 	}
 
 	public void rollback() {
@@ -336,6 +346,7 @@ public class Level {
 			locationMatrix = this.matrixCopy();
 			history.remove(history.size()-1);
 		}
+		updateRules();
 	}
 
 	public Location[][] getLocationMatrix(){
@@ -356,6 +367,7 @@ public class Level {
 		locationMatrix = history.get(0);
 		history = new ArrayList<Location[][]>();
 		history.add(this.matrixCopy());
+		updateRules();
 	}
 	
 	public int getLength() {

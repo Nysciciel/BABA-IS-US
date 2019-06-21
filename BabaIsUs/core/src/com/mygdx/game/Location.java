@@ -143,7 +143,7 @@ public class Location {
 	public void add(Item item) {
 		Item toRemove = null;
 		for(Item i:items) {
-			if (i.isempty()) {
+			if (i.isEmpty()) {
 				toRemove = i;
 			}
 		}
