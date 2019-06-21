@@ -19,4 +19,11 @@ public class Skull extends Item{
 		return false;
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Skull" + orientation + "-0";
+		spriteUsed[1]="Skull" + orientation + "-1";
+		return(spriteUsed);
+	}
+
 }
