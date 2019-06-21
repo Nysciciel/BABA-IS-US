@@ -10,6 +10,7 @@ import com.mygdx.game.*;
 import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Water extends Item {
 
@@ -17,10 +18,8 @@ public class Water extends Item {
 		super(loc, ruleTable, x, y, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	private TextureAtlas textureAtlas;
-	private Animation animation;
-	private float elapsedTime = 0;
+	
+	private float fishTime = 2;
 
 	
 	@Override
@@ -28,28 +27,34 @@ public class Water extends Item {
 		return true;
 	}
 
-	public void render(SpriteBatch sb){
+	public void loadTextureAtlas(){
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
+	}
+
+	public String[] getSpriteUsed(){
 		String s = "";
 		for(int i=0;i<=3;i++){
 			if(isNeighbourEqual(i)){
 				s += i;
 			}
 		}
-		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
-		TextureRegion[] orientedWall = new TextureRegion[2];
-		orientedWall[0]=textureAtlas.findRegion("Water-" + s + "-0");
-		orientedWall[1]=textureAtlas.findRegion("Water-" + s + "-1");
-		animation = new Animation(1/3f, orientedWall);
-		elapsedTime += Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,x*size,y*size,size,size);
+		double fishRand = Math.random();
+		if(fishRand<0.005 && fishTime>1){
+			fishTime = 0;
+		}
+		if(s.equals("0123") && fishTime<0.6) {
+			fishTime += Gdx.graphics.getDeltaTime();
+			String[] spriteUsed = new String[2];
+			spriteUsed[0]="WaterFish-0";
+			spriteUsed[1]="WaterFish-1";
+			return(spriteUsed);
+		}else {
+			fishTime += Gdx.graphics.getDeltaTime();
+			String[] spriteUsed = new String[2];
+			spriteUsed[0]="Water-" + s + "-0";
+			spriteUsed[1]="Water-" + s + "-1";
+			return(spriteUsed);
+		}
 	}
 
-	public void dispose(){
-		textureAtlas.dispose();
-		texture.dispose();
-	}
 }

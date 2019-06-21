@@ -1,10 +1,17 @@
 package com.mygdx.game;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Scanner;
+
+
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
+
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.property.You;
@@ -16,9 +23,11 @@ import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.rule.RuleStack;
 import com.mygdx.game.rule.RuleStackList;
 
+
 import java.io.File;
 
 public class Level {
+
 	private Location[][] locationMatrix;
 	private int height;
 	private int length;
@@ -27,6 +36,20 @@ public class Level {
 	private ArrayList<Class> props;
 
 	private ArrayList<Location[][]> history;
+	
+	public Level(int length,int height) {
+		this.height = height;
+		this.length = length;
+		
+		locationMatrix = new Location[height][length];
+		for(int i = 0 ; i < height ; i++) {
+			for(int j = 0 ; j < length ; j++) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				locationMatrix[i][j] = new Location(items,this,i,j);
+				items.add(new Empty(locationMatrix[i][j],i,j,0));
+			}
+		}
+	}
 
 	public Level(String filename) {
 		
@@ -104,6 +127,24 @@ public class Level {
 		
 
 	}
+	
+	public Location getLocation(int x, int y) {
+		return locationMatrix[y][x];
+	}
+	/*
+	public LevelView(int hauteur, int largeur) {
+		this.height = hauteur;
+		this.length = largeur;
+
+		items = new ArrayList[height][length];
+
+		for (int index1 = 0; index1 < height; index1++) {
+			for (int index2 = 0; index2 < length; index2++) {
+				items[height - 1 - index1][index2] = new ArrayList<Item>();
+				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
+			}
+		}
+	}*/
 
 	public void readRules() {
 		
@@ -183,7 +224,7 @@ public class Level {
 		Location first = null;
 		for(Location i:list) {
 			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou()) || (list.indexOf(i.next(direction))==-1)) {
+				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
 					first = i;
 					break;
 				}
@@ -201,11 +242,11 @@ public class Level {
 		return beginning;
 	}
 
-	public void moveYou(int direction) {
+	public void moveYou1(int direction) {
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				if (locationMatrix[y][x].hasYou()) {
+				if (locationMatrix[y][x].hasYou1()) {
 					found.add(locationMatrix[y][x]);
 				}
 			}
@@ -215,7 +256,7 @@ public class Level {
 
 		if (found != null) {
 			for(Location i:found) {
-				ArrayList<Item> res = i.move(direction);
+				ArrayList<Item> res = i.move1(direction);
 				if (res!=null) {
 					for(Item j:res) {
 						j.goforward();
@@ -224,11 +265,27 @@ public class Level {
 			}
 		}
 	}
-
-	public void update() {
+	
+	public void moveYou2(int direction) {
+		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].update();
+				if (locationMatrix[y][x].hasYou2()) {
+					found.add(locationMatrix[y][x]);
+				}
+			}
+		}
+
+		found = prioritySort(found, direction);
+
+		if (found != null) {
+			for(Location i:found) {
+				ArrayList<Item> res = i.move2(direction);
+				if (res!=null) {
+					for(Item j:res) {
+						j.goforward();
+					}
+				}
 			}
 		}
 	}
@@ -241,7 +298,9 @@ public class Level {
 		}
 	}
 
-	public void render(SpriteBatch sb) {
+
+	public void render(Batch sb) {
+
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].render(sb);

@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
@@ -52,9 +53,18 @@ public class Location {
 		}
 	}
 
-	public boolean hasYou() {
+	public boolean hasYou1() {
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean hasYou2() {
+		for(Item i:items) {
+			if (i.isYou2()) {
 				return true;
 			}
 		}
@@ -63,25 +73,25 @@ public class Location {
 
 	public void orientYou(int direction) {
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1() || i.isYou2()) {
 				i.orient(direction);
 			}
 		}
 	}
 
 	public ArrayList<Text> giveTextItems(){
-		
+
 		ArrayList<Text> textList = new ArrayList<Text>();
-		
+
 		for (Item item : items) {
 			if (item instanceof Text)
 				textList.add((Text) item);
 		}
 		return textList;
 	}
-	
+
 	public boolean thereIsAOn() {
-		
+
 		for (Item item : items) {
 			if (item instanceof Text)
 				if (((Text)item).isOn()) 
@@ -99,6 +109,9 @@ public class Location {
 
 		ArrayList<Item> pushable = new ArrayList<Item>();
 		for(Item i:items) {
+			if (((i.isStop()&&!i.isPush()) || (i.isPull() && !(i.isPush()))) && next((2+direction)%4).allAreWeak()) {
+				return true;
+			}
 			if ((i.isStop()&&!i.isPush()) || (i.isPull() && !(i.isPush()))) {
 				return false;
 			}
@@ -141,10 +154,28 @@ public class Location {
 		items.add(item);
 	}
 
-	public ArrayList<Item> move(int direction) {
+	public ArrayList<Item> move1(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1()) {
+				yous.add(i);
+				i.orient(direction);
+			}
+		}
+		if (yous.size()>0) {
+			if (next(direction)!=null) {
+				if (next(direction).pleaseCanIGo(direction)) {
+					return yous;
+				}
+			}
+		}
+		return null;
+	}
+
+	public ArrayList<Item> move2(int direction) {
+		ArrayList<Item> yous = new ArrayList<Item>();
+		for(Item i:items) {
+			if (i.isYou2()) {
 				yous.add(i);
 				i.orient(direction);
 			}
@@ -177,26 +208,21 @@ public class Location {
 		return null;
 	}
 
-	public void update() {
-		for(Item i:items) {
-			i.update();
-		}
-	}
-
 	public void dispose() {
 		for(Item i:items) {
 			i.dispose();
 		}
 	}
 
-	public void render(SpriteBatch sb) {
+
+	public void render(Batch sb) {
 		for(Item i:items) {
 			i.render(sb);
 		}
 	}
 
 	public void checkDeaths() {
-		
+
 		this.checkLocks();
 
 		ArrayList<Item> toKill = new ArrayList<Item>();
@@ -206,7 +232,7 @@ public class Location {
 			if(i.isDefeat()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou() && (isFloat == j.isFloat())) {
+					if((i.isYou1() || i.isYou2()) && (isFloat == j.isFloat())) {
 						if(toKill.indexOf(j)==-1) {
 							toKill.add(j);
 						}
@@ -235,6 +261,9 @@ public class Location {
 						}
 					}
 				}
+			}
+			if(i.isWeak() && this.items.size()>1) {
+				toKill.add(i);
 			}
 		}
 		for(Item i:toKill) {
@@ -298,9 +327,11 @@ public class Location {
 			}
 		}
 		for(Item i:toMove) {
-			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
-				i.goforward();
-				i.moved();
+			if(next(i.getOrientation())!=null) {
+				if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
+					i.goforward();
+					i.moved();
+				}
 			}
 		}
 
@@ -313,7 +344,7 @@ public class Location {
 			if(i.isWin()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou() && (isFloat != j.isFloat())) {
+					if((i.isYou1() || i.isYou2()) && (isFloat != j.isFloat())) {
 						System.out.println("YOU WIN MOTHERFUCKER");;
 					}
 				}
@@ -349,10 +380,19 @@ public class Location {
 			i.setLocation(this);
 		}
 	}
-	
+
 	public boolean allAreOpen() {
 		for(Item i:items) {
 			if(!(i.isOpen())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean allAreWeak() {
+		for(Item i:items) {
+			if(!(i.isWeak())) {
 				return false;
 			}
 		}
@@ -378,7 +418,7 @@ public class Location {
 		return false;
 	}
 
-	
+
 	public boolean allAreShut() {
 		for(Item i:items) {
 			if(!(i.isShut())) {
@@ -389,6 +429,7 @@ public class Location {
 	}
 	
 	public boolean isOnLocation(Class<Item> item) {
+
 		for(Item i:items) {
 			if(item.isInstance(i)) {
 				return true;
@@ -398,6 +439,7 @@ public class Location {
 	}
 	
 	public boolean isNearLocation(Class<Item> item) {
+
 		for(int i=0; i!=3; i++) {
 			if (this.next(i) != null && this.next(i).isOnLocation(item)) {
 				return true;

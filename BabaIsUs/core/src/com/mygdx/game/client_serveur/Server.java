@@ -1,5 +1,7 @@
 package com.mygdx.game.client_serveur;
 
+import com.mygdx.game.Level;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,10 +19,13 @@ public class Server{
 	
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
+	private boolean connected = false;
+	private Level lvl;
 	
-	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
+	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack,Level level) {
 		
 		this.data = bq;
+		this.lvl = level;
 		callBackFunction = callBack;
         
 		 final ServerSocket serveurSocket  ;
@@ -31,7 +36,7 @@ public class Server{
 	     try {
 	       serveurSocket = new ServerSocket(5000);
 	       clientSocket = serveurSocket.accept();
-	       
+	       this.connected =true;
 	       out = clientSocket.getOutputStream();
 	       in = clientSocket.getInputStream();
 	       Thread envoyer = new Thread(new Runnable() {
@@ -41,7 +46,6 @@ public class Server{
 	                while(true){
 	                  try {
 						msg = data.take();
-						System.out.println("msg : " + msg);
 						out.write(msg);
 						out.flush();
 	                  } catch (InterruptedException e) {
@@ -76,5 +80,10 @@ public class Server{
 	      } 
 	     
 	}
-	
+
+	public boolean isConnected(){
+		return true;
+	}
+
+
 }

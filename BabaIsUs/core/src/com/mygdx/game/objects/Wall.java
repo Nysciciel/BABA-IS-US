@@ -1,6 +1,7 @@
 package com.mygdx.game.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,33 +25,25 @@ public class Wall extends Item {
 	private float elapsedTime = 0;
 
 	@Override
-	public boolean isStop() {
+	public boolean isMove() {
 		return true;
 	}
 
-	public void render(SpriteBatch sb){
+	public void loadTextureAtlas(){
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
+	}
+
+	public String[] getSpriteUsed(){
 		String s = "";
 		for(int i=0;i<=3;i++){
 			if(isNeighbourEqual(i)){
 				s += i;
 			}
 		}
-		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
-		TextureRegion[] orientedWall = new TextureRegion[2];
-		orientedWall[0]=textureAtlas.findRegion("Wall-" + s + "-0");
-		orientedWall[1]=textureAtlas.findRegion("Wall-" + s + "-1");
-		animation = new Animation(1/3f, orientedWall);
-		elapsedTime += Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,x*size,y*size,size,size);
-	}
-
-	public void dispose(){
-		textureAtlas.dispose();
-		texture.dispose();
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Wall-" + s + "-0";
+		spriteUsed[1]="Wall-" + s + "-1";
+		return(spriteUsed);
 	}
 
 }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Baba extends Item{
 
@@ -42,43 +43,19 @@ public class Baba extends Item{
 		return super.isYou();
 	}
 
-
-	public void render(SpriteBatch sb){
-		animationChrono +=Gdx.graphics.getDeltaTime();
-		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFoxSheetU.txt"));
-		TextureRegion[] orientedBaba = new TextureRegion[2];
-		orientedBaba[0] = textureAtlas.findRegion("Fox"+orientation+"-0");
-		orientedBaba[1] = textureAtlas.findRegion("Fox"+orientation+"-1");
-		animation = new Animation(1/3f, orientedBaba);
-		elapsedTime += Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		if(animationChrono<0.2){
-			System.out.println(animationChrono);
-			switch(orientation){
-			case(0):
-				sb.draw(test, (x+1-animationChrono*5) * size, y * size, size, size);
-			break;
-			case(1):
-				sb.draw(test, x * size, (y-1+animationChrono*5) * size, size, size);
-			break;
-			case(2):
-				sb.draw(test, (x-1+animationChrono*5) * size, y * size, size, size);
-			break;
-			case(3):
-				sb.draw(test, x * size, (y+1-animationChrono*5) * size, size, size);
-			break;
-			}
-		}else {
-			sb.draw(test, x * size, y * size, size, size);
-		}
+	public void loadTextureAtlas(){
+		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFox" + "SheetU.txt"));
+	}
+	@Override
+	public boolean isPush(){
+		return false;
 	}
 
-	public void dispose(){
-		textureAtlas.dispose();
-		texture.dispose();
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Fox" + orientation + "-0";
+		spriteUsed[1]="Fox" + orientation + "-1";
+		return(spriteUsed);
 	}
 
 }
