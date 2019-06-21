@@ -55,6 +55,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			else {
 				// case Setting (change of nature)
 				if (rule.is()) {
+					
 					// add relation
 					ArrayList<String> keyList = new ArrayList<String>();
 					keyList.add(rule.getRelation().getRefName());
@@ -62,7 +63,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 					// add last item
 					ArrayList<String> keyList2 = new ArrayList<String>();
 					keyList2.add(rule.getTextList().getLast().getRefName());
-					keys.add(keyList);
+					keys.add(keyList2);
+
 					// case restriction by opposition
 					if (rule.getTextList().get(length-2).isNot()) { // -1 ?
 						// add NOT
@@ -105,7 +107,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 						// add last
 						ArrayList<String> keyList2 = new ArrayList<String>();
 						keyList2.add(rule.getTextList().getLast().getRefName());
-						keys.add(keyList);
+						keys.add(keyList2);
 					}
 					if (rule.getTextList().getFirst().isNot()){
 						// add complementary of 2nd element
@@ -157,8 +159,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				}
 			}
 			
-
 			for (String key : keys.get(0)) {
+				
 				this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
 			}
 		

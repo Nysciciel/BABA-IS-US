@@ -10,6 +10,8 @@ import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.item_ref.WallText;
+import com.mygdx.game.objects.text.item_ref.WaterText;
+import com.mygdx.game.objects.text.property.Sink;
 import com.mygdx.game.objects.text.property.Stop;
 import com.mygdx.game.objects.text.property.You;
 import com.mygdx.game.objects.text.relation.Is;
@@ -113,6 +115,11 @@ public class Level {
 			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
 			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
 			
+			// WATER IS SINK
+			locationMatrix[0][12].add(new Sink(locationMatrix[0][12], 0));
+			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
+			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
+
 
 			history.add(this.matrixCopy());
 			
