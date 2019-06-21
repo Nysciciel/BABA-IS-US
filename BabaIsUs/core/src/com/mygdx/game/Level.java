@@ -27,6 +27,20 @@ public class Level {
 	private HashSet<Rule> rules;
 
 	private ArrayList<Location[][]> history;
+	
+	public Level(int length,int height) {
+		this.height = height;
+		this.length = length;
+		
+		locationMatrix = new Location[height][length];
+		for(int i = 0 ; i < height ; i++) {
+			for(int j = 0 ; j < length ; j++) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				locationMatrix[i][j] = new Location(items,this,i,j);
+				items.add(new Empty(locationMatrix[i][j],i,j,0));
+			}
+		}
+	}
 
 	public Level(String filename) {
 
@@ -88,6 +102,10 @@ public class Level {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public Location getLocation(int x, int y) {
+		return locationMatrix[y][x];
 	}
 	/*
 	public LevelView(int hauteur, int largeur) {

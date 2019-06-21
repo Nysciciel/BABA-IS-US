@@ -6,5 +6,8 @@ public enum ObjectList {
 	WATER,
 	KEKE,
 	EMPTY,
-	ROCK;
+	ROCK,
+	WALLTEXT,
+	ROCKTEXT,
+	ISTEXT;
 }
