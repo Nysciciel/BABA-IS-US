@@ -416,6 +416,12 @@ public class Location {
 		}
 		return false;
 	}
+	
+	public void transform() {
+		for (Item item : items) {
+			item.transform();
+		}
+	}
 
 
 	public boolean allAreShut() {
