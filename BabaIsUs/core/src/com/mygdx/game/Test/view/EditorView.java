@@ -68,7 +68,7 @@ public class EditorView implements Screen {
         
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         
