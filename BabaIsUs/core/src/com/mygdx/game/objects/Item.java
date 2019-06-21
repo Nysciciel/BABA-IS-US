@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.utils.Constants;
@@ -358,6 +360,20 @@ public abstract class Item {
 	}
 	
 	public abstract String toString();
+	
+	public void transform() {
+		ArrayList<Class> items = this.hasToTranformTo();
+		if(items.size()>0) {
+			loc.del(this);
+			for(Class clazz:items) {
+				try {
+					loc.add((Item)clazz.getConstructors()[0].newInstance(loc,orientation));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	
 	

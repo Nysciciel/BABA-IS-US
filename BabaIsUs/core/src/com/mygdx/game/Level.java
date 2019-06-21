@@ -345,6 +345,11 @@ public class Level {
 		history.add(this.matrixCopy());
 		
 		updateRules();
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].transform();
+			}
+		}
 	}
 
 	public void rollback() {
