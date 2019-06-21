@@ -182,7 +182,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			}
 		else {
 			for (String key : keys.get(0)) {
-				System.out.println("aduygfoqsuhgdfonqjushfnekcfuqynseotgjuh qsbjecgtb&vkabhczqkeg ");
+				//System.out.println("aduygfoqsuhgdfonqjushfnekcfuqynseotgjuh qsbjecgtb&vkabhczqkeg ");
 				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
 			}
 		}

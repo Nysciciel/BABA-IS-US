@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -135,22 +136,22 @@ public class Location {
 
 	public void del(Item item) {
 		items.remove(item);
-		if (items.size()==0) {
+		if (items.isEmpty()) {
 			this.add(new Empty(this, 0));
 		}
 	}
 
 	public void add(Item item) {
-		Item toRemove = null;
+		ArrayList<Item> toRemove = new ArrayList<Item>();
 		for(Item i:items) {
 			if (i.isEmpty()) {
-				toRemove = i;
+				toRemove.add(i);
 			}
 		}
-		if(toRemove != null) {
-			items.remove(toRemove);
+		items.removeAll(toRemove);
+		if(!item.isEmpty()) {
+			items.add(item);
 		}
-		items.add(item);
 	}
 
 	public ArrayList<Item> move1(int direction) {
@@ -388,7 +389,7 @@ public class Location {
 		}
 		return true;
 	}
-	
+
 	public boolean allAreWeak() {
 		for(Item i:items) {
 			if(!(i.isWeak())) {
@@ -416,11 +417,27 @@ public class Location {
 		}
 		return false;
 	}
-	
+
 	public void transform() {
+		
+		ArrayList<Item> newItems = new ArrayList<Item>();
+		ArrayList<Class> afterTransform;
+		
 		for (Item item : items) {
-			item.transform();
+			afterTransform = item.hasToTransformTo();
+			if (afterTransform.isEmpty())
+				newItems.add(item);
+			else {
+				for (Class c : afterTransform) {
+					try {
+						newItems.add((Item)c.getConstructors()[0].newInstance(this,item.getOrientation()));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		}
+		items = newItems;
 	}
 
 
@@ -441,7 +458,7 @@ public class Location {
 		}
 		return false;
 	}
-	
+
 	public boolean isNearLocation(Class<Item> item) {
 
 		for(int i=0; i!=3; i++) {
@@ -451,7 +468,7 @@ public class Location {
 		}
 		return false;
 	}	
-	
+
 	public Level getLevel() {
 		return lvl;
 	}
@@ -459,7 +476,7 @@ public class Location {
 	public int getX() {
 		return this.x;
 	}
-	
+
 	public int getY() {
 		return this.y;
 	}

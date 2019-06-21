@@ -113,7 +113,7 @@ public abstract class Item {
 		return propertyAssert("Weak");
 	}
 	
-	private ArrayList<Class> hasToTranformTo(){
+	public ArrayList<Class> hasToTransformTo(){
 		
 		ArrayList<Class> transform = new ArrayList<Class>();
 		try {
@@ -361,20 +361,7 @@ public abstract class Item {
 	
 	public abstract String toString();
 	
-	public void transform() {
-		ArrayList<Class> items = this.hasToTranformTo();
-		if(items.size()>0) {
-			loc.del(this);
-			for(Class clazz:items) {
-				try {
-					loc.add((Item)clazz.getConstructors()[0].newInstance(loc,orientation));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
+		
 	
 	
 }
