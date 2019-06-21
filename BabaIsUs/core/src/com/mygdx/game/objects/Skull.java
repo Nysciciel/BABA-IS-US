@@ -8,15 +8,5 @@ public class Skull extends Item{
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	public boolean isDefeat() {
-		return false;
-	}
-	
-	@Override
-	public boolean isMove() {
-		return false;
-	}
 
 }

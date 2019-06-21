@@ -10,7 +10,7 @@ public class Empty extends Item{
 	}
 
 	@Override
-	public boolean isempty() {
+	public boolean isEmpty() {
 		return true;
 	}
 

@@ -12,12 +12,6 @@ public class Water extends Item {
 
 	private float fishTime = 2;
 
-	
-	@Override
-	public boolean isPush() {
-		return true;
-	}
-
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
 	}

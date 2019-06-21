@@ -168,7 +168,7 @@ public abstract class Item {
 		loc.add(this);
 	}
 
-	public boolean isempty() {
+	public boolean isEmpty() {
 		return false;
 	}
 
