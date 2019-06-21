@@ -40,9 +40,7 @@ public class LevelView implements Screen,ServerCallBack {
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
-        System.out.println("got pranked");
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             lvl.endturn();
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.Z)){

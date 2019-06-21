@@ -44,14 +44,31 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			lvl.endturn();
+			try {
+				data.put(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.Z)){
+		if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+			lvl.reset();
+			try {
+				data.put(6);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 			lvl.rollback();
+			try {
+				data.put(4);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou2(2);
 			lvl.endturn();
 
@@ -62,7 +79,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou2(1);
 			lvl.endturn();
 
@@ -74,7 +91,7 @@ public class ClientView implements Screen,ServerCallBack {
 
 
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou2(0);
 			lvl.endturn();
 
@@ -85,7 +102,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou2(3);
 			lvl.endturn();
 
@@ -96,11 +113,20 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-			parent.screenChoice(MainTest.MENU);
-		}
 		if(movePoto != -1) {
-			lvl.moveYou1(movePoto);
+			switch(movePoto) {
+			case(4):
+				lvl.rollback();
+				break;
+			case(5):
+				lvl.endturn();
+				break;
+			case(6):
+				lvl.reset();
+				break;
+			default:
+				lvl.moveYou1(movePoto);
+			}
 			movePoto = -1;
 			lvl.endturn();
 		}

@@ -49,17 +49,33 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		//System.out.println("ON EST DANS LA SERVERVIEW POTOOOOOOOOOOOOOOOOOOOOOO");
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			parent.screenChoice(MainTest.MENU);
 		}
 		if(enabled) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
+				try {
+					data.put(5);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+				slvl.reset();
+				try {
+					data.put(6);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				slvl.rollback();
+				try {
+					data.put(4);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 				slvl.moveYou1(2);
@@ -107,7 +123,19 @@ public class ServerView implements Screen,ServerCallBack {
 
 			}
 			if(movePoto != -1) {
-				slvl.moveYou2(movePoto);
+				switch(movePoto) {
+				case(4):
+					slvl.rollback();
+					break;
+				case(5):
+					slvl.endturn();
+					break;
+				case(6):
+					slvl.reset();
+					break;
+				default:
+					slvl.moveYou2(movePoto);
+				}
 				movePoto = -1;
 				slvl.endturn();
 			}
