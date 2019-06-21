@@ -18,7 +18,7 @@ public class Wall extends Item {
 		super(loc, x, y, orientation);
 	}
 	@Override
-	public boolean isMove() {
+	public boolean isPush() {
 		return true;
 	}
 
