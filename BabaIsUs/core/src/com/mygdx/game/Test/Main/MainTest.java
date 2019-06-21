@@ -3,6 +3,7 @@ package com.mygdx.game.Test.Main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
 import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.view.*;
@@ -49,6 +50,8 @@ public class MainTest extends Game {
                 this.setScreen(menu);
                 Stage stage = menu.getStage();
                 Gdx.input.setInputProcessor(stage);
+                if(levelView != null) levelView.setLvl(new Level("Level.txt"));
+                if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 break;
             case EDITOR:
                 if(editorView == null) editorView = new EditorView(this);
@@ -78,7 +81,7 @@ public class MainTest extends Game {
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(server == null) server = new ServerView(this,thread,data,level);
+                if(server == null) server = new ServerView(this,thread,data);
                 this.setScreen(server);
                 Stage stage6 = server.getStage();
                 Gdx.input.setInputProcessor(stage6);
