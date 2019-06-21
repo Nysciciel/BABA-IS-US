@@ -2,12 +2,7 @@ package com.mygdx.game.client_serveur;
 
 import com.mygdx.game.Level;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.CharBuffer;
@@ -28,19 +23,32 @@ public class Server{
 		this.lvl = level;
 		this.connected = false;
 		callBackFunction = callBack;
-        
-		 final ServerSocket serveurSocket  ;
-	     final Socket clientSocket ;
-	     final InputStream in;
-	     final OutputStream out;
+
+		FileInputStream fis = null;
+		BufferedInputStream bis = null;
+		final ServerSocket serveurSocket  ;
+		final Socket clientSocket ;
+		final InputStream in;
+		final OutputStream out;
 	     
 	     try {
 	       serveurSocket = new ServerSocket(5000);
 	       clientSocket = serveurSocket.accept();
 	       this.connected =true;
-	       out = clientSocket.getOutputStream();
-	       in = clientSocket.getInputStream();
-	       Thread envoyer = new Thread(new Runnable() {
+
+			 File myFile = new File ("Level.txt");
+			 byte [] mybytearray  = new byte [(int)myFile.length()];
+			 fis = new FileInputStream(myFile);
+			 bis = new BufferedInputStream(fis);
+			 bis.read(mybytearray,0,mybytearray.length);
+			 out = clientSocket.getOutputStream();
+			 System.out.println("Sending " + " Level.txt " + "(" + mybytearray.length + " bytes)");
+			 out.write(mybytearray,0,mybytearray.length);
+			 out.flush();
+
+	        //out = clientSocket.getOutputStream();
+	        in = clientSocket.getInputStream();
+	        Thread envoyer = new Thread(new Runnable() {
 	             int msg;
 	              @Override
 	              public void run() {
@@ -78,7 +86,12 @@ public class Server{
 	      recevoir.start();
 	      }catch (IOException e) {
 	         e.printStackTrace();
-	      } 
+	      }
+	     finally {
+			 /*if (bis != null) bis.close();
+			 if (out != null) out.close();
+			 if (clientSocket!=null) clientSocket.close();*/
+		 }
 	     
 	}
 

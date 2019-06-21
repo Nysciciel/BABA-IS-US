@@ -19,7 +19,7 @@ public class MultiplayerView implements Screen {
     private MainTest parent; // a field to store our orchestrator
     private Stage stage;
     private Texture background;
-
+    private Skin skin;
     // our constructor with a Box2DTutorial argument
     public MultiplayerView(MainTest mainTest) {
 
@@ -27,18 +27,20 @@ public class MultiplayerView implements Screen {
         stage = new Stage(new ScreenViewport());
         this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
     }
 
     public Stage getStage(){
         return stage;
     }
+    public void setStage(Stage nstage){ this.stage = nstage;}
 
     @Override
     public void show() {
         // TODO Auto-generated method stub
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+
 
 
         Table table = new Table();

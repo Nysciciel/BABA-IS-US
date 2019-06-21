@@ -1,33 +1,55 @@
 package com.mygdx.game.client_serveur;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.CharBuffer;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
+
+
 public class Client {
 	
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
+
+	public final static int FILE_SIZE = 6022386;
 	
 	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack, String ip_addr) {
 		
 		final Socket clientSocket;
 		final InputStream in;
 	    final OutputStream out;
+
+		int bytesRead;
+		int current = 0;
+		FileOutputStream fos = null;
+		BufferedOutputStream bos = null;
 	    
 	    data = bq;
 	    callBackFunction = callBack;
 	    
 	    try {
 	         clientSocket = new Socket(ip_addr,5000);
+
+			byte [] mybytearray  = new byte [FILE_SIZE];
+			InputStream is = clientSocket.getInputStream();
+			fos = new FileOutputStream("level.txt");
+			bos = new BufferedOutputStream(fos);
+			bytesRead = is.read(mybytearray,0,mybytearray.length);
+			current = bytesRead;
+
+			do {
+				bytesRead =
+						is.read(mybytearray, current, (mybytearray.length-current));
+				if(bytesRead >= 0) current += bytesRead;
+			} while(bytesRead > -1);
+
+			bos.write(mybytearray, 0 , current);
+			bos.flush();
+			System.out.println("File " + "level.txt"
+					+ " downloaded (" + current + " bytes read)");
 	   
 	         out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
