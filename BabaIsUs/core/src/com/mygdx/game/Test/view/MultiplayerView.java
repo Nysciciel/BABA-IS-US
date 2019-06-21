@@ -86,7 +86,6 @@ public class MultiplayerView implements Screen {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 String IP = address.getText();
-                System.out.println(IP);
                 MainTest.ip_addr = IP;
                 parent.screenChoice(MainTest.CLIENT);
 
