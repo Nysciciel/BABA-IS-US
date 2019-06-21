@@ -23,11 +23,9 @@ public class Logic extends LogicHashtable {
 		onNot = onNot2;
 		nearNot = nearNot2;
 		facing = facing2;		
-		System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
 	}
 
 	public boolean getTruth(Item item) {
-		System.out.println("value = "+value);
 		return value && onTruth(item) && nearTruth(item) && facingTruth(item);
 	}
 	
