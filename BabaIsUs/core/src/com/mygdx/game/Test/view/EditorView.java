@@ -169,8 +169,8 @@ public class EditorView implements Screen {
         			editor.clear();
         			break;
         		case "save":
-        			System.out.println("dfsdf");
         			FileManager.SaveLevel(editor.getLevel());
+        			parent.screenChoice(MainTest.MENU);
         			break;
         		}
         		return true;

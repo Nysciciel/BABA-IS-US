@@ -22,7 +22,7 @@ public class FileManager {
 			for(int j=0 ; j<length ; j++) {
 				loc = level.getLocation(i, j);
 				for(Item item : loc.getItems()) {
-					chaine = chaine + item.toString();
+					chaine = chaine + item.toString() + item.getOrientation();
 				}
 				chaine = chaine + " ";
 			}
