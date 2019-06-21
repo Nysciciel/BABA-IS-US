@@ -44,6 +44,10 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+			parent.screenChoice(MainTest.MENU);
+		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			lvl.endturn();
 			try {
