@@ -16,11 +16,14 @@ public class Wall extends Item {
 	public Wall(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName() + "SheetU.txt"));
 	}
 	@Override
 	public boolean isMove() {
 		return true;
+	}
+
+	public void loadTextureAtlas(){
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
 	}
 
 	public String[] getSpriteUsed(){
@@ -34,11 +37,6 @@ public class Wall extends Item {
 		spriteUsed[0]="Wall-" + s + "-0";
 		spriteUsed[1]="Wall-" + s + "-1";
 		return(spriteUsed);
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }

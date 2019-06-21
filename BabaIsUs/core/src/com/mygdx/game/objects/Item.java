@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class Item {
 	protected float animationChrono=0;
-	protected TextureAtlas textureAtlas ;
+	protected TextureAtlas textureAtlas;
 	protected Animation animation;
 	protected float elapsedTime = 0;
 
@@ -79,7 +79,7 @@ public abstract class Item {
 		this.x = x;
 		this.y = y;
 		this.orientation= orientation;
-
+		loadTextureAtlas();
 	}
 
 	public Vector2 getPosition() {
@@ -164,6 +164,15 @@ public abstract class Item {
 		return false;
 	}
 
+	public void loadTextureAtlas(){
+		try{
+			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName()+ "Sheet.txt"));
+		}catch(Exception e){
+			textureAtlas = new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"));
+		}
+	}
+
+
 	public void render(Batch sb){
 		String[] spriteUsed = getSpriteUsed();
 		int length = spriteUsed.length;
@@ -173,6 +182,7 @@ public abstract class Item {
 		}
 		animation = new Animation(1/3f, orientedWall);
 		elapsedTime += Gdx.graphics.getDeltaTime();
+		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
 		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
@@ -180,8 +190,40 @@ public abstract class Item {
 		sb.draw(test,getAffichePos()[0]*size,getAffichePos()[1]*size,size,size);
 	}
 
-	public abstract String[] getSpriteUsed();
-	public abstract float[] getAffichePos();
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[1];
+		spriteUsed[0]="Error0";
+		return(spriteUsed);
+	}
+
+	public float[] getAffichePos(){
+		float a,b;
+		if(animationChrono<0.2){
+			switch(orientation){
+				case(0):
+					a=x+1-animationChrono*5;
+					b=y;
+					break;
+				case(1):
+					a=x;
+					b=y-1+animationChrono*5;
+					break;
+				case(2):
+					a=x-1+animationChrono*5;
+					b=y;
+					break;
+				default:
+					a=x;
+					b=y+1-animationChrono*5;
+					break;
+			}
+		}else {
+			a=x;
+			b=y;
+		}
+		float[] tab={a,b};
+		return(tab);
+	}
 	
 	public void orient(int direction) {
 		orientation = direction;
