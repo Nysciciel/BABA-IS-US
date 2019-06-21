@@ -14,11 +14,10 @@ import com.mygdx.game.utils.Constants;
 
 public class Not extends Operator {
 
-	public Not(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Not(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
 
 	@Override
 	public boolean isNot() {

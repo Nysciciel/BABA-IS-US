@@ -15,8 +15,8 @@ import com.mygdx.game.utils.Constants;
 
 public class Wall extends Item {
 
-	public Wall(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Wall(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

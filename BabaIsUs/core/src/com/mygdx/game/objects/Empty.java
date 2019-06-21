@@ -12,9 +12,9 @@ import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Empty extends Item{
-	
-	public Empty(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+
+	public Empty(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

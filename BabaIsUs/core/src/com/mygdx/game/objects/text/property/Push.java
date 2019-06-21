@@ -7,10 +7,9 @@ import com.mygdx.game.rule.RuleSet;
 
 public class Push extends Property {
 
-	public Push(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Push(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
 
 }

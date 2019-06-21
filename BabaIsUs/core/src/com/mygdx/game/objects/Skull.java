@@ -11,8 +11,8 @@ import com.mygdx.game.rule.RuleSet;
 
 public class Skull extends Item{
 
-	public Skull(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Skull(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -19,6 +19,21 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class Item {
 
+	protected int orientation;
+	protected Location loc;
+	protected float animationChrono = 1;
+	protected TextureAtlas textureAtlas;
+	protected Animation animation;
+	protected float elapsedTime = 0;
+	protected boolean hasMoved = false;
+	protected boolean hasShifted = false;
+
+	// Constructor
+	public Item(Location loc, int orientation) {
+		this.loc = loc;
+		this.orientation= orientation;
+	}
+
 	private boolean propertyAssert(String key) {
 		
 		Logic affirm;
@@ -117,28 +132,12 @@ public abstract class Item {
 		return null;		
 	}
 	
-
-	protected int x;
-	protected int y;
-	protected int orientation;
-	protected Location loc;
-	protected float animationChrono = 1;
-	protected TextureAtlas textureAtlas;
-	protected Animation animation;
-	protected float elapsedTime = 0;
-	protected boolean hasMoved = false;
-	protected boolean hasShifted = false;
-
-	public Item(Location loc, LogicHashtable ruleTable,
-			int x, int y, int orientation) {
-		this.loc = loc;
-		this.x = x;
-		this.y = y;
-		this.orientation= orientation;
+	public int getX() {
+		return loc.getX();
 	}
-
-	public Vector2 getPosition() {
-		return new Vector2(x,y);
+	
+	public int getY() {
+		return loc.getY();
 	}
 
 	public int getOrientation() {
@@ -164,22 +163,6 @@ public abstract class Item {
 			}
 		}
 
-		switch(orientation) {
-		case(0):
-			x-=1;
-		break;
-		case(1):
-			y+=1;
-		break;
-		case(2):
-			x+=1;
-		break;
-		case(3):
-			y-=1;
-		break;
-		default:
-		}
-
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
@@ -190,23 +173,6 @@ public abstract class Item {
 		//useful for when a push&pull chain is getting pushed
 		animationChrono = 0;
 		loc.del(this);
-
-		switch(orientation) {
-		case(0):
-			x-=1;
-		break;
-		case(1):
-			y+=1;
-		break;
-		case(2):
-			x+=1;
-		break;
-		case(3):
-			y-=1;
-		break;
-		default:
-		}
-
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
@@ -256,25 +222,25 @@ public abstract class Item {
 		if(animationChrono<0.2){
 			switch(orientation){
 				case(0):
-					a=x+1-animationChrono*5;
-					b=y;
+					a=getX()+1-animationChrono*5;
+					b=getY();
 					break;
 				case(1):
-					a=x;
-					b=y-1+animationChrono*5;
+					a=getX();
+					b=getY()-1+animationChrono*5;
 					break;
 				case(2):
-					a=x-1+animationChrono*5;
-					b=y;
+					a=getX()-1+animationChrono*5;
+					b=getY();
 					break;
 				default:
-					a=x;
-					b=y+1-animationChrono*5;
+					a=getX();
+					b=getY()+1-animationChrono*5;
 					break;
 			}
 		}else {
-			a=x;
-			b=y;
+			a=getX();
+			b=getY();
 		}
 		float[] tab={a,b};
 		return(tab);
@@ -307,7 +273,7 @@ public abstract class Item {
 
 	public Item copy() {
 		try {
-			return (Item)getClass().getConstructors()[0].newInstance(null,x,y,orientation);
+			return (Item)getClass().getConstructors()[0].newInstance(null, orientation);
 		}
 		catch(Exception e) {
 			return null;

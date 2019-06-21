@@ -6,9 +6,9 @@ import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 
 public abstract class Text extends Item {
-	
-	public Text(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+
+	public Text(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

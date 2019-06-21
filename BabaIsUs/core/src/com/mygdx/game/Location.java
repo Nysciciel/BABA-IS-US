@@ -3,7 +3,6 @@ package com.mygdx.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
 
@@ -137,7 +136,7 @@ public class Location {
 	public void del(Item item) {
 		items.remove(item);
 		if (items.size()==0) {
-			this.add(new Empty(this, lvl.getRuleTable(), x, y, 0));
+			this.add(new Empty(this, 0));
 		}
 	}
 
@@ -450,6 +449,14 @@ public class Location {
 	
 	public Level getLevel() {
 		return lvl;
+	}
+
+	public int getX() {
+		return this.x;
+	}
+	
+	public int getY() {
+		return this.y;
 	}
 }
 

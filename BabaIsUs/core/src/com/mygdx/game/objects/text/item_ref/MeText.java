@@ -7,8 +7,8 @@ import com.mygdx.game.rule.RuleSet;
 
 public class MeText extends ItemRef {
 
-	public MeText(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public MeText(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 }

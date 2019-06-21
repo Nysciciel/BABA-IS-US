@@ -7,9 +7,8 @@ import com.mygdx.game.rule.RuleSet;
 
 public abstract class Operator extends Text {
 
-	
-	public Operator(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Operator(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

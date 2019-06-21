@@ -6,10 +6,9 @@ import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 
 public abstract class Relation extends Text {
-	
 
-	public Relation(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Relation(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -7,9 +7,11 @@ import com.mygdx.game.rule.RuleSet;
 
 public class KekeText extends ItemRef {
 
-	public KekeText(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public KekeText(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }

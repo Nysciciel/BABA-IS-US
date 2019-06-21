@@ -14,10 +14,9 @@ import com.mygdx.game.utils.Constants;
 
 public class You extends Property {
 
-	public You(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public You(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
 
 }

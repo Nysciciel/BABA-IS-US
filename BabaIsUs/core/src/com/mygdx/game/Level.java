@@ -46,7 +46,7 @@ public class Level {
 			for(int j = 0 ; j < length ; j++) {
 				ArrayList<Item> items = new ArrayList<Item>();
 				locationMatrix[i][j] = new Location(items,this,i,j);
-				items.add(new Empty(locationMatrix[i][j],i,j,0));
+				items.add(new Empty(locationMatrix[i][j],0));
 			}
 		}
 	}
@@ -83,25 +83,25 @@ public class Level {
 					Location loc = new Location(items, this, x, height - 1 -y);
 					switch(lines.get(y).charAt(x)) {
 					case 'e':
-						loc.add(new Empty(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Empty(loc, 0));
 						break;
 					case 'b':
-						loc.add(new Baba(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Baba(loc, 0));
 						break;
 					case 'w':
-						loc.add(new Wall(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Wall(loc, 0));
 						break;
 					case 'r':
-						loc.add(new Rock(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Rock(loc, 0));
 						break;
 					case 'a':
-						loc.add(new Water(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Water(loc, 0));
 						break;
 					case 'k':
-						loc.add(new Keke(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Keke(loc, 0));
 						break;
 					case 's':
-						loc.add(new Skull(loc, getRuleTable(), x, height - 1 -y,0));
+						loc.add(new Skull(loc, 0));
 						break;
 					}
 					locationMatrix[height - 1 -y][x] = loc;
@@ -109,9 +109,9 @@ public class Level {
 			}
 			
 			// Test de text
-			locationMatrix[0][0].add(new You(locationMatrix[0][0], getRuleTable(), 0, height-1,0));
-			locationMatrix[1][0].add(new Is(locationMatrix[1][0], getRuleTable(), 0, height-2,0));
-			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], getRuleTable(), 0, height-3,0));
+			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
+			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
 
 			history.add(this.matrixCopy());
 			

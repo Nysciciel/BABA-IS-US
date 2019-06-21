@@ -14,8 +14,8 @@ import com.mygdx.game.utils.Constants;
 
 public class On extends Operator {
 
-	public On(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public On(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

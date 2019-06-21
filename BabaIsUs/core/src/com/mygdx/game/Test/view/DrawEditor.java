@@ -40,16 +40,16 @@ public class DrawEditor extends Actor{
     	Location loc = lvl.getLocation((int)(x/ratioWidth), (int)(y/ratioHeight));
     	switch(object) {
     	case BABA:		
-    		loc.add(new Baba(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Baba(loc, direction));
     		break;
     	case ROCK:
-    		loc.add(new Rock(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Rock(loc, direction));
     		break;
     	case WATER:
-    		loc.add(new Water(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Water(loc, direction));
     		break;
     	case WALL:
-    		loc.add(new Wall(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Wall(loc, direction));
     		break;
     	case EMPTY:
     		break;

@@ -15,8 +15,9 @@ import com.mygdx.game.utils.Constants;
 
 public class And extends Operator {
 
-	public And(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public And(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

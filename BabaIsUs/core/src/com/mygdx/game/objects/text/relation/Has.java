@@ -7,11 +7,9 @@ import com.mygdx.game.rule.RuleSet;
 
 public class Has extends Relation {
 
-	public Has(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Has(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-
 
 }

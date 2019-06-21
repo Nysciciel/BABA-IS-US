@@ -16,8 +16,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Baba extends Item{
 
-	public Baba(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public Baba(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
 

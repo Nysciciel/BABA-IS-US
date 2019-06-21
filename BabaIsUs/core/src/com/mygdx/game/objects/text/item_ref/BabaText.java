@@ -14,9 +14,9 @@ import com.mygdx.game.utils.Constants;
 
 public class BabaText extends ItemRef {
 
-
-	public BabaText(Location loc, LogicHashtable ruleTable, int x, int y, int orientation) {
-		super(loc, ruleTable, x, y, orientation);
+	public BabaText(Location loc, int orientation) {
+		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
+
 }
