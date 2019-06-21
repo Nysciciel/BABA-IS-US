@@ -11,11 +11,6 @@ public class Wall extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean isPush() {
-		return true;
-	}
-
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
 	}
