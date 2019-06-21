@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 
 public class Skull extends Item{
 
-	public Skull(Location loc,
-			int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Skull(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

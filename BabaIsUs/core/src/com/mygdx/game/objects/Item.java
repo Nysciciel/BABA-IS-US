@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.Logic;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
+
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -18,76 +21,118 @@ public abstract class Item {
 	protected TextureAtlas textureAtlas;
 	protected Animation animation;
 	protected float elapsedTime = 0;
-
-	public boolean isPush() {
-		return false;
-	}
-	public boolean isYou1() {
-		return false;
-	}
-	public boolean isYou2() {
-		return false;
-	}
-	public boolean isWin() {
-		return false;
-	}
-	public boolean isStop() {
-		return false;
-	}
-	public boolean isPull() {
-		return false;
-	}
-	public boolean isSink() {
-		return false;
-	}
-	public boolean isDefeat() {
-		return false;
-	}
-	public boolean isMove() {
-		return false;
-	}
-	public boolean isHot() {
-		return false;
-	}
-	public boolean isMelt() {
-		return false;
-	}
-	public boolean isFloat() {
-		return false;
-	}
-	public boolean isShift() {
-		return false;
-	}
-	public boolean isShut() {
-		return false;
-	}
-	public boolean isOpen() {
-		return false;
-	}
-	public boolean isWeak() {
-		return false;
-	}
-
-	protected int x;
-	protected int y;
+	protected Texture texture;
+	protected LogicHashtable ruleTable;
 	protected int orientation;
 	protected Location loc;
 
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
 
-	public Item(Location loc,
-			int x, int y, int orientation) {
+	public Item(Location loc, int orientation) {
 		this.loc = loc;
-		this.x = x;
-		this.y = y;
 		this.orientation= orientation;
+		
 		loadTextureAtlas();
 	}
 
-	public Vector2 getPosition() {
-		return new Vector2(x,y);
+	private boolean propertyAssert(String key) {
+		
+		Logic affirm;
+		Logic restrict;
+		
+		try {
+		affirm = (Logic) getRuleTable().get(key).get(getCategory());
+		if (affirm == null)
+			return false;
+		}
+		catch(Exception e) {
+			return false;
+		}
+		
+		try{
+			restrict = (Logic) getRuleTable().get(key).get("Not").get(getCategory());
+			if (restrict == null)
+				return affirm.getTruth(this);
+		}
+		catch(Exception e) {
+			return affirm.getTruth(this);
+		}
+		
+		return affirm.getTruth(this) && !restrict.getTruth(this);
 	}
+
+	public boolean isPush() {
+		return propertyAssert("Push");
+	}
+	public boolean isYou1() {
+		return propertyAssert("You");
+	}
+	public boolean isYou2() {
+		return propertyAssert("You2");
+	}
+	public boolean isYou() {
+		return propertyAssert("You");
+	}
+	public boolean isWin() {
+		return propertyAssert("Win");
+	}
+	public boolean isStop() {
+		return propertyAssert("Stop");
+	}
+	public boolean isPull() {
+		return propertyAssert("Pull");
+	}
+	public boolean isSink() {
+		return propertyAssert("Sink");
+	}
+	public boolean isDefeat() {
+		return propertyAssert("Defeat");
+	}
+	public boolean isMove() {
+		return propertyAssert("Move");
+	}
+	public boolean isHot() {
+		return propertyAssert("Hot");
+	}
+	public boolean isMelt() {
+		return propertyAssert("Melt");
+	}
+	public boolean isFloat() {
+		return propertyAssert("Float");
+	}
+	public boolean isShift() {
+		return propertyAssert("Shift");
+	}
+	public boolean isShut() {
+		return propertyAssert("Shut");
+	}
+	public boolean isOpen() {
+		return propertyAssert("Open");
+	}
+	
+	public boolean isWeak() {
+		return propertyAssert("Weak");
+	}
+	
+	private ArrayList<Class> hasToTranformTo(){
+		
+		ArrayList<Class> transform = new ArrayList<Class>();
+		
+		if (ruleTable.get("Is").get(this.getCategory()).get(this.getCategory()) == null)
+			return transform;
+		
+		for (Class c : ruleTable.getProps()) {
+			// TODO :  getSimpleName wrong for Text objects ?
+			// TODO : verify order !!!!!!!!
+			if (((Logic)(ruleTable.get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
+					&& !((Logic)(ruleTable.get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
+				transform.add(c);
+		}
+		return transform;		
+	}
+	
+	
 
 	public int getOrientation() {
 		return orientation;
@@ -112,22 +157,6 @@ public abstract class Item {
 			}
 		}
 
-		switch(orientation) {
-		case(0):
-			x-=1;
-		break;
-		case(1):
-			y+=1;
-		break;
-		case(2):
-			x+=1;
-		break;
-		case(3):
-			y-=1;
-		break;
-		default:
-		}
-
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
@@ -138,22 +167,6 @@ public abstract class Item {
 		//useful for when a push&pull chain is getting pushed
 		animationChrono = 0;
 		loc.del(this);
-
-		switch(orientation) {
-		case(0):
-			x-=1;
-		break;
-		case(1):
-			y+=1;
-		break;
-		case(2):
-			x+=1;
-		break;
-		case(3):
-			y-=1;
-		break;
-		default:
-		}
 
 		loc = loc.next(orientation);
 		loc.add(this);
@@ -204,30 +217,38 @@ public abstract class Item {
 		if(animationChrono<0.2){
 			switch(orientation){
 				case(0):
-					a=x+1-animationChrono*5;
-					b=y;
+					a=getX()+1-animationChrono*5;
+					b=getY();
 					break;
 				case(1):
-					a=x;
-					b=y-1+animationChrono*5;
+					a=getX();
+					b=getY()-1+animationChrono*5;
 					break;
 				case(2):
-					a=x-1+animationChrono*5;
-					b=y;
+					a=getX()-1+animationChrono*5;
+					b=getY();
 					break;
 				default:
-					a=x;
-					b=y+1-animationChrono*5;
+					a=getX();
+					b=getY()+1-animationChrono*5;
 					break;
 			}
 		}else {
-			a=x;
-			b=y;
+			a=getX();
+			b=getY();
 		}
 		float[] tab={a,b};
 		return(tab);
 	}
 	
+	protected int getY() {
+		return loc.getY();
+	}
+
+	protected int getX() {
+		return loc.getX();
+	}
+
 	public void orient(int direction) {
 		orientation = direction;
 	}
@@ -255,7 +276,7 @@ public abstract class Item {
 
 	public Item copy() {
 		try {
-			return (Item)getClass().getConstructors()[0].newInstance(null,x,y,orientation);
+			return (Item)getClass().getConstructors()[0].newInstance(null,orientation);
 		}
 		catch(Exception e) {
 			return null;
@@ -280,21 +301,34 @@ public abstract class Item {
 		return(false);
 	}
 
-	public boolean isOn(Class item) {
-		return loc.isOn(item);
+	public String getName() {
+		return this.getClass().getSimpleName();
 	}
 
-	public boolean isNear(Class item) {
-		return loc.isNear(item);
+	public String getCategory() {
+		return getName();
 	}
 
-	public boolean isFacing(Class item) {
+	public boolean isOnLocation(Class item) {
+		return loc.isOnLocation(item);
+	}
+
+	public boolean isNearLocation(Class item) {
+		return loc.isNearLocation(item);
+	}
+
+	public boolean isFacingLocation(Class item) {
 		if (loc.next(orientation) != null) {
-			return loc.next(orientation).isOn(item);
+			return loc.next(orientation).isOnLocation(item);
 		}
 		return false;
 	}
-	
-	
-	
+
+	public String getRefName() {
+		return getName();
+	}
+
+	public LogicHashtable getRuleTable() {
+		return loc.getLevel().getRuleTable();
+	}
 }

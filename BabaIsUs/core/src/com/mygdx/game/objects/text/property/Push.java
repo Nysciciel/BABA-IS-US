@@ -2,11 +2,14 @@ package com.mygdx.game.objects.text.property;
 
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.Property;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 
 public class Push extends Property {
 
-	public Push(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Push(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
 	public String[] getSpriteUsed(){
 		return null;
@@ -14,4 +17,5 @@ public class Push extends Property {
 	public float[] getAffichePos(){
 		return null;
 	}
+
 }

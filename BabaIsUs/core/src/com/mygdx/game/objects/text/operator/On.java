@@ -8,13 +8,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mygdx.game.Level;
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.Operator;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.utils.Constants;
 
 public class On extends Operator {
-
-
-	public On(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	
+	public On(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

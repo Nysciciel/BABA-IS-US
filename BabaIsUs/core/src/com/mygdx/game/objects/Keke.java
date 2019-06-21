@@ -1,19 +1,14 @@
 package com.mygdx.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.mygdx.game.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.GL20;
+import com.mygdx.game.Location;
 
 public class Keke extends Item{
 
-	public Keke(Location loc,
-			int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Keke(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public boolean isShift() {
 		return false;

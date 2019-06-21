@@ -7,9 +7,9 @@ import com.mygdx.game.objects.text.Text;
 
 public class RuleStackList extends ArrayList<RuleStack> {
 
-	private HashSet<Rule> rules;
+	private RuleSet rules;
 
-	public RuleStackList(HashSet<Rule> rules) {
+	public RuleStackList(RuleSet rules) {
 		super();
 		this.rules = rules;
 	}
@@ -18,16 +18,13 @@ public class RuleStackList extends ArrayList<RuleStack> {
 
 		ArrayList<RuleStack> toBeRemoved = new ArrayList<RuleStack>();
 		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
-
-		System.out.println("thereIsAnOnOr... = "+thereIsAnOnOrNearOrFacingOrAnd);
-		System.out.println("thereIsANot = "+thereIsANot);
-
+		
 		// And handling in case of a final State
 		if (thereIsAnd(textList))
 			for (RuleStack ruleStack : this) {	
 				if (ruleStack.isFinal()) {
 					System.out.println("And + final");
-					rules.add(new Rule(ruleStack));
+					rules.add(new Rule(ruleStack, rules));
 					while(!ruleStack.isRelation()) {
 						ruleStack.pop(); //pop and go back to the previous state
 						System.out.print("pop : ");
@@ -41,14 +38,15 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			for (RuleStack ruleStack : this) {
 				if (ruleStack.isFinal()) {
 					System.out.println("just final");
-					rules.add(new Rule(ruleStack));
+					Rule rule = new Rule(ruleStack, rules);
+					rules.add(rule);
 					toBeRemoved.add(ruleStack);
 				}
 			}
 		}
+
 		this.removeAll(toBeRemoved);
 
-		System.out.println("            11111111111111111");
 		// Create a new Stack for each RuleStack that has an automaton in the AND state
 		for (RuleStack ruleStack : this) {
 			if (ruleStack.isAnd()) {
@@ -64,7 +62,6 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			}
 		}	
 
-		System.out.println("            22222222222222222");
 		toBeRemoved = new ArrayList<RuleStack>();
 		// next state if not a well
 		for (RuleStack ruleStack : this) {
@@ -82,7 +79,6 @@ public class RuleStackList extends ArrayList<RuleStack> {
 
 			// Classic next State
 			else {
-				System.out.println("            333333333333333333");
 				for (Text text : textList) {	
 					RuleStack divRuleStack = ruleStack.clone();
 					// Si l'état correspond a une regexp (formant une vraie Rule !)
@@ -99,9 +95,9 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				}	
 			}
 		}
+		
 		this.removeAll(toBeRemoved);
 
-		System.out.println("            44444444444444444444");
 		// init new Stacks with an Item ref that is not following  ON / NEAR / FACING / AND
 		if ((!thereIsAnOnOrNearOrFacingOrAnd && !thereIsANot) || (this.isEmpty() && newRuleStacks.isEmpty()))
 			for (Text text : textList) {

@@ -13,9 +13,6 @@ public class Location {
 	protected int x;
 	protected int y;
 
-
-
-
 	public Location(ArrayList<Item> items, Level lvl, int x, int y) {
 		this.items = items;
 		this.lvl = lvl;
@@ -140,7 +137,7 @@ public class Location {
 	public void del(Item item) {
 		items.remove(item);
 		if (items.size()==0) {
-			this.add(new Empty(this, x, y, 0));
+			this.add(new Empty(this, 0));
 		}
 	}
 
@@ -431,7 +428,7 @@ public class Location {
 		return true;
 	}
 
-	public boolean isOn(Class<Item> item) {
+	public boolean isOnLocation(Class<Item> item) {
 		for(Item i:items) {
 			if(item.isInstance(i)) {
 				return true;
@@ -440,13 +437,26 @@ public class Location {
 		return false;
 	}
 
-	public boolean isNear(Class<Item> item) {
+	
+	public boolean isNearLocation(Class<Item> item) {
 		for(int i=0; i!=3; i++) {
-			if (this.next(i) != null && this.next(i).isOn(item)) {
+			if (this.next(i) != null && this.next(i).isOnLocation(item)) {
 				return true;
 			}
 		}
 		return false;
+	}	
+	
+	public Level getLevel() {
+		return lvl;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }
 

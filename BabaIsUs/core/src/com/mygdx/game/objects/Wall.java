@@ -9,14 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.utils.Constants;
 
 public class Wall extends Item {
 
-	public Wall(Location loc,
-			int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Wall(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public boolean isMove() {
 		return true;

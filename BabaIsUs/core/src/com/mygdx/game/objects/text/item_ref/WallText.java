@@ -2,11 +2,14 @@ package com.mygdx.game.objects.text.item_ref;
 
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.ItemRef;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 
 public class WallText extends ItemRef {
 
-	public WallText(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public WallText(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
 	public String[] getSpriteUsed(){
 		return null;
@@ -14,4 +17,5 @@ public class WallText extends ItemRef {
 	public float[] getAffichePos(){
 		return null;
 	}
+
 }

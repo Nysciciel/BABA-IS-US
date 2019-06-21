@@ -8,88 +8,93 @@ import com.mygdx.game.objects.text.item_ref.*;
 import com.mygdx.game.objects.text.operator.*;
 import com.mygdx.game.objects.text.relation.*;
 import com.mygdx.game.objects.text.property.*;
+import com.mygdx.game.objects.Baba;
+import com.mygdx.game.objects.Empty;
+import com.mygdx.game.objects.Keke;
+import com.mygdx.game.objects.Rock;
+import com.mygdx.game.objects.Wall;
+import com.mygdx.game.objects.Water;
 import com.mygdx.game.objects.text.*;
 
 public class RuleTextReaderTest {
 	
-	private HashSet<Rule> rules;
+	private RuleSet rules;
 	private ArrayList<ArrayList<Text>> textLigne;
+	private LogicHashtable logic;
+	private ArrayList<Class> props;
 
 	
 	public RuleTextReaderTest() {
 		
-		rules = new HashSet<Rule>();
+		props = new ArrayList<Class>();
+		
+		props.add(Baba.class);props.add(Empty.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);
+		
+		rules = new RuleSet();
 		
 		textLigne = new ArrayList<ArrayList<Text>>();
 		
 		
 		ArrayList<Text> dgfglkedsgl = new ArrayList<Text>();
-		dgfglkedsgl.add(new On(null, 0, 0, 0));
+		dgfglkedsgl.add(new On(null,0));
 		textLigne.add(dgfglkedsgl);
 		
 		
 		
 		ArrayList<Text> lqsvh = new ArrayList<Text>();
-		lqsvh.add(new Not(null, 0, 0, 0));
+		lqsvh.add(new Not(null,0));
 		textLigne.add(lqsvh);
 		
 		ArrayList<Text> dgfgl5 = new ArrayList<Text>();
-		dgfgl5.add(new BabaText(null, 0, 0, 0));
+		dgfgl5.add(new BabaText(null, 0));
 		textLigne.add(dgfgl5);
 		
 		ArrayList<Text> KSUFPU = new ArrayList<Text>();
-		KSUFPU.add(new And(null, 0, 0, 0));
-		KSUFPU.add(new On(null, 0, 0, 0));
+		KSUFPU.add(new And(null, 0));
+		KSUFPU.add(new On(null, 0));
 		textLigne.add(KSUFPU);
 		
 		ArrayList<Text> dgfgl = new ArrayList<Text>();
-		dgfgl.add(new KekeText(null, 0, 0, 0));
+		dgfgl.add(new KekeText(null, 0));
 		textLigne.add(dgfgl);
 		
 		ArrayList<Text> dgfgl2 = new ArrayList<Text>();
-		dgfgl2.add(new Is(null, 0, 0, 0));
+		dgfgl2.add(new Is(null, 0));
 		textLigne.add(dgfgl2);
 		
 		
 		
 		ArrayList<Text> dgfgl7 = new ArrayList<Text>();
-		dgfgl7.add(new Not(null, 0, 0, 0));
+		dgfgl7.add(new Not(null,0));
 		textLigne.add(dgfgl7);
 		
 		
 		
 		ArrayList<Text> dgfgl8 = new ArrayList<Text>();
-		dgfgl8.add(new You(null, 0, 0, 0));
+		dgfgl8.add(new You(null, 0));
 		textLigne.add(dgfgl8);
 		
 		ArrayList<Text> dgfgl13 = new ArrayList<Text>();
-		dgfgl13.add(new And(null, 0, 0, 0));
+		dgfgl13.add(new And(null,  0));
 		textLigne.add(dgfgl13);
 		
 		ArrayList<Text> dgfgl56 = new ArrayList<Text>();
-		dgfgl56.add(new On(null, 0, 0, 0));
+		dgfgl56.add(new On(null, 0));
 		textLigne.add(dgfgl56);
 		
 		
 		ArrayList<Text> dgfgl3 = new ArrayList<Text>();
-		dgfgl3.add(new KekeText(null, 0, 0, 0));
+		dgfgl3.add(new KekeText(null, 0));
 		textLigne.add(dgfgl3);
 		
 		
-		
-		
 		ArrayList<Text> dgfgl4 = new ArrayList<Text>();
-		dgfgl4.add(new And(null, 0, 0, 0));
+		dgfgl4.add(new And(null, 0));
 		textLigne.add(dgfgl4);
-		
-		
-		
-		
-		
-		
+			
 		
 		ArrayList<Text> dgfgl57 = new ArrayList<Text>();
-		dgfgl57.add(new You(null, 0, 0, 0));
+		dgfgl57.add(new You(null, 0));
 		textLigne.add(dgfgl57);
 		
 		
@@ -100,7 +105,6 @@ public class RuleTextReaderTest {
 	}
 	
 	public void readRules() {
-		
 			
 			System.out.println("readRules");
 			
@@ -135,10 +139,14 @@ public class RuleTextReaderTest {
 				System.out.println(currentRules.toString());
 				//System.out.print("Current States : ");
 				//currentRules.currentStates();
-				System.out.println();
-				
-				
+				System.out.println();				
 			}
+	}
+	
+	private void interpretRules() {
+		
+		logic = new LogicHashtable(rules, props);
+		
 	}
 	
 	private boolean thereIsANot(ArrayList<Text> textList) {

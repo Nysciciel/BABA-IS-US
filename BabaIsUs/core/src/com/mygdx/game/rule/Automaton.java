@@ -33,12 +33,12 @@ public class Automaton {
 	
 	public AutomatonState nextHop(Text text) {
 		
-		System.out.println("****** NEXT HOP ******"+this.toString());
+		//System.out.println("****** NEXT HOP ******"+this.toString());
 		
 		previousState = currentState;
 		
 		if (currentState.getLabel() == "firstState") {
-			System.out.println("first State");
+			//System.out.println("first State");
 			if (text.isNot())
 				return currentState = (currentState);
 			if (text.isItemRef())
@@ -46,7 +46,7 @@ public class Automaton {
 		}
 		
 		if (currentState.getLabel() == "stateA") {
-			System.out.println("State A");
+			//System.out.println("State A");
 			if (text.isOn())
 				return currentState = (stateOn);
 			if (text.isIs())
@@ -58,7 +58,7 @@ public class Automaton {
 		}
 		
 		if (currentState.getLabel() == "stateAnd") {
-			System.out.println("State And");
+			//System.out.println("State And");
 			if (text == null || text.isItemRef())
 				return currentState = (stateA);
 			if (text.isNot())
@@ -67,7 +67,7 @@ public class Automaton {
 		}
 		
 		if (currentState.getLabel() == "stateOn") {
-			System.out.println("State On");
+			//System.out.println("State On");
 			if (text.isItemRef())
 				return currentState = (stateA);
 			if (text.isNot())
@@ -75,7 +75,7 @@ public class Automaton {
 		}
 
 		if (currentState.getLabel() == "stateIs") {
-			System.out.println("State Is");
+			//System.out.println("State Is");
 			if (text.isNot())
 				return currentState = (currentState);
 			if (text.isItemRef() || text.isProperty())
@@ -83,7 +83,7 @@ public class Automaton {
 		}
 
 		if (currentState.getLabel() == "stateO") {
-			System.out.println("State O");
+			//System.out.println("State O");
 			if (text.isNot())
 				return currentState = (currentState);
 			if (text.isItemRef())
