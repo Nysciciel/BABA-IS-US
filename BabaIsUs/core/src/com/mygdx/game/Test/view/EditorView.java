@@ -40,6 +40,8 @@ public class EditorView implements Screen {
     
     private TextButton rockSelect;
     private TextButton waterSelect;
+    private TextButton skullSelect;
+    private TextButton wallSelect;
     
     private TextButton babaTextSelect;
     private TextButton rockTextSelect;
@@ -78,6 +80,8 @@ public class EditorView implements Screen {
         
         rockSelect = new TextButton("rock",skin);
         waterSelect = new TextButton("water",skin);
+        wallSelect = new TextButton("wall",skin);
+        skullSelect = new TextButton("skull",skin);
         
         babaTextSelect = new TextButton("babatext",skin);
         rockTextSelect = new TextButton("rocktext",skin);
@@ -94,6 +98,8 @@ public class EditorView implements Screen {
         
         objectList.add(rockSelect);
         objectList.add(waterSelect);
+        objectList.add(skullSelect);
+        objectList.add(wallSelect);
         
         table.add(mainList);
         table.row().pad(0, 0, 10, 0);
