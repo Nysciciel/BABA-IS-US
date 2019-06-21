@@ -36,9 +36,27 @@ public class Client {
 
 			 dis = new DataInputStream(clientSocket.getInputStream());
 			 fos = new FileOutputStream("level.txt");
+			 int filesize;
 			 byte[] buffer = new byte[4096];
+			 String hex = new String();
+             try {
+            	 while(true) {
+            		 dis.read(buffer);
+            		 String buf = new String(buffer);
+            		 System.out.println(buf);
+            		 hex.concat(buf);
+            		 System.out.println(hex);
+            		 System.out.println("");
+            		 if(hex.contains("f")) {
+            			 filesize = Integer.parseInt(hex.substring(0, hex.length()-2));
+            			 break;
+            		 }
+            	 }
+             } catch (IOException e) {
+                  e.printStackTrace();
+                  filesize =0;
+             }
 
-			 int filesize = 15123; // Send file size in separate msg
 			 int read = 0;
 			 int totalRead = 0;
 			 int remaining = filesize;
@@ -83,7 +101,9 @@ public class Client {
 	         Thread recevoir= new Thread(new Runnable() {
 		          @Override
 		          public void run() {
-		        	 byte[] b = new byte[1];
+		        	  
+		        	  byte[] b = new byte[1];
+		        	  
 		             try {
 		            	 while(true) {
 		            		 in.read(b);
