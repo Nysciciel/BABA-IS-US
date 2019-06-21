@@ -14,9 +14,8 @@ public class Empty extends Item{
 	public Empty(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal("EmptySheet.txt"));
 	}
-	
+
 	@Override
 	public boolean isempty() {
 		return true;
@@ -26,11 +25,6 @@ public class Empty extends Item{
 		String[] spriteUsed = new String[1];
 		spriteUsed[0]="Empty0";
 		return(spriteUsed);
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }

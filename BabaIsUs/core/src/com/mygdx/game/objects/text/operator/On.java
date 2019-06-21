@@ -15,24 +15,11 @@ public class On extends Operator {
 
 	public On(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
-	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Rock0";
-		spriteUsed[1]="Rock1";
-		return(spriteUsed);
 	}
 
 	@Override
 	public boolean isOn() {
 		return true;
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }

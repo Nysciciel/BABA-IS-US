@@ -12,14 +12,10 @@ import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Rock extends Item {
-	private TextureAtlas textureAtlas;
-	private Animation animation;
-	private float elapsedTime = 0;
 
 	public Rock(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
 	}
 	@Override
 	public boolean isPull() {
@@ -43,11 +39,6 @@ public class Rock extends Item {
 		spriteUsed[0]="Rock0";
 		spriteUsed[1]="Rock1";
 		return(spriteUsed);
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }
