@@ -107,7 +107,6 @@ public abstract class Item {
 	public boolean isOpen() {
 		return propertyAssert("Open");
 	}
-	
 	public boolean isWeak() {
 		return propertyAssert("Weak");
 	}
