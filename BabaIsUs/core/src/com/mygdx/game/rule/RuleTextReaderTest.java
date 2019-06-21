@@ -36,13 +36,17 @@ public class RuleTextReaderTest {
 		
 		
 		ArrayList<Text> dgfglkedsgl = new ArrayList<Text>();
-		dgfglkedsgl.add(new On(null,0));
+
+		dgfglkedsgl.add(new On(null, 0));
+
 		textLigne.add(dgfglkedsgl);
 		
 		
 		
 		ArrayList<Text> lqsvh = new ArrayList<Text>();
-		lqsvh.add(new Not(null,0));
+
+		lqsvh.add(new Not(null, 0));
+
 		textLigne.add(lqsvh);
 		
 		ArrayList<Text> dgfgl5 = new ArrayList<Text>();

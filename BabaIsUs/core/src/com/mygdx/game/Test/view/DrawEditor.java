@@ -43,7 +43,7 @@ public class DrawEditor extends Actor{
     		loc.add(new Baba(loc, direction));
     		break;
     	case ROCK:
-    		loc.add(new Rock(loc,direction));
+    		loc.add(new Rock(loc, direction));
     		break;
     	case WATER:
     		loc.add(new Water(loc,direction));

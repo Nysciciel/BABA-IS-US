@@ -105,10 +105,17 @@ public class LevelState extends GameState implements ServerCallBack{
 		if(Gdx.input.isKeyJustPressed(Input.Keys.R )) {
 			lvl.reset();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 			lvl.updateRules();
 >>>>>>> Grammaire
+=======
+			lvl.updateRules();
+=======
+
+>>>>>>> 4abd532973c760d05cdbc950df249d2db39ff1ad
+>>>>>>> dev
 		}
 	}
 

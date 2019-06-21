@@ -25,23 +25,6 @@ public class Baba extends Item{
 		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFox" + "SheetU.txt"));
 	}
 
-	@Override
-	public boolean isYou() {
-		try {
-
-			System.out.println(getRuleTable());
-			System.out.println(" "+((Logic)getRuleTable().get("You").get("Baba")).getTruth(this));
-			System.out.println("On "+((Logic)getRuleTable().get("You").get("Baba")).onTruth(this));
-			System.out.println("Near "+((Logic)getRuleTable().get("You").get("Baba")).nearTruth(this));
-			System.out.println("Facing "+((Logic)getRuleTable().get("You").get("Baba")).facingTruth(this));
-		}
-		catch(Exception e) {
-			System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Nope");
-		}
-
-		return super.isYou();
-	}
-
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
 		spriteUsed[0]="Fox" + orientation + "-0";

@@ -7,7 +7,6 @@ import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 
 public abstract class ItemRef extends com.mygdx.game.objects.text.Text {
-
 	public ItemRef(Location loc, int orientation) {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub

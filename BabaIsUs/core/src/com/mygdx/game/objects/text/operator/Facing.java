@@ -2,8 +2,6 @@ package com.mygdx.game.objects.text.operator;
 
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.Operator;
-import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.RuleSet;
 
 public class Facing extends Operator {
 

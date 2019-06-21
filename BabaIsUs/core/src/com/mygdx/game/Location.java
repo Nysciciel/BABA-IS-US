@@ -3,7 +3,6 @@ package com.mygdx.game;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
 
@@ -436,9 +435,9 @@ public class Location {
 		}
 		return false;
 	}
-
 	
 	public boolean isNearLocation(Class<Item> item) {
+
 		for(int i=0; i!=3; i++) {
 			if (this.next(i) != null && this.next(i).isOnLocation(item)) {
 				return true;
@@ -450,13 +449,13 @@ public class Location {
 	public Level getLevel() {
 		return lvl;
 	}
-	
-	public int getX() {
-		return x;
-	}
 
+	public int getX() {
+		return this.x;
+	}
+	
 	public int getY() {
-		return y;
+		return this.y;
 	}
 }
 

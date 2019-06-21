@@ -19,5 +19,4 @@ public class You extends Property {
 		// TODO Auto-generated constructor stub
 	}
 
-
 }

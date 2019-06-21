@@ -86,7 +86,7 @@ public class Level {
 						loc.add(new Empty(loc, 0));
 						break;
 					case 'b':
-						loc.add(new Baba(loc,0));
+						loc.add(new Baba(loc, 0));
 						break;
 					case 'w':
 						loc.add(new Wall(loc, 0));
@@ -369,7 +369,4 @@ public class Level {
 	public LogicHashtable getRuleTable() {
 		return ruleTable;
 	}
-
-	
-
 }

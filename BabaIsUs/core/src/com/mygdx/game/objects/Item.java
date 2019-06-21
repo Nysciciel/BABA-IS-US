@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public abstract class Item {
+	
 	protected float animationChrono=0;
 	protected TextureAtlas textureAtlas;
 	protected Animation animation;
@@ -119,14 +120,14 @@ public abstract class Item {
 		
 		ArrayList<Class> transform = new ArrayList<Class>();
 		
-		if (ruleTable.get("Is").get(this.getCategory()).get(this.getCategory()) == null)
+		if (getRuleTable().get("Is").get(this.getCategory()).get(this.getCategory()) == null)
 			return transform;
 		
-		for (Class c : ruleTable.getProps()) {
+		for (Class c : getRuleTable().getProps()) {
 			// TODO :  getSimpleName wrong for Text objects ?
 			// TODO : verify order !!!!!!!!
-			if (((Logic)(ruleTable.get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
-					&& !((Logic)(ruleTable.get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
+			if (((Logic)(getRuleTable().get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
+					&& !((Logic)(getRuleTable().get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
 				transform.add(c);
 		}
 		return transform;		
@@ -167,7 +168,6 @@ public abstract class Item {
 		//useful for when a push&pull chain is getting pushed
 		animationChrono = 0;
 		loc.del(this);
-
 		loc = loc.next(orientation);
 		loc.add(this);
 	}
@@ -276,7 +276,7 @@ public abstract class Item {
 
 	public Item copy() {
 		try {
-			return (Item)getClass().getConstructors()[0].newInstance(null,orientation);
+			return (Item)getClass().getConstructors()[0].newInstance(null, orientation);
 		}
 		catch(Exception e) {
 			return null;

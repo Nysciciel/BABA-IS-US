@@ -2,8 +2,6 @@ package com.mygdx.game.objects.text.item_ref;
 
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.text.ItemRef;
-import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.RuleSet;
 
 public class MeText extends ItemRef {
 
