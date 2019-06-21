@@ -26,5 +26,10 @@ public class Empty extends Item{
 		spriteUsed[0]="Empty0";
 		return(spriteUsed);
 	}
+	
+	@Override
+	public String toString() {
+		return "e";
+	}
 
 }

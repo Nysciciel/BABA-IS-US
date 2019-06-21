@@ -75,7 +75,7 @@ public class DrawEditor extends Actor{
     	
     	for(int i=0 ; i < height ; i++) {
         	for(int j=0 ; j < width ; j++) {
-        		lvl.render(batch);;
+        		lvl.render(batch);
             }
         }
     	drawRepere(batch);
@@ -98,6 +98,10 @@ public class DrawEditor extends Actor{
         	shapeRenderer.line(i*ratioWidth, 0 , i*ratioWidth, this.getHeight());
         }
         shapeRenderer.end();
+    }
+    
+    public Level getLevel() {
+    	return this.lvl;
     }
     
     

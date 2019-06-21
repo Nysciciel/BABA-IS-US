@@ -38,4 +38,10 @@ public class Baba extends Item{
 		return(spriteUsed);
 	}
 
+	@Override
+	public String toString() {
+		return "b";
+	}
+	
+
 }

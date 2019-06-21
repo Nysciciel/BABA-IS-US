@@ -40,5 +40,10 @@ public class Rock extends Item {
 		spriteUsed[1]="Rock1";
 		return(spriteUsed);
 	}
+	
+	@Override
+	public String toString() {
+		return "r";
+	}
 
 }

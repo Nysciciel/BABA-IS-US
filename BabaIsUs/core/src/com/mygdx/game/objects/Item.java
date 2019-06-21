@@ -295,6 +295,8 @@ public abstract class Item {
 		return false;
 	}
 	
+	public abstract String toString();
+	
 	
 	
 }

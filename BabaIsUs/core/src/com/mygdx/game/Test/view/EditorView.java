@@ -19,6 +19,7 @@ import com.mygdx.game.Location;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.Baba;
 import com.mygdx.game.objects.Item;
+import com.mygdx.game.utils.FileManager;
 import com.mygdx.game.utils.ObjectList;
 
 public class EditorView implements Screen {
@@ -167,7 +168,9 @@ public class EditorView implements Screen {
         		case "reset":
         			editor.clear();
         			break;
-        		case "select":
+        		case "save":
+        			System.out.println("dfsdf");
+        			FileManager.SaveLevel(editor.getLevel());
         			break;
         		}
         		return true;

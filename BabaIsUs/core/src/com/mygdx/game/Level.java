@@ -304,5 +304,13 @@ public class Level {
 		history = new ArrayList<Location[][]>();
 		history.add(this.matrixCopy());
 	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
 
 }
