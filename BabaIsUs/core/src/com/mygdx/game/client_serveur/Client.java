@@ -69,12 +69,6 @@ public class Client {
 			 }
 			 System.out.println("fin d'enregistrement de fichier");
 
-			try {
-				fos.close();
-				dis.close();
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
 			out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
 	   

@@ -44,10 +44,14 @@ public class Server{
 			System.out.println("debut d'envoie de fichier");
 			File file = new File("level.txt");
 			int length = (int)file.length();
-			String hex = Integer.toHexString(length);
-			hex.concat("f");
+			System.out.println(length);
+			String hex = Integer.toString(length);
+			System.out.println(hex);
+			hex = hex.concat("f");
+			System.out.println(hex);
 			buffer = hex.getBytes();
 			dos.write(buffer);
+
 			while (fis.read(buffer) > 0) {
 				dos.write(buffer);
 			}
@@ -58,7 +62,7 @@ public class Server{
 				e.printStackTrace();
 			}
 			*/
-			
+
 			//fos.close();
 			//dis.close();
 
@@ -104,7 +108,6 @@ public class Server{
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
->>>>>>> 4912be366aa8dd4ebea35583cc09a8709c64a702
 	}
 
 	public boolean isConnected(){
