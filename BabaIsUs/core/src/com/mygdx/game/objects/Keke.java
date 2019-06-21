@@ -15,5 +15,10 @@ public class Keke extends Item{
 		spriteUsed[1]="Keke0-1";
 		return(spriteUsed);
 	}
+	
+	@Override
+	public String toString() {
+		return "k";
+	}
 
 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class Item {
 	
-	protected float animationChrono=0;
+	protected float animationChrono=1;
 	protected TextureAtlas textureAtlas;
 	protected Animation animation;
 	protected float elapsedTime = 0;
@@ -326,4 +326,9 @@ public abstract class Item {
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}
+	
+	public abstract String toString();
+	
+	
+	
 }

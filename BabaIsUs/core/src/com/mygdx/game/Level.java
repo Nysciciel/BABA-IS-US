@@ -376,6 +376,14 @@ public class Level {
 		history.add(this.matrixCopy());
 		updateRules();
 	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
 
 	public LogicHashtable getRuleTable() {
 		return ruleTable;

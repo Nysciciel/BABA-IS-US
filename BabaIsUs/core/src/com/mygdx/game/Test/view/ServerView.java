@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
+import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 
@@ -28,18 +29,20 @@ public class ServerView implements Screen,ServerCallBack {
 	private Texture background;
 	private int movePoto;
 
-	public ServerView(MainTest mainTest) {
+	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
 
-		data = new ArrayBlockingQueue<Integer>(1);
-
+		//data = new ArrayBlockingQueue<Integer>(1);
+		this.data = data;
 		this.movePoto = -1;
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
+		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
 		this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-		this.thread = new ServerThread(data,this,slvl);
+		this.thread = thread;
+		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -51,6 +54,7 @@ public class ServerView implements Screen,ServerCallBack {
 	public void show() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			parent.screenChoice(MainTest.MENU);
+			this.thread.interrupt();
 		}
 		if(enabled) {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -196,20 +200,3 @@ public class ServerView implements Screen,ServerCallBack {
 	}
 }
 
-class ServerThread extends Thread{
-	private BlockingQueue<Integer> bq;
-	ServerCallBack callBack;
-	Level level;
-
-	public ServerThread(BlockingQueue<Integer> bq, ServerCallBack callBack, Level level){
-		super();
-		this.bq = bq;
-		this.callBack = callBack;
-		this.level = level;
-		this.start();
-	}
-
-	public void run() {
-		new Server(this.bq,this.callBack,this.level) ;
-	}
-}
