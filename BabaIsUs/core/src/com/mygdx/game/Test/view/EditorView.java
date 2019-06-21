@@ -86,24 +86,25 @@ public class EditorView implements Screen {
         babaTextSelect = new TextButton("babatext",skin);
         rockTextSelect = new TextButton("rocktext",skin);
         
-        mainList.add(charaSelect).fill();
-        mainList.add(objectSelect).fill();
-        mainList.add(textSelect).fill();
         
-        charaList.add(babaSelect);
-        charaList.add(kekeSelect);
+        mainList.add(charaSelect).fill().width(100).uniformX();
+        mainList.add(objectSelect).fill().uniformX();
+        mainList.add(textSelect).fill().uniformX();
         
-        textList.add(babaTextSelect);
-        textList.add(rockTextSelect);
+        charaList.add(babaSelect).fill().uniformX();
+        charaList.add(kekeSelect).fill().uniformX();
         
-        objectList.add(rockSelect);
-        objectList.add(waterSelect);
-        objectList.add(skullSelect);
-        objectList.add(wallSelect);
+        textList.add(babaTextSelect).fill().uniformX();
+        textList.add(rockTextSelect).fill().uniformX();
         
-        table.add(mainList);
+        objectList.add(rockSelect).fill().uniformX();
+        objectList.add(waterSelect).fill().uniformX();
+        objectList.add(skullSelect).fill().uniformX();
+        objectList.add(wallSelect).fill().uniformX();
+        
+        table.add(mainList).left().expandX();
         table.row().pad(0, 0, 10, 0);
-        table.add(charaList);
+        table.add(charaList).left().expandX();
         table.row().pad(10, 10, 10, 0);
         table.add(editor).expand().colspan(3).fill();
         
@@ -126,25 +127,25 @@ public class EditorView implements Screen {
         		switch(nom) {
         		case "Chara":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(charaList);
+        		    table.add(charaList).left().expandX();
         		    table.row().pad(10, 10, 10, 0);
         		    table.add(editor).expand().colspan(3).fill();
         			break;
         		case "Obj":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(objectList);
+        		    table.add(objectList).left().expandX();
         		    table.row().pad(10, 10, 10, 0);
         		    table.add(editor).expand().colspan(3).fill();
         			break;
         		case "Text":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(textList);
+        		    table.add(textList).left().expandX();
         		    table.row().pad(10, 10, 10, 0);
         		    table.add(editor).expand().colspan(3).fill();
         			break;
