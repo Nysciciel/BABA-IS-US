@@ -327,4 +327,9 @@ public abstract class Item {
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}
+	
+	public abstract String toString();
+	
+	
+	
 }

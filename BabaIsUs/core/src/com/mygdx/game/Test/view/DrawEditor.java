@@ -3,6 +3,8 @@ package com.mygdx.game.Test.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,13 +25,15 @@ public class DrawEditor extends Actor{
 	
 	private int height, width;
 	Level lvl;
-
+	ShapeRenderer shapeRenderer;
+	
     public DrawEditor(int width, int height) {
     	
         super();
         this.width = width;
         this.height = height;
         
+        shapeRenderer = new ShapeRenderer();
         lvl = new Level(width,height);
                 
     }
@@ -52,6 +56,14 @@ public class DrawEditor extends Actor{
     		loc.add(new Wall(loc,direction));
     		break;
     	case EMPTY:
+    		loc.getItems().clear();
+    		loc.add(new Empty(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		break;
+    	case SKULL:
+    		loc.add(new Skull(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		break;
+    	case KEKE:
+    		loc.add(new Keke(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
     		break;
     	}
     }
@@ -60,12 +72,37 @@ public class DrawEditor extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch,parentAlpha);
+    	
     	for(int i=0 ; i < height ; i++) {
         	for(int j=0 ; j < width ; j++) {
-        		lvl.getLocation(i, j).render(batch);
+        		lvl.render(batch);
             }
         }
+    	drawRepere(batch);
     	
     }
+    
+    public void clear() {
+    	lvl = new Level(10,10);
+    }
+    
+    public void drawRepere(Batch batch) {
+    	float ratioWidth = this.getWidth()/width;
+    	float ratioHeight = this.getHeight()/height;
+    	shapeRenderer.begin(ShapeType.Line);
+    	shapeRenderer.setColor(1, 1, 1, 1);
+        for(int i=0 ; i<= height ; i++) {
+        	shapeRenderer.line(0, i*ratioHeight, this.getWidth(), i*ratioHeight);
+        }
+        for(int i=0 ; i<= width ; i++) {
+        	shapeRenderer.line(i*ratioWidth, 0 , i*ratioWidth, this.getHeight());
+        }
+        shapeRenderer.end();
+    }
+    
+    public Level getLevel() {
+    	return this.lvl;
+    }
+    
     
 }

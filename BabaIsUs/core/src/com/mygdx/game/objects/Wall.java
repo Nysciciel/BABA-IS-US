@@ -32,5 +32,10 @@ public class Wall extends Item {
 		spriteUsed[1]="Wall-" + s + "-1";
 		return(spriteUsed);
 	}
+	
+	@Override
+	public String toString() {
+		return "w";
+	}
 
 }
