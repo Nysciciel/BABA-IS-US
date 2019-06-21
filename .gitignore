@@ -1,7 +1,4 @@
 # Temporary Files
-
-.recommenders/
-
 *~
 .*.swp
 .DS_STORE
