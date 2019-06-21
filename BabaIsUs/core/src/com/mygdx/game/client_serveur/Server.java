@@ -53,9 +53,6 @@ public class Server{
 			}
 			*/
 
-			 //fos.close();
-			 //dis.close();
-
 			 this.connected =true;
 	        out = clientSocket.getOutputStream();
 	        in = clientSocket.getInputStream();
@@ -97,14 +94,7 @@ public class Server{
 	      recevoir.start();
 	      }catch (IOException e) {
 	         e.printStackTrace();
-	      }finally {
-	     	try {
-				fos.close();
-				dis.close();
-			}catch (IOException e) {
-				e.printStackTrace();
-			}
-		 }
+	      }
 	}
 
 	public boolean isConnected(){
