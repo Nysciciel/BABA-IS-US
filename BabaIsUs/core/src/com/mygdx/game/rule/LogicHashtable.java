@@ -154,7 +154,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				if (textList.get(i).getName().equals("Facing")) {
 					if (textList.get(i).isNot()) {
 						facingNot.add(textList.get(i+1).getRefClass());
-					}
+					} 
 					facing.add(textList.get(i).getRefClass());
 				}
 			}

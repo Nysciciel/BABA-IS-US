@@ -114,17 +114,47 @@ public abstract class Item {
 	private ArrayList<Class> hasToTranformTo(){
 		
 		ArrayList<Class> transform = new ArrayList<Class>();
-		
-		if (getRuleTable().get("Is").get(this.getCategory()).get(this.getCategory()) == null)
-			return transform;
+		try {
+			if (((Logic)getRuleTable().get("Is").get(this.getCategory()).get(this.getCategory())).getTruth(this))
+				return transform;
+		}
+		catch(Exception e) {
+
+		}
 		
 		for (Class c : getRuleTable().getProps()) {
 			// TODO :  getSimpleName wrong for Text objects ?
 			// TODO : verify order !!!!!!!!
-			if (((Logic)(getRuleTable().get("Is").get(c.getSimpleName()).get(this.getCategory()))).getTruth(this)
-					&& !((Logic)(getRuleTable().get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
+			Logic affirm;
+			Logic restrict;
+			boolean affirmBoolean;
+			boolean restrictBoolean;
+			
+			try {
+				affirm = (Logic)(getRuleTable().get("Is").get(c.getSimpleName()).get(this.getCategory()));
+				if (affirm == null)
+					affirmBoolean = false;
+				else
+					affirmBoolean = affirm.getTruth(this);
+			}
+			catch(Exception e) {
+				affirmBoolean = false;
+			}
+			try {
+				restrict = (Logic)(getRuleTable().get("Is").get("Not").get(this.getCategory()).get(this.getCategory()));
+				if (restrict == null)
+					restrictBoolean = false;
+				else
+					restrictBoolean = restrict.getTruth(this);
+			}
+			catch(Exception e) {
+				restrictBoolean = false;
+			}
+					
+			if (affirmBoolean && !restrictBoolean)
 				transform.add(c);
 		}
+
 		return transform;		
 	}
 	
