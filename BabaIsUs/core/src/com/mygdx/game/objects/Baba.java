@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Baba extends Item{
 
@@ -20,9 +21,13 @@ public class Baba extends Item{
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFox" + "SheetU.txt"));
 	}
-	
 	@Override
-	public boolean isYou() {
+	public boolean isPush(){
+		return true;
+	}
+
+	@Override
+	public boolean isYou1() {
 		return true;
 	}
 

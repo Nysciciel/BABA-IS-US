@@ -1,4 +1,4 @@
-package com.mygdx.game.states;
+/*package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.utils.Constants;
 
@@ -29,7 +32,7 @@ public class MainMenu extends GameState{
 		this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
 		this.parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		
-		this.parameter.size = 128; 
+		this.parameter.size = 128;
 		
 		this.gameTitleText = this.generator.generateFont(this.parameter);
 		this.gameTitleGlyph = new GlyphLayout();
@@ -37,15 +40,18 @@ public class MainMenu extends GameState{
 		this.gameTitleGlyph.setText(this.gameTitleText, Constants.GAME_TITLE);
 		
 		this.camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+
 	}
 
 	@Override
 	protected void handleInput() {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			this.gsm.set(new EditorState(gsm));
+		}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			this.gsm.set(new LevelState(gsm));
 		}
 	}
-
 	@Override
 	public void update(float dt) {
 		this.handleInput();
@@ -65,4 +71,4 @@ public class MainMenu extends GameState{
 		this.background.dispose();
 	}
 
-}
+}*/

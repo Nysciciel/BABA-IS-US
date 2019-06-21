@@ -1,4 +1,4 @@
-package com.mygdx.game.managers;
+/*package com.mygdx.game.managers;
 
 import java.util.Stack;
 
@@ -29,7 +29,11 @@ public class GameStateManager {
 		this.gameStates.peek().render(sb);
 	}
 
+
+
+
 	public void dispose(){
 		this.gameStates.peek().dispose();
 	}
-}
+}*/
+

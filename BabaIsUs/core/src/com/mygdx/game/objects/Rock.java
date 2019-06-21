@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Rock extends Item {
 
@@ -18,14 +19,18 @@ public class Rock extends Item {
 	}
 	@Override
 	public boolean isPull() {
-		return true;
+		return false;
 	}
 	@Override
 	public boolean isPush() {
+		return false;
+	}
+	@Override
+	public boolean isMove() {
 		return true;
 	}
 	@Override
-	public boolean isYou() {
+	public boolean isYou2() {
 		return false;
 	}
 

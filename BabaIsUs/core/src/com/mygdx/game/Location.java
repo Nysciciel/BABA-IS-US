@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
@@ -55,9 +56,18 @@ public class Location {
 		}
 	}
 
-	public boolean hasYou() {
+	public boolean hasYou1() {
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean hasYou2() {
+		for(Item i:items) {
+			if (i.isYou2()) {
 				return true;
 			}
 		}
@@ -66,7 +76,7 @@ public class Location {
 
 	public void orientYou(int direction) {
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1() || i.isYou2()) {
 				i.orient(direction);
 			}
 		}
@@ -144,10 +154,28 @@ public class Location {
 		items.add(item);
 	}
 
-	public ArrayList<Item> move(int direction) {
+	public ArrayList<Item> move1(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
-			if (i.isYou()) {
+			if (i.isYou1()) {
+				yous.add(i);
+				i.orient(direction);
+			}
+		}
+		if (yous.size()>0) {
+			if (next(direction)!=null) {
+				if (next(direction).pleaseCanIGo(direction)) {
+					return yous;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Item> move2(int direction) {
+		ArrayList<Item> yous = new ArrayList<Item>();
+		for(Item i:items) {
+			if (i.isYou2()) {
 				yous.add(i);
 				i.orient(direction);
 			}
@@ -186,7 +214,8 @@ public class Location {
 		}
 	}
 
-	public void render(SpriteBatch sb) {
+
+	public void render(Batch sb) {
 		for(Item i:items) {
 			i.render(sb);
 		}
@@ -203,7 +232,7 @@ public class Location {
 			if(i.isDefeat()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou() && (isFloat == j.isFloat())) {
+					if((i.isYou1() || i.isYou2()) && (isFloat == j.isFloat())) {
 						if(toKill.indexOf(j)==-1) {
 							toKill.add(j);
 						}
@@ -310,7 +339,7 @@ public class Location {
 			if(i.isWin()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if(j.isYou() && (isFloat != j.isFloat())) {
+					if((i.isYou1() || i.isYou2()) && (isFloat != j.isFloat())) {
 						System.out.println("YOU WIN MOTHERFUCKER");;
 					}
 				}
@@ -384,6 +413,25 @@ public class Location {
 		}
 		return true;
 	}
+	
+	public boolean isOn(Class<Item> item) {
+		for(Item i:items) {
+			if(item.isInstance(i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isNear(Class<Item> item) {
+		for(int i=0; i!=3; i++) {
+			if (this.next(i) != null && this.next(i).isOn(item)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
+
 
 

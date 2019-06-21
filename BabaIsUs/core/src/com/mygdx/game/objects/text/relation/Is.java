@@ -15,7 +15,7 @@ public class Is extends Relation {
 	public Is(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	
+
 	@Override
 	public boolean isIs(){
 		return true;

@@ -1,4 +1,4 @@
-package com.mygdx.game.states;
+/*package com.mygdx.game.states;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -14,7 +14,7 @@ import com.mygdx.game.client_serveur.*;
 
 public class LevelState extends GameState implements ServerCallBack{
 	
-	private Level lvl;
+	private LevelView lvl;
 	
 	
 	
@@ -26,17 +26,21 @@ public class LevelState extends GameState implements ServerCallBack{
 
 	protected LevelState(GameStateManager gms) {
 		super(gms);
+
+		data = new ArrayBlockingQueue<Integer>(1);
+		client = new Client(data,this,"137.194.90.186");
+
 		//data = new ArrayBlockingQueue<Integer>(1);
 		//client = new Client(data,this,"192.168.43.114");
-		
-		
-		this.lvl = new Level("level.txt");
+
+
+		this.lvl = new LevelView("level.txt");
 		
 		
 		
 	}
 
-	@Override
+	//@Override
 	protected void handleInput() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			lvl.moveYou(2);
@@ -48,7 +52,7 @@ public class LevelState extends GameState implements ServerCallBack{
 				e.printStackTrace();
 			}
 			*/
-		}
+/*		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			lvl.moveYou(1);
 			lvl.endturn();
@@ -59,7 +63,7 @@ public class LevelState extends GameState implements ServerCallBack{
 				e.printStackTrace();
 			}
 			*/
-		}
+/*		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			lvl.moveYou(0);
 			lvl.endturn();
@@ -70,7 +74,7 @@ public class LevelState extends GameState implements ServerCallBack{
 				e.printStackTrace();
 			}
 			*/
-		}
+/*		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			lvl.moveYou(3);
 			lvl.endturn();
@@ -81,32 +85,40 @@ public class LevelState extends GameState implements ServerCallBack{
 				e.printStackTrace();
 			}
 			*/
-		}
+/*		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER ) || Gdx.input.isKeyJustPressed(Input.Keys.SPACE )) {
 			lvl.endturn();
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Z )) {
 			lvl.rollback();
 		}
+
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+			this.gsm.set(new MainMenu(gsm));
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.R )) {
 			lvl.reset();
+
 		}
 	}
 
-	@Override
+	//@Override
 	public void update(float dt) {
 		this.handleInput();
 	}
 
-	@Override
+	//@Override
 	public void render(SpriteBatch sb) {
 		lvl.render(sb);
 	}
 
-	@Override
+	//@Override
 	public void dispose() {
 		lvl.dispose();
 	}
+
+
+}
 
 	@Override
 	public void dataReceived(int data) {
@@ -114,4 +126,5 @@ public class LevelState extends GameState implements ServerCallBack{
 		System.out.println(data);
 	}
 
-}
+}*/
+

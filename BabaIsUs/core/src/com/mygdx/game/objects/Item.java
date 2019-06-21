@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.utils.Constants;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public abstract class Item {
@@ -21,7 +22,10 @@ public abstract class Item {
 	public boolean isPush() {
 		return false;
 	}
-	public boolean isYou() {
+	public boolean isYou1() {
+		return false;
+	}
+	public boolean isYou2() {
 		return false;
 	}
 	public boolean isWin() {
@@ -168,7 +172,8 @@ public abstract class Item {
 		}
 	}
 
-	public void render(SpriteBatch sb){
+
+	public void render(Batch sb){
 		String[] spriteUsed = getSpriteUsed();
 		int length = spriteUsed.length;
 		TextureRegion[] orientedWall = new TextureRegion[length];
@@ -236,7 +241,7 @@ public abstract class Item {
 	public void moved() {
 		hasMoved = true;
 	}
-	
+
 	public boolean hasShifted() {
 		return hasShifted;
 	}
@@ -253,7 +258,7 @@ public abstract class Item {
 			return null;
 		}
 	}
-	
+
 	public void setLocation(Location loc) {
 		this.loc = loc;
 	}
@@ -270,5 +275,20 @@ public abstract class Item {
 			}
 		}
 		return(false);
+	}
+
+	public boolean isOn(Class item) {
+		return loc.isOn(item);
+	}
+
+	public boolean isNear(Class item) {
+		return loc.isNear(item);
+	}
+
+	public boolean isFacing(Class item) {
+		if (loc.next(orientation) != null) {
+			return loc.next(orientation).isOn(item);
+		}
+		return false;
 	}
 }
