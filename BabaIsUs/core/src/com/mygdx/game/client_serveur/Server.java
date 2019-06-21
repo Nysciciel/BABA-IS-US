@@ -15,12 +15,12 @@ public class Server{
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
-	private Level lvl;
+	//private Level lvl;
 	
-	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack,Level level) {
+	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
 		
 		this.data = bq;
-		this.lvl = level;
+		//this.lvl = level;
 		this.connected = false;
 		callBackFunction = callBack;
 
@@ -37,25 +37,25 @@ public class Server{
 	       serveurSocket = new ServerSocket(5000);
 	       clientSocket = serveurSocket.accept();
 
-			 dis = new DataInputStream(clientSocket.getInputStream());
-			 fos = new FileOutputStream("level.txt");
-			 byte[] buffer = new byte[4096];
+	       //try {
+				DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
+				 fis = new FileInputStream("level.txt");
+				byte[] buffer = new byte[4096];
+			System.out.println("debut d'envoie de fichier");
+				while (fis.read(buffer) > 0) {
+					dos.write(buffer);
+				}
+			System.out.println("Fin d'envoi du fichier");
+				/*fis.close();
+				dos.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			*/
 
-			 int filesize = 15123; // Send file size in separate msg
-			 int read = 0;
-			 int totalRead = 0;
-			 int remaining = filesize;
-			 System.out.println("debut d'enregistrement de fichier");
-			 while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
-				 totalRead += read;
-				 remaining -= read;
-				 System.out.println("read " + totalRead + " bytes.");
-				 fos.write(buffer, 0, read);
-			 }
-			 System.out.println("fin d'enregistrement de fichier");
 			 //fos.close();
 			 //dis.close();
-			 
+
 			 this.connected =true;
 	        out = clientSocket.getOutputStream();
 	        in = clientSocket.getInputStream();

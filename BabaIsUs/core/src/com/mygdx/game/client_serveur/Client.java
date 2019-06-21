@@ -26,6 +26,7 @@ public class Client {
 		int current = 0;
 		FileOutputStream fos = null;
 		BufferedOutputStream bos = null;
+		DataInputStream dis = null;
 	    
 	    data = bq;
 	    callBackFunction = callBack;
@@ -33,20 +34,23 @@ public class Client {
 	    try {
 	         clientSocket = new Socket(ip_addr,5000);
 
-			//try {
-				DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
-				FileInputStream fis = new FileInputStream("level.txt");
-				byte[] buffer = new byte[4096];
-			System.out.println("debut d'envoie de fichier");
-				while (fis.read(buffer) > 0) {
-					dos.write(buffer);
-				}
-			System.out.println("Fin d'envoi du fichier");
-				/*fis.close();
-				dos.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}*/
+			 dis = new DataInputStream(clientSocket.getInputStream());
+			 fos = new FileOutputStream("level.txt");
+			 byte[] buffer = new byte[4096];
+
+			 int filesize = 15123; // Send file size in separate msg
+			 int read = 0;
+			 int totalRead = 0;
+			 int remaining = filesize;
+			 System.out.println("debut d'enregistrement de fichier");
+			 while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+				 totalRead += read;
+				 remaining -= read;
+				 System.out.println("read " + totalRead + " bytes.");
+				 fos.write(buffer, 0, read);
+			 }
+			 System.out.println("fin d'enregistrement de fichier");
+
 
 			out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
@@ -88,7 +92,14 @@ public class Client {
 		      recevoir.start();
 		      }catch (IOException e) {
 		         e.printStackTrace();
-		      } 
+		      } finally {
+			try {
+				fos.close();
+				dis.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

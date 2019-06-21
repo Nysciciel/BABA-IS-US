@@ -44,8 +44,8 @@ public class LoadingView implements Screen, ServerCallBack {
         Gdx.input.setInputProcessor(stage);
 
         this.data = new ArrayBlockingQueue<Integer>(1);
+        this.thread = new ServerThread(data,this);
         this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-        this.thread = new ServerThread(data,this,slvl);
 
 
         this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
