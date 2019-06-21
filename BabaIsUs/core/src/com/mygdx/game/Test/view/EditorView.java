@@ -37,6 +37,7 @@ public class EditorView implements Screen {
     private TextButton objectSelect;
     private TextButton clearSelect;
     private TextButton resetSelect;
+    private TextButton saveSelect;
     
     private TextButton babaSelect;
     private TextButton kekeSelect;
@@ -81,6 +82,7 @@ public class EditorView implements Screen {
         textSelect = new TextButton("Text",skin);
         clearSelect = new TextButton("clear",skin);
         resetSelect = new TextButton("reset",skin);
+        saveSelect = new TextButton("save",skin);
         
         babaSelect = new TextButton("baba",skin);
         kekeSelect = new TextButton("keke",skin);
@@ -99,6 +101,7 @@ public class EditorView implements Screen {
         mainList.add(textSelect).fill().uniformX();
         mainList.add(clearSelect).expandX().right();
         mainList.add(resetSelect).fill().uniformX();
+        mainList.add(saveSelect).fill().uniformX();
         
         charaList.add(babaSelect).fill().uniformX();
         charaList.add(kekeSelect).fill().uniformX();
@@ -162,6 +165,9 @@ public class EditorView implements Screen {
         			selectedItem = ObjectList.EMPTY;
         			break;
         		case "reset":
+        			editor.clear();
+        			break;
+        		case "select":
         			break;
         		}
         		return true;

@@ -82,6 +82,10 @@ public class DrawEditor extends Actor{
     	
     }
     
+    public void clear() {
+    	lvl = new Level(10,10);
+    }
+    
     public void drawRepere(Batch batch) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
@@ -95,5 +99,6 @@ public class DrawEditor extends Actor{
         }
         shapeRenderer.end();
     }
+    
     
 }
