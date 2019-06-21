@@ -46,7 +46,6 @@ public class Server{
 	                while(true){
 	                  try {
 						msg = data.take();
-						System.out.println("msg : " + msg);
 						out.write(msg);
 						out.flush();
 	                  } catch (InterruptedException e) {

@@ -324,9 +324,11 @@ public class Location {
 			}
 		}
 		for(Item i:toMove) {
-			if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
-				i.goforward();
-				i.moved();
+			if(next(i.getOrientation())!=null) {
+				if(next(i.getOrientation()).pleaseCanIGo(i.getOrientation())) {
+					i.goforward();
+					i.moved();
+				}
 			}
 		}
 
