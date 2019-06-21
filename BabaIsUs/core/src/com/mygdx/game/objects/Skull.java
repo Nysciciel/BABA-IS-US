@@ -12,7 +12,6 @@ public class Skull extends Item{
 	public Skull(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal("RockSheet.txt"));
 	}
 	
 	@Override
@@ -23,18 +22,6 @@ public class Skull extends Item{
 	@Override
 	public boolean isMove() {
 		return false;
-	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Rock0";
-		spriteUsed[1]="Rock1";
-		return(spriteUsed);
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }
