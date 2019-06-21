@@ -12,7 +12,7 @@ public class Wall extends Item {
 	}
 
 	@Override
-	public boolean isMove() {
+	public boolean isPush() {
 		return true;
 	}
 
@@ -31,6 +31,11 @@ public class Wall extends Item {
 		spriteUsed[0]="Wall-" + s + "-0";
 		spriteUsed[1]="Wall-" + s + "-1";
 		return(spriteUsed);
+	}
+	
+	@Override
+	public String toString() {
+		return "w";
 	}
 
 }

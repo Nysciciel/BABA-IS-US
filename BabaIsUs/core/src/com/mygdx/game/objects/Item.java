@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 public abstract class Item {
-	
+
 	protected float animationChrono=1;
 	protected TextureAtlas textureAtlas;
 	protected Animation animation;
@@ -29,15 +29,15 @@ public abstract class Item {
 	public Item(Location loc, int orientation) {
 		this.loc = loc;
 		this.orientation= orientation;
-		
+
 		loadTextureAtlas();
 	}
 
 	private boolean propertyAssert(String key) {
-		
+
 		Logic affirm;
 		Logic restrict;
-		
+
 		try {
 		affirm = (Logic) getRuleTable().get(key).get(getCategory());
 		if (affirm == null)
@@ -46,7 +46,7 @@ public abstract class Item {
 		catch(Exception e) {
 			return false;
 		}
-		
+
 		try{
 			restrict = (Logic) getRuleTable().get(key).get("Not").get(getCategory());
 			if (restrict == null)
@@ -55,7 +55,7 @@ public abstract class Item {
 		catch(Exception e) {
 			return affirm.getTruth(this);
 		}
-		
+
 		return affirm.getTruth(this) && !restrict.getTruth(this);
 	}
 
@@ -107,18 +107,18 @@ public abstract class Item {
 	public boolean isOpen() {
 		return propertyAssert("Open");
 	}
-	
+
 	public boolean isWeak() {
 		return propertyAssert("Weak");
 	}
-	
+
 	private ArrayList<Class> hasToTranformTo(){
-		
+
 		ArrayList<Class> transform = new ArrayList<Class>();
-		
+
 		if (getRuleTable().get("Is").get(this.getCategory()).get(this.getCategory()) == null)
 			return transform;
-		
+
 		for (Class c : getRuleTable().getProps()) {
 			// TODO :  getSimpleName wrong for Text objects ?
 			// TODO : verify order !!!!!!!!
@@ -126,10 +126,10 @@ public abstract class Item {
 					&& !((Logic)(getRuleTable().get("Is").get("Not").get(this.getCategory()).get(this.getCategory()))).getTruth(this))
 				transform.add(c);
 		}
-		return transform;		
+		return transform;
 	}
-	
-	
+
+
 
 	public int getOrientation() {
 		return orientation;
@@ -236,7 +236,7 @@ public abstract class Item {
 		float[] tab={a,b};
 		return(tab);
 	}
-	
+
 	protected int getY() {
 		return loc.getY();
 	}
@@ -327,4 +327,6 @@ public abstract class Item {
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}
+
+	public abstract String toString();
 }

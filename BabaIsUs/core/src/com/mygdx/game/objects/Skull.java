@@ -18,6 +18,11 @@ public class Skull extends Item{
 	public boolean isMove() {
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return "s";
+	}
 
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
