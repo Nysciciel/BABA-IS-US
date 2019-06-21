@@ -36,17 +36,26 @@ public class Server{
 	       clientSocket = serveurSocket.accept();
 	       this.connected =true;
 
-			 File myFile = new File ("Level.txt");
-			 byte [] mybytearray  = new byte [(int)myFile.length()];
-			 fis = new FileInputStream(myFile);
-			 bis = new BufferedInputStream(fis);
-			 bis.read(mybytearray,0,mybytearray.length);
-			 out = clientSocket.getOutputStream();
-			 System.out.println("Sending " + " Level.txt " + "(" + mybytearray.length + " bytes)");
-			 out.write(mybytearray,0,mybytearray.length);
-			 out.flush();
+			 DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+			 FileOutputStream fos = new FileOutputStream("level.txt");
+			 byte[] buffer = new byte[4096];
 
-	        //out = clientSocket.getOutputStream();
+			 int filesize = 15123; // Send file size in separate msg
+			 int read = 0;
+			 int totalRead = 0;
+			 int remaining = filesize;
+			 while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
+				 totalRead += read;
+				 remaining -= read;
+				 System.out.println("read " + totalRead + " bytes.");
+				 fos.write(buffer, 0, read);
+			 }
+
+			 fos.close();
+			 dis.close();
+
+
+	        out = clientSocket.getOutputStream();
 	        in = clientSocket.getInputStream();
 	        Thread envoyer = new Thread(new Runnable() {
 	             int msg;
@@ -87,12 +96,6 @@ public class Server{
 	      }catch (IOException e) {
 	         e.printStackTrace();
 	      }
-	     finally {
-			 /*if (bis != null) bis.close();
-			 if (out != null) out.close();
-			 if (clientSocket!=null) clientSocket.close();*/
-		 }
-	     
 	}
 
 	public boolean isConnected(){

@@ -33,25 +33,22 @@ public class Client {
 	    try {
 	         clientSocket = new Socket(ip_addr,5000);
 
-			byte [] mybytearray  = new byte [FILE_SIZE];
-			InputStream is = clientSocket.getInputStream();
-			fos = new FileOutputStream("level.txt");
-			bos = new BufferedOutputStream(fos);
-			bytesRead = is.read(mybytearray,0,mybytearray.length);
-			current = bytesRead;
+			try {
+				DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
+				FileInputStream fis = new FileInputStream("level.txt");
+				byte[] buffer = new byte[4096];
 
-			do {
-				bytesRead =
-						is.read(mybytearray, current, (mybytearray.length-current));
-				if(bytesRead >= 0) current += bytesRead;
-			} while(bytesRead > -1);
+				while (fis.read(buffer) > 0) {
+					dos.write(buffer);
+				}
 
-			bos.write(mybytearray, 0 , current);
-			bos.flush();
-			System.out.println("File " + "level.txt"
-					+ " downloaded (" + current + " bytes read)");
-	   
-	         out = clientSocket.getOutputStream();
+				fis.close();
+				dos.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
 	   
 	         Thread envoyer = new Thread(new Runnable() {
