@@ -57,13 +57,13 @@ public class DrawEditor extends Actor{
     		break;
     	case EMPTY:
     		loc.getItems().clear();
-    		loc.add(new Empty(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Empty(loc,direction));
     		break;
     	case SKULL:
-    		loc.add(new Skull(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Skull(loc,direction));
     		break;
     	case KEKE:
-    		loc.add(new Keke(loc,(int)(x/ratioWidth),(int)(y/ratioHeight),direction));
+    		loc.add(new Keke(loc,direction));
     		break;
     	}
     }
