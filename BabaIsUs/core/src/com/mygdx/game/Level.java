@@ -86,11 +86,13 @@ public class Level {
 			}
 			
 			// Test de text
-			locationMatrix[0][0].add(new BabaText(locationMatrix[0][0], getRuleTable(), 0, height-1,0));
+			locationMatrix[0][0].add(new You(locationMatrix[0][0], getRuleTable(), 0, height-1,0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], getRuleTable(), 0, height-2,0));
-			locationMatrix[2][0].add(new You(locationMatrix[2][0], getRuleTable(), 0, height-3,0));
+			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], getRuleTable(), 0, height-3,0));
 
 			history.add(this.matrixCopy());
+			
+			updateRules();
 
 
 		}
@@ -106,13 +108,13 @@ public class Level {
 	public void readRules() {
 		
 		rules = new RuleSet();
-		
+				
 		RuleStackList currentRules; 
 		boolean thereIsAnOnOrNearOrFacingOrAnd;
 		boolean thereIsANot;
 
 		// lecture par ligne
-		for (int y = height-1; y>0; y--) {
+		for (int y = height-1; y>=0; y--) {
 			
 			thereIsAnOnOrNearOrFacingOrAnd = false;
 			thereIsANot = false;
@@ -136,7 +138,7 @@ public class Level {
 			thereIsAnOnOrNearOrFacingOrAnd = false;
 			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
-			for (int y = height-1; y>0; y--) {
+			for (int y = height-1; y>=0; y--) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
 				
 				for (Text text : textList) {
@@ -157,8 +159,14 @@ public class Level {
 		System.out.println("################################## __Construction__    ################################################");
 		ruleTable = new LogicHashtable(rules, props);
 		System.out.println("##################################  __RuleTable__    ################################################");
-		System.out.println(ruleTable.toString());
-
+		System.out.println(ruleTable);
+		System.out.println(locationMatrix[2][0].getItems().get(0).getRuleTable());
+		
+	}
+	
+	public void updateRules() {
+		readRules();
+		interpretRules();
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
@@ -175,7 +183,6 @@ public class Level {
 			if (i.next(direction)!=null) {
 				if(!(i.next(direction).hasYou()) || (list.indexOf(i.next(direction))==-1)) {
 					first = i;
-
 					break;
 				}
 			}
@@ -301,5 +308,7 @@ public class Level {
 	public LogicHashtable getRuleTable() {
 		return ruleTable;
 	}
+
+	
 
 }

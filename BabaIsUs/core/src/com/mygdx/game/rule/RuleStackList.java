@@ -18,7 +18,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 
 		ArrayList<RuleStack> toBeRemoved = new ArrayList<RuleStack>();
 		ArrayList<RuleStack> newRuleStacks = new ArrayList<RuleStack>();
-
+		
 		// And handling in case of a final State
 		if (thereIsAnd(textList))
 			for (RuleStack ruleStack : this) {	
@@ -38,11 +38,13 @@ public class RuleStackList extends ArrayList<RuleStack> {
 			for (RuleStack ruleStack : this) {
 				if (ruleStack.isFinal()) {
 					System.out.println("just final");
-					rules.add(new Rule(ruleStack, rules));
+					Rule rule = new Rule(ruleStack, rules);
+					rules.add(rule);
 					toBeRemoved.add(ruleStack);
 				}
 			}
 		}
+
 		this.removeAll(toBeRemoved);
 
 		// Create a new Stack for each RuleStack that has an automaton in the AND state
@@ -93,6 +95,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				}	
 			}
 		}
+		
 		this.removeAll(toBeRemoved);
 
 		// init new Stacks with an Item ref that is not following  ON / NEAR / FACING / AND

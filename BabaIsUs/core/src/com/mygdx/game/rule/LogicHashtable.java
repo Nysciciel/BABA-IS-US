@@ -14,7 +14,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 	public LogicHashtable(RuleSet rules, ArrayList<Class> props) {
 		
 		this.setProps(props);
-		
+				
 		for (Rule rule : rules) {
 			
 			rule.show();
@@ -25,7 +25,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			if (rule.getTextList().getLast().isProperty()) {
 				// add last
 				ArrayList<String> keyList = new ArrayList<String>();
-				keyList.add(rule.getTextList().getLast().getName());
+				keyList.add(rule.getTextList().getLast().getRefName());
 				keys.add(keyList);
 				// case Property restriction
 				if (rule.getTextList().get(length-2).isNot()) { // -1 ?
@@ -39,7 +39,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 					// add complementary of 2nd element
 					ArrayList<String> complementaryKeyList = new ArrayList<String>();
 					for (Class c : props) {
-						if (!c.getSimpleName().equals(rule.getTextList().get(1).getName()))
+						if (!c.getSimpleName().equals(rule.getTextList().get(1).getRefName()))
 							complementaryKeyList.add(c.getSimpleName());
 					}
 					keys.add(complementaryKeyList);
@@ -47,7 +47,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				else {
 					// add first 
 					ArrayList<String> keyList1 = new ArrayList<String>();
-					keyList1.add(rule.getTextList().getFirst().getName());
+					keyList1.add(rule.getTextList().getFirst().getRefName());
 					keys.add(keyList1);
 				}
 			}
@@ -57,11 +57,11 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				if (rule.is()) {
 					// add relation
 					ArrayList<String> keyList = new ArrayList<String>();
-					keyList.add(rule.getRelation().getName());
+					keyList.add(rule.getRelation().getRefName());
 					keys.add(keyList);
 					// add last item
 					ArrayList<String> keyList2 = new ArrayList<String>();
-					keyList2.add(rule.getTextList().getLast().getName());
+					keyList2.add(rule.getTextList().getLast().getRefName());
 					keys.add(keyList);
 					// case restriction by opposition
 					if (rule.getTextList().get(length-2).isNot()) { // -1 ?
@@ -74,7 +74,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 						/// add complementary of 2nd element
 						ArrayList<String> complementaryKeyList = new ArrayList<String>();
 						for (Class c : props) {
-							if (!c.getSimpleName().equals(rule.getTextList().get(1).getName()))
+							if (!c.getSimpleName().equals(rule.getTextList().get(1).getRefName()))
 								complementaryKeyList.add(c.getSimpleName());
 						}
 						keys.add(complementaryKeyList);
@@ -82,7 +82,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 					else {
 						// add first
 						ArrayList<String> keyList1 = new ArrayList<String>();
-						keyList1.add(rule.getTextList().getFirst().getName());
+						keyList1.add(rule.getTextList().getFirst().getRefName());
 						keys.add(keyList1);
 					}
 				}
@@ -90,13 +90,13 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				else {
 					// add relation
 					ArrayList<String> keyList = new ArrayList<String>();
-					keyList.add(rule.getRelation().getName());
+					keyList.add(rule.getRelation().getRefName());
 					keys.add(keyList);
 					if (rule.getTextList().get(length-2).isNot()) {
 						// add complementary of the final - 1
 						ArrayList<String> complementaryKeyList = new ArrayList<String>();
 						for (Class c : props) {
-							if (!c.getSimpleName().equals(rule.getTextList().get(length-2).getName()))
+							if (!c.getSimpleName().equals(rule.getTextList().get(length-2).getRefName()))
 								complementaryKeyList.add(c.getSimpleName());
 						}
 						keys.add(complementaryKeyList);
@@ -104,14 +104,14 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 					else {
 						// add last
 						ArrayList<String> keyList2 = new ArrayList<String>();
-						keyList2.add(rule.getTextList().getLast().getName());
+						keyList2.add(rule.getTextList().getLast().getRefName());
 						keys.add(keyList);
 					}
 					if (rule.getTextList().getFirst().isNot()){
 						// add complementary of 2nd element
 						ArrayList<String> complementaryKeyList = new ArrayList<String>();
 						for (Class c : props) {
-							if (!c.getSimpleName().equals(rule.getTextList().get(1).getName()))
+							if (!c.getSimpleName().equals(rule.getTextList().get(1).getRefName()))
 								complementaryKeyList.add(c.getSimpleName());
 						}
 						keys.add(complementaryKeyList);
@@ -119,13 +119,12 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 					else {
 						// add first
 						ArrayList<String> keyList1 = new ArrayList<String>();
-						keyList1.add(rule.getTextList().getFirst().getName());
+						keyList1.add(rule.getTextList().getFirst().getRefName());
 						keys.add(keyList1);
 					}
 				}
 			}
 			
-			// TODO : ON/NEAR/FACING
 			ArrayList<Class> on = new ArrayList<Class>();
 			ArrayList<Class> near = new ArrayList<Class>();
 			ArrayList<Class> facing = new ArrayList<Class>();
@@ -181,6 +180,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			}
 		else {
 			for (String key : keys.get(0)) {
+				System.out.println("aduygfoqsuhgdfonqjushfnekcfuqynseotgjuh qsbjecgtb&vkabhczqkeg ");
 				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
 			}
 		}

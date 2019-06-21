@@ -19,8 +19,9 @@ public abstract class Item {
 
 	private boolean propertyAssert(String key) {
 		try {
-			Logic affirm = (Logic) ruleTable.get("Push").get(getCategory());
-			Logic restrict = (Logic) ruleTable.get("Push").get("Not").get(getCategory());
+			Logic affirm = (Logic) ruleTable.get(key).get(getCategory());
+			Logic restrict = (Logic) ruleTable.get(key).get("Not").get(getCategory());
+			System.out.println("Acheived to this point @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			return affirm.getTruth(this) && !restrict.getTruth(this);
 		}
 		catch(Exception e) {
@@ -283,5 +284,13 @@ public abstract class Item {
 			return loc.next(orientation).isOnLocation(item);
 		}
 		return false;
+	}
+
+	public String getRefName() {
+		return getName();
+	}
+
+	public LogicHashtable getRuleTable() {
+		return ruleTable;
 	}
 }

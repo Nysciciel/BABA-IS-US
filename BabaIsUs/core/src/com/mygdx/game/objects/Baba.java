@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.*;
+import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,13 +23,25 @@ public class Baba extends Item{
 	private TextureAtlas textureAtlas;
 	private Animation animation;
 	private float elapsedTime = 0;
-	
-	/*
+
+
 	@Override
 	public boolean isYou() {
-		return true;
+		try {
+
+			System.out.println(ruleTable);
+			System.out.println(""+((Logic)ruleTable.get("You").get("Baba")).getTruth(this));
+			System.out.println("On"+((Logic)ruleTable.get("You").get("Baba")).onTruth(this));
+			System.out.println("Near"+((Logic)ruleTable.get("You").get("Baba")).nearTruth(this));
+			System.out.println("Facing"+((Logic)ruleTable.get("You").get("Baba")).facingTruth(this));
+		}
+		catch(Exception e) {
+			System.out.println("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- Nope");
+		}
+
+		return super.isYou();
 	}
-	*/
+
 
 	public void render(SpriteBatch sb){
 		animationChrono +=Gdx.graphics.getDeltaTime();
@@ -45,18 +58,18 @@ public class Baba extends Item{
 		if(animationChrono<0.2){
 			System.out.println(animationChrono);
 			switch(orientation){
-				case(0):
-					sb.draw(test, (x+1-animationChrono*5) * size, y * size, size, size);
-					break;
-				case(1):
-					sb.draw(test, x * size, (y-1+animationChrono*5) * size, size, size);
-					break;
-				case(2):
-					sb.draw(test, (x-1+animationChrono*5) * size, y * size, size, size);
-					break;
-				case(3):
-					sb.draw(test, x * size, (y+1-animationChrono*5) * size, size, size);
-					break;
+			case(0):
+				sb.draw(test, (x+1-animationChrono*5) * size, y * size, size, size);
+			break;
+			case(1):
+				sb.draw(test, x * size, (y-1+animationChrono*5) * size, size, size);
+			break;
+			case(2):
+				sb.draw(test, (x-1+animationChrono*5) * size, y * size, size, size);
+			break;
+			case(3):
+				sb.draw(test, x * size, (y+1-animationChrono*5) * size, size, size);
+			break;
 			}
 		}else {
 			sb.draw(test, x * size, y * size, size, size);

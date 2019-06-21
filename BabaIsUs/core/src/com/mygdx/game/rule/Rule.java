@@ -15,6 +15,9 @@ public class Rule {
 		
 		this.rules = rules;
 		
+		System.out.println(rules);
+
+		
 		System.out.println("");
 		System.out.println("+++++++++++++++++++++++++Here is the Rule++++++++++++++++++++++++++");
 		
@@ -24,22 +27,28 @@ public class Rule {
 		System.out.println("");
 		
 		// Compressing the NOTs
-		ArrayList<Text> simplified = new ArrayList<Text>();
+		textList = new LinkedList<Text>();
 		
 		Text previous = null;
 		for (Text text : ruleStack.getStack()) {
 			if (previous != null) {
-				if (!text.getName().equals("Not") || !previous.getName().contentEquals("Not")) {
-					simplified.add(text);
+				if (!text.getName().equals("Not") || !previous.getName().equals("Not")) {
+					textList.add(text);
 				}
 			}
+			else {
+				textList.add(text);
+			}
+			
 			previous = text;
 		}
+		System.out.println(rules);
 	}
 	
 	public String toString() {
 		
 		String s = new String();
+		System.out.println(textList);
 		for (Text text : textList) {
 			s += text.toString() + " ";
 		}
