@@ -44,15 +44,16 @@ public class Server{
 			 int read = 0;
 			 int totalRead = 0;
 			 int remaining = filesize;
+			 System.out.println("debut d'enregistrement de fichier");
 			 while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
 				 totalRead += read;
 				 remaining -= read;
 				 System.out.println("read " + totalRead + " bytes.");
 				 fos.write(buffer, 0, read);
 			 }
-
-			 fos.close();
-			 dis.close();
+			 System.out.println("fin d'enregistrement de fichier");
+			 //fos.close();
+			 //dis.close();
 
 
 	        out = clientSocket.getOutputStream();

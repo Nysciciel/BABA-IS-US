@@ -33,20 +33,20 @@ public class Client {
 	    try {
 	         clientSocket = new Socket(ip_addr,5000);
 
-			try {
+			//try {
 				DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
 				FileInputStream fis = new FileInputStream("level.txt");
 				byte[] buffer = new byte[4096];
-
+			System.out.println("debut d'envoie de fichier");
 				while (fis.read(buffer) > 0) {
 					dos.write(buffer);
 				}
-
-				fis.close();
+			System.out.println("Fin d'envoi du fichier");
+				/*fis.close();
 				dos.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}*/
 
 			out = clientSocket.getOutputStream();
 	         in = clientSocket.getInputStream();
