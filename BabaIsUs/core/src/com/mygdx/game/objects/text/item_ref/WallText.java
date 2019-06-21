@@ -8,10 +8,5 @@ public class WallText extends ItemRef {
 	public WallText(Location loc, int x, int y, int orientation) {
 		super(loc, x, y, orientation);
 	}
-	public String[] getSpriteUsed(){
-		return null;
-	}
-	public float[] getAffichePos(){
-		return null;
-	}
+
 }
