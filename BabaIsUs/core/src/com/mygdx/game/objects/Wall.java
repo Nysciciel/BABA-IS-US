@@ -19,7 +19,7 @@ public class Wall extends Item {
 		textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName() + "SheetU.txt"));
 	}
 	@Override
-	public boolean isMove() {
+	public boolean isPush() {
 		return true;
 	}
 

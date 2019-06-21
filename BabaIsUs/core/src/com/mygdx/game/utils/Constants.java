@@ -8,6 +8,6 @@ public class Constants {
 	public final static int WINDOW_HEIGHT = 900;
 	
 	public final static String GAME_TITLE = "Baba Is Us";
-	
+	public final static String LOADING_SCREEN = "Waiting for an other player";
 	public final static int SPEED = 20;
 }
