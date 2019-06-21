@@ -41,5 +41,10 @@ public class Water extends Item {
 			return(spriteUsed);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return "a";
+	}
 
 }

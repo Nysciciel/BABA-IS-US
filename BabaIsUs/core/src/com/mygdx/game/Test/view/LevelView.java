@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Level;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 
@@ -40,6 +41,9 @@ public class LevelView implements Screen,ServerCallBack {
 
     @Override
     public void show() {
+        if(lvl == null){
+            lvl = new com.mygdx.game.Level("level.txt");
+        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             lvl.endturn();
         }
@@ -70,6 +74,14 @@ public class LevelView implements Screen,ServerCallBack {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
         }
+    }
+
+    public Level getLvl(){
+        return lvl;
+    }
+
+    public void setLvl(Level nlvl){
+       this.lvl = nlvl;
     }
 
     @Override

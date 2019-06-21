@@ -5,11 +5,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
+import com.mygdx.game.client_serveur.ServerCallBack;
+import com.mygdx.game.utils.Constants;
 
-public class Settings implements Screen {
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+public class LoadingView implements Screen, ServerCallBack {
 
 
     private MainTest parent; // a field to store our orchestrator
@@ -17,18 +26,49 @@ public class Settings implements Screen {
     private Stage stage;
     private Texture background;
 
+    private BlockingQueue<Integer> data;
+    private com.mygdx.game.ServerLevel slvl;
+    private ServerThread thread;
+
+    private BitmapFont gameTitleText, touchText, toText, startText;
+    private FreeTypeFontGenerator generator;
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private GlyphLayout gameTitleGlyph, touchGlyph, toGlyph, startGlyph;
+
     // our constructor with a Box2DTutorial argument
-    public Settings(MainTest mainTest) {
+    public LoadingView(MainTest mainTest) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
 
+        this.data = new ArrayBlockingQueue<Integer>(1);
+        this.thread = new ServerThread(data,this);
+
+
+        this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
+        this.parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        this.parameter.size = 64;
+        this.gameTitleText = this.generator.generateFont(this.parameter);
+        this.gameTitleGlyph = new GlyphLayout();
+        this.gameTitleGlyph.setText(this.gameTitleText, Constants.LOADING_SCREEN);
     }
 
     public Stage getStage(){
         return stage;
+    }
+
+    public ServerLevel getSlvl() {
+        return this.slvl;
+    }
+
+    public BlockingQueue<Integer> getData(){
+        return this.data;
+    }
+
+    public ServerThread getThread(){
+        return thread;
     }
 
     @Override
@@ -36,18 +76,25 @@ public class Settings implements Screen {
         // TODO Auto-generated method stub
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
+            this.thread.interrupt();
+        }
+
+        if(this.thread.checkClient()){
+            parent.screenChoice((MainTest.SERVER));
         }
     }
 
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.SETTINGS);
+        parent.screenChoice(MainTest.LOADING);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+        //stage.getBatch().draw(this.gameTitleGlyph,Gdx.graphics.getWidth()/2 - this.gameTitleGlyph.width/2,Gdx.graphics.getHeight()/2);
+        this.gameTitleText.draw(stage.getBatch(), this.gameTitleGlyph, Gdx.graphics.getWidth()/2 - this.gameTitleGlyph.width/2, Gdx.graphics.getHeight()/3);
         stage.getBatch().end();
         stage.draw();
     }
@@ -78,5 +125,11 @@ public class Settings implements Screen {
         // TODO Auto-generated method stub
         stage.dispose();
         this.background.dispose();
+        this.gameTitleText.dispose();
+    }
+
+    @Override
+    public void dataReceived(int data) {
+
     }
 }

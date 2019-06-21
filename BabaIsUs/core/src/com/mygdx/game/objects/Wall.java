@@ -11,6 +11,11 @@ public class Wall extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public boolean isPush() {
+		return true;
+	}
+
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
 	}
@@ -26,6 +31,11 @@ public class Wall extends Item {
 		spriteUsed[0]="Wall-" + s + "-0";
 		spriteUsed[1]="Wall-" + s + "-1";
 		return(spriteUsed);
+	}
+	
+	@Override
+	public String toString() {
+		return "w";
 	}
 
 }
