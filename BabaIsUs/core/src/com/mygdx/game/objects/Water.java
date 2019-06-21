@@ -15,11 +15,14 @@ public class Water extends Item {
 	public Water(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName() + "SheetU.txt"));
 	}
 	@Override
 	public boolean isPush() {
 		return true;
+	}
+
+	public void loadTextureAtlas(){
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
 	}
 
 	public String[] getSpriteUsed(){
@@ -46,11 +49,6 @@ public class Water extends Item {
 			spriteUsed[1]="Water-" + s + "-1";
 			return(spriteUsed);
 		}
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }

@@ -12,7 +12,6 @@ public class Keke extends Item{
 	public Keke(Location loc,
 			int x, int y, int orientation) {
 		super(loc, x, y, orientation);
-		textureAtlas = new TextureAtlas(Gdx.files.internal("KekeSheet.txt"));
 	}
 	
 	@Override
@@ -35,11 +34,6 @@ public class Keke extends Item{
 		spriteUsed[0]="Keke0-0";
 		spriteUsed[1]="Keke0-1";
 		return(spriteUsed);
-	}
-
-	public float[] getAffichePos(){
-		float[] tab = {x,y};
-		return(tab);
 	}
 
 }
