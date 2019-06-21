@@ -30,14 +30,15 @@ public class Server{
 		final Socket clientSocket ;
 		final InputStream in;
 		final OutputStream out;
+		DataInputStream dis = null;
+		FileOutputStream fos = null;
 	     
 	     try {
 	       serveurSocket = new ServerSocket(5000);
 	       clientSocket = serveurSocket.accept();
-	       this.connected =true;
 
-			 DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
-			 FileOutputStream fos = new FileOutputStream("level.txt");
+			 dis = new DataInputStream(clientSocket.getInputStream());
+			 fos = new FileOutputStream("level.txt");
 			 byte[] buffer = new byte[4096];
 
 			 int filesize = 15123; // Send file size in separate msg
@@ -54,8 +55,8 @@ public class Server{
 			 System.out.println("fin d'enregistrement de fichier");
 			 //fos.close();
 			 //dis.close();
-
-
+			 
+			 this.connected =true;
 	        out = clientSocket.getOutputStream();
 	        in = clientSocket.getInputStream();
 	        Thread envoyer = new Thread(new Runnable() {
@@ -96,7 +97,14 @@ public class Server{
 	      recevoir.start();
 	      }catch (IOException e) {
 	         e.printStackTrace();
-	      }
+	      }finally {
+	     	try {
+				fos.close();
+				dis.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
 	}
 
 	public boolean isConnected(){
