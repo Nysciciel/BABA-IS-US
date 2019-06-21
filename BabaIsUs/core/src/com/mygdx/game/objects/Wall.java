@@ -25,7 +25,7 @@ public class Wall extends Item {
 	private float elapsedTime = 0;
 
 	@Override
-	public boolean isMove() {
+	public boolean isPush() {
 		return true;
 	}
 

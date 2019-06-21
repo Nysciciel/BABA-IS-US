@@ -19,13 +19,14 @@ public class Server{
 	
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
-	private boolean connected = false;
+	private boolean connected;
 	private Level lvl;
 	
 	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack,Level level) {
 		
 		this.data = bq;
 		this.lvl = level;
+		this.connected = false;
 		callBackFunction = callBack;
         
 		 final ServerSocket serveurSocket  ;
@@ -82,7 +83,11 @@ public class Server{
 	}
 
 	public boolean isConnected(){
-		return true;
+		return connected;
+	}
+
+	public void setServerCallBack(ServerCallBack cb){
+		callBackFunction = cb;
 	}
 
 
