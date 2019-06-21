@@ -81,7 +81,7 @@ public class MainTest extends Game {
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(server == null) server = new ServerView(this,thread,data,level);
+                if(server == null) server = new ServerView(this,thread,data);
                 this.setScreen(server);
                 Stage stage6 = server.getStage();
                 Gdx.input.setInputProcessor(stage6);
