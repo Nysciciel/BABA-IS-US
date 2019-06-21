@@ -1,8 +1,6 @@
 package com.mygdx.game.rule;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 import com.mygdx.game.objects.text.Relation;
 import com.mygdx.game.objects.text.Text;
 

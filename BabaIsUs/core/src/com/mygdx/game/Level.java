@@ -1,26 +1,18 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Scanner;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
 
-import com.badlogic.gdx.scenes.scene2d.*;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.property.You;
 import com.mygdx.game.objects.text.relation.Is;
-import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.Rule;
 import com.mygdx.game.rule.RuleSet;
-import com.mygdx.game.rule.RuleStack;
 import com.mygdx.game.rule.RuleStackList;
 
 

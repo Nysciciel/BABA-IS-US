@@ -1,8 +1,6 @@
 package com.mygdx.game.rule;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-
 import com.mygdx.game.objects.text.Text;
 
 public class RuleStackList extends ArrayList<RuleStack> {

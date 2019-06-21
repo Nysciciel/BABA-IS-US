@@ -1,10 +1,6 @@
 package com.mygdx.game.rule;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import com.mygdx.game.Location;
 import com.mygdx.game.objects.Item;
 
 public class Logic extends LogicHashtable {

@@ -1,8 +1,6 @@
 package com.mygdx.game.rule;
 
 import java.util.LinkedList;
-
-import com.mygdx.game.objects.Item;
 import com.mygdx.game.objects.text.Text;
 
 public class RuleStack {

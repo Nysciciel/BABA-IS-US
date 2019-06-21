@@ -2,7 +2,6 @@ package com.mygdx.game.rule;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 
 public class RuleSet extends HashSet<Rule> {
 	

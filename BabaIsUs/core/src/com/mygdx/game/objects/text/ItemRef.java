@@ -1,10 +1,6 @@
 package com.mygdx.game.objects.text;
 
-import com.mygdx.game.Level;
 import com.mygdx.game.Location;
-import com.mygdx.game.objects.Item;
-import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.RuleSet;
 
 public abstract class ItemRef extends com.mygdx.game.objects.text.Text {
 	public ItemRef(Location loc, int orientation) {

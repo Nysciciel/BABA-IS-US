@@ -2,8 +2,6 @@ package com.mygdx.game.objects.text;
 
 import com.mygdx.game.*;
 import com.mygdx.game.objects.*;
-import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.RuleSet;
 
 public abstract class Text extends Item {
 

@@ -1,9 +1,6 @@
 package com.mygdx.game.rule;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-
-
 import com.mygdx.game.objects.text.item_ref.*;
 import com.mygdx.game.objects.text.operator.*;
 import com.mygdx.game.objects.text.relation.*;

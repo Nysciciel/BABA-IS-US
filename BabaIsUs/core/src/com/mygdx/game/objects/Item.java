@@ -6,12 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
-import com.mygdx.game.rule.RuleSet;
-
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
