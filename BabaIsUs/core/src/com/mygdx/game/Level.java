@@ -34,6 +34,7 @@ public class Level {
 	public Level(int length,int height) {
 		this.height = height;
 		this.length = length;
+		this.rules = new RuleSet();
 		
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -67,8 +68,9 @@ public class Level {
 			height = lines.size();
 			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
-			System.out.println(length);
-			System.out.println(height);
+			this.rules = new RuleSet();
+			//System.out.println(length);
+			//System.out.println(height);
 
 			
 			locationMatrix = new Location[height][length];
@@ -225,6 +227,7 @@ public class Level {
 	}
 	
 	public void updateRules() {
+		
 		highLight(false);
 		readRules();
 		highLight(true);
