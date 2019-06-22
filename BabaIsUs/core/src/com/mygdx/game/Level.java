@@ -13,6 +13,7 @@ import com.mygdx.game.objects.text.property.*;
 import com.mygdx.game.objects.text.operator.*;
 import com.mygdx.game.objects.text.relation.*;
 import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.Rule;
 import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.rule.RuleStackList;
 
@@ -102,6 +103,9 @@ public class Level {
 				}
 			}
 			
+			locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
+			locationMatrix[6][12].add(new Wall(locationMatrix[6][12], 0));
+			
 			// BABA IS YOU
 			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
@@ -110,7 +114,7 @@ public class Level {
 			
 
 			// WALL IS STOP
-			locationMatrix[0][10].add(new Stop(locationMatrix[0][10], 0));
+			locationMatrix[0][10].add(new Push(locationMatrix[0][10], 0));
 			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
 			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
 
@@ -120,11 +124,12 @@ public class Level {
 			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
 
 			// SKULL ON BABA iS WALL
-			locationMatrix[0][14].add(new WallText(locationMatrix[0][14], 0));
+			locationMatrix[0][14].add(new Weak(locationMatrix[0][14], 0));
 			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
-			locationMatrix[2][14].add(new BabaText(locationMatrix[2][14], 0));
-			locationMatrix[3][14].add(new On(locationMatrix[3][14], 0));
-			locationMatrix[4][14].add(new SkullText(locationMatrix[4][14], 0));
+			locationMatrix[2][14].add(new Wall(locationMatrix[2][14], 0));
+			locationMatrix[3][14].add(new Not(locationMatrix[3][14], 0));
+			locationMatrix[4][14].add(new On(locationMatrix[4][14], 0));
+			locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));
 
 			// SKULL IS HOT AND PULL
 			locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
@@ -220,9 +225,18 @@ public class Level {
 	}
 	
 	public void updateRules() {
-		
+		highLight(false);
 		readRules();
+		highLight(true);
 		interpretRules();		
+	}
+
+	private void highLight(boolean b) {
+		for (Rule rule : rules) {
+			for (Text text : rule.getTextList()) {
+				text.highLight(b);
+			}
+		}
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
