@@ -1,12 +1,16 @@
 package com.mygdx.game;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
 
+/**
+ * Object in a grid of the level containing a list of Items
+ * It is mostly a box
+ * @author Maxwell
+ *
+ */
 public class Location {
 	protected Level lvl;
 	protected ArrayList<Item> items;
@@ -100,7 +104,12 @@ public class Location {
 		return false;
 	}
 
-
+	/**
+	 * Ask the next location in the 
+	 * @param direction
+	 * whether an object of this can move to the next location and move the interactive objects of the next location if necessary
+	 * @return the permission
+	 */
 	public boolean pleaseCanIGo(int direction) {
 
 		if (this.allAreShut() && this.next((2+direction)%4).allAreOpen()) {
@@ -418,6 +427,9 @@ public class Location {
 		return false;
 	}
 
+	/**
+	 * Transform all the items that have a setting like "BABA IS KEKE" in the new item(s)
+	 */
 	public void transform() {
 		
 		ArrayList<Item> newItems = new ArrayList<Item>();

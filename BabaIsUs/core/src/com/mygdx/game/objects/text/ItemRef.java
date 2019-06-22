@@ -2,6 +2,11 @@ package com.mygdx.game.objects.text;
 
 import com.mygdx.game.Location;
 
+/**
+ * Class of Text referencing Items
+ * @author Maxwell
+ *
+ */
 public abstract class ItemRef extends com.mygdx.game.objects.text.Text {
 	public ItemRef(Location loc, int orientation) {
 		super(loc, orientation);

@@ -85,6 +85,6 @@ public class Logic extends LogicHashtable {
 	}
 
 	public String toString() {
-		return ""+value;
+		return "*";
 	}
 }

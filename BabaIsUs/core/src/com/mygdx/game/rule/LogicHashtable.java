@@ -7,6 +7,12 @@ import java.util.List;
 
 import com.mygdx.game.objects.text.Text;
 
+/**
+ * Approximately a Hashtable of Hashtable... 
+ * When the last Hashtable is of the Logic class, it's rather the truth of the assertion made by the succession of keys
+ * @author Maxwell
+ *
+ */
 public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 	
 	private ArrayList<Class> props;
