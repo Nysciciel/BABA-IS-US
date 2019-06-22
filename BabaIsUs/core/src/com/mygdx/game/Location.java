@@ -473,7 +473,7 @@ public class Location {
 
 	public boolean isNearLocation(Class<Item> item) {
 
-		for(int i=0; i!=3; i++) {
+		for(int i=0; i<4; i++) {
 			if (this.next(i) != null && this.next(i).isOnLocation(item)) {
 				return true;
 			}

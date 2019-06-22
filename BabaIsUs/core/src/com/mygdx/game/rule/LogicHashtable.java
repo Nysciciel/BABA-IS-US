@@ -144,7 +144,7 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			
 			LinkedList<Text> textList = rule.getTextList();
 			for (int i = 2; i < length-2; i++) {
-				System.out.println("-----"+textList.get(i).getName());
+				//System.out.println("-----"+textList.get(i).getName());
 				if (textList.get(i-1).getName().equals("On")) {
 					if (textList.get(i).isNot()) {
 						onNot.add(textList.get(i+1).getRefClass());
