@@ -127,6 +127,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				}
 			}
 			
+
+			
 			ArrayList<Class> on = new ArrayList<Class>();
 			ArrayList<Class> near = new ArrayList<Class>();
 			ArrayList<Class> facing = new ArrayList<Class>();
@@ -159,15 +161,40 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				}
 			}
 			
+			map(keys, on, near, facing, onNot, nearNot, facingNot);
+			
+			
 			for (String key : keys.get(0)) {
-				
-				this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
+				if (this.containsKey(key)) {
+					this.get(key).map(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot);
+				}
+				else
+					this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
 			}
 		
 		
 		}
 	}
 	
+	private void map(List<ArrayList<String>> keys, ArrayList<Class> on, ArrayList<Class> near,
+			ArrayList<Class> facing, ArrayList<Class> onNot, ArrayList<Class> nearNot, ArrayList<Class> facingNot) {
+
+		if (keys.size()>1)
+			for (String key : keys.get(0)) {
+				if (this.containsKey(key)) {
+					this.get(key).map(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot);
+				}
+				else
+					this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
+			}
+		else {
+			for (String key : keys.get(0)) {
+				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
+			}
+		}
+
+	}
+
 	public LogicHashtable() {
 		super();
 		props = new ArrayList<Class>();
@@ -182,7 +209,6 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			}
 		else {
 			for (String key : keys.get(0)) {
-				//System.out.println("aduygfoqsuhgdfonqjushfnekcfuqynseotgjuh qsbjecgtb&vkabhczqkeg ");
 				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
 			}
 		}

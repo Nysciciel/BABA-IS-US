@@ -8,14 +8,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.objects.*;
 
 import com.mygdx.game.objects.text.Text;
-import com.mygdx.game.objects.text.item_ref.BabaText;
-import com.mygdx.game.objects.text.item_ref.WallText;
-import com.mygdx.game.objects.text.item_ref.WaterText;
-import com.mygdx.game.objects.text.operator.Not;
-import com.mygdx.game.objects.text.property.Sink;
-import com.mygdx.game.objects.text.property.Stop;
-import com.mygdx.game.objects.text.property.You;
-import com.mygdx.game.objects.text.relation.Is;
+import com.mygdx.game.objects.text.item_ref.*;
+import com.mygdx.game.objects.text.property.*;
+import com.mygdx.game.objects.text.operator.*;
+import com.mygdx.game.objects.text.relation.*;
 import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.rule.RuleStackList;
@@ -53,7 +49,7 @@ public class Level {
 		props = new ArrayList<Class>();
 		
 		props.add(Empty.class);
-		props.add(Baba.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);
+		props.add(Baba.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);props.add(Water.class);props.add(Skull.class);
 		this.ruleTable = new LogicHashtable();
 		
 		try {
@@ -70,8 +66,8 @@ public class Level {
 			height = lines.size();
 			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
-			//System.out.println(length);
-			//System.out.println(height);
+			System.out.println(length);
+			System.out.println(height);
 
 			
 			locationMatrix = new Location[height][length];
@@ -110,22 +106,37 @@ public class Level {
 			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
-			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			
-			
+
 			// WALL IS STOP
 			locationMatrix[0][10].add(new Stop(locationMatrix[0][10], 0));
 			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
 			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
-			
+
 			// WATER IS SINK
 			locationMatrix[0][12].add(new Sink(locationMatrix[0][12], 0));
 			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
 			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
 
+			// SKULL IS BABA iS SKULL
+			locationMatrix[0][14].add(new SkullText(locationMatrix[0][14], 0));
+			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
+			locationMatrix[2][14].add(new BabaText(locationMatrix[2][14], 0));
+			locationMatrix[3][14].add(new Is(locationMatrix[3][14], 0));
+			locationMatrix[4][14].add(new SkullText(locationMatrix[4][14], 0));
+
+			// SKULL IS BABA iS SKULL
+			locationMatrix[0][16].add(new Win(locationMatrix[0][16], 0));
+			locationMatrix[1][16].add(new And(locationMatrix[1][16], 0));
+			locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
+			locationMatrix[3][16].add(new Is(locationMatrix[3][16], 0));
+			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));
+
+
 
 			history.add(this.matrixCopy());
-			
+
 			updateRules();
 
 
@@ -134,8 +145,8 @@ public class Level {
 			System.out.println("Error while loading level");
 			e.printStackTrace();
 		}
-		
-		
+
+
 
 	}
 	
@@ -174,11 +185,7 @@ public class Level {
 			for (int x = 0; x<length; x++) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
 				
-							
-				for (Text text : textList) {
-					text.show();
-					//System.out.println("  "+x+"  "+y+"  ");
-				}
+				
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();				
@@ -193,10 +200,6 @@ public class Level {
 			for (int y = height-1; y>=0; y--) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
 				
-				for (Text text : textList) {
-					text.show();
-					//System.out.println("  "+x+"  "+y+"  ");
-				}
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();
