@@ -144,26 +144,30 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			
 			LinkedList<Text> textList = rule.getTextList();
 			for (int i = 2; i < length-2; i++) {
-				
-				if (textList.get(i).getName().equals("On")) {
+				System.out.println("-----"+textList.get(i).getName());
+				if (textList.get(i-1).getName().equals("On")) {
 					if (textList.get(i).isNot()) {
 						onNot.add(textList.get(i+1).getRefClass());
 					}
-					on.add(textList.get(i).getRefClass());
+					else
+						on.add(textList.get(i).getRefClass());
+					System.out.println(on);
 				}
 				
-				if (textList.get(i).getName().equals("Near")) {
+				if (textList.get(i-1).getName().equals("Near")) {
 					if (textList.get(i).isNot()) {
 						nearNot.add(textList.get(i+1).getRefClass());
 					}
-					near.add(textList.get(i).getRefClass());
+					else
+						near.add(textList.get(i).getRefClass());
 				}
 				
-				if (textList.get(i).getName().equals("Facing")) {
+				if (textList.get(i-1).getName().equals("Facing")) {
 					if (textList.get(i).isNot()) {
 						facingNot.add(textList.get(i+1).getRefClass());
-					} 
-					facing.add(textList.get(i).getRefClass());
+					}
+					else
+						facing.add(textList.get(i).getRefClass());
 				}
 			}
 			

@@ -11,11 +11,5 @@ public class Pull extends Property {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-	public String[] getSpriteUsed(){
-		return null;
-	}
-	public float[] getAffichePos(){
-		return null;
-	}
 
 }

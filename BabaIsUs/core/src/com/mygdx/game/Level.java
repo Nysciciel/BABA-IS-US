@@ -119,17 +119,17 @@ public class Level {
 			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
 			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
 
-			// SKULL IS BABA iS SKULL
-			locationMatrix[0][14].add(new SkullText(locationMatrix[0][14], 0));
+			// SKULL ON BABA iS WALL
+			locationMatrix[0][14].add(new WallText(locationMatrix[0][14], 0));
 			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
 			locationMatrix[2][14].add(new BabaText(locationMatrix[2][14], 0));
-			locationMatrix[3][14].add(new Is(locationMatrix[3][14], 0));
+			locationMatrix[3][14].add(new On(locationMatrix[3][14], 0));
 			locationMatrix[4][14].add(new SkullText(locationMatrix[4][14], 0));
 
-			// SKULL IS BABA iS SKULL
-			locationMatrix[0][16].add(new Win(locationMatrix[0][16], 0));
+			// SKULL IS HOT AND PULL
+			locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
 			locationMatrix[1][16].add(new And(locationMatrix[1][16], 0));
-			locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
+			//locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
 			locationMatrix[3][16].add(new Is(locationMatrix[3][16], 0));
 			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));
 
