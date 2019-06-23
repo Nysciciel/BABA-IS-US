@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,12 +21,16 @@ public class Menu implements Screen {
 
     private MainTest parent; // a field to store our orchestrator
     private Stage stage;
-    private Texture background;
+    private TextureAtlas textureAtlas;
+    private Animation animation;
+    private float elapsedTime = 0;
+
     // our constructor with a Box2DTutorial argument
     public Menu(MainTest mainTest) {
         parent = mainTest;
 
-        this.background = new Texture("Menu_background.jpg");
+        textureAtlas = new TextureAtlas(Gdx.files.internal("MenuBackSheet.txt"));
+        animation = new Animation(1/2f, textureAtlas.getRegions());
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);// setting the argument to our field.
@@ -104,7 +111,8 @@ public class Menu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.getBatch().end();
         stage.draw();
     }
@@ -134,6 +142,6 @@ public class Menu implements Screen {
     public void dispose() {
         // TODO Auto-generated method stub
         stage.dispose();
-        this.background.dispose();
+        this.textureAtlas.dispose();
     }
 }
