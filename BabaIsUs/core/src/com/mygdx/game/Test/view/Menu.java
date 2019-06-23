@@ -23,14 +23,18 @@ public class Menu implements Screen {
     private Stage stage;
     private TextureAtlas textureAtlas;
     private Animation animation;
+    private TextureAtlas textureAtlas2;
+    private Animation animation2;
     private float elapsedTime = 0;
 
     // our constructor with a Box2DTutorial argument
     public Menu(MainTest mainTest) {
         parent = mainTest;
 
-        textureAtlas = new TextureAtlas(Gdx.files.internal("MenuBackSheet.txt"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal("BackgroundMenu.txt"));
         animation = new Animation(1/2f, textureAtlas.getRegions());
+        textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
+        animation2 = new Animation(1/2f, textureAtlas2.getRegions());
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);// setting the argument to our field.
@@ -112,7 +116,12 @@ public class Menu implements Screen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
         elapsedTime += Gdx.graphics.getDeltaTime();
-        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
+            elapsedTime=0;
+        }
+        stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime-Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         stage.getBatch().end();
         stage.draw();
     }

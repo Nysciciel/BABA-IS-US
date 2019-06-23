@@ -1,0 +1,19 @@
+SunSheet.png
+size: 420, 85
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Sun0
+  rotate: false
+  xy: 0, 0
+  size: 210, 85
+  orig: 210, 85
+  offset: 0, 0
+  index: -1
+Sun1
+  rotate: false
+  xy: 210, 0
+  size: 210, 85
+  orig: 210, 85
+  offset: 0, 0
+  index: -1
