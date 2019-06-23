@@ -5,8 +5,17 @@ import com.mygdx.game.objects.text.Relation;
 
 public class Has extends Relation {
 
-	public Has(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Has(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
+	
+	public String[] getSpriteUsed(){
+		return null;
+	}
+	public float[] getAffichePos(){
+		return null;
+	}
+
 
 }

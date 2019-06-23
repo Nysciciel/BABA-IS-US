@@ -1,12 +1,13 @@
 package com.mygdx.game.client_serveur;
 
 import com.mygdx.game.Level;
+import com.mygdx.game.Test.Main.MainTest;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.nio.CharBuffer;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
@@ -15,6 +16,7 @@ public class Server{
 	BlockingQueue<Integer> data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
+	private String ip;
 	//private Level lvl;
 
 	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
@@ -32,9 +34,18 @@ public class Server{
 		final OutputStream out;
 		DataInputStream dis = null;
 		FileOutputStream fos = null;
+		ip = null;
 
 		try {
 			serveurSocket = new ServerSocket(5000);
+			URL whatismyip = new URL("http://checkip.amazonaws.com");
+			BufferedReader inB = new BufferedReader(new InputStreamReader(
+					whatismyip.openStream()));
+
+			this.ip = inB.readLine(); //you get the IP as a String
+			System.out.println(ip);
+			MainTest.ip_addr = ip;
+
 			clientSocket = serveurSocket.accept();
 
 			//try {
@@ -113,6 +124,8 @@ public class Server{
 	public boolean isConnected(){
 		return connected;
 	}
+
+	public String getIp(){return ip;}
 
 	public void setServerCallBack(ServerCallBack cb){
 		callBackFunction = cb;

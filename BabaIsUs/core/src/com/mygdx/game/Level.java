@@ -1,19 +1,23 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.objects.*;
 
-import com.badlogic.gdx.scenes.scene2d.*;
 import com.mygdx.game.objects.text.Text;
-import com.mygdx.game.rule.Rule;
-import com.mygdx.game.rule.RuleStack;
+import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.item_ref.WallText;
+import com.mygdx.game.objects.text.item_ref.WaterText;
+import com.mygdx.game.objects.text.operator.Not;
+import com.mygdx.game.objects.text.property.Sink;
+import com.mygdx.game.objects.text.property.Stop;
+import com.mygdx.game.objects.text.property.You;
+import com.mygdx.game.objects.text.relation.Is;
+import com.mygdx.game.rule.LogicHashtable;
+import com.mygdx.game.rule.RuleSet;
 import com.mygdx.game.rule.RuleStackList;
 
 
@@ -24,7 +28,9 @@ public class Level {
 	private Location[][] locationMatrix;
 	private int height;
 	private int length;
-	private HashSet<Rule> rules;
+	private RuleSet rules;
+	private LogicHashtable ruleTable;
+	private ArrayList<Class> props;
 
 	private ArrayList<Location[][]> history;
 	
@@ -37,21 +43,26 @@ public class Level {
 			for(int j = 0 ; j < length ; j++) {
 				ArrayList<Item> items = new ArrayList<Item>();
 				locationMatrix[i][j] = new Location(items,this,i,j);
-				items.add(new Empty(locationMatrix[i][j],i,j,0));
+				items.add(new Empty(locationMatrix[i][j],0));
 			}
 		}
 	}
 
 	public Level(String filename) {
-
-
+		
+		props = new ArrayList<Class>();
+		
+		props.add(Empty.class);
+		props.add(Baba.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);
+		this.ruleTable = new LogicHashtable();
+		
 		try {
 			Scanner scanner = new Scanner(new File(filename));
 			ArrayList <String> lines = new ArrayList <String>();
 			while(scanner.hasNext()) {
 				lines.add(scanner.nextLine());
 			}
-
+			
 			scanner.close();
 
 
@@ -59,8 +70,10 @@ public class Level {
 			height = lines.size();
 			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
+			//System.out.println(length);
+			//System.out.println(height);
 
-
+			
 			locationMatrix = new Location[height][length];
 			for (int y = 0; y<height; y++) {
 				for (int x = 0; x<length; x++) {
@@ -68,32 +81,52 @@ public class Level {
 					Location loc = new Location(items, this, x, height - 1 -y);
 					switch(lines.get(y).charAt(x)) {
 					case 'e':
-						loc.add(new Empty(loc, x, height - 1 -y,0));
+						loc.add(new Empty(loc, 0));
 						break;
 					case 'b':
-						loc.add(new Baba(loc, x, height - 1 -y,0));
+						loc.add(new Baba(loc, 0));
 						break;
 					case 'w':
-						loc.add(new Wall(loc, x, height - 1 -y,0));
+						loc.add(new Wall(loc, 0));
 						break;
 					case 'r':
-						loc.add(new Rock(loc, x, height - 1 -y,0));
+						loc.add(new Rock(loc, 0));
 						break;
 					case 'a':
-						loc.add(new Water(loc, x, height - 1 -y,0));
+						loc.add(new Water(loc, 0));
 						break;
 					case 'k':
-						loc.add(new Keke(loc, x, height - 1 -y,0));
+						loc.add(new Keke(loc, 0));
 						break;
 					case 's':
-						loc.add(new Skull(loc, x, height - 1 -y,0));
+						loc.add(new Skull(loc, 0));
 						break;
 					}
 					locationMatrix[height - 1 -y][x] = loc;
 				}
 			}
+			
+			// BABA IS YOU
+			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
+			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
+			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			
+			
+			// WALL IS STOP
+			locationMatrix[0][10].add(new Stop(locationMatrix[0][10], 0));
+			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
+			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
+			
+			// WATER IS SINK
+			locationMatrix[0][12].add(new Sink(locationMatrix[0][12], 0));
+			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
+			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
+
 
 			history.add(this.matrixCopy());
+			
+			updateRules();
 
 
 		}
@@ -101,6 +134,8 @@ public class Level {
 			System.out.println("Error while loading level");
 			e.printStackTrace();
 		}
+		
+		
 
 	}
 	
@@ -124,30 +159,67 @@ public class Level {
 
 	public void readRules() {
 		
+		rules = new RuleSet();
+				
 		RuleStackList currentRules; 
-		boolean thereIsAnOnOrNearOrFacingOrAnd = false;
-		boolean thereIsANot = false;
+		boolean thereIsAnOnOrNearOrFacingOrAnd;
+		boolean thereIsANot;
 
 		// lecture par ligne
-		for (int y = 0; y<height; y++) {
+		for (int y = height-1; y>=0; y--) {
+			
+			thereIsAnOnOrNearOrFacingOrAnd = false;
+			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				
+							
+				for (Text text : textList) {
+					text.show();
+					//System.out.println("  "+x+"  "+y+"  ");
+				}
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();				
 			}
+			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 		//lecture par colonne
 		for (int x = 0; x<length; x++) {
+			thereIsAnOnOrNearOrFacingOrAnd = false;
+			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
-			for (int y = 0; y<height; y++) {
+			for (int y = height-1; y>=0; y--) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
+				
+				for (Text text : textList) {
+					text.show();
+					//System.out.println("  "+x+"  "+y+"  ");
+				}
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
+			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
+	}
+	
+
+	public void interpretRules() {
+
+		//System.out.println("################################## __Construction__    ################################################");
+		ruleTable = new LogicHashtable(rules, props);
+		//System.out.println("##################################  __RuleTable__    ################################################");
+		System.out.println(ruleTable);
+		//System.out.println(locationMatrix[2][0].getItems().get(0).getRuleTable());
+		
+	}
+	
+	public void updateRules() {
+		
+		readRules();
+		interpretRules();		
 	}
 
 	public ArrayList<Location> prioritySort(ArrayList<Location> list, int direction){
@@ -164,7 +236,6 @@ public class Level {
 			if (i.next(direction)!=null) {
 				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
 					first = i;
-
 					break;
 				}
 			}
@@ -274,6 +345,15 @@ public class Level {
 				locationMatrix[y][x].reset();
 			}
 		}
+		
+		updateRules();
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				locationMatrix[y][x].transform();
+				locationMatrix[y][x].checkDeaths();
+			}
+		}
+		updateRules();
 		history.add(this.matrixCopy());
 	}
 
@@ -283,6 +363,7 @@ public class Level {
 			locationMatrix = this.matrixCopy();
 			history.remove(history.size()-1);
 		}
+		updateRules();
 	}
 
 	public Location[][] getLocationMatrix(){
@@ -303,6 +384,18 @@ public class Level {
 		locationMatrix = history.get(0);
 		history = new ArrayList<Location[][]>();
 		history.add(this.matrixCopy());
+		updateRules();
+	}
+	
+	public int getLength() {
+		return this.length;
+	}
+	
+	public int getHeight() {
+		return this.height;
 	}
 
+	public LogicHashtable getRuleTable() {
+		return ruleTable;
+	}
 }

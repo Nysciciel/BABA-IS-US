@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +19,7 @@ import com.mygdx.game.Location;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.Baba;
 import com.mygdx.game.objects.Item;
+import com.mygdx.game.utils.FileManager;
 import com.mygdx.game.utils.ObjectList;
 
 public class EditorView implements Screen {
@@ -34,15 +36,21 @@ public class EditorView implements Screen {
     private TextButton charaSelect;
     private TextButton textSelect;
     private TextButton objectSelect;
+    private TextButton clearSelect;
+    private TextButton resetSelect;
+    private TextButton saveSelect;
     
     private TextButton babaSelect;
     private TextButton kekeSelect;
     
     private TextButton rockSelect;
     private TextButton waterSelect;
+    private TextButton skullSelect;
+    private TextButton wallSelect;
     
     private TextButton babaTextSelect;
     private TextButton rockTextSelect;
+    
     
     Table table;
 
@@ -55,11 +63,12 @@ public class EditorView implements Screen {
         this.editor = new DrawEditor(10,10);
         selectedItem = ObjectList.BABA;
         
+        
         Gdx.input.setInputProcessor(stage);
         
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         
@@ -72,33 +81,44 @@ public class EditorView implements Screen {
         charaSelect = new TextButton("Chara",skin);
         objectSelect = new TextButton("Obj",skin);
         textSelect = new TextButton("Text",skin);
+        clearSelect = new TextButton("clear",skin);
+        resetSelect = new TextButton("reset",skin);
+        saveSelect = new TextButton("save",skin);
         
         babaSelect = new TextButton("baba",skin);
         kekeSelect = new TextButton("keke",skin);
         
         rockSelect = new TextButton("rock",skin);
         waterSelect = new TextButton("water",skin);
+        wallSelect = new TextButton("wall",skin);
+        skullSelect = new TextButton("skull",skin);
         
         babaTextSelect = new TextButton("babatext",skin);
         rockTextSelect = new TextButton("rocktext",skin);
         
-        mainList.add(charaSelect).fill();
-        mainList.add(objectSelect).fill();
-        mainList.add(textSelect).fill();
+        mainList.left();
+        mainList.add(charaSelect).fill().width(100).uniformX();
+        mainList.add(objectSelect).fill().uniformX();
+        mainList.add(textSelect).fill().uniformX();
+        mainList.add(clearSelect).expandX().right();
+        mainList.add(resetSelect).fill().uniformX();
+        mainList.add(saveSelect).fill().uniformX();
         
-        charaList.add(babaSelect);
-        charaList.add(kekeSelect);
+        charaList.add(babaSelect).fill().uniformX();
+        charaList.add(kekeSelect).fill().uniformX();
         
-        textList.add(babaTextSelect);
-        textList.add(rockTextSelect);
+        textList.add(babaTextSelect).fill().uniformX();
+        textList.add(rockTextSelect).fill().uniformX();
         
-        objectList.add(rockSelect);
-        objectList.add(waterSelect);
+        objectList.add(rockSelect).fill().uniformX();
+        objectList.add(waterSelect).fill().uniformX();
+        objectList.add(skullSelect).fill().uniformX();
+        objectList.add(wallSelect).fill().uniformX();
         
-        table.add(mainList);
+        table.add(mainList).left().expandX().fill();
         table.row().pad(0, 0, 10, 0);
-        table.add(charaList);
-        table.row().pad(10, 10, 10, 0);
+        table.add(charaList).left().expandX();
+        table.row().pad(0, 0, 0, 0);
         table.add(editor).expand().colspan(3).fill();
         
         
@@ -120,27 +140,37 @@ public class EditorView implements Screen {
         		switch(nom) {
         		case "Chara":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX().fill();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(charaList);
-        		    table.row().pad(10, 10, 10, 0);
+        		    table.add(charaList).left().expandX();
+        		    table.row().pad(0, 0, 0, 0);
         		    table.add(editor).expand().colspan(3).fill();
         			break;
         		case "Obj":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX().fill();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(objectList);
-        		    table.row().pad(10, 10, 10, 0);
+        		    table.add(objectList).left().expandX();
+        		    table.row().pad(0, 0, 0, 0);
         		    table.add(editor).expand().colspan(3).fill();
         			break;
         		case "Text":
         			table.clear();
-        			table.add(mainList);
+        			table.add(mainList).left().expandX().fill();
         		    table.row().pad(0, 0, 10, 0);
-        		    table.add(textList);
-        		    table.row().pad(10, 10, 10, 0);
+        		    table.add(textList).left().expandX();
+        		    table.row().pad(0, 0, 0, 0);
         		    table.add(editor).expand().colspan(3).fill();
+        			break;
+        		case "clear":
+        			selectedItem = ObjectList.EMPTY;
+        			break;
+        		case "reset":
+        			editor.clear();
+        			break;
+        		case "save":
+        			FileManager.SaveLevel(editor.getLevel());
+        			parent.screenChoice(MainTest.MENU);
         			break;
         		}
         		return true;
@@ -157,7 +187,7 @@ public class EditorView implements Screen {
         			selectedItem = ObjectList.BABA;
         			break;
         		case "keke":
-        			//selectedItem = ObjectList.KEKE;
+        			selectedItem = ObjectList.KEKE;
         			break;
         		}
         		return true;
@@ -178,6 +208,9 @@ public class EditorView implements Screen {
         			break;
         		case "wall":
         			selectedItem = ObjectList.WALL;
+        			break;
+        		case "skull":
+        			selectedItem = ObjectList.SKULL;
         			break;
         		}
         		return true;
@@ -221,6 +254,7 @@ public class EditorView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        
     }
 
     @Override

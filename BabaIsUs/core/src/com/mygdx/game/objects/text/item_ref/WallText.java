@@ -5,8 +5,8 @@ import com.mygdx.game.objects.text.ItemRef;
 
 public class WallText extends ItemRef {
 
-	public WallText(Location loc, int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public WallText(Location loc, int orientation) {
+		super(loc, orientation);
+		// TODO Auto-generated constructor stub
 	}
-
 }

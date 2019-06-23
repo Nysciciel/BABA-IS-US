@@ -1,26 +1,16 @@
 package com.mygdx.game.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
-import com.mygdx.game.utils.Constants;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class Water extends Item {
-	private float fishTime = 2;
 
-	public Water(Location loc,
-			int x, int y, int orientation) {
-		super(loc, x, y, orientation);
+	public Water(Location loc, int orientation) {
+		super(loc, orientation);
 	}
-	@Override
-	public boolean isPush() {
-		return true;
-	}
+
+	private float fishTime = 2;
 
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
@@ -50,6 +40,11 @@ public class Water extends Item {
 			spriteUsed[1]="Water-" + s + "-1";
 			return(spriteUsed);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "a";
 	}
 
 }
