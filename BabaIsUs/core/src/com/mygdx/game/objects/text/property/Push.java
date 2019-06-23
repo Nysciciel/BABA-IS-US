@@ -12,11 +12,4 @@ public class Push extends Property {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String[] getSpriteUsed(){
-		return null;
-	}
-	public float[] getAffichePos(){
-		return null;
-	}
-
 }

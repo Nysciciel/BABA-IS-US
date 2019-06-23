@@ -14,6 +14,15 @@ import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 
+/**
+ * 
+ * @author Maxwell
+ * 
+ * Item is the abstract class defining all the items possible.
+ * 
+ * It is mainly characterized by its location that contains it and its orientation.
+ *
+ */
 public abstract class Item {
 	
 	protected float animationChrono=1;
@@ -21,7 +30,6 @@ public abstract class Item {
 	protected Animation animation;
 	protected float elapsedTime = 0;
 	protected Texture texture;
-	protected LogicHashtable ruleTable;
 	protected int orientation;
 	protected Location loc;
 
@@ -34,7 +42,12 @@ public abstract class Item {
 		
 		loadTextureAtlas();
 	}
-
+	
+	/**
+	 * Ask the truth table whether the property with the label key characterize this object
+	 * @param key : property key of the Hashtable
+	 * @return boolean 
+	 */
 	private boolean propertyAssert(String key) {
 		
 		Logic affirm;
@@ -113,6 +126,10 @@ public abstract class Item {
 		return propertyAssert("Weak");
 	}
 	
+	/**
+	 * 
+	 * @return the ArrayList<Class> of the transformations due to setting logics
+	 */
 	public ArrayList<Class> hasToTransformTo(){
 		
 		ArrayList<Class> transform = new ArrayList<Class>();
@@ -161,7 +178,7 @@ public abstract class Item {
 	}
 	
 	
-
+	
 	public int getOrientation() {
 		return orientation;
 	}
@@ -170,6 +187,9 @@ public abstract class Item {
 		textureAtlas.dispose();
 	}
 
+	/**
+	 * move of the item toward the orientation case using an animation
+	 */
 	public void goforward() {
 
 		animationChrono = 0;
@@ -189,10 +209,12 @@ public abstract class Item {
 		loc.add(this);
 	}
 
+	/**
+	 * same as go forward except it doesn't pull the one behind
+	 * useful for when a push&pull chain is getting pushed
+	 */
 	public void advance() {
-
-		//same as go forward except it doesn't pull the one behind
-		//useful for when a push&pull chain is getting pushed
+		
 		animationChrono = 0;
 		loc.del(this);
 		loc = loc.next(orientation);
@@ -207,6 +229,10 @@ public abstract class Item {
 		return false;
 	}
 
+	/**
+	 * Loading the Atlas texture to set the parameter textureAtlas
+	 * Use the name of the current class to choose it and set a default texture if not found
+	 */
 	public void loadTextureAtlas(){
 		try{
 			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName()+ "Sheet.txt"));
@@ -215,7 +241,10 @@ public abstract class Item {
 		}
 	}
 
-
+	/**
+	 *  Draw the animated texture
+	 * @param sb Sprite bash that has to be drawn
+	 */
 	public void render(Batch sb){
 		String[] spriteUsed = getSpriteUsed();
 		int length = spriteUsed.length;
@@ -239,6 +268,10 @@ public abstract class Item {
 		return(spriteUsed);
 	}
 
+	/**
+	 * animation of a move
+	 * @return
+	 */
 	public float[] getAffichePos(){
 		float a,b;
 		if(animationChrono<0.2){
@@ -351,10 +384,21 @@ public abstract class Item {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return the name of the class except for the ItemRef ones whom return is the reference class
+	 * Example :
+	 * for the Hot class it returns "Hot" 
+	 * for the WallText class it returns "Wall"
+	 */
 	public String getRefName() {
 		return getName();
 	}
 
+	/**
+	 * Ask for the rule table
+	 * @return the rule table of the level
+	 */
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}

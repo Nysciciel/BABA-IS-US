@@ -2,6 +2,11 @@ package com.mygdx.game.objects.text;
 
 import com.mygdx.game.Location;
 
+/**
+ * Class of "ON", "AND", "NEAR", "FACING"...
+ * @author Maxwell
+ *
+ */
 public abstract class Operator extends Text {
 
 	public Operator(Location loc, int orientation) {

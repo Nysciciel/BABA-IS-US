@@ -86,5 +86,9 @@ public abstract class Text extends Item {
 
 	public Class getRefClass() {
 		return null;
+	}
+
+	public void highLight(boolean b) {
+		// TODO Highlight the text by changing the texture by a brighter one if b is true		
 	};
 }

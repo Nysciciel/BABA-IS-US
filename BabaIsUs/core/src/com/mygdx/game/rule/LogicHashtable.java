@@ -7,6 +7,12 @@ import java.util.List;
 
 import com.mygdx.game.objects.text.Text;
 
+/**
+ * Approximately a Hashtable of Hashtable... 
+ * When the last Hashtable is of the Logic class, it's rather the truth of the assertion made by the succession of keys
+ * @author Maxwell
+ *
+ */
 public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 	
 	private ArrayList<Class> props;
@@ -127,6 +133,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				}
 			}
 			
+
+			
 			ArrayList<Class> on = new ArrayList<Class>();
 			ArrayList<Class> near = new ArrayList<Class>();
 			ArrayList<Class> facing = new ArrayList<Class>();
@@ -136,38 +144,67 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			
 			LinkedList<Text> textList = rule.getTextList();
 			for (int i = 2; i < length-2; i++) {
-				
-				if (textList.get(i).getName().equals("On")) {
+				//System.out.println("-----"+textList.get(i).getName());
+				if (textList.get(i-1).getName().equals("On")) {
 					if (textList.get(i).isNot()) {
 						onNot.add(textList.get(i+1).getRefClass());
 					}
-					on.add(textList.get(i).getRefClass());
+					else
+						on.add(textList.get(i).getRefClass());
+					System.out.println(on);
 				}
 				
-				if (textList.get(i).getName().equals("Near")) {
+				if (textList.get(i-1).getName().equals("Near")) {
 					if (textList.get(i).isNot()) {
 						nearNot.add(textList.get(i+1).getRefClass());
 					}
-					near.add(textList.get(i).getRefClass());
+					else
+						near.add(textList.get(i).getRefClass());
 				}
 				
-				if (textList.get(i).getName().equals("Facing")) {
+				if (textList.get(i-1).getName().equals("Facing")) {
 					if (textList.get(i).isNot()) {
 						facingNot.add(textList.get(i+1).getRefClass());
-					} 
-					facing.add(textList.get(i).getRefClass());
+					}
+					else
+						facing.add(textList.get(i).getRefClass());
 				}
 			}
 			
+			map(keys, on, near, facing, onNot, nearNot, facingNot);
+			
+			
 			for (String key : keys.get(0)) {
-				
-				this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
+				if (this.containsKey(key)) {
+					this.get(key).map(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot);
+				}
+				else
+					this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
 			}
 		
 		
 		}
 	}
 	
+	private void map(List<ArrayList<String>> keys, ArrayList<Class> on, ArrayList<Class> near,
+			ArrayList<Class> facing, ArrayList<Class> onNot, ArrayList<Class> nearNot, ArrayList<Class> facingNot) {
+
+		if (keys.size()>1)
+			for (String key : keys.get(0)) {
+				if (this.containsKey(key)) {
+					this.get(key).map(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot);
+				}
+				else
+					this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
+			}
+		else {
+			for (String key : keys.get(0)) {
+				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
+			}
+		}
+
+	}
+
 	public LogicHashtable() {
 		super();
 		props = new ArrayList<Class>();
@@ -182,7 +219,6 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			}
 		else {
 			for (String key : keys.get(0)) {
-				//System.out.println("aduygfoqsuhgdfonqjushfnekcfuqynseotgjuh qsbjecgtb&vkabhczqkeg ");
 				this.put(key, new Logic(on, near, facing, onNot, nearNot, facingNot));
 			}
 		}
