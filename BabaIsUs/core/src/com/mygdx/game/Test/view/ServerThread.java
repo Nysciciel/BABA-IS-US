@@ -9,23 +9,23 @@ import java.util.concurrent.BlockingQueue;
 public class ServerThread extends Thread{
 	private BlockingQueue<Integer> bq;
 	ServerCallBack callBack;
-	Level level;
+	//Level level;
 	private boolean clientUp;
 	private Server server;
 
-	public ServerThread(BlockingQueue<Integer> bq, ServerCallBack callBack, Level level){
+	public ServerThread(BlockingQueue<Integer> bq, ServerCallBack callBack){
 		super();
 		this.server = null;
 		this.clientUp = false;
 		this.bq = bq;
 		this.callBack = callBack;
-		this.level = level;
+		//this.level = level;
 		this.start();
 
 	}
 
 	public void run() {
-		this.server = new Server(this.bq,this.callBack,this.level) ;
+		this.server = new Server(this.bq,this.callBack) ;
 	}
 
 	public boolean checkClient(){

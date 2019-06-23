@@ -11,13 +11,11 @@ public class RuleSet extends HashSet<Rule> {
 	
 	public ArrayList<String> getRules(){
 		
-		ArrayList<String> rules = new ArrayList<String>();
-		
+		ArrayList<String> rules = new ArrayList<String>();		
 		for (Rule rule : this) {
 			rules.add(rule.toString());
 		}
 		
 		return rules;
 	}
-
 }

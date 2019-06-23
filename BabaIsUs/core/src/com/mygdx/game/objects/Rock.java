@@ -9,23 +9,6 @@ public class Rock extends Item {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean isPull() {
-		return false;
-	}
-	@Override
-	public boolean isPush() {
-		return false;
-	}
-	@Override
-	public boolean isMove() {
-		return true;
-	}
-	@Override
-	public boolean isYou2() {
-		return false;
-	}
-
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
 		spriteUsed[0]="Rock0";

@@ -9,26 +9,6 @@ public class Keke extends Item{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public boolean isShift() {
-		return false;
-	}
-	
-	@Override
-	public boolean isPush() {
-		return false;
-	}
-	
-	@Override
-	public boolean isWin() {
-		return false;
-	}
-	
-	@Override
-	public boolean isYou2() {
-		return true;
-	}
-
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
 		spriteUsed[0]="Keke0-0";

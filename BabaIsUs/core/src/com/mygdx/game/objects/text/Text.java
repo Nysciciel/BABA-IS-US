@@ -2,6 +2,7 @@ package com.mygdx.game.objects.text;
 
 import com.mygdx.game.*;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.rule.Logic;
 
 public abstract class Text extends Item {
 
@@ -41,7 +42,18 @@ public abstract class Text extends Item {
 
 	@Override
 	public boolean isPush() {
-		return true;
+		
+		try {
+			Logic restrict = ((Logic)getRuleTable().get("Push").get("Not").get(getCategory()));	
+			if (restrict == null)
+				return true;
+			return restrict.getTruth(this);
+			
+		}
+		catch(Exception e) {
+			return true;
+		}
+		
 	}
 
 	
@@ -74,5 +86,9 @@ public abstract class Text extends Item {
 
 	public Class getRefClass() {
 		return null;
+	}
+
+	public void highLight(boolean b) {
+		// TODO Highlight the text by changing the texture by a brighter one if b is true		
 	};
 }

@@ -21,12 +21,12 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		if (thereIsAnd(textList))
 			for (RuleStack ruleStack : this) {	
 				if (ruleStack.isFinal()) {
-					System.out.println("And + final");
+					////System.out.println("And + final");
 					rules.add(new Rule(ruleStack, rules));
 					while(!ruleStack.isRelation()) {
 						ruleStack.pop(); //pop and go back to the previous state
-						System.out.print("pop : ");
-						ruleStack.showPhrase();
+						//System.out.print("pop : ");
+						//ruleStack.showPhrase();
 					}
 					newRuleStacks.add(ruleStack);
 				}
@@ -35,7 +35,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 		else {
 			for (RuleStack ruleStack : this) {
 				if (ruleStack.isFinal()) {
-					System.out.println("just final");
+					//System.out.println("just final");
 					Rule rule = new Rule(ruleStack, rules);
 					rules.add(rule);
 					toBeRemoved.add(ruleStack);
@@ -54,7 +54,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 					if (!newRuleStack.isNextHopAWell(text) && thereIsAnOnOrNearOrFacingOrAnd && !thereIsANot) {
 						newRuleStack.add(text); 
 						newRuleStacks.add(newRuleStack);
-						System.out.println("and -> new stack");
+						//System.out.println("and -> new stack");
 					}
 				}				
 			}
@@ -70,8 +70,8 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				RuleStack divRuleStack = ruleStack.clone();
 				divRuleStack.isNextHopAWell(null);
 				newRuleStacks.add(divRuleStack);
-				System.out.println("save stacks in AND state");
-				divRuleStack.show();
+				//System.out.println("save stacks in AND state");
+				//divRuleStack.show();
 			}
 
 
@@ -84,11 +84,11 @@ public class RuleStackList extends ArrayList<RuleStack> {
 						// Si on est pas dans l'état AND et qu'on ne lit pas AND
 						if (!text.isAnd() && !ruleStack.isAnd()) {
 							divRuleStack.add(text);
-							System.out.println("// add text");
+							//System.out.println("// add text");
 						}
 						newRuleStacks.add(divRuleStack); // TODO : filter so that BABA are not duplicated !!!!
-						System.out.println("next State + add");
-						divRuleStack.show();
+						//System.out.println("next State + add");
+						//divRuleStack.show();
 					}
 				}	
 			}
@@ -103,7 +103,7 @@ public class RuleStackList extends ArrayList<RuleStack> {
 				if (!ruleStack.isNextHopAWell(text)) {
 					ruleStack.add(text);
 					newRuleStacks.add(ruleStack);
-					System.out.println("init new stack");
+					//System.out.println("init new stack");
 				}
 			}
 		this.addAll(newRuleStacks);

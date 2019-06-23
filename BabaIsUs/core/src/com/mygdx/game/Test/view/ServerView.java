@@ -29,7 +29,7 @@ public class ServerView implements Screen,ServerCallBack {
 	private Texture background;
 	private int movePoto;
 
-	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data, ServerLevel slvl) {
+	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
@@ -40,7 +40,7 @@ public class ServerView implements Screen,ServerCallBack {
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-		this.slvl = slvl;
+		this.slvl = new com.mygdx.game.ServerLevel("level.txt");
 		this.thread = thread;
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);

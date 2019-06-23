@@ -13,16 +13,16 @@ public class Rule {
 		
 		this.rules = rules;
 		
-		System.out.println(rules);
+		//System.out.println(rules);
 
 		
-		System.out.println("");
-		System.out.println("+++++++++++++++++++++++++Here is the Rule++++++++++++++++++++++++++");
+		//System.out.println("");
+		//System.out.println("+++++++++++++++++++++++++Here is the Rule++++++++++++++++++++++++++");
 		
 		// show elements
-		ruleStack.showPhrase();
-		System.out.println("===================================================================");
-		System.out.println("");
+		//ruleStack.showPhrase();
+		//System.out.println("===================================================================");
+		//System.out.println("");
 		
 		// Compressing the NOTs
 		textList = new LinkedList<Text>();
@@ -40,13 +40,13 @@ public class Rule {
 			
 			previous = text;
 		}
-		System.out.println(rules);
+		//System.out.println(rules);
 	}
 	
 	public String toString() {
 		
 		String s = new String();
-		System.out.println(textList);
+		//System.out.println(textList);
 		for (Text text : textList) {
 			s += text.toString() + " ";
 		}
