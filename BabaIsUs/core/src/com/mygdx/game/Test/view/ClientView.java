@@ -34,7 +34,7 @@ public class ClientView implements Screen,ServerCallBack {
 		data = new ArrayBlockingQueue<Integer>(1);
 		client = new Client(data,this,ip_addr);
 
-		this.lvl = new com.mygdx.game.Level("level.txt");
+		this.lvl = new com.mygdx.game.Level("levelc.txt");
 		Gdx.input.setInputProcessor(stage);
 	}
 

@@ -15,6 +15,7 @@ import com.mygdx.game.objects.text.operator.Not;
 import com.mygdx.game.objects.text.property.Sink;
 import com.mygdx.game.objects.text.property.Stop;
 import com.mygdx.game.objects.text.property.You;
+import com.mygdx.game.objects.text.property.You2;
 import com.mygdx.game.objects.text.relation.Is;
 import com.mygdx.game.rule.LogicHashtable;
 import com.mygdx.game.rule.RuleSet;
@@ -111,6 +112,10 @@ public class Level {
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
 			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			
+			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
+			locationMatrix[2][0].add(new Skull(locationMatrix[2][1], 0));
 			
 			
 			// WALL IS STOP
