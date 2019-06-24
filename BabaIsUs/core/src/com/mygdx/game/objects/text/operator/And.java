@@ -15,4 +15,11 @@ public class And extends Operator {
 		return true;
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="And0-0";
+		spriteUsed[1]="And0-1";
+		return(spriteUsed);
+	}
+
 }

@@ -10,4 +10,11 @@ public class RockText extends ItemRef {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="MeText0";
+		spriteUsed[1]="MeText1";
+		return(spriteUsed);
+	}
+
 }
