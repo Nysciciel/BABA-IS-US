@@ -137,9 +137,14 @@ public class ServerView implements Screen,ServerCallBack {
 				case(6):
 					slvl.reset();
 					break;
-				default:
+				case(0):
+				case(1):
+				case(2):
+				case(3):
 					slvl.moveYou2(movePoto);
 					slvl.endturn();
+					break;
+				default:
 				}
 				movePoto = -1;
 			}

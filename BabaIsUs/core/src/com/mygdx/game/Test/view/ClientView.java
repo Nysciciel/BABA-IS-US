@@ -128,9 +128,14 @@ public class ClientView implements Screen,ServerCallBack {
 			case(6):
 				lvl.reset();
 				break;
-			default:
+			case(0):
+			case(1):
+			case(2):
+			case(3):
 				lvl.moveYou1(movePoto);
 				lvl.endturn();
+				break;
+			default:
 			}
 			movePoto = -1;
 		}
