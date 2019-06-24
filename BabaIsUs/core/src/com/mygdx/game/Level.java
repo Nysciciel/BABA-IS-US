@@ -40,7 +40,7 @@ public class Level {
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
 				ArrayList<Item> items = new ArrayList<Item>();
-				locationMatrix[i][j] = new Location(items,this,i,j);
+				locationMatrix[i][j] = new Location(items,this,j,i);
 				items.add(new Empty(locationMatrix[i][j],0));
 			}
 		}
@@ -156,10 +156,7 @@ public class Level {
 
 
 	}
-	
-	public Location getLocation(int x, int y) {
-		return locationMatrix[y][x];
-	}
+
 	/*
 	public LevelView(int hauteur, int largeur) {
 		this.height = hauteur;

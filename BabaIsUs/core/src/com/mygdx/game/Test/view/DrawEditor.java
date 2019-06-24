@@ -41,7 +41,8 @@ public class DrawEditor extends Actor{
     public void setItem(ObjectList object, int x, int y, int direction) {
     	float ratioWidth = Gdx.graphics.getWidth()/width;
     	float ratioHeight = Gdx.graphics.getHeight()/height;
-    	Location loc = lvl.getLocation((int)(x/ratioWidth), (int)(y/ratioHeight));
+    	System.out.println((int)(x/ratioWidth));
+    	Location loc = lvl.getLocationMatrix()[(int) (y/ratioHeight)][(int) (x/ratioWidth)];
     	switch(object) {
     	case BABA:		
     		loc.add(new Baba(loc, direction));
