@@ -40,15 +40,15 @@ public class Level extends Actor{
 	private ArrayList<Class> props;
 
 	private ArrayList<Location[][]> history;
-	
+
 	public Level(int length,int height) {
-		
+
 		super();
-		
+
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
-		
+
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
@@ -60,13 +60,13 @@ public class Level extends Actor{
 	}
 
 	public Level(String filename) {
-		
+
 		props = new ArrayList<Class>();
-		
+
 		props.add(Empty.class);
 		props.add(Baba.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);props.add(Water.class);props.add(Skull.class);
 		this.ruleTable = new LogicHashtable();
-		
+
 		try {
 			Scanner scanner = new Scanner(new File(filename));
 			ArrayList <String> lines = new ArrayList <String>();
@@ -76,7 +76,7 @@ public class Level extends Actor{
 			while(scanner.hasNext()) {
 				lines.add(scanner.nextLine());
 			}
-			
+
 			scanner.close();
 
 			history = new ArrayList<Location[][]>();
@@ -84,9 +84,9 @@ public class Level extends Actor{
 			//System.out.println(length);
 			//System.out.println(height);
 
-			
+
 			locationMatrix = new Location[height][length];
-			
+
 			for(int i=0;i<lines.size();i++) {
 				String[] cell = lines.get(i).split(",");
 				for(int j=0 ; j<cell.length ;j++) {
@@ -95,8 +95,8 @@ public class Level extends Actor{
 						ArrayList<Item> items = new ArrayList<Item>();
 						System.out.println(i + " " + k);
 						locationMatrix[i][j] = new Location(items, this, j, i);
-						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));					
-		
+						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
+
 					}
 				}
 			}
@@ -134,26 +134,26 @@ public class Level extends Actor{
 	}*/
 
 	public void readRules() {
-		
+
 		rules = new RuleSet();
-				
-		RuleStackList currentRules; 
+
+		RuleStackList currentRules;
 		boolean thereIsAnOnOrNearOrFacingOrAnd;
 		boolean thereIsANot;
 
 		// lecture par ligne
 		for (int y = height-1; y>=0; y--) {
-			
+
 			thereIsAnOnOrNearOrFacingOrAnd = false;
 			thereIsANot = false;
 			currentRules = new RuleStackList(rules);
 			for (int x = 0; x<length; x++) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
-				
-				
+
+
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
-				thereIsANot = locationMatrix[y][x].thereIsANot();				
+				thereIsANot = locationMatrix[y][x].thereIsANot();
 			}
 			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
@@ -164,7 +164,7 @@ public class Level extends Actor{
 			currentRules = new RuleStackList(rules);
 			for (int y = height-1; y>=0; y--) {
 				ArrayList<Text> textList = locationMatrix[y][x].giveTextItems();
-				
+
 				currentRules.buildNext(textList, thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 				thereIsAnOnOrNearOrFacingOrAnd = locationMatrix[y][x].thereIsAOn() || locationMatrix[y][x].thereIsAAnd();
 				thereIsANot = locationMatrix[y][x].thereIsANot();
@@ -172,7 +172,7 @@ public class Level extends Actor{
 			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 	}
-	
+
 
 	public void interpretRules() {
 
@@ -181,15 +181,15 @@ public class Level extends Actor{
 		//System.out.println("##################################  __RuleTable__    ################################################");
 		System.out.println(ruleTable);
 		//System.out.println(locationMatrix[2][0].getItems().get(0).getRuleTable());
-		
+
 	}
-	
+
 	public void updateRules() {
-		
+
 		highLight(false);
 		readRules();
 		highLight(true);
-		interpretRules();		
+		interpretRules();
 	}
 
 	private void highLight(boolean b) {
@@ -210,7 +210,7 @@ public class Level extends Actor{
 			return list;
 		}
 		Location first = list.get(0);
-		
+
 		for(Location i:list) {
 			if(direction == 0 && i.getX()<first.getX()) {
 				first = i;
@@ -255,7 +255,7 @@ public class Level extends Actor{
 			}
 		}
 	}
-	
+
 	public void moveYou2(int direction) {
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
@@ -324,7 +324,7 @@ public class Level extends Actor{
 				locationMatrix[y][x].reset();
 			}
 		}
-		
+
 		updateRules();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -366,11 +366,11 @@ public class Level extends Actor{
 		history.add(this.matrixCopy());
 		updateRules();
 	}
-	
+
 	public int getMatrixLength() {
 		return this.length;
 	}
-	
+
 	public int getMatrixHeight() {
 		return this.height;
 	}
@@ -378,11 +378,11 @@ public class Level extends Actor{
 	public LogicHashtable getRuleTable() {
 		return ruleTable;
 	}
-	
+
 	@Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch,parentAlpha);
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
-    	
+
     }
 }
