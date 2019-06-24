@@ -104,6 +104,7 @@ public class LoadingView implements Screen, ServerCallBack {
             this.thread.interrupt();
         }
 
+        System.out.println(this.thread.checkClient());
         if(this.thread.checkClient()){
             parent.screenChoice((MainTest.SERVER));
         }

@@ -158,7 +158,7 @@ public class Location {
 			}
 		}
 		items.removeAll(toRemove);
-		if(!item.isEmpty()) {
+		if(!item.isEmpty() || items.isEmpty()) {
 			items.add(item);
 		}
 	}

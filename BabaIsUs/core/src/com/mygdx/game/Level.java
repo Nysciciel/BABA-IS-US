@@ -38,6 +38,7 @@ public class Level extends Actor{
 	private RuleSet rules;
 	private LogicHashtable ruleTable;
 	private ArrayList<Class> props;
+	private int hash;
 
 	private ArrayList<Location[][]> history;
 	
@@ -48,6 +49,7 @@ public class Level extends Actor{
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
+		this.hash = 0;
 		
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -127,7 +129,7 @@ public class Level extends Actor{
 			locationMatrix[2][4].add(new BabaText(locationMatrix[2][4], 0));
 			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			// BABA IS YOU
-			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
+	/*			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
 			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
@@ -446,4 +448,19 @@ public class Level extends Actor{
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
     	
     }
+
+    @Override
+	public int hashCode(){
+		hash =0;
+		//System.out.println(locationMatrix[0][0].getItems().get(0).getClass().getSimpleName());
+		//System.out.println(locationMatrix[0][1].getItems().get(0).getClass().getSimpleName());
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				for (Item i: locationMatrix[y][x].getItems()){
+					hash = hash +((int) i.toString().charAt(0)*(x+1)*2*(i.getOrientation()+6) + (int) i.toString().charAt(0)*(y+1)*3*(i.getOrientation()+6) );
+				}
+			}
+		}
+		return hash;
+	}
 }
