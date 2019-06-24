@@ -65,6 +65,7 @@ public class ServerView implements Screen,ServerCallBack {
 	@Override
 	public void show() {
 		shash = slvl.hashCode();
+		System.out.println(shash + " " + chash);
 		if(shash != chash){
 			System.out.println("c'est la merde");
 		}else{
@@ -226,7 +227,9 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void dataReceived(int data) {
+		System.out.println("data : "+data);
 		if(data > 6){
+
 			chash = data;
 		}else{
 			movePoto = data;

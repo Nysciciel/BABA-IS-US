@@ -49,7 +49,7 @@ public class LoadingView implements Screen, ServerCallBack {
         this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
 
-        this.data = new ArrayBlockingQueue<Integer>(1);
+        this.data = new ArrayBlockingQueue<Integer>(32);
         this.thread = new ServerThread(data,this);
         this.IP = " ";
 
@@ -104,7 +104,6 @@ public class LoadingView implements Screen, ServerCallBack {
             this.thread.interrupt();
         }
 
-        System.out.println(this.thread.checkClient());
         if(this.thread.checkClient()){
             parent.screenChoice((MainTest.SERVER));
         }

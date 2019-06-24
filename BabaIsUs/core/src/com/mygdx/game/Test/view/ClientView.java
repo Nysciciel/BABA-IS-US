@@ -36,7 +36,7 @@ public class ClientView implements Screen,ServerCallBack {
 		table = new Table();
 		table.setFillParent(true);
 
-		data = new ArrayBlockingQueue<Integer>(1);
+		data = new ArrayBlockingQueue<Integer>(32);
 		client = new Client(data,this,ip_addr);
 
 		this.lvl = new com.mygdx.game.Level("levelc.txt");
