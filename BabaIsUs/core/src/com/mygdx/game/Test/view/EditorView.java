@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -28,6 +29,7 @@ public class EditorView implements Screen {
     private Stage stage;
     private DrawEditor editor;
     private ObjectList selectedItem;
+    private int selectedOrientation;
     private Table mainList;
     private Table charaList;
     private Table objectList;
@@ -62,7 +64,7 @@ public class EditorView implements Screen {
         stage = new Stage(new ScreenViewport());
         this.editor = new DrawEditor(10,10);
         selectedItem = ObjectList.BABA;
-        
+        selectedOrientation = 0;
         
         Gdx.input.setInputProcessor(stage);
         
@@ -127,9 +129,23 @@ public class EditorView implements Screen {
         editor.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		System.out.println(selectedItem);
-        		editor.setItem(selectedItem, (int) (x), (int)(y), 0 );
+        		editor.setItem(selectedItem, (int) (x), (int)(y), selectedOrientation );
         		return true;
         	}
+        	
+        });
+        
+        stage.addListener(new InputListener() {
+        	public boolean scrolled(InputEvent event,
+                    float x,
+                    float y,
+                    int amount) {
+         
+            selectedOrientation = (selectedOrientation + amount)%4;
+            if(selectedOrientation<0) selectedOrientation += 4;
+            System.out.println(selectedOrientation);
+            return true;
+        }
         	
         });
         
@@ -224,10 +240,10 @@ public class EditorView implements Screen {
         		nom = nom.substring(nom.indexOf(" ")+1);
         		switch(nom) {
         		case "babatext":
-        			//selectedItem = ObjectList.ROCK;
+        			selectedItem = ObjectList.BABATEXT;
         			break;
         		case "rocktext":
-        			//selectedItem = ObjectList.ROCKTEXT;
+        			selectedItem = ObjectList.ROCKTEXT;
         			break;
         		}
         		return true;
@@ -243,6 +259,7 @@ public class EditorView implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
         }   
+        
         
     }
 
@@ -286,5 +303,6 @@ public class EditorView implements Screen {
     public Stage getStage() {
     	return stage;
     }
+
 
 }

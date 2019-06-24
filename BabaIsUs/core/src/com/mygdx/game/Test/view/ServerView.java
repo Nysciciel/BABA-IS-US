@@ -36,6 +36,7 @@ public class ServerView implements Screen,ServerCallBack {
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
 		table = new Table();
+		table.setFillParent(true);
 		
 		//data = new ArrayBlockingQueue<Integer>(1);
 		this.data = data;
