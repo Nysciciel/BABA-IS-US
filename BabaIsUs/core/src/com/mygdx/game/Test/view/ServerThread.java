@@ -12,10 +12,12 @@ public class ServerThread extends Thread{
 	//Level level;
 	private boolean clientUp;
 	private Server server;
+	private String serverIp;
 
 	public ServerThread(BlockingQueue<Integer> bq, ServerCallBack callBack){
 		super();
 		this.server = null;
+		this.serverIp = null;
 		this.clientUp = false;
 		this.bq = bq;
 		this.callBack = callBack;
@@ -26,6 +28,9 @@ public class ServerThread extends Thread{
 
 	public void run() {
 		this.server = new Server(this.bq,this.callBack) ;
+		/*do{
+			serverIp = this.server.getIp();
+		}while(serverIp == null);*/
 	}
 
 	public boolean checkClient(){
@@ -37,5 +42,9 @@ public class ServerThread extends Thread{
 
 	public Server getServer(){
 		return this.server;
+	}
+
+	public String getServerIp(){
+		return this.serverIp;
 	}
 }

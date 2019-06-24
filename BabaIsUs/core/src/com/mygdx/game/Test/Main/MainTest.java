@@ -34,7 +34,7 @@ public class MainTest extends Game {
     public final static int SERVER = 5;
     public final static int CLIENT = 6;
     public final static int LOADING = 7;
-    public static String ip_addr;
+    public static String ip_addr = null;
   //  public static ServerThread thread;
  //   public final static int ENDGAME = 3;
     @Override

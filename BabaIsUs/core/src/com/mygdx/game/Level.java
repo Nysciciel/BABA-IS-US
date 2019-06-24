@@ -8,6 +8,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.objects.*;
 
 import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.item_ref.WallText;
+import com.mygdx.game.objects.text.item_ref.WaterText;
+import com.mygdx.game.objects.text.operator.Not;
+import com.mygdx.game.objects.text.property.Sink;
+import com.mygdx.game.objects.text.property.Stop;
+import com.mygdx.game.objects.text.property.You;
+import com.mygdx.game.objects.text.property.You2;
+import com.mygdx.game.objects.text.relation.Is;
 import com.mygdx.game.objects.text.item_ref.*;
 import com.mygdx.game.objects.text.property.*;
 import com.mygdx.game.objects.text.operator.*;
@@ -113,6 +122,16 @@ public class Level {
 			locationMatrix[2][5].add(new Is(locationMatrix[2][5], 0));
 			locationMatrix[2][4].add(new BabaText(locationMatrix[2][4], 0));
 			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			// BABA IS YOU
+			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
+			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
+			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			
+			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
+			locationMatrix[2][0].add(new Skull(locationMatrix[2][1], 0));
+			
 			
 
 			// WALL IS STOP
@@ -251,20 +270,22 @@ public class Level {
 		if (list.size()==1) {
 			return list;
 		}
-		Location first = null;
+		Location first = list.get(0);
+		
 		for(Location i:list) {
-			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
-					first = i;
-					break;
-				}
+			if(direction == 0 && i.getX()<first.getX()) {
+				first = i;
+			}
+			if(direction == 1 && i.getY()>first.getY()) {
+				first = i;
+			}
+			if(direction == 2 && i.getX()>first.getX()) {
+				first = i;
+			}
+			if(direction == 3 && i.getY()<first.getY()) {
+				first = i;
 			}
 		}
-
-		if (first==null) {
-			first = list.get(0);
-		}
-
 		list.remove(first);
 		ArrayList<Location> beginning = new ArrayList<Location>();
 		beginning.add(first);
