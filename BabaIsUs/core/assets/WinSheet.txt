@@ -1,19 +1,19 @@
-BackgroundMenu.png
-size: 840, 170
+WinSheet.png
+size: 64, 32
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-BackgroundMenu0
+Win0
   rotate: false
   xy: 0, 0
-  size: 420, 170
-  orig: 420, 170
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
-BackgroundMenu1
+Win1
   rotate: false
-  xy: 420, 0
-  size: 420, 170
-  orig: 420, 170
+  xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
