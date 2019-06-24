@@ -10,4 +10,11 @@ public class WaterText extends ItemRef {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="WaterText0";
+		spriteUsed[1]="WaterText1";
+		return(spriteUsed);
+	}
+
 }

@@ -15,12 +15,12 @@ public class FileManager {
 		Location loc = null;
 		String chaine = "";
 		
-		int length = level.getLength();
-		int height = level.getHeight();
+		int length = level.getMatrixLength();
+		int height = level.getMatrixHeight();
 		
 		for(int i=0 ; i<height ; i++) {
 			for(int j=0 ; j<length ; j++) {
-				loc = level.getLocation(i, j);
+				loc = level.getLocationMatrix()[i][j];
 				for(Item item : loc.getItems()) {
 					chaine = chaine + item.toString() + item.getOrientation();
 				}

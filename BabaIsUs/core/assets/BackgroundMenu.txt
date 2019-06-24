@@ -1,0 +1,19 @@
+BackgroundMenu.png
+size: 840, 170
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BackgroundMenu0
+  rotate: false
+  xy: 0, 0
+  size: 420, 170
+  orig: 420, 170
+  offset: 0, 0
+  index: -1
+BackgroundMenu1
+  rotate: false
+  xy: 420, 0
+  size: 420, 170
+  orig: 420, 170
+  offset: 0, 0
+  index: -1

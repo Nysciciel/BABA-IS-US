@@ -12,4 +12,11 @@ public class Push extends Property {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Push0";
+		spriteUsed[1]="Push1";
+		return(spriteUsed);
+	}
+
 }

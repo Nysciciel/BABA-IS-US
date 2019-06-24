@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
@@ -22,7 +23,7 @@ public class ClientView implements Screen,ServerCallBack {
 	private Server server;
 	private BlockingQueue<Integer> data;
 	private int movePoto;
-
+	private Table table;
 
 
 	public ClientView(MainTest mainTest, String ip_addr) {
@@ -30,12 +31,17 @@ public class ClientView implements Screen,ServerCallBack {
 		this.movePoto = -1;
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
+		table = new Table();
 
 		data = new ArrayBlockingQueue<Integer>(1);
 		client = new Client(data,this,ip_addr);
 
 		this.lvl = new com.mygdx.game.Level("levelc.txt");
 		Gdx.input.setInputProcessor(stage);
+		
+		table.add(lvl).expand().fill();
+		
+		stage.addActor(table);
 	}
 
 	public Stage getStage(){
@@ -128,9 +134,14 @@ public class ClientView implements Screen,ServerCallBack {
 			case(6):
 				lvl.reset();
 				break;
-			default:
+			case(0):
+			case(1):
+			case(2):
+			case(3):
 				lvl.moveYou1(movePoto);
 				lvl.endturn();
+				break;
+			default:
 			}
 			movePoto = -1;
 		}
@@ -143,9 +154,6 @@ public class ClientView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.getBatch().begin();
-		lvl.render(stage.getBatch());
-		stage.getBatch().end();
 		stage.draw();
 	}
 
