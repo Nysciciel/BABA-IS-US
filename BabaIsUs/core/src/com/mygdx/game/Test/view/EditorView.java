@@ -148,11 +148,12 @@ public class EditorView implements Screen {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.substring(nom.indexOf(" ")+1);
-        		if(nom == "clear") {
+        		System.out.println(nom);
+        		if(nom.equals("clear")) {
         			selectedItem = ObjectList.EMPTY;
-        		} else if(nom == "reset") {
+        		} else if(nom.equals("reset")) {
         			editor.clear();
-        		}else if(nom == "save") {
+        		}else if(nom.equals("save")) {
         			FileManager.SaveLevel(editor.getLevel());
         			parent.screenChoice(MainTest.MENU);
         		}else {
