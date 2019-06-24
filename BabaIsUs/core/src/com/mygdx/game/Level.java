@@ -443,7 +443,6 @@ public class Level extends Actor{
 	@Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch,parentAlpha);
-    	System.out.println(this.getWidth());
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
     	
     }
