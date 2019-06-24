@@ -134,8 +134,9 @@ public class Location {
 					for(Item i:pushable) {
 						i.orient(direction);
 						i.advance();
-						return true;
+						
 					}
+					return true;
 				}
 			}
 			return false;

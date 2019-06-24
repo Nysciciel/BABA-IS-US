@@ -134,8 +134,10 @@ public class Level extends Actor{
 			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			
-			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
-			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
+			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			
+			locationMatrix[0][1].add(new You2(locationMatrix[0][1], 0));
+			locationMatrix[1][1].add(new Is(locationMatrix[1][1], 0));
 			locationMatrix[2][1].add(new Skull(locationMatrix[2][1], 0));
 			
 			
@@ -445,7 +447,6 @@ public class Level extends Actor{
 	@Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch,parentAlpha);
-    	System.out.println(this.getWidth());
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
     	
     }
