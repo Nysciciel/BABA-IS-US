@@ -70,16 +70,15 @@ public class Level extends Actor{
 		try {
 			Scanner scanner = new Scanner(new File(filename));
 			ArrayList <String> lines = new ArrayList <String>();
+			String[] taille = scanner.nextLine().split(" ");
+			length = Integer.parseInt(taille[0]);
+			height = Integer.parseInt(taille[1]);
 			while(scanner.hasNext()) {
 				lines.add(scanner.nextLine());
 			}
 			
 			scanner.close();
 
-
-
-			height = lines.size();
-			length = lines.get(0).length();
 			history = new ArrayList<Location[][]>();
 			this.rules = new RuleSet();
 			//System.out.println(length);
@@ -87,81 +86,20 @@ public class Level extends Actor{
 
 			
 			locationMatrix = new Location[height][length];
-			for (int y = 0; y<height; y++) {
-				for (int x = 0; x<length; x++) {
-					ArrayList<Item> items = new ArrayList<Item>();
-					Location loc = new Location(items, this, x, height - 1 -y);
-					switch(lines.get(y).charAt(x)) {
-					case 'e':
-						loc.add(new Empty(loc, 0));
-						break;
-					case 'b':
-						loc.add(new Baba(loc, 0));
-						break;
-					case 'w':
-						loc.add(new Wall(loc, 0));
-						break;
-					case 'r':
-						loc.add(new Rock(loc, 0));
-						break;
-					case 'a':
-						loc.add(new Water(loc, 0));
-						break;
-					case 'k':
-						loc.add(new Keke(loc, 0));
-						break;
-					case 's':
-						loc.add(new Skull(loc, 0));
-						break;
+			
+			for(int i=0;i<lines.size();i++) {
+				String[] cell = lines.get(i).split(",");
+				for(int j=0 ; j<cell.length ;j++) {
+					String[] split = cell[j].split(" ");
+					for(int k=0 ;k<split.length;k++) {
+						ArrayList<Item> items = new ArrayList<Item>();
+						System.out.println(i + " " + k);
+						locationMatrix[i][j] = new Location(items, this, j, i);
+						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));					
+		
 					}
-					locationMatrix[height - 1 -y][x] = loc;
 				}
 			}
-			
-			//locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
-			//locationMatrix[7][12].add(new Wall(locationMatrix[7][12], 0));
-			
-			// BABA IS YOU
-			locationMatrix[2][6].add(new You(locationMatrix[2][6], 0));
-			locationMatrix[2][5].add(new Is(locationMatrix[2][5], 0));
-			locationMatrix[2][4].add(new BabaText(locationMatrix[2][4], 0));
-			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
-			// BABA IS YOU
-			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
-			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
-			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
-			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
-			
-			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
-			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
-			locationMatrix[2][0].add(new Skull(locationMatrix[2][1], 0));
-			
-			
-
-			// WALL IS STOP
-			locationMatrix[8][6].add(new Push(locationMatrix[8][6], 0));
-			locationMatrix[8][5].add(new Is(locationMatrix[8][5], 0));
-			locationMatrix[8][4].add(new WallText(locationMatrix[8][4], 0));
-
-			// WATER IS SINK
-			locationMatrix[8][12].add(new Sink(locationMatrix[8][12], 0));
-			locationMatrix[8][11].add(new Is(locationMatrix[8][11], 0));
-			locationMatrix[8][10].add(new SkullText(locationMatrix[8][10], 0));
-
-			// SKULL ON BABA iS WALL
-			/*locationMatrix[0][14].add(new Sink(locationMatrix[0][14], 0));
-			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
-			locationMatrix[2][14].add(new WallText(locationMatrix[2][14], 0));
-			locationMatrix[3][14].add(new Near(locationMatrix[3][14], 0));
-			locationMatrix[4][14].add(new KekeText(locationMatrix[4][14], 0));
-			//locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));*/
-
-			// SKULL IS HOT AND PULL
-			/*locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
-			locationMatrix[1][16].add(new And(locationMatrix[1][16], 0));
-			//locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
-			locationMatrix[3][16].add(new Is(locationMatrix[3][16], 0));
-			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));*/
 
 
 
@@ -415,6 +353,7 @@ public class Level extends Actor{
 		Location[][] matrix = new Location[height][length];
 		for(int y=0; y < height; y++) {
 			for(int x=0; x < length; x++) {
+				System.out.println(x);
 				matrix[y][x] = locationMatrix[y][x].copy();
 			}
 		}
@@ -443,7 +382,6 @@ public class Level extends Actor{
 	@Override
     public void draw(Batch batch, float parentAlpha) {
     	super.draw(batch,parentAlpha);
-    	System.out.println(this.getWidth());
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
     	
     }

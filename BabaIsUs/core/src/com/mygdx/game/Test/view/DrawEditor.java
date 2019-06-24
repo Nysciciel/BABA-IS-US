@@ -100,7 +100,7 @@ public class DrawEditor extends Actor{
     	float ratioHeight = this.getHeight()/height;
     	float size = Math.min(ratioWidth, ratioHeight);
     	shapeRenderer.begin(ShapeType.Line);
-    	shapeRenderer.setColor(1, 1, 1, 1);
+    	shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1);
         for(int i=0 ; i<= height ; i++) {
         	shapeRenderer.line(0, i*size, size*width, i*size);
         }
