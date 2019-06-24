@@ -3,11 +3,21 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.objects.*;
 
 import com.mygdx.game.objects.text.Text;
+import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.item_ref.WallText;
+import com.mygdx.game.objects.text.item_ref.WaterText;
+import com.mygdx.game.objects.text.operator.Not;
+import com.mygdx.game.objects.text.property.Sink;
+import com.mygdx.game.objects.text.property.Stop;
+import com.mygdx.game.objects.text.property.You;
+import com.mygdx.game.objects.text.property.You2;
+import com.mygdx.game.objects.text.relation.Is;
 import com.mygdx.game.objects.text.item_ref.*;
 import com.mygdx.game.objects.text.property.*;
 import com.mygdx.game.objects.text.operator.*;
@@ -20,7 +30,7 @@ import com.mygdx.game.rule.RuleStackList;
 
 import java.io.File;
 
-public class Level {
+public class Level extends Actor{
 
 	private Location[][] locationMatrix;
 	private int height;
@@ -32,6 +42,9 @@ public class Level {
 	private ArrayList<Location[][]> history;
 	
 	public Level(int length,int height) {
+		
+		super();
+		
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
@@ -40,7 +53,7 @@ public class Level {
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
 				ArrayList<Item> items = new ArrayList<Item>();
-				locationMatrix[i][j] = new Location(items,this,i,j);
+				locationMatrix[i][j] = new Location(items,this,j,i);
 				items.add(new Empty(locationMatrix[i][j],0));
 			}
 		}
@@ -105,40 +118,50 @@ public class Level {
 				}
 			}
 			
-			locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
-			locationMatrix[7][12].add(new Wall(locationMatrix[7][12], 0));
+			//locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
+			//locationMatrix[7][12].add(new Wall(locationMatrix[7][12], 0));
 			
+			// BABA IS YOU
+			locationMatrix[2][6].add(new You(locationMatrix[2][6], 0));
+			locationMatrix[2][5].add(new Is(locationMatrix[2][5], 0));
+			locationMatrix[2][4].add(new BabaText(locationMatrix[2][4], 0));
+			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			// BABA IS YOU
 			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
-			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			
+			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
+			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
+			locationMatrix[2][0].add(new Skull(locationMatrix[2][1], 0));
+			
 			
 
 			// WALL IS STOP
-			locationMatrix[0][10].add(new Push(locationMatrix[0][10], 0));
-			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
-			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
+			locationMatrix[8][6].add(new Push(locationMatrix[8][6], 0));
+			locationMatrix[8][5].add(new Is(locationMatrix[8][5], 0));
+			locationMatrix[8][4].add(new WallText(locationMatrix[8][4], 0));
 
 			// WATER IS SINK
-			locationMatrix[0][12].add(new Sink(locationMatrix[0][12], 0));
-			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
-			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
+			locationMatrix[8][12].add(new Sink(locationMatrix[8][12], 0));
+			locationMatrix[8][11].add(new Is(locationMatrix[8][11], 0));
+			locationMatrix[8][10].add(new SkullText(locationMatrix[8][10], 0));
 
 			// SKULL ON BABA iS WALL
-			locationMatrix[0][14].add(new Sink(locationMatrix[0][14], 0));
+			/*locationMatrix[0][14].add(new Sink(locationMatrix[0][14], 0));
 			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
 			locationMatrix[2][14].add(new WallText(locationMatrix[2][14], 0));
 			locationMatrix[3][14].add(new Near(locationMatrix[3][14], 0));
 			locationMatrix[4][14].add(new KekeText(locationMatrix[4][14], 0));
-			//locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));
+			//locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));*/
 
 			// SKULL IS HOT AND PULL
-			locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
+			/*locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
 			locationMatrix[1][16].add(new And(locationMatrix[1][16], 0));
 			//locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
 			locationMatrix[3][16].add(new Is(locationMatrix[3][16], 0));
-			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));
+			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));*/
 
 
 
@@ -156,10 +179,7 @@ public class Level {
 
 
 	}
-	
-	public Location getLocation(int x, int y) {
-		return locationMatrix[y][x];
-	}
+
 	/*
 	public LevelView(int hauteur, int largeur) {
 		this.height = hauteur;
@@ -251,20 +271,22 @@ public class Level {
 		if (list.size()==1) {
 			return list;
 		}
-		Location first = null;
+		Location first = list.get(0);
+		
 		for(Location i:list) {
-			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
-					first = i;
-					break;
-				}
+			if(direction == 0 && i.getX()<first.getX()) {
+				first = i;
+			}
+			if(direction == 1 && i.getY()>first.getY()) {
+				first = i;
+			}
+			if(direction == 2 && i.getX()>first.getX()) {
+				first = i;
+			}
+			if(direction == 3 && i.getY()<first.getY()) {
+				first = i;
 			}
 		}
-
-		if (first==null) {
-			first = list.get(0);
-		}
-
 		list.remove(first);
 		ArrayList<Location> beginning = new ArrayList<Location>();
 		beginning.add(first);
@@ -329,11 +351,10 @@ public class Level {
 	}
 
 
-	public void render(Batch sb) {
-
+	public void render(Batch sb, float cellSize) {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].render(sb);
+				locationMatrix[y][x].render(sb,cellSize);
 			}
 		}
 	}
@@ -407,15 +428,23 @@ public class Level {
 		updateRules();
 	}
 	
-	public int getLength() {
+	public int getMatrixLength() {
 		return this.length;
 	}
 	
-	public int getHeight() {
+	public int getMatrixHeight() {
 		return this.height;
 	}
 
 	public LogicHashtable getRuleTable() {
 		return ruleTable;
 	}
+	
+	@Override
+    public void draw(Batch batch, float parentAlpha) {
+    	super.draw(batch,parentAlpha);
+    	System.out.println(this.getWidth());
+    	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
+    	
+    }
 }

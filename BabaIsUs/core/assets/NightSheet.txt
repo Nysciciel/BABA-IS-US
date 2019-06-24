@@ -1,0 +1,12 @@
+NightSheet.png
+size: 400, 200
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Night1
+  rotate: false
+  xy: 0, 0
+  size: 400, 200
+  orig: 400, 200
+  offset: 0, 0
+  index: -1

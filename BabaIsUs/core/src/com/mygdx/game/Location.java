@@ -224,9 +224,9 @@ public class Location {
 	}
 
 
-	public void render(Batch sb) {
+	public void render(Batch sb, float cellSize) {
 		for(Item i:items) {
-			i.render(sb);
+			i.render(sb, cellSize);
 		}
 	}
 

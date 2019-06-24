@@ -10,4 +10,11 @@ public class EmptyText extends ItemRef {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="EmptyText0";
+		spriteUsed[1]="EmptyText1";
+		return(spriteUsed);
+	}
+
 }

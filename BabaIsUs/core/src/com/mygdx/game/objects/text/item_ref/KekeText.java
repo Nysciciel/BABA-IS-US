@@ -10,6 +10,11 @@ public class KekeText extends ItemRef {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="KekeText0";
+		spriteUsed[1]="KekeText1";
+		return(spriteUsed);
+	}
 
 }

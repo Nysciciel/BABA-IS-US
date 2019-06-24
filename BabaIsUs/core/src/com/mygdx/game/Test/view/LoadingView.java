@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
@@ -34,6 +38,8 @@ public class LoadingView implements Screen, ServerCallBack {
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private GlyphLayout gameTitleGlyph, touchGlyph, toGlyph, startGlyph;
+    private String IP;
+    private Skin skin;
 
     // our constructor with a Box2DTutorial argument
     public LoadingView(MainTest mainTest) {
@@ -45,6 +51,7 @@ public class LoadingView implements Screen, ServerCallBack {
 
         this.data = new ArrayBlockingQueue<Integer>(1);
         this.thread = new ServerThread(data,this);
+        this.IP = " ";
 
 
         this.generator = new FreeTypeFontGenerator(Gdx.files.internal("font.ttf"));
@@ -53,6 +60,7 @@ public class LoadingView implements Screen, ServerCallBack {
         this.gameTitleText = this.generator.generateFont(this.parameter);
         this.gameTitleGlyph = new GlyphLayout();
         this.gameTitleGlyph.setText(this.gameTitleText, Constants.LOADING_SCREEN);
+        skin = new Skin(Gdx.files.internal("uiskin.json"));
     }
 
     public Stage getStage(){
@@ -74,6 +82,23 @@ public class LoadingView implements Screen, ServerCallBack {
     @Override
     public void show() {
         // TODO Auto-generated method stub
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
+        Table table = new Table();
+        table.setFillParent(true);
+        //table.setDebug(true);
+        table.setVisible(false);
+        stage.addActor(table);
+        this.IP = MainTest.ip_addr;
+        TextField address = new TextField(this.IP, skin);
+
+        table.add(address);
+
+
+        if(this.IP != null){
+            table.setVisible(true);
+        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU);
             this.thread.interrupt();
@@ -82,6 +107,8 @@ public class LoadingView implements Screen, ServerCallBack {
         if(this.thread.checkClient()){
             parent.screenChoice((MainTest.SERVER));
         }
+
+
     }
 
     @Override

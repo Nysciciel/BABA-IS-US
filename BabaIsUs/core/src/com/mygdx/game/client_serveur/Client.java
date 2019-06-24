@@ -35,7 +35,7 @@ public class Client {
 			clientSocket = new Socket(ip_addr,5000);
 
 			dis = new DataInputStream(clientSocket.getInputStream());
-			fos = new FileOutputStream("level.txt");
+			fos = new FileOutputStream("levelc.txt");
 			int filesize;
 			byte[] buffer = new byte[4096];
 			byte[] b = new byte[1];
