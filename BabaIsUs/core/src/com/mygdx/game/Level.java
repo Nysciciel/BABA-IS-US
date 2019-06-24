@@ -262,20 +262,22 @@ public class Level {
 		if (list.size()==1) {
 			return list;
 		}
-		Location first = null;
+		Location first = list.get(0);
+		
 		for(Location i:list) {
-			if (i.next(direction)!=null) {
-				if(!(i.next(direction).hasYou1() || i.next(direction).hasYou2()) || (list.indexOf(i.next(direction))==-1)) {
-					first = i;
-					break;
-				}
+			if(direction == 0 && i.getX()<first.getX()) {
+				first = i;
+			}
+			if(direction == 1 && i.getY()>first.getY()) {
+				first = i;
+			}
+			if(direction == 2 && i.getX()>first.getX()) {
+				first = i;
+			}
+			if(direction == 3 && i.getY()<first.getY()) {
+				first = i;
 			}
 		}
-
-		if (first==null) {
-			first = list.get(0);
-		}
-
 		list.remove(first);
 		ArrayList<Location> beginning = new ArrayList<Location>();
 		beginning.add(first);
