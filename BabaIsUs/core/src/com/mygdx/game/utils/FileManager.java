@@ -44,7 +44,6 @@ public class FileManager {
 		}
 		
 		file.writeString(chaine, false);
-		
 		return false;		
 	}
 	

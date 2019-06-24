@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.objects.*;
@@ -42,9 +43,7 @@ public class Level extends Actor{
 	private ArrayList<Location[][]> history;
 
 	public Level(int length,int height) {
-
 		super();
-
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
@@ -68,7 +67,8 @@ public class Level extends Actor{
 		this.ruleTable = new LogicHashtable();
 
 		try {
-			Scanner scanner = new Scanner(new File(filename));
+			FileHandle file = Gdx.files.local(filename);
+			Scanner scanner = new Scanner(file.read());
 			ArrayList <String> lines = new ArrayList <String>();
 			String[] taille = scanner.nextLine().split(" ");
 			length = Integer.parseInt(taille[0]);
@@ -93,7 +93,6 @@ public class Level extends Actor{
 					String[] split = cell[j].split(" ");
 					for(int k=0 ;k<split.length;k++) {
 						ArrayList<Item> items = new ArrayList<Item>();
-						System.out.println(i + " " + k);
 						locationMatrix[i][j] = new Location(items, this, j, i);
 						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
 

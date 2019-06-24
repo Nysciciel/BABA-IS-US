@@ -1,6 +1,7 @@
 package com.mygdx.game.Test.view;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,6 +22,7 @@ import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.Baba;
 import com.mygdx.game.objects.Item;
 import com.mygdx.game.utils.FileManager;
+import com.mygdx.game.utils.ItemTypeList;
 import com.mygdx.game.utils.ObjectList;
 
 public class EditorView implements Screen {
@@ -30,28 +32,19 @@ public class EditorView implements Screen {
     private DrawEditor editor;
     private ObjectList selectedItem;
     private int selectedOrientation;
-    private Table mainList;
-    private Table charaList;
-    private Table objectList;
-    private Table textList;
     
-    private TextButton charaSelect;
-    private TextButton textSelect;
-    private TextButton objectSelect;
+    private Table mainList;
+    private Table propertyList;
+    private Table relationList;
+    private Table operatorList;
+    private Table objectList;
+    private Table item_textList;
+    
+ 
     private TextButton clearSelect;
     private TextButton resetSelect;
     private TextButton saveSelect;
-    
-    private TextButton babaSelect;
-    private TextButton kekeSelect;
-    
-    private TextButton rockSelect;
-    private TextButton waterSelect;
-    private TextButton skullSelect;
-    private TextButton wallSelect;
-    
-    private TextButton babaTextSelect;
-    private TextButton rockTextSelect;
+ 
     
     
     Table table;
@@ -75,51 +68,53 @@ public class EditorView implements Screen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         
         mainList = new Table();
-        charaList = new Table();
+        propertyList = new Table();
+        item_textList = new Table();
         objectList = new Table();
-        textList = new Table();
+        operatorList = new Table();
+        relationList = new Table();
         
         
-        charaSelect = new TextButton("Chara",skin);
-        objectSelect = new TextButton("Obj",skin);
-        textSelect = new TextButton("Text",skin);
         clearSelect = new TextButton("clear",skin);
         resetSelect = new TextButton("reset",skin);
         saveSelect = new TextButton("save",skin);
         
-        babaSelect = new TextButton("baba",skin);
-        kekeSelect = new TextButton("keke",skin);
         
-        rockSelect = new TextButton("rock",skin);
-        waterSelect = new TextButton("water",skin);
-        wallSelect = new TextButton("wall",skin);
-        skullSelect = new TextButton("skull",skin);
-        
-        babaTextSelect = new TextButton("babatext",skin);
-        rockTextSelect = new TextButton("rocktext",skin);
         
         mainList.left();
-        mainList.add(charaSelect).fill().width(100).uniformX();
-        mainList.add(objectSelect).fill().uniformX();
-        mainList.add(textSelect).fill().uniformX();
+        for(ItemTypeList object : ItemTypeList.values()) {
+        	mainList.add(new TextButton(object.toString(),skin)).fill().width(100).uniformX();
+        }
         mainList.add(clearSelect).expandX().right();
         mainList.add(resetSelect).fill().uniformX();
         mainList.add(saveSelect).fill().uniformX();
         
-        charaList.add(babaSelect).fill().uniformX();
-        charaList.add(kekeSelect).fill().uniformX();
         
-        textList.add(babaTextSelect).fill().uniformX();
-        textList.add(rockTextSelect).fill().uniformX();
         
-        objectList.add(rockSelect).fill().uniformX();
-        objectList.add(waterSelect).fill().uniformX();
-        objectList.add(skullSelect).fill().uniformX();
-        objectList.add(wallSelect).fill().uniformX();
+        
+        for(ObjectList object : ObjectList.values()) {
+        	switch(object.getItemType()) {
+        	case ITEM_TEXT:
+        		item_textList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		break;
+        	case OPERATOR:
+        		operatorList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		break;
+        	case OBJECT:
+        		objectList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		break;
+        	case PROPERTY:
+        		propertyList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		break;
+        	case RELATION:
+        		relationList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		break;
+        	}
+        }
         
         table.add(mainList).left().expandX().fill();
         table.row().pad(0, 0, 10, 0);
-        table.add(charaList).left().expandX();
+        table.add(objectList).left().expandX();
         table.row().pad(0, 0, 0, 0);
         table.add(editor).expand().colspan(3).fill();
         
@@ -153,58 +148,58 @@ public class EditorView implements Screen {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.substring(nom.indexOf(" ")+1);
-        		switch(nom) {
-        		case "Chara":
-        			table.clear();
-        			table.add(mainList).left().expandX().fill();
-        		    table.row().pad(0, 0, 10, 0);
-        		    table.add(charaList).left().expandX();
-        		    table.row().pad(0, 0, 0, 0);
-        		    table.add(editor).expand().colspan(3).fill();
-        			break;
-        		case "Obj":
-        			table.clear();
-        			table.add(mainList).left().expandX().fill();
-        		    table.row().pad(0, 0, 10, 0);
-        		    table.add(objectList).left().expandX();
-        		    table.row().pad(0, 0, 0, 0);
-        		    table.add(editor).expand().colspan(3).fill();
-        			break;
-        		case "Text":
-        			table.clear();
-        			table.add(mainList).left().expandX().fill();
-        		    table.row().pad(0, 0, 10, 0);
-        		    table.add(textList).left().expandX();
-        		    table.row().pad(0, 0, 0, 0);
-        		    table.add(editor).expand().colspan(3).fill();
-        			break;
-        		case "clear":
+        		if(nom == "clear") {
         			selectedItem = ObjectList.EMPTY;
-        			break;
-        		case "reset":
+        		} else if(nom == "reset") {
         			editor.clear();
-        			break;
-        		case "save":
+        		}else if(nom == "save") {
         			FileManager.SaveLevel(editor.getLevel());
         			parent.screenChoice(MainTest.MENU);
-        			break;
+        		}else {
+        			
+        			switch(ItemTypeList.valueOf(nom)) {
+            		case PROPERTY:
+            			table.clear();
+            			table.add(mainList).left().expandX().fill();
+            		    table.row().pad(0, 0, 10, 0);
+            		    table.add(propertyList).left().expandX();
+            		    table.row().pad(0, 0, 0, 0);
+            		    table.add(editor).expand().colspan(3).fill();
+            			break;
+            		case RELATION:
+            			table.clear();
+            			table.add(mainList).left().expandX().fill();
+            		    table.row().pad(0, 0, 10, 0);
+            		    table.add(relationList).left().expandX();
+            		    table.row().pad(0, 0, 0, 0);
+            		    table.add(editor).expand().colspan(3).fill();
+            			break;
+            		case ITEM_TEXT:
+            			table.clear();
+            			table.add(mainList).left().expandX().fill();
+            		    table.row().pad(0, 0, 10, 0);
+            		    table.add(item_textList).left().expandX();
+            		    table.row().pad(0, 0, 0, 0);
+            		    table.add(editor).expand().colspan(3).fill();
+            			break;
+            		case OPERATOR:
+            			table.clear();
+            			table.add(mainList).left().expandX().fill();
+            		    table.row().pad(0, 0, 10, 0);
+            		    table.add(operatorList).left().expandX();
+            		    table.row().pad(0, 0, 0, 0);
+            		    table.add(editor).expand().colspan(3).fill();
+            			break;
+            		case OBJECT:
+            			table.clear();
+            			table.add(mainList).left().expandX().fill();
+            		    table.row().pad(0, 0, 10, 0);
+            		    table.add(objectList).left().expandX();
+            		    table.row().pad(0, 0, 0, 0);
+            		    table.add(editor).expand().colspan(3).fill();
+            			break;
         		}
-        		return true;
-        	}
-        	
-        });
-        
-        charaList.addListener(new InputListener() {
-        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-        		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
-        		switch(nom) {
-        		case "baba":
-        			selectedItem = ObjectList.BABA;
-        			break;
-        		case "keke":
-        			selectedItem = ObjectList.KEKE;
-        			break;
+     
         		}
         		return true;
         	}
@@ -215,37 +210,47 @@ public class EditorView implements Screen {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.substring(nom.indexOf(" ")+1);
-        		switch(nom) {
-        		case "rock":
-        			selectedItem = ObjectList.ROCK;
-        			break;
-        		case "water":
-        			selectedItem = ObjectList.WATER;
-        			break;
-        		case "wall":
-        			selectedItem = ObjectList.WALL;
-        			break;
-        		case "skull":
-        			selectedItem = ObjectList.SKULL;
-        			break;
-        		}
+        		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
         	
         });
         
-        textList.addListener(new InputListener() {
+        propertyList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.substring(nom.indexOf(" ")+1);
-        		switch(nom) {
-        		case "babatext":
-        			selectedItem = ObjectList.BABATEXT;
-        			break;
-        		case "rocktext":
-        			selectedItem = ObjectList.ROCKTEXT;
-        			break;
-        		}
+        		selectedItem = ObjectList.valueOf(nom);
+        		return true;
+        	}
+        	
+        });
+        
+        operatorList.addListener(new InputListener() {
+        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+        		String nom = event.getTarget().toString();
+        		nom = nom.substring(nom.indexOf(" ")+1);
+        		selectedItem = ObjectList.valueOf(nom);
+        		return true;
+        	}
+        	
+        });
+        
+        item_textList.addListener(new InputListener() {
+        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+        		String nom = event.getTarget().toString();
+        		nom = nom.substring(nom.indexOf(" ")+1);
+        		selectedItem = ObjectList.valueOf(nom);
+        		return true;
+        	}
+        	
+        });
+        
+        relationList.addListener(new InputListener() {
+        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+        		String nom = event.getTarget().toString();
+        		nom = nom.substring(nom.indexOf(" ")+1);
+        		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
         	
