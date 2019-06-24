@@ -12,4 +12,11 @@ public class Pull extends Property {
 		// TODO Auto-generated constructor stub
 	}
 
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[2];
+		spriteUsed[0]="Pull0";
+		spriteUsed[1]="Pull1";
+		return(spriteUsed);
+	}
+
 }

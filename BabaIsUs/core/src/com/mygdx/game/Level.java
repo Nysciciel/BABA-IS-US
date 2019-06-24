@@ -105,40 +105,40 @@ public class Level {
 				}
 			}
 			
-			locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
-			locationMatrix[7][12].add(new Wall(locationMatrix[7][12], 0));
+			//locationMatrix[6][12].add(new Keke(locationMatrix[6][12], 0));
+			//locationMatrix[7][12].add(new Wall(locationMatrix[7][12], 0));
 			
 			// BABA IS YOU
-			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
-			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
-			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
+			locationMatrix[2][6].add(new You(locationMatrix[2][6], 0));
+			locationMatrix[2][5].add(new Is(locationMatrix[2][5], 0));
+			locationMatrix[2][4].add(new BabaText(locationMatrix[2][4], 0));
 			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			
 
 			// WALL IS STOP
-			locationMatrix[0][10].add(new Push(locationMatrix[0][10], 0));
-			locationMatrix[1][10].add(new Is(locationMatrix[1][10], 0));
-			locationMatrix[2][10].add(new WallText(locationMatrix[2][10], 0));
+			locationMatrix[8][6].add(new Push(locationMatrix[8][6], 0));
+			locationMatrix[8][5].add(new Is(locationMatrix[8][5], 0));
+			locationMatrix[8][4].add(new WallText(locationMatrix[8][4], 0));
 
 			// WATER IS SINK
-			locationMatrix[0][12].add(new Sink(locationMatrix[0][12], 0));
-			locationMatrix[1][12].add(new Is(locationMatrix[1][12], 0));
-			locationMatrix[2][12].add(new WaterText(locationMatrix[2][12], 0));
+			locationMatrix[8][12].add(new Sink(locationMatrix[8][12], 0));
+			locationMatrix[8][11].add(new Is(locationMatrix[8][11], 0));
+			locationMatrix[8][10].add(new SkullText(locationMatrix[8][10], 0));
 
 			// SKULL ON BABA iS WALL
-			locationMatrix[0][14].add(new Sink(locationMatrix[0][14], 0));
+			/*locationMatrix[0][14].add(new Sink(locationMatrix[0][14], 0));
 			locationMatrix[1][14].add(new Is(locationMatrix[1][14], 0));
 			locationMatrix[2][14].add(new WallText(locationMatrix[2][14], 0));
 			locationMatrix[3][14].add(new Near(locationMatrix[3][14], 0));
 			locationMatrix[4][14].add(new KekeText(locationMatrix[4][14], 0));
-			//locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));
+			//locationMatrix[5][14].add(new KekeText(locationMatrix[5][14], 0));*/
 
 			// SKULL IS HOT AND PULL
-			locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
+			/*locationMatrix[0][16].add(new Pull(locationMatrix[0][16], 0));
 			locationMatrix[1][16].add(new And(locationMatrix[1][16], 0));
 			//locationMatrix[2][16].add(new Hot(locationMatrix[2][16], 0));
 			locationMatrix[3][16].add(new Is(locationMatrix[3][16], 0));
-			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));
+			locationMatrix[4][16].add(new SkullText(locationMatrix[4][16], 0));*/
 
 
 
