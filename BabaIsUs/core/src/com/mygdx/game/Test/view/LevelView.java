@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
 import com.mygdx.game.Test.Main.MainTest;
@@ -17,21 +18,27 @@ import java.util.concurrent.BlockingQueue;
 public class LevelView implements Screen,ServerCallBack {
 
     private MainTest parent; // a field to store our orchestrator
-    private com.mygdx.game.Level lvl;
+    private Level lvl;
     private Stage stage;
     private Client client;
     private Server server;
     private BlockingQueue<Integer> data;
+    private Table table;
 
 
     public LevelView(MainTest mainTest) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
+        table = new Table();
+        table.setFillParent(true);
 
 
-        this.lvl = new com.mygdx.game.Level("level.txt");
+        this.lvl = new Level("level.txt");
         Gdx.input.setInputProcessor(stage);
+        
+        stage.addActor(table);
+        table.add(lvl).expand().fill();
     }
 
 
@@ -91,9 +98,6 @@ public class LevelView implements Screen,ServerCallBack {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.getBatch().begin();
-        lvl.render(stage.getBatch());
-        stage.getBatch().end();
         stage.draw();
     }
 

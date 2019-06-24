@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
 import com.mygdx.game.ServerLevel;
@@ -28,12 +29,14 @@ public class ServerView implements Screen,ServerCallBack {
 	private BlockingQueue<Integer> data;
 	private Texture background;
 	private int movePoto;
+	private Table table;
 
 	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
-
+		table = new Table();
+		
 		//data = new ArrayBlockingQueue<Integer>(1);
 		this.data = data;
 		this.movePoto = -1;
@@ -44,6 +47,10 @@ public class ServerView implements Screen,ServerCallBack {
 		this.thread = thread;
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);
+		
+		table.add(slvl).expand().fill();
+		
+		stage.addActor(table);
 	}
 
 	public Stage getStage(){
@@ -158,7 +165,6 @@ public class ServerView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.getBatch().begin();
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
             enabled =true;
@@ -166,8 +172,6 @@ public class ServerView implements Screen,ServerCallBack {
         else{
             stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         }*/
-		slvl.render(stage.getBatch());
-		stage.getBatch().end();
 		stage.draw();
 	}
 

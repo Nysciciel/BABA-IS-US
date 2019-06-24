@@ -3,8 +3,9 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.objects.*;
 
 import com.mygdx.game.objects.text.Text;
@@ -29,7 +30,7 @@ import com.mygdx.game.rule.RuleStackList;
 
 import java.io.File;
 
-public class Level {
+public class Level extends Actor{
 
 	private Location[][] locationMatrix;
 	private int height;
@@ -41,6 +42,9 @@ public class Level {
 	private ArrayList<Location[][]> history;
 	
 	public Level(int length,int height) {
+		
+		super();
+		
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
@@ -49,7 +53,7 @@ public class Level {
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
 				ArrayList<Item> items = new ArrayList<Item>();
-				locationMatrix[i][j] = new Location(items,this,i,j);
+				locationMatrix[i][j] = new Location(items,this,j,i);
 				items.add(new Empty(locationMatrix[i][j],0));
 			}
 		}
@@ -175,10 +179,7 @@ public class Level {
 
 
 	}
-	
-	public Location getLocation(int x, int y) {
-		return locationMatrix[y][x];
-	}
+
 	/*
 	public LevelView(int hauteur, int largeur) {
 		this.height = hauteur;
@@ -350,11 +351,10 @@ public class Level {
 	}
 
 
-	public void render(Batch sb) {
-
+	public void render(Batch sb, float cellSize) {
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].render(sb);
+				locationMatrix[y][x].render(sb,cellSize);
 			}
 		}
 	}
@@ -428,15 +428,23 @@ public class Level {
 		updateRules();
 	}
 	
-	public int getLength() {
+	public int getMatrixLength() {
 		return this.length;
 	}
 	
-	public int getHeight() {
+	public int getMatrixHeight() {
 		return this.height;
 	}
 
 	public LogicHashtable getRuleTable() {
 		return ruleTable;
 	}
+	
+	@Override
+    public void draw(Batch batch, float parentAlpha) {
+    	super.draw(batch,parentAlpha);
+    	System.out.println(this.getWidth());
+    	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
+    	
+    }
 }
