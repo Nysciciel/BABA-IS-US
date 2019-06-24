@@ -12,7 +12,7 @@ public class Wall extends Item {
 	}
 
 	public void loadTextureAtlas(){
-		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetU.txt"));
+		textureAtlas = new TextureAtlas(Gdx.files.internal("WallSheetGlued.txt"));
 	}
 
 	public String[] getSpriteUsed(){
