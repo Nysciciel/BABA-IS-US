@@ -40,6 +40,10 @@ public class ServerThread extends Thread{
 		return clientUp;
 	}
 
+	public void setClientUp(boolean state){
+		this.clientUp = state;
+	}
+
 	public Server getServer(){
 		return this.server;
 	}
