@@ -118,7 +118,7 @@ public class Level {
 			locationMatrix[0][0].add(new You(locationMatrix[0][0], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][0], 0));
 			locationMatrix[2][0].add(new BabaText(locationMatrix[2][0], 0));
-			locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
+			//locationMatrix[3][0].add(new Not(locationMatrix[3][0], 0));
 			
 			locationMatrix[0][0].add(new You2(locationMatrix[0][1], 0));
 			locationMatrix[1][0].add(new Is(locationMatrix[1][1], 0));
