@@ -245,7 +245,7 @@ public abstract class Item {
 	 *  Draw the animated texture
 	 * @param sb Sprite bash that has to be drawn
 	 */
-	public void render(Batch sb){
+	public void render(Batch sb, float cellSize){
 		String[] spriteUsed = getSpriteUsed();
 		int length = spriteUsed.length;
 		TextureRegion[] orientedWall = new TextureRegion[length];
@@ -256,10 +256,7 @@ public abstract class Item {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		int h_ratio = Constants.WINDOW_HEIGHT/(loc.getLevelHeigh());
-		int w_ratio = Constants.WINDOW_WIDTH/(loc.getLevelWidth());
-		int size = Math.min(h_ratio,w_ratio);
-		sb.draw(test,getAffichePos()[0]*size,getAffichePos()[1]*size,size,size);
+		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
 	}
 
 	public String[] getSpriteUsed(){

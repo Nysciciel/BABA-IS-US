@@ -39,10 +39,10 @@ public class DrawEditor extends Actor{
     }
     
     public void setItem(ObjectList object, int x, int y, int direction) {
-    	float ratioWidth = Gdx.graphics.getWidth()/width;
-    	float ratioHeight = Gdx.graphics.getHeight()/height;
-    	System.out.println((int)(x/ratioWidth));
-    	Location loc = lvl.getLocationMatrix()[(int) (y/ratioHeight)][(int) (x/ratioWidth)];
+    	float ratioWidth = this.getWidth()/width;
+    	float ratioHeight = this.getHeight()/height;
+    	float size = Math.min(ratioWidth, ratioHeight);
+    	Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
     	switch(object) {
     	case BABA:		
     		loc.add(new Baba(loc, direction));
@@ -76,7 +76,7 @@ public class DrawEditor extends Actor{
     	
     	for(int i=0 ; i < height ; i++) {
         	for(int j=0 ; j < width ; j++) {
-        		lvl.render(batch);
+        		lvl.render(batch,(int) Math.min(this.getWidth()/width, this.getHeight()/height));
             }
         }
     	drawRepere(batch);
@@ -90,13 +90,14 @@ public class DrawEditor extends Actor{
     public void drawRepere(Batch batch) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
+    	float size = Math.min(ratioWidth, ratioHeight);
     	shapeRenderer.begin(ShapeType.Line);
     	shapeRenderer.setColor(1, 1, 1, 1);
         for(int i=0 ; i<= height ; i++) {
-        	shapeRenderer.line(0, i*ratioHeight, this.getWidth(), i*ratioHeight);
+        	shapeRenderer.line(0, i*size, size*width, i*size);
         }
         for(int i=0 ; i<= width ; i++) {
-        	shapeRenderer.line(i*ratioWidth, 0 , i*ratioWidth, this.getHeight());
+        	shapeRenderer.line(i*size, 0 , i*size, size*height);
         }
         shapeRenderer.end();
     }
