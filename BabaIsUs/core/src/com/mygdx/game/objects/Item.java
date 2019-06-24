@@ -15,16 +15,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 
 /**
- * 
+ *
  * @author Maxwell
- * 
+ *
  * Item is the abstract class defining all the items possible.
- * 
+ *
  * It is mainly characterized by its location that contains it and its orientation.
  *
  */
 public abstract class Item {
-	
+
 	protected float animationChrono=1;
 	protected TextureAtlas textureAtlas;
 	protected Animation animation;
@@ -39,20 +39,20 @@ public abstract class Item {
 	public Item(Location loc, int orientation) {
 		this.loc = loc;
 		this.orientation= orientation;
-		
+
 		loadTextureAtlas();
 	}
-	
+
 	/**
 	 * Ask the truth table whether the property with the label key characterize this object
 	 * @param key : property key of the Hashtable
-	 * @return boolean 
+	 * @return boolean
 	 */
 	private boolean propertyAssert(String key) {
-		
+
 		Logic affirm;
 		Logic restrict;
-		
+
 		try {
 		affirm = (Logic) getRuleTable().get(key).get(getCategory());
 		if (affirm == null)
@@ -61,7 +61,7 @@ public abstract class Item {
 		catch(Exception e) {
 			return false;
 		}
-		
+
 		try{
 			restrict = (Logic) getRuleTable().get(key).get("Not").get(getCategory());
 			if (restrict == null)
@@ -70,7 +70,7 @@ public abstract class Item {
 		catch(Exception e) {
 			return affirm.getTruth(this);
 		}
-		
+
 		return affirm.getTruth(this) && !restrict.getTruth(this);
 	}
 
@@ -125,13 +125,13 @@ public abstract class Item {
 	public boolean isWeak() {
 		return propertyAssert("Weak");
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return the ArrayList<Class> of the transformations due to setting logics
 	 */
 	public ArrayList<Class> hasToTransformTo(){
-		
+
 		ArrayList<Class> transform = new ArrayList<Class>();
 		try {
 			if (((Logic)getRuleTable().get("Is").get(this.getCategory()).get(this.getCategory())).getTruth(this))
@@ -148,7 +148,7 @@ public abstract class Item {
 			Logic restrict;
 			boolean affirmBoolean;
 			boolean restrictBoolean;
-			
+
 			try {
 				affirm = (Logic)(getRuleTable().get("Is").get(c.getSimpleName()).get(this.getCategory()));
 				if (affirm == null)
@@ -169,16 +169,15 @@ public abstract class Item {
 			catch(Exception e) {
 				restrictBoolean = false;
 			}
-					
+
 			if (affirmBoolean && !restrictBoolean)
 				transform.add(c);
 		}
-
-		return transform;		
+		return transform;
 	}
-	
-	
-	
+
+
+
 	public int getOrientation() {
 		return orientation;
 	}
@@ -214,7 +213,7 @@ public abstract class Item {
 	 * useful for when a push&pull chain is getting pushed
 	 */
 	public void advance() {
-		
+
 		animationChrono = 0;
 		loc.del(this);
 		loc = loc.next(orientation);
@@ -297,7 +296,7 @@ public abstract class Item {
 		float[] tab={a,b};
 		return(tab);
 	}
-	
+
 	protected int getY() {
 		return loc.getY();
 	}
@@ -382,10 +381,10 @@ public abstract class Item {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the name of the class except for the ItemRef ones whom return is the reference class
 	 * Example :
-	 * for the Hot class it returns "Hot" 
+	 * for the Hot class it returns "Hot"
 	 * for the WallText class it returns "Wall"
 	 */
 	public String getRefName() {
@@ -399,10 +398,6 @@ public abstract class Item {
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}
-	
+
 	public abstract String toString();
-	
-		
-	
-	
 }

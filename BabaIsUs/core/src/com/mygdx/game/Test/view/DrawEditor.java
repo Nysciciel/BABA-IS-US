@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.mygdx.game.Level;
 import com.mygdx.game.Location;
 import com.mygdx.game.objects.*;
+import com.mygdx.game.objects.text.item_ref.BabaText;
+import com.mygdx.game.objects.text.item_ref.RockText;
 import com.mygdx.game.utils.MyTextInputListener;
 import com.mygdx.game.utils.ObjectList;
 
@@ -65,6 +67,12 @@ public class DrawEditor extends Actor{
     		break;
     	case KEKE:
     		loc.add(new Keke(loc,direction));
+    		break;
+    	case ROCKTEXT:
+    		loc.add(new RockText(loc,direction));
+    		break;
+    	case BABATEXT:
+    		loc.add(new BabaText(loc,direction));
     		break;
     	}
     }

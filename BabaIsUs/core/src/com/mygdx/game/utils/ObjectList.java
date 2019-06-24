@@ -9,6 +9,8 @@ public enum ObjectList {
 	ROCK,
 	WALLTEXT,
 	ROCKTEXT,
+	BABATEXT,
+	KEKETEXT,
 	ISTEXT,
 	SKULL;
 }
