@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server{
 
-	ConcurrentLinkedQueue data;
+	ConcurrentLinkedQueue<Integer> data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
 	private String ip;
