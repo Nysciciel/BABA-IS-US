@@ -13,10 +13,9 @@ import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 import java.util.concurrent.ArrayBlockingQueue;
-
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ServerView implements Screen,ServerCallBack {
 
@@ -27,15 +26,15 @@ public class ServerView implements Screen,ServerCallBack {
 	private Server server;
 	private ServerThread thread;
 	private boolean enabled;
-	private BlockingQueue<Integer> data;
+	private ConcurrentLinkedQueue data;
 	private Texture background;
 	private int movePoto;
 	private Table table;
 	private int shash;
 	private int chash;
-	private BlockingQueue<Integer> actions = new ArrayBlockingQueue(10);
+	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
-	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
+	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
@@ -78,24 +77,24 @@ public class ServerView implements Screen,ServerCallBack {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
 				try {
-					data.put(15);
-				} catch (InterruptedException e) {
+					data.add(15);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
 				slvl.reset();
 				try {
-					data.put(16);
-				} catch (InterruptedException e) {
+					data.add(16);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 			else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				slvl.rollback();
 				try {
-					data.put(14);
-				} catch (InterruptedException e) {
+					data.add(14);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -104,8 +103,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(12);
-				} catch (InterruptedException e) {
+					data.add(12);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -114,8 +113,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(11);
-				} catch (InterruptedException e) {
+					data.add(11);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -126,8 +125,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(10);
-				} catch (InterruptedException e) {
+					data.add(10);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
@@ -137,15 +136,16 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(13);
-				} catch (InterruptedException e) {
+					data.add(13);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
 			}
 			while(actions.peek()!=null) {
 
-				movePoto = actions.poll();
+				movePoto = (int)actions.poll();
+				System.out.println("value taken from actions:"+movePoto);
 				switch(movePoto) {
 				case(4):
 					slvl.rollback();
@@ -167,11 +167,11 @@ public class ServerView implements Screen,ServerCallBack {
 				}
 				try {
 					if(0<=movePoto && movePoto<=6) {
-						data.put(movePoto+20);
-						int kjsghj = movePoto+20;
+						
+						data.add(movePoto+20);
 						System.out.println("tosend:" + data);
 					}
-				} catch (InterruptedException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -225,13 +225,12 @@ public class ServerView implements Screen,ServerCallBack {
 	}
 	@Override
 	public void dataReceived(int data) {
-		movePoto = data;
+		System.out.println("avant actions:"+actions);
 		try {
-			int number = movePoto;
-			actions.put(number);
-			System.out.println("received:"+number);
-			System.out.println("actions:"+actions);
-		} catch (InterruptedException e) {
+			actions.add(data);
+			System.out.println("received:"+data);
+			System.out.println("après actions:"+actions);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
