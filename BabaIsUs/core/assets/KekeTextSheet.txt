@@ -1,7 +1,7 @@
 KekeTextSheet.png
 size: 64, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 KekeText0
   rotate: false

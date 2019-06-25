@@ -8,12 +8,22 @@ public abstract class Text extends Item {
 
 	public Text(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
+		highlight = "0";
 	}
 
 	protected String label;
-	protected Class refClass;
-
+	private String highlight;
+		
+	public String getSpriteID(int i) {
+		
+		return this.getName()+highlight+"-"+i;
+	}
+	
+	public String getSpriteIDNoH(int i) {
+				
+		return this.getName()+i;
+	}
+	
 	public boolean isOperator() {
 		return false;
 	}
@@ -89,6 +99,9 @@ public abstract class Text extends Item {
 	}
 
 	public void highLight(boolean b) {
-		// TODO Highlight the text by changing the texture by a brighter one if b is true		
+		if (b)
+			highlight = "1";
+		else
+			highlight = "0";
 	};
 }

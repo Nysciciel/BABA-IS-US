@@ -1,7 +1,7 @@
 BackgroundMenu.png
 size: 840, 170
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 BackgroundMenu0
   rotate: false
