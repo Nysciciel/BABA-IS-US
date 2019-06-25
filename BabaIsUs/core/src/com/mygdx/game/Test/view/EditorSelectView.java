@@ -3,6 +3,7 @@ package com.mygdx.game.Test.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -35,7 +36,6 @@ public class EditorSelectView implements Screen{
 		 
 		 table = new VerticalGroup();
 	     table.setFillParent(true);
-	     table.setDebug(true);
 	     
 	     Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 	     
@@ -45,9 +45,7 @@ public class EditorSelectView implements Screen{
 	     
 	     table.center().fill().expand().pad(100, 100, 100, 100).space(20);
 	     textField = new TextField("",skin);
-	     table.addActor(textField);
 	     nouveau = new TextButton("New",skin);
-	     table.addActor(nouveau);
 	     for(FileHandle file : files) {
 	    	 table.addActor(new TextButton(file.name(),skin));
 	     }
@@ -57,20 +55,33 @@ public class EditorSelectView implements Screen{
 	     
 	     Table table1 = new Table();
 	     table1.setFillParent(true);
+	     table1.center().pad(100, 100, 100, 100);
+	     table1.add(textField).expandX().fill();
+	     table1.row();
+	     table1.add(nouveau).expandX().fill();
+	     table1.row();
 	     table1.add(pane).fill().expand();
-	     
 	     stage.addActor(table1);
 	     
+	     
+	     nouveau.addListener(new InputListener() {
+	        	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	        		String nom = event.getTarget().toString();
+	        		nom = nom.split(" ")[nom.split(" ").length-1];
+	        		parent.screenChoice(MainTest.EDITOR,textField.getText());
+
+	        		return true;
+	        	}
+	        	
+	        });
 	     
 	     table.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.split(" ")[nom.split(" ").length-1];
-        		if(nom.equals("New")) {
-        			parent.screenChoice(MainTest.EDITOR,textField.getText());
-        		} else {
-        			parent.screenChoice(MainTest.EDITOR,nom);
-        		}
+
+        		parent.screenChoice(MainTest.EDITOR,nom);
+
         		return true;
         	}
         	
@@ -89,6 +100,9 @@ public class EditorSelectView implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			parent.screenChoice(MainTest.MENU,null);
+		}
 		
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

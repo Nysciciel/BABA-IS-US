@@ -126,7 +126,7 @@ public class EditorView implements Screen {
         table.row().pad(0, 0, 10, 0);
         table.add(objectList).left().expandX();
         table.row().pad(0, 0, 0, 0).right();
-        table.add(editor).expandY().fill();
+        table.add(editor).expand().fill();
 
         table.add(sliderW).fill().width(50);
         table.add(sliderH).fill().width(50);
@@ -175,6 +175,8 @@ public class EditorView implements Screen {
             		    table.add(propertyList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
             		    table.add(editor).expand().colspan(3).fill();
+            		    table.add(sliderW).fill().width(50);
+            	        table.add(sliderH).fill().width(50);
             			break;
             		case RELATION:
             			table.clear();
@@ -183,6 +185,8 @@ public class EditorView implements Screen {
             		    table.add(relationList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
             		    table.add(editor).expand().colspan(3).fill();
+            		    table.add(sliderW).fill().width(50);
+            	        table.add(sliderH).fill().width(50);
             			break;
             		case ITEM_TEXT:
             			table.clear();
@@ -191,6 +195,8 @@ public class EditorView implements Screen {
             		    table.add(item_textList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
             		    table.add(editor).expand().colspan(3).fill();
+            		    table.add(sliderW).fill().width(50);
+            	        table.add(sliderH).fill().width(50);
             			break;
             		case OPERATOR:
             			table.clear();
@@ -199,6 +205,8 @@ public class EditorView implements Screen {
             		    table.add(operatorList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
             		    table.add(editor).expand().colspan(3).fill();
+            		    table.add(sliderW).fill().width(50);
+            	        table.add(sliderH).fill().width(50);
             			break;
             		case OBJECT:
             			table.clear();
@@ -207,6 +215,8 @@ public class EditorView implements Screen {
             		    table.add(objectList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
             		    table.add(editor).expand().colspan(3).fill();
+            		    table.add(sliderW).fill().width(50);
+            	        table.add(sliderH).fill().width(50);
             			break;
         		}
      
@@ -290,9 +300,7 @@ public class EditorView implements Screen {
     @Override
     public void show() {
         // TODO Auto-generated method stub
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU, null);
-        }   
+         
         
         
     }
@@ -300,6 +308,9 @@ public class EditorView implements Screen {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
+    	if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            parent.screenChoice(MainTest.MENU, null);
+        }  
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
