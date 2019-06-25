@@ -1,44 +1,44 @@
-NotSheet.png
+You1Sheet.png
 size: 192, 32
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Not0-0
+You10-0
   rotate: false
   xy: 0, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Not0-1
+You10-1
   rotate: false
   xy: 32, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Not0-2
+You10-2
   rotate: false
   xy: 64, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Not1-0
+You11-0
   rotate: false
   xy: 96, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Not1-1
+You11-1
   rotate: false
   xy: 128, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Not1-2
+You11-2
   rotate: false
   xy: 160, 0
   size: 32, 32
