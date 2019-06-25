@@ -1,7 +1,7 @@
 WallSheetU.png
 size: 1024, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Wall--0
   rotate: false

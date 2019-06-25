@@ -1,7 +1,7 @@
 WaterSheetU.png
 size: 1088, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Water--0
   rotate: false

@@ -1,7 +1,7 @@
 OpenSheet.png
 size: 192, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Open0-0
   rotate: false
