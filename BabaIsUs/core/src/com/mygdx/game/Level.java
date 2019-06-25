@@ -67,7 +67,7 @@ public class Level extends Actor{
 		this.ruleTable = new LogicHashtable();
 
 		try {
-			FileHandle file = Gdx.files.local(filename);
+			FileHandle file = Gdx.files.local("Level/"+filename);
 			Scanner scanner = new Scanner(file.read());
 			ArrayList <String> lines = new ArrayList <String>();
 			String[] taille = scanner.nextLine().split(" ");
@@ -89,8 +89,8 @@ public class Level extends Actor{
 				String[] cell = lines.get(i).split(",");
 				for(int j=0 ; j<cell.length ;j++) {
 					String[] split = cell[j].split(" ");
+					ArrayList<Item> items = new ArrayList<Item>();
 					for(int k=0 ;k<split.length;k++) {
-						ArrayList<Item> items = new ArrayList<Item>();
 						locationMatrix[i][j] = new Location(items, this, j, i);
 						String classname = split[k].substring(0, split[k].length()-1);
 						Class clazz = Class.forName(classname);

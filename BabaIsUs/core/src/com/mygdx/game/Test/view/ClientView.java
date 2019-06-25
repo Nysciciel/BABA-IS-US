@@ -57,13 +57,12 @@ public class ClientView implements Screen,ServerCallBack {
 	public void show() {
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-			parent.screenChoice(MainTest.MENU);
-			try {
-				data.put(99);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			this.client.setConnected(false);
+			parent.screenChoice(MainTest.MENU,null);
+		}
+		try {
+			data.put(lvl.hashCode());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			//lvl.endturn();
@@ -195,7 +194,7 @@ public class ClientView implements Screen,ServerCallBack {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		parent.screenChoice(MainTest.CLIENT);
+		parent.screenChoice(MainTest.CLIENT,null);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

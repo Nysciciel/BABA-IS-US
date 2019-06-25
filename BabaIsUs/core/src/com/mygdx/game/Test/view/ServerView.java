@@ -67,8 +67,8 @@ public class ServerView implements Screen,ServerCallBack {
 	public void show() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			parent.screenChoice(MainTest.MENU);
-			this.thread.setConnection(false);
+			parent.screenChoice(MainTest.MENU,null);
+			this.thread.setClientUp(false);
 			this.thread.shutCO();
 			//this.thread.interrupt();
 		}
@@ -167,7 +167,7 @@ public class ServerView implements Screen,ServerCallBack {
 				}
 				try {
 					if(0<=movePoto && movePoto<=6) {
-						
+
 						data.add(movePoto+20);
 						System.out.println("tosend:" + data);
 					}
@@ -182,7 +182,7 @@ public class ServerView implements Screen,ServerCallBack {
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		parent.screenChoice(MainTest.SERVER);
+		parent.screenChoice(MainTest.SERVER,null);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
@@ -229,10 +229,9 @@ public class ServerView implements Screen,ServerCallBack {
 		try {
 			actions.add(data);
 			System.out.println("received:"+data);
-			System.out.println("après actions:"+actions);
+			System.out.println("aprï¿½s actions:"+actions);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 }
-

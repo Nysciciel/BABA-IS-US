@@ -23,11 +23,14 @@ public class MainTest extends Game {
     private MultiplayerView multiplayerView;
     private LoadingView loading;
     private boolean reloaded;
+    private EditorSelectView editorSelect;
+    private LevelSelectView levelSelect;
    // private EndScreen endScreen;
 
     private ServerThread thread;
     private ConcurrentLinkedQueue data;
     private ServerLevel level;
+
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -37,6 +40,8 @@ public class MainTest extends Game {
     public final static int SERVER = 5;
     public final static int CLIENT = 6;
     public final static int LOADING = 7;
+    public final static int EDITORSELECT = 8;
+    public final static int LEVELSELECT = 9;
     public static String ip_addr = null;
   //  public static ServerThread thread;
  //   public final static int ENDGAME = 3;
@@ -46,14 +51,14 @@ public class MainTest extends Game {
         setScreen(menu);
     }
 
-    public void screenChoice(int screen){
+    public void screenChoice(int screen, String fileName){
         switch(screen){
             case MENU:
                 if(menu == null) menu = new Menu(this);
                 this.setScreen(menu);
                 Stage stage = menu.getStage();
                 Gdx.input.setInputProcessor(stage);
-                if(levelView != null) levelView.setLvl(new Level("Level.txt"));
+                if(levelView != null) levelView.setLvl(new Level("level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 if(!reloaded) {
                     loading = new LoadingView(this) ;
@@ -61,16 +66,16 @@ public class MainTest extends Game {
                 }
                 break;
             case EDITOR:
-                if(editorView == null) editorView = new EditorView(this);
+                editorView = new EditorView(this, fileName);
                 this.setScreen(editorView);
                 Stage stage2 = editorView.getStage();
                 Gdx.input.setInputProcessor(stage2);
                 break;
             case LEVEL:
-                if(levelView == null) levelView = new LevelView(this);
+                levelView = new LevelView(this, fileName);
                 this.setScreen(levelView);
                 Stage stage3 = levelView.getStage();
-                Gdx.input.setInputProcessor(stage3);
+                //Gdx.input.setInputProcessor(stage3);
                 break;
             case MULTIPLAYER:
                 if(multiplayerView == null) multiplayerView = new MultiplayerView(this);
@@ -107,6 +112,21 @@ public class MainTest extends Game {
                 Stage stage8 = loading.getStage();
                 Gdx.input.setInputProcessor(stage8);
                 break;
+            case EDITORSELECT:
+                editorSelect = new EditorSelectView(this);
+                this.setScreen(editorSelect);
+                Stage stage9 = editorSelect.getStage();
+                Gdx.input.setInputProcessor(stage9);
+                break;
+            case LEVELSELECT:
+                levelSelect = new LevelSelectView(this);
+                this.setScreen(levelSelect);
+                Stage stage10 = levelSelect.getStage();
+                Gdx.input.setInputProcessor(stage10);
+                break;
         }
+
+
     }
+
 }
