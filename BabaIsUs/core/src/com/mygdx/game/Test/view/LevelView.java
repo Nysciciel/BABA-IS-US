@@ -81,7 +81,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     @Override
     public void resize(int width, int height) {
         // TODO Auto-generated method stub
-        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

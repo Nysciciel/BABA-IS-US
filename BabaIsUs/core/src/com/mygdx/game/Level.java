@@ -91,6 +91,7 @@ public class Level extends Actor{
 					String[] split = cell[j].split(" ");
 					ArrayList<Item> items = new ArrayList<Item>();
 					for(int k=0 ;k<split.length;k++) {
+						System.out.println(split[k]);
 						locationMatrix[i][j] = new Location(items, this, j, i);
 						String classname = split[k].substring(0, split[k].length()-1);
 						Class clazz = Class.forName(classname);
