@@ -13,6 +13,7 @@ import com.mygdx.game.client_serveur.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ClientView implements Screen,ServerCallBack {
 
@@ -25,6 +26,7 @@ public class ClientView implements Screen,ServerCallBack {
 	private int movePoto;
 	private Table table;
 	private int hash;
+	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
 
 	public ClientView(MainTest mainTest, String ip_addr) {
@@ -41,9 +43,9 @@ public class ClientView implements Screen,ServerCallBack {
 
 		this.lvl = new com.mygdx.game.Level("levelc.txt");
 		Gdx.input.setInputProcessor(stage);
-		
+
 		table.add(lvl).expand().fill();
-		
+
 		stage.addActor(table);
 	}
 
@@ -53,7 +55,7 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU);
 			try {
@@ -79,7 +81,7 @@ public class ClientView implements Screen,ServerCallBack {
 				e.printStackTrace();
 			}
 		}
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 			//lvl.rollback();
 			try {
 				data.put(4);
@@ -87,7 +89,7 @@ public class ClientView implements Screen,ServerCallBack {
 				e.printStackTrace();
 			}
 		}
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			//lvl.moveYou2(2);
 			//lvl.endturn();
 
@@ -98,7 +100,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			//lvl.moveYou2(1);
 			//lvl.endturn();
 
@@ -110,7 +112,7 @@ public class ClientView implements Screen,ServerCallBack {
 
 
 		}
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			//lvl.moveYou2(0);
 			//lvl.endturn();
 
@@ -121,7 +123,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			//lvl.moveYou2(3);
 			//lvl.endturn();
 
@@ -132,59 +134,62 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-        if (movePoto >= 20) {
-            movePoto = movePoto%20;
-            if (movePoto != -1) {
-                switch (movePoto) {
-                    case (4):
-                        lvl.rollback();
-                        break;
-                    case (5):
-                        lvl.endturn();
-                        break;
-                    case (6):
-                        lvl.reset();
-                        break;
-                    case (0):
-                    case (1):
-                    case (2):
-                    case (3):
-                        System.out.println(movePoto);
-                        lvl.moveYou2(movePoto);
-                        lvl.endturn();
-                        break;
-                    default:
-                }
-                movePoto = -1;
-            }
-        }else{
-            if (movePoto >= 10) {
-                movePoto = movePoto%10;
-                if (movePoto != -1) {
-                    switch (movePoto) {
-                        case (4):
-                            lvl.rollback();
-                            break;
-                        case (5):
-                            lvl.endturn();
-                            break;
-                        case (6):
-                            lvl.reset();
-                            break;
-                        case (0):
-                        case (1):
-                        case (2):
-                        case (3):
-                            System.out.println(movePoto);
-                            lvl.moveYou1(movePoto);
-                            lvl.endturn();
-                            break;
-                        default:
-                    }
-                    movePoto = -1;
-                }
-            }
-        }
+		while(actions.peek()!=null) {
+			movePoto = actions.poll();
+			if (movePoto >= 20) {
+				movePoto = movePoto%20;
+				if (movePoto != -1) {
+					switch (movePoto) {
+					case (4):
+						lvl.rollback();
+					break;
+					case (5):
+						lvl.endturn();
+					break;
+					case (6):
+						lvl.reset();
+					break;
+					case (0):
+					case (1):
+					case (2):
+					case (3):
+						System.out.println(movePoto);
+					lvl.moveYou2(movePoto);
+					lvl.endturn();
+					break;
+					default:
+					}
+					movePoto = -1;
+				}
+			}else{
+				if (movePoto >= 10) {
+					movePoto = movePoto%10;
+					if (movePoto != -1) {
+						switch (movePoto) {
+						case (4):
+							lvl.rollback();
+						break;
+						case (5):
+							lvl.endturn();
+						break;
+						case (6):
+							lvl.reset();
+						break;
+						case (0):
+						case (1):
+						case (2):
+						case (3):
+							System.out.println(movePoto);
+						lvl.moveYou1(movePoto);
+						lvl.endturn();
+						break;
+						default:
+						}
+						movePoto = -1;
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -226,6 +231,6 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void dataReceived(int dataS) {
-		movePoto = dataS;
+		actions.add(dataS);
 	}
 }

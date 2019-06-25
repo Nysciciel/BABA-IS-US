@@ -10,6 +10,7 @@ import com.mygdx.game.Test.view.*;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class MainTest extends Game {
 
@@ -21,9 +22,8 @@ public class MainTest extends Game {
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
-   // private EndScreen endScreen;
     private ServerThread thread;
-    private BlockingQueue<Integer> data;
+    private ConcurrentLinkedQueue data;
     private ServerLevel level;
 
     public final static int MENU = 0;

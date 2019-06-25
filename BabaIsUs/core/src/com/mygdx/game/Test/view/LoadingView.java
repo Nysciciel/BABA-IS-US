@@ -21,6 +21,7 @@ import com.mygdx.game.utils.Constants;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class LoadingView implements Screen, ServerCallBack {
 
@@ -30,7 +31,7 @@ public class LoadingView implements Screen, ServerCallBack {
     private Stage stage;
     private Texture background;
 
-    private BlockingQueue<Integer> data;
+    private ConcurrentLinkedQueue data;
     private com.mygdx.game.ServerLevel slvl;
     private ServerThread thread;
 
@@ -49,7 +50,7 @@ public class LoadingView implements Screen, ServerCallBack {
         this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
 
-        this.data = new ArrayBlockingQueue<Integer>(32);
+        this.data = new ConcurrentLinkedQueue();
         this.thread = new ServerThread(data,this);
         this.IP = " ";
 
@@ -71,7 +72,7 @@ public class LoadingView implements Screen, ServerCallBack {
         return this.slvl;
     }
 
-    public BlockingQueue<Integer> getData(){
+    public ConcurrentLinkedQueue getData(){
         return this.data;
     }
 

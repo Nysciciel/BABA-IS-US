@@ -10,17 +10,18 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server{
 
-	BlockingQueue<Integer> data;
+	ConcurrentLinkedQueue data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
 	private String ip;
 	//private Level lvl;
 	private ServerSocket serveurSocket  ;
 
-	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
+	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack) {
 
 		this.data = bq;
 		//this.lvl = level;
@@ -82,15 +83,15 @@ public class Server{
 				public void run() {
 					while(connected){
 						try {
-							msg = data.take();
+							if(data.peek()==null) {
+								continue;
+							}
+							msg = (int)data.poll();
 							System.out.println("sent;"+msg);
 							System.out.println("");
 							out.write(msg);
 							out.flush();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
