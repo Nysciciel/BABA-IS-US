@@ -145,7 +145,7 @@ public class EditorView implements Screen {
         mainList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
         		if(nom.equals("clear")) {
         			selectedItem = ObjectList.EMPTY;
         		} else if(nom.equals("reset")) {
