@@ -169,7 +169,7 @@ public class EditorView implements Screen {
         			switch(ItemTypeList.valueOf(nom)) {
             		case PROPERTY:
             			table.clear();
-            			table.add(mainList).left().expandX().fill();
+            			table.add(mainList).left().expandX().fill().colspan(2);
             		    table.row().pad(0, 0, 10, 0);
             		    table.add(propertyList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
@@ -179,7 +179,7 @@ public class EditorView implements Screen {
             			break;
             		case RELATION:
             			table.clear();
-            			table.add(mainList).left().expandX().fill();
+            			table.add(mainList).left().expandX().fill().colspan(2);
             		    table.row().pad(0, 0, 10, 0);
             		    table.add(relationList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
@@ -189,7 +189,7 @@ public class EditorView implements Screen {
             			break;
             		case ITEM_TEXT:
             			table.clear();
-            			table.add(mainList).left().expandX().fill();
+            			table.add(mainList).left().expandX().fill().colspan(2);
             		    table.row().pad(0, 0, 10, 0);
             		    table.add(item_textList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
@@ -199,7 +199,7 @@ public class EditorView implements Screen {
             			break;
             		case OPERATOR:
             			table.clear();
-            			table.add(mainList).left().expandX().fill();
+            			table.add(mainList).left().expandX().fill().colspan(2);
             		    table.row().pad(0, 0, 10, 0);
             		    table.add(operatorList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
@@ -209,7 +209,7 @@ public class EditorView implements Screen {
             			break;
             		case OBJECT:
             			table.clear();
-            			table.add(mainList).left().expandX().fill();
+            			table.add(mainList).left().expandX().fill().colspan(2);
             		    table.row().pad(0, 0, 10, 0);
             		    table.add(objectList).left().expandX();
             		    table.row().pad(0, 0, 0, 0);
