@@ -273,13 +273,14 @@ public abstract class Item {
 		//System.out.println(this.getName());
 		//System.out.println(spriteChoosing);
 		Object[] spriteChosen = spriteChoosing.toArray();
-		// C'est en réalité une TextureRegion[]
+		// C'est en rï¿½alitï¿½ une TextureRegion[]
 		
 		animation = new Animation(1/3f, spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
+		float a = 0.028f;
+		sb.draw(test,getAffichePos()[0]*cellSize-cellSize*a/2,getAffichePos()[1]*cellSize-cellSize*a/2,cellSize*(1+a),cellSize*(1+a));
 	}
 
 	public String[] getSpriteUsed(){
