@@ -24,17 +24,19 @@ public class ClientView implements Screen,ServerCallBack {
 	private BlockingQueue<Integer> data;
 	private int movePoto;
 	private Table table;
+	private int hash;
 
 
 	public ClientView(MainTest mainTest, String ip_addr) {
 
 		this.movePoto = -1;
+		this.hash = 0;
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
 		table = new Table();
 		table.setFillParent(true);
 
-		data = new ArrayBlockingQueue<Integer>(1);
+		data = new ArrayBlockingQueue<Integer>(32);
 		client = new Client(data,this,ip_addr);
 
 		this.lvl = new com.mygdx.game.Level("levelc.txt");
@@ -54,6 +56,11 @@ public class ClientView implements Screen,ServerCallBack {
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU);
+		}
+		try {
+			data.put(lvl.hashCode());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			lvl.endturn();
@@ -186,7 +193,13 @@ public class ClientView implements Screen,ServerCallBack {
 	}
 
 	@Override
-	public void dataReceived(int data) {
-		movePoto = data;
+	public void dataReceived(int data)
+	{
+		if(data > 6){
+			hash = data;
+		}else{
+			movePoto = data;
+		}
+
 	}
 }

@@ -20,6 +20,7 @@ import com.mygdx.game.utils.MyTextInputListener;
 import com.mygdx.game.utils.ObjectList;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -45,36 +46,20 @@ public class DrawEditor extends Actor{
     	float ratioHeight = this.getHeight()/height;
     	float size = Math.min(ratioWidth, ratioHeight);
     	Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
-    	switch(object) {
-    	case BABA:		
-    		loc.add(new Baba(loc, direction));
-    		break;
-    	case ROCK:
-    		loc.add(new Rock(loc, direction));
-    		break;
-    	case WATER:
-    		loc.add(new Water(loc,direction));
-    		break;
-    	case WALL:
-    		loc.add(new Wall(loc,direction));
-    		break;
-    	case EMPTY:
+    	
+    	if(object == ObjectList.EMPTY) {
     		loc.getItems().clear();
-    		loc.add(new Empty(loc,direction));
-    		break;
-    	case SKULL:
-    		loc.add(new Skull(loc,direction));
-    		break;
-    	case KEKE:
-    		loc.add(new Keke(loc,direction));
-    		break;
-    	case ROCKTEXT:
-    		loc.add(new RockText(loc,direction));
-    		break;
-    	case BABATEXT:
-    		loc.add(new BabaText(loc,direction));
-    		break;
+    	} else {
+    		try {
+    			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
+    		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+    				| NoSuchMethodException | SecurityException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
     	}
+    	
+ 
     }
     
     
@@ -100,7 +85,7 @@ public class DrawEditor extends Actor{
     	float ratioHeight = this.getHeight()/height;
     	float size = Math.min(ratioWidth, ratioHeight);
     	shapeRenderer.begin(ShapeType.Line);
-    	shapeRenderer.setColor(1, 1, 1, 1);
+    	shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1);
         for(int i=0 ; i<= height ; i++) {
         	shapeRenderer.line(0, i*size, size*width, i*size);
         }
