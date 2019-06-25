@@ -30,6 +30,8 @@ public class ServerView implements Screen,ServerCallBack {
 	private Texture background;
 	private int movePoto;
 	private Table table;
+	private int shash;
+	private int chash;
 
 	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
 
@@ -40,6 +42,8 @@ public class ServerView implements Screen,ServerCallBack {
 		
 		//data = new ArrayBlockingQueue<Integer>(1);
 		this.data = data;
+		this.shash = 0;
+		this.chash = 0;
 		this.movePoto = -1;
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
@@ -60,14 +64,30 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
+		shash = slvl.hashCode();
+		System.out.println(shash + " " + chash);
+		if(shash != chash){
+			System.out.println("c'est la merde");
+		}else{
+			System.out.println("on est good");
+		}
+
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			parent.screenChoice(MainTest.MENU);
 			this.thread.setClientUp(false);
-			this.thread.interrupt();
+			this.thread.shutCO();
+			//this.thread.interrupt();
 		}
 		if(enabled) {
+			try {
+				data.put(slvl.hashCode());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
+				System.out.println(slvl.getLocationMatrix().hashCode());
 				try {
 					data.put(15);
 				} catch (InterruptedException e) {
@@ -212,7 +232,14 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void dataReceived(int data) {
-		movePoto = data;
+		System.out.println("data : "+data);
+		if(data > 6){
+
+			chash = data;
+		}else{
+			movePoto = data;
+		}
+
 	}
 }
 

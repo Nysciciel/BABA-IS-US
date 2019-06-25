@@ -46,13 +46,19 @@ public class DrawEditor extends Actor{
     	float ratioHeight = this.getHeight()/height;
     	float size = Math.min(ratioWidth, ratioHeight);
     	Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
-    	try {
-			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	
+    	if(object == ObjectList.EMPTY) {
+    		loc.getItems().clear();
+    	} else {
+    		try {
+    			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
+    		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+    				| NoSuchMethodException | SecurityException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
  
     }
     

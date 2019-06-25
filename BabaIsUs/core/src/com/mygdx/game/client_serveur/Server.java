@@ -18,6 +18,7 @@ public class Server{
 	private boolean connected;
 	private String ip;
 	//private Level lvl;
+	private ServerSocket serveurSocket  ;
 
 	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
 
@@ -28,7 +29,7 @@ public class Server{
 
 		FileInputStream fis = null;
 		BufferedInputStream bis = null;
-		final ServerSocket serveurSocket  ;
+
 		final Socket clientSocket ;
 		final InputStream in;
 		final OutputStream out;
@@ -118,6 +119,12 @@ public class Server{
 			recevoir.start();
 		}catch (IOException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				serveurSocket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -129,6 +136,10 @@ public class Server{
 
 	public void setServerCallBack(ServerCallBack cb){
 		callBackFunction = cb;
+	}
+
+	public ServerSocket getSocket(){
+		return serveurSocket;
 	}
 
 
