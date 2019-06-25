@@ -130,6 +130,5 @@ public class LevelView implements Screen,ServerCallBack {
 
     @Override
     public void dataReceived(int data) {
-        System.out.println(data);
     }
 }

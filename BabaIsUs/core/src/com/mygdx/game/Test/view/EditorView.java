@@ -123,7 +123,6 @@ public class EditorView implements Screen {
         
         editor.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-        		System.out.println(selectedItem);
         		editor.setItem(selectedItem, (int) (x), (int)(y), selectedOrientation );
         		return true;
         	}
@@ -138,7 +137,6 @@ public class EditorView implements Screen {
          
             selectedOrientation = (selectedOrientation + amount)%4;
             if(selectedOrientation<0) selectedOrientation += 4;
-            System.out.println(selectedOrientation);
             return true;
         }
         	
@@ -148,7 +146,6 @@ public class EditorView implements Screen {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
         		nom = nom.substring(nom.indexOf(" ")+1);
-        		System.out.println(nom);
         		if(nom.equals("clear")) {
         			selectedItem = ObjectList.EMPTY;
         		} else if(nom.equals("reset")) {

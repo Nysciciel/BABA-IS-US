@@ -111,7 +111,6 @@ public class MultiplayerView implements Screen {
         }
 
         protected void result(Object object){
-            System.out.println("Chosen: " + object);
         }
     }
 
