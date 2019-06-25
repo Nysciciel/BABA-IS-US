@@ -106,7 +106,6 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage7);
                 break;
             case LOADING:
-                System.out.println("je suis en loading");
                 reloaded = false;
                 if(loading == null) loading = new LoadingView(this);
                 this.setScreen(loading);
