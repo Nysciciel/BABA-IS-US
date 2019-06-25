@@ -10,6 +10,7 @@ public class BabaText extends ItemRef {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
 		spriteUsed[0]="BabaText0";

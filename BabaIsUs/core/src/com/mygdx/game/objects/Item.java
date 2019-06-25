@@ -9,6 +9,8 @@ import com.mygdx.game.rule.LogicHashtable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Stack;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -234,7 +236,7 @@ public abstract class Item {
 	 */
 	public void loadTextureAtlas(){
 		try{
-			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName()+ "Sheet.txt"));
+			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getName()+ "Sheet.txt"));
 		}catch(Exception e){
 			textureAtlas = new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"));
 		}
@@ -246,11 +248,33 @@ public abstract class Item {
 	 */
 	public void render(Batch sb, float cellSize){
 		String[] spriteUsed = getSpriteUsed();
-		int length = spriteUsed.length;
-		TextureRegion[] spriteChosen = new TextureRegion[length];
+		
+		int length = spriteUsed.length;		
+		
+		Stack<TextureRegion> spriteChoosing = new Stack<TextureRegion>();
+		
 		for(int i=0;i<length;i++) {
-			spriteChosen[i] = textureAtlas.findRegion(spriteUsed[i]);
+			spriteChoosing.push(textureAtlas.findRegion(spriteUsed[i]));
+			System.out.println(spriteUsed[i]);
+			if (spriteChoosing.peek() == null) {
+				spriteChoosing.pop();
+				if (i == 0) {
+					try {
+						spriteChoosing.push(textureAtlas.findRegion("Error0"));
+					}
+					catch(Exception e){
+						spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
+						e.printStackTrace();
+					}
+				}
+				break;
+			}
 		}
+		//System.out.println(this.getName());
+		//System.out.println(spriteChoosing);
+		Object[] spriteChosen = spriteChoosing.toArray();
+		// C'est en réalité une TextureRegion[]
+		
 		animation = new Animation(1/3f, spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();

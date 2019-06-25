@@ -8,11 +8,18 @@ public abstract class Text extends Item {
 
 	public Text(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
 	}
 
 	protected String label;
-	protected Class refClass;
+
+	
+	public String[] getSpriteUsed(){
+		String[] spriteUsed = new String[3];
+		spriteUsed[0]=this.getName()+"0-0";
+		spriteUsed[1]=this.getName()+"0-1";
+		spriteUsed[2]=this.getName()+"0-2";
+		return(spriteUsed);
+	}
 
 	public boolean isOperator() {
 		return false;
