@@ -39,6 +39,7 @@ public class Level extends Actor{
 	private RuleSet rules;
 	private LogicHashtable ruleTable;
 	private ArrayList<Class> props;
+	private int hash;
 
 	private ArrayList<Location[][]> history;
 
@@ -47,7 +48,8 @@ public class Level extends Actor{
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
-
+		this.hash = 0;
+		
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
@@ -383,4 +385,19 @@ public class Level extends Actor{
     	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
 
     }
+
+    @Override
+	public int hashCode(){
+		hash =0;
+		//System.out.println(locationMatrix[0][0].getItems().get(0).getClass().getSimpleName());
+		//System.out.println(locationMatrix[0][1].getItems().get(0).getClass().getSimpleName());
+		for (int x = 0; x<length;x++) {
+			for (int y = 0; y<height;y++) {
+				for (Item i: locationMatrix[y][x].getItems()){
+					hash = hash +((int) i.toString().charAt(0)*(x+1)*2*(i.getOrientation()+6) + (int) i.toString().charAt(0)*(y+1)*3*(i.getOrientation()+6) );
+				}
+			}
+		}
+		return hash;
+	}
 }

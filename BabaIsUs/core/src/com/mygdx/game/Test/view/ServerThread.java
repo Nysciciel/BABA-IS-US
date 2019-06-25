@@ -51,4 +51,12 @@ public class ServerThread extends Thread{
 	public String getServerIp(){
 		return this.serverIp;
 	}
+
+	public void shutCO(){
+		try {
+			server.getSocket().close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 }
