@@ -31,6 +31,7 @@ public class MainTest extends Game {
     private ConcurrentLinkedQueue data;
     private ServerLevel level;
 
+    private float elapsedTime;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -127,6 +128,14 @@ public class MainTest extends Game {
         }
 
 
+    }
+
+    public void setElapsedTime(float t){
+        elapsedTime = t ;
+    }
+
+    public float getElapsedTime(){
+        return(elapsedTime);
     }
 
 }
