@@ -35,14 +35,14 @@ public class Settings implements Screen {
     public void show() {
         // TODO Auto-generated method stub
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU,null);
         }
     }
 
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.SETTINGS);
+        parent.screenChoice(MainTest.SETTINGS,null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

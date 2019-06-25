@@ -12,10 +12,10 @@ import com.mygdx.game.Level;
 import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ServerView implements Screen,ServerCallBack {
 
@@ -26,20 +26,21 @@ public class ServerView implements Screen,ServerCallBack {
 	private Server server;
 	private ServerThread thread;
 	private boolean enabled;
-	private BlockingQueue<Integer> data;
+	private ConcurrentLinkedQueue data;
 	private Texture background;
 	private int movePoto;
 	private Table table;
 	private int shash;
 	private int chash;
+	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
-	public ServerView(MainTest mainTest, ServerThread thread, BlockingQueue<Integer> data) {
+	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
 		table = new Table();
 		table.setFillParent(true);
-		
+
 		//data = new ArrayBlockingQueue<Integer>(1);
 		this.data = data;
 		this.shash = 0;
@@ -52,9 +53,9 @@ public class ServerView implements Screen,ServerCallBack {
 		this.thread = thread;
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);
-		
+
 		table.add(slvl).expand().fill();
-		
+
 		stage.addActor(table);
 	}
 
@@ -64,129 +65,127 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		shash = slvl.hashCode();
-		System.out.println(shash + " " + chash);
-		if(shash != chash){
-			System.out.println("c'est la merde");
-		}else{
-			System.out.println("on est good");
-		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			parent.screenChoice(MainTest.MENU);
-			this.thread.setClientUp(false);
+			parent.screenChoice(MainTest.MENU,null);
+			//this.thread.setClientUp(false);
 			this.thread.shutCO();
 			//this.thread.interrupt();
 		}
 		if(enabled) {
-			try {
-				data.put(slvl.hashCode());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
-				System.out.println(slvl.getLocationMatrix().hashCode());
 				try {
-					data.put(5);
-				} catch (InterruptedException e) {
+					data.add(15);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
 				slvl.reset();
 				try {
-					data.put(6);
-				} catch (InterruptedException e) {
+					data.add(16);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				slvl.rollback();
 				try {
-					data.put(4);
-				} catch (InterruptedException e) {
+					data.add(14);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 				slvl.moveYou1(2);
 				slvl.endturn();
 
 				try {
-					data.put(2);
-				} catch (InterruptedException e) {
+					data.add(12);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 				slvl.moveYou1(1);
 				slvl.endturn();
 
 				try {
-					data.put(1);
-				} catch (InterruptedException e) {
+					data.add(11);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
 
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 				slvl.moveYou1(0);
 				slvl.endturn();
 
 				try {
-					data.put(0);
-				} catch (InterruptedException e) {
+					data.add(10);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+			else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 				slvl.moveYou1(3);
 				slvl.endturn();
 
 				try {
-					data.put(3);
-				} catch (InterruptedException e) {
+					data.add(13);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 
 			}
-			if(movePoto != -1) {
+			while(actions.peek()!=null) {
+
+				movePoto = (int)actions.poll();
+				System.out.println("value taken from actions:"+movePoto);
 				switch(movePoto) {
 				case(4):
 					slvl.rollback();
-					break;
+				break;
 				case(5):
 					slvl.endturn();
-					break;
+				break;
 				case(6):
 					slvl.reset();
-					break;
+				break;
 				case(0):
 				case(1):
 				case(2):
 				case(3):
 					slvl.moveYou2(movePoto);
-					slvl.endturn();
-					break;
+				slvl.endturn();
+				break;
 				default:
 				}
-				movePoto = -1;
+				try {
+					if(0<=movePoto && movePoto<=6) {
+
+						data.add(movePoto+20);
+						System.out.println("tosend:" + data);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
+
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		parent.screenChoice(MainTest.SERVER);
+		parent.screenChoice(MainTest.SERVER,null);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
             enabled =true;
@@ -224,17 +223,15 @@ public class ServerView implements Screen,ServerCallBack {
 		stage.dispose();
 		this.background.dispose();
 	}
-
 	@Override
 	public void dataReceived(int data) {
-		System.out.println("data : "+data);
-		if(data > 6){
-
-			chash = data;
-		}else{
-			movePoto = data;
+		System.out.println("avant actions:"+actions);
+		try {
+			actions.add(data);
+			System.out.println("received:"+data);
+			System.out.println("apr�s actions:"+actions);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 	}
 }
-

@@ -15,12 +15,14 @@ public class Client {
 	ServerCallBack callBackFunction;
 
 	public final static int FILE_SIZE = 6022386;
+	private boolean connected;
 
 	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack, String ip_addr) {
 
 		final Socket clientSocket;
 		final InputStream in;
 		final OutputStream out;
+		this.connected = true;
 
 		int bytesRead;
 		int current = 0;
@@ -36,15 +38,15 @@ public class Client {
 
 			dis = new DataInputStream(clientSocket.getInputStream());
 			fos = new FileOutputStream("levelc.txt");
-			int filesize;
+			int filesize = 0;
 			byte[] buffer = new byte[4096];
 			byte[] b = new byte[1];
 			String hex = new String();
 			try {
-				while(true) {
+				while(connected) {
 					dis.read(b);
 					String buf = new String(b);
-					System.out.println(buf);
+					//System.out.println(buf);
 					hex = hex.concat(buf);
 					System.out.println(hex);
 					System.out.println("");
@@ -79,7 +81,7 @@ public class Client {
 				int msg;
 				@Override
 				public void run() {
-					while(true){
+					while(connected){
 						try {
 							msg = data.take();
 							out.write(msg);
@@ -89,7 +91,12 @@ public class Client {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						};
+						}
+					}
+					try {
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
 			});
@@ -102,10 +109,16 @@ public class Client {
 					byte[] b = new byte[1];
 
 					try {
-						while(true) {
+						while(connected) {
 							in.read(b);
+							System.out.println("valeur passée " + b[0]);
 							callBackFunction.dataReceived(b[0]);
+							if(b[0] == 99){
+								System.out.println("connection fermée par le serveur");
+								connected = false;
+							}
 						}
+						in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -115,6 +128,13 @@ public class Client {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public boolean isConnected(){
+		return connected;
+	}
+
+	public void setConnected(boolean status){
+		connected = status;
 	}
 
 }

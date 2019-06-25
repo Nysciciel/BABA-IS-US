@@ -20,9 +20,8 @@ import com.mygdx.game.rule.RuleSet;
 
 public class FileManager {
 	
-	public static boolean SaveLevel(Level level) {
-		
-		FileHandle file  = Gdx.files.local("level.txt");
+	public static boolean SaveLevel(Level level, String fileName) {
+		FileHandle file  = Gdx.files.local(fileName);
 		
 		Location loc = null;
 		String chaine = "";

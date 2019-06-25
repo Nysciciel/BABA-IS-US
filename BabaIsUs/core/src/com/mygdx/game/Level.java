@@ -8,7 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.objects.*;
-
+import com.mygdx.game.objects.text.ItemRef;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.item_ref.WallText;
@@ -49,7 +49,7 @@ public class Level extends Actor{
 		this.length = length;
 		this.rules = new RuleSet();
 		this.hash = 0;
-		
+
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
 			for(int j = 0 ; j < length ; j++) {
@@ -64,12 +64,10 @@ public class Level extends Actor{
 
 		props = new ArrayList<Class>();
 
-		props.add(Empty.class);
-		props.add(Baba.class);props.add(Keke.class);props.add(Rock.class);props.add(Wall.class);props.add(Water.class);props.add(Water.class);props.add(Skull.class);
 		this.ruleTable = new LogicHashtable();
 
 		try {
-			FileHandle file = Gdx.files.local(filename);
+			FileHandle file = Gdx.files.local("Level/"+filename);
 			Scanner scanner = new Scanner(file.read());
 			ArrayList <String> lines = new ArrayList <String>();
 			String[] taille = scanner.nextLine().split(" ");
@@ -83,9 +81,7 @@ public class Level extends Actor{
 
 			history = new ArrayList<Location[][]>();
 			this.rules = new RuleSet();
-			//System.out.println(length);
-			//System.out.println(height);
-
+			
 
 			locationMatrix = new Location[height][length];
 
@@ -93,16 +89,33 @@ public class Level extends Actor{
 				String[] cell = lines.get(i).split(",");
 				for(int j=0 ; j<cell.length ;j++) {
 					String[] split = cell[j].split(" ");
+					ArrayList<Item> items = new ArrayList<Item>();
 					for(int k=0 ;k<split.length;k++) {
-						ArrayList<Item> items = new ArrayList<Item>();
 						locationMatrix[i][j] = new Location(items, this, j, i);
-						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
-
+						String classname = split[k].substring(0, split[k].length()-1);
+						Class clazz = Class.forName(classname);
+						locationMatrix[i][j].add((Item) clazz.getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
+						
+						
+						if(classname.contains("text")) {
+							if (classname.contains("item_ref")) {
+								String desired_name = "com.mygdx.game.objects"+classname.substring(classname.lastIndexOf('.'),classname.length()-4);
+								Class desired_object = Class.forName(desired_name);
+								if (!props.contains(desired_object)) {
+									props.add(desired_object);
+								}
+							}
+						}
+						else
+						{
+							if (!props.contains(clazz) && (clazz != Class.forName("com.mygdx.game.objects.Empty"))) {
+								props.add(clazz);
+							}
+						}
 					}
 				}
 			}
-
-
+			
 
 			history.add(this.matrixCopy());
 
@@ -177,11 +190,8 @@ public class Level extends Actor{
 
 	public void interpretRules() {
 
-		//System.out.println("################################## __Construction__    ################################################");
 		ruleTable = new LogicHashtable(rules, props);
-		//System.out.println("##################################  __RuleTable__    ################################################");
-		System.out.println(ruleTable);
-		//System.out.println(locationMatrix[2][0].getItems().get(0).getRuleTable());
+		//System.out.println(ruleTable);
 
 	}
 
@@ -380,17 +390,15 @@ public class Level extends Actor{
 	}
 
 	@Override
-    public void draw(Batch batch, float parentAlpha) {
-    	super.draw(batch,parentAlpha);
-    	this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch,parentAlpha);
+		this.render(batch,Math.min(this.getWidth()/length, this.getHeight()/height));
 
-    }
+	}
 
-    @Override
+	@Override
 	public int hashCode(){
 		hash =0;
-		//System.out.println(locationMatrix[0][0].getItems().get(0).getClass().getSimpleName());
-		//System.out.println(locationMatrix[0][1].getItems().get(0).getClass().getSimpleName());
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				for (Item i: locationMatrix[y][x].getItems()){

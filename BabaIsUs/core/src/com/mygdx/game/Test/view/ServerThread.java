@@ -5,16 +5,17 @@ import com.mygdx.game.client_serveur.Server;
 import com.mygdx.game.client_serveur.ServerCallBack;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ServerThread extends Thread{
-	private BlockingQueue<Integer> bq;
+	private ConcurrentLinkedQueue bq;
 	ServerCallBack callBack;
 	//Level level;
 	private boolean clientUp;
 	private Server server;
 	private String serverIp;
 
-	public ServerThread(BlockingQueue<Integer> bq, ServerCallBack callBack){
+	public ServerThread(ConcurrentLinkedQueue bq, ServerCallBack callBack){
 		super();
 		this.server = null;
 		this.serverIp = null;
@@ -34,14 +35,16 @@ public class ServerThread extends Thread{
 	}
 
 	public boolean checkClient(){
-		if( server != null) {
+		if( server != null && server.isConnected()) {
 			this.clientUp = true;
+		}else{
+			this.clientUp = false;
 		}
 		return clientUp;
 	}
 
-	public void setClientUp(boolean state){
-		this.clientUp = state;
+	public void setConnection(boolean state){
+		this.server.setConnected(state);
 	}
 
 	public Server getServer(){

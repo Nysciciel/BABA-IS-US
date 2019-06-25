@@ -27,18 +27,33 @@ import java.util.Scanner;
 public class DrawEditor extends Actor{
 	
 	private int height, width;
-	Level lvl;
-	ShapeRenderer shapeRenderer;
+	private Level lvl;
+	private ShapeRenderer shapeRenderer;
+	private String file;
 	
-    public DrawEditor(int width, int height) {
+    public DrawEditor(int width, int height, String file) {
     	
         super();
         this.width = width;
         this.height = height;
-        
+        this.file = file;
+        if(Gdx.files.internal("Level/"+file).exists()) {
+        	lvl = new Level(file);
+        } else {
+        	lvl = new Level(width,height);
+        }
         shapeRenderer = new ShapeRenderer();
-        lvl = new Level(width,height);
-                
+        
+    }
+    
+    public void setLarg(int W) {
+    	this.width = W;
+    	clear();
+    }
+    
+    public void setHaut(int H) {
+    	this.height = H;
+    	clear();
     }
     
     public void setItem(ObjectList object, int x, int y, int direction) {
@@ -64,25 +79,28 @@ public class DrawEditor extends Actor{
     
     @Override
     public void draw(Batch batch, float parentAlpha) {
-    	super.draw(batch,parentAlpha);
+    	//super.draw(batch,parentAlpha);
+    	
+    	drawRepere(batch);
     	
     	for(int i=0 ; i < height ; i++) {
         	for(int j=0 ; j < width ; j++) {
         		lvl.render(batch,(int) Math.min(this.getWidth()/width, this.getHeight()/height));
             }
         }
-    	drawRepere(batch);
+    	
     	
     }
     
     public void clear() {
-    	lvl = new Level(10,10);
+    	lvl = new Level(this.width,this.height);
     }
     
     public void drawRepere(Batch batch) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
     	float size = Math.min(ratioWidth, ratioHeight);
+    	batch.end();
     	shapeRenderer.begin(ShapeType.Line);
     	shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1);
         for(int i=0 ; i<= height ; i++) {
@@ -92,6 +110,7 @@ public class DrawEditor extends Actor{
         	shapeRenderer.line(i*size, 0 , i*size, size*height);
         }
         shapeRenderer.end();
+        batch.begin();
     }
     
     public Level getLevel() {

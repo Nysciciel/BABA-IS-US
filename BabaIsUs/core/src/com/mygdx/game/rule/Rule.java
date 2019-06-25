@@ -55,7 +55,7 @@ public class Rule {
 	}
 	
 	public void show() {
-		System.out.println(toString());
+		//System.out.println(toString());
 	}
 	
 	public LinkedList<Text> getTextList() {

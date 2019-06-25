@@ -13,6 +13,7 @@ import com.mygdx.game.client_serveur.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ClientView implements Screen,ServerCallBack {
 
@@ -25,6 +26,7 @@ public class ClientView implements Screen,ServerCallBack {
 	private int movePoto;
 	private Table table;
 	private int hash;
+	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
 
 	public ClientView(MainTest mainTest, String ip_addr) {
@@ -41,9 +43,9 @@ public class ClientView implements Screen,ServerCallBack {
 
 		this.lvl = new com.mygdx.game.Level("levelc.txt");
 		Gdx.input.setInputProcessor(stage);
-		
+
 		table.add(lvl).expand().fill();
-		
+
 		stage.addActor(table);
 	}
 
@@ -53,9 +55,9 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-			parent.screenChoice(MainTest.MENU);
+			parent.screenChoice(MainTest.MENU,null);
 		}
 		try {
 			data.put(lvl.hashCode());
@@ -63,32 +65,32 @@ public class ClientView implements Screen,ServerCallBack {
 			e.printStackTrace();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			lvl.endturn();
+			//lvl.endturn();
 			try {
 				data.put(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-			lvl.reset();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+			//lvl.reset();
 			try {
 				data.put(6);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
-			lvl.rollback();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+			//lvl.rollback();
 			try {
 				data.put(4);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-			lvl.moveYou2(2);
-			lvl.endturn();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			//lvl.moveYou2(2);
+			//lvl.endturn();
 
 			try {
 				data.put(2);
@@ -97,9 +99,9 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			lvl.moveYou2(1);
-			lvl.endturn();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			//lvl.moveYou2(1);
+			//lvl.endturn();
 
 			try {
 				data.put(1);
@@ -109,9 +111,9 @@ public class ClientView implements Screen,ServerCallBack {
 
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-			lvl.moveYou2(0);
-			lvl.endturn();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			//lvl.moveYou2(0);
+			//lvl.endturn();
 
 			try {
 				data.put(0);
@@ -120,9 +122,9 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-			lvl.moveYou2(3);
-			lvl.endturn();
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+			//lvl.moveYou2(3);
+			//lvl.endturn();
 
 			try {
 				data.put(3);
@@ -131,34 +133,68 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if(movePoto != -1) {
-			switch(movePoto) {
-			case(4):
-				lvl.rollback();
-				break;
-			case(5):
-				lvl.endturn();
-				break;
-			case(6):
-				lvl.reset();
-				break;
-			case(0):
-			case(1):
-			case(2):
-			case(3):
-				lvl.moveYou1(movePoto);
-				lvl.endturn();
-				break;
-			default:
+		while(actions.peek()!=null) {
+			movePoto = actions.poll();
+			if (movePoto >= 20) {
+				movePoto = movePoto%20;
+				if (movePoto != -1) {
+					switch (movePoto) {
+					case (4):
+						lvl.rollback();
+					break;
+					case (5):
+						lvl.endturn();
+					break;
+					case (6):
+						lvl.reset();
+					break;
+					case (0):
+					case (1):
+					case (2):
+					case (3):
+						System.out.println(movePoto);
+					lvl.moveYou2(movePoto);
+					lvl.endturn();
+					break;
+					default:
+					}
+					movePoto = -1;
+				}
+			}else{
+				if (movePoto >= 10) {
+					movePoto = movePoto%10;
+					if (movePoto != -1) {
+						switch (movePoto) {
+						case (4):
+							lvl.rollback();
+						break;
+						case (5):
+							lvl.endturn();
+						break;
+						case (6):
+							lvl.reset();
+						break;
+						case (0):
+						case (1):
+						case (2):
+						case (3):
+							System.out.println(movePoto);
+						lvl.moveYou1(movePoto);
+						lvl.endturn();
+						break;
+						default:
+						}
+						movePoto = -1;
+					}
+				}
 			}
-			movePoto = -1;
 		}
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		parent.screenChoice(MainTest.CLIENT);
+		parent.screenChoice(MainTest.CLIENT,null);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -193,13 +229,7 @@ public class ClientView implements Screen,ServerCallBack {
 	}
 
 	@Override
-	public void dataReceived(int data)
-	{
-		if(data > 6){
-			hash = data;
-		}else{
-			movePoto = data;
-		}
-
+	public void dataReceived(int dataS) {
+		actions.add(dataS);
 	}
 }

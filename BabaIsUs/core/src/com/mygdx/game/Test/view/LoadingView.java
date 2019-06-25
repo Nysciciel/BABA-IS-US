@@ -21,6 +21,7 @@ import com.mygdx.game.utils.Constants;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class LoadingView implements Screen, ServerCallBack {
 
@@ -30,7 +31,7 @@ public class LoadingView implements Screen, ServerCallBack {
     private Stage stage;
     private Texture background;
 
-    private BlockingQueue<Integer> data;
+    private ConcurrentLinkedQueue data;
     private com.mygdx.game.ServerLevel slvl;
     private ServerThread thread;
 
@@ -49,7 +50,7 @@ public class LoadingView implements Screen, ServerCallBack {
         this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
 
-        this.data = new ArrayBlockingQueue<Integer>(32);
+        this.data = new ConcurrentLinkedQueue();
         this.thread = new ServerThread(data,this);
         this.IP = " ";
 
@@ -71,13 +72,14 @@ public class LoadingView implements Screen, ServerCallBack {
         return this.slvl;
     }
 
-    public BlockingQueue<Integer> getData(){
+    public ConcurrentLinkedQueue getData(){
         return this.data;
     }
 
     public ServerThread getThread(){
         return thread;
     }
+
 
     @Override
     public void show() {
@@ -100,12 +102,12 @@ public class LoadingView implements Screen, ServerCallBack {
             table.setVisible(true);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU,null);
             this.thread.interrupt();
         }
 
         if(this.thread.checkClient()){
-            parent.screenChoice((MainTest.SERVER));
+            parent.screenChoice(MainTest.SERVER,null);
         }
 
 
@@ -114,7 +116,7 @@ public class LoadingView implements Screen, ServerCallBack {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.LOADING);
+        parent.screenChoice(MainTest.LOADING,null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

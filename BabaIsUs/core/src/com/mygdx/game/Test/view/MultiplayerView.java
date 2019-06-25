@@ -65,13 +65,13 @@ public class MultiplayerView implements Screen {
         table.add(okBut);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU,null);
         }
 
         host.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.LOADING);
+                parent.screenChoice(MainTest.LOADING,null);
             }
         });
 
@@ -84,12 +84,16 @@ public class MultiplayerView implements Screen {
             }
         });
 
+      /*  if(Gdx.input.isKeyJustPressed((Input.Keys.ENTER))){
+            okBut.act(float delta);
+        }*/
+
         okBut.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 String IP = address.getText();
                 MainTest.ip_addr = IP;
-                parent.screenChoice(MainTest.CLIENT);
+                parent.screenChoice(MainTest.CLIENT,null);
 
                 // Popup test = new Popup(IP);
             }
@@ -117,7 +121,7 @@ public class MultiplayerView implements Screen {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.MULTIPLAYER);
+        parent.screenChoice(MainTest.MULTIPLAYER,null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

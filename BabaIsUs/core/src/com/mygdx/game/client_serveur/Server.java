@@ -10,17 +10,18 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server{
 
-	BlockingQueue<Integer> data;
+	ConcurrentLinkedQueue data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
 	private String ip;
 	//private Level lvl;
 	private ServerSocket serveurSocket  ;
 
-	public Server(BlockingQueue<Integer> bq, ServerCallBack callBack) {
+	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack) {
 
 		this.data = bq;
 		//this.lvl = level;
@@ -44,7 +45,6 @@ public class Server{
 					whatismyip.openStream()));
 
 			this.ip = inB.readLine(); //you get the IP as a String
-			System.out.println(ip);
 			MainTest.ip_addr = ip;
 
 			clientSocket = serveurSocket.accept();
@@ -53,21 +53,16 @@ public class Server{
 			DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
 			fis = new FileInputStream("level.txt");
 			byte[] buffer = new byte[4096];
-			System.out.println("debut d'envoie de fichier");
 			File file = new File("level.txt");
 			int length = (int)file.length();
-			System.out.println(length);
 			String hex = Integer.toString(length);
-			System.out.println(hex);
 			hex = hex.concat("f");
-			System.out.println(hex);
 			buffer = hex.getBytes();
 			dos.write(buffer);
 
 			while (fis.read(buffer) > 0) {
 				dos.write(buffer);
 			}
-			System.out.println("Fin d'envoi du fichier");
 			/*fis.close();
 				dos.close();
 			} catch (Exception e) {
@@ -81,21 +76,33 @@ public class Server{
 			this.connected =true;
 			out = clientSocket.getOutputStream();
 			in = clientSocket.getInputStream();
+
 			Thread envoyer = new Thread(new Runnable() {
 				int msg;
 				@Override
 				public void run() {
-					while(true){
+					while(connected){
 						try {
-							msg = data.take();
+							if(data.peek()==null) {
+								continue;
+							}
+							msg = (int)data.poll();
+							System.out.println("sent;"+msg);
+							System.out.println("");
 							out.write(msg);
 							out.flush();
-						} catch (InterruptedException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						};
+						}
+					}
+					try {
+						msg = 99;
+						out.write(msg);
+						out.flush();
+						out.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			});
@@ -107,10 +114,16 @@ public class Server{
 				public void run() {
 					byte[] b = new byte[1];
 					try {
-						while(true) {
+						while(connected) {
 							in.read(b);
 							callBackFunction.dataReceived(b[0]);
+							if(b[0] == 99){
+								System.out.println("connection fermée par le client");
+								connected = false;
+							}
 						}
+
+						in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -130,6 +143,10 @@ public class Server{
 
 	public boolean isConnected(){
 		return connected;
+	}
+
+	public void setConnected(boolean status){
+		connected = status;
 	}
 
 	public String getIp(){return ip;}
