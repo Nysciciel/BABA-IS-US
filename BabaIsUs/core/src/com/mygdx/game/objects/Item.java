@@ -269,7 +269,7 @@ public abstract class Item {
 		Object[] spriteChosen = spriteChosen();
 		// C'est en r�alit� une TextureRegion[]
 		int length = spriteChosen.length;
-		
+
 		animation = new Animation(2f/(3f*(float)length), spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
@@ -323,24 +323,24 @@ public abstract class Item {
 			switch(orientation){
 				case(0):
 					a=getX()+1-animationChrono*5;
-					b=getY();
+					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(1):
 					a=getX();
-					b=getY()-1+animationChrono*5;
+					b=getY()-1+animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(2):
 					a=getX()-1+animationChrono*5;
-					b=getY();
+					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				default:
 					a=getX();
-					b=getY()+1-animationChrono*5;
+					b=getY()+1-animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 			}
 		}else {
 			a=getX();
-			b=getY();
+			b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 		}
 		float[] tab={a,b};
 		return(tab);

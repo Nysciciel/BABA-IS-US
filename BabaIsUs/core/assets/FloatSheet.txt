@@ -31,14 +31,14 @@ Float1-0
   orig: 32, 32
   offset: 0, 0
   index: -1
-Float1-2
+Float1-1
   rotate: false
   xy: 128, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Float1-3
+Float1-2
   rotate: false
   xy: 160, 0
   size: 32, 32
