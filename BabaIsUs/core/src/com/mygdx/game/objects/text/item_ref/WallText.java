@@ -9,12 +9,4 @@ public class WallText extends ItemRef {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="WallText0";
-		spriteUsed[1]="WallText1";
-		return(spriteUsed);
-	}
-
 }

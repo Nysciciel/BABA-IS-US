@@ -10,18 +10,4 @@ public class Baba extends Item{
 		super(loc, orientation);
 		isTextureOriented = true;
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Fox" + orientation + "-0";
-		spriteUsed[1]="Fox" + orientation + "-1";
-		return(spriteUsed);
-	}
-
-	@Override
-	public String toString() {
-		return "b";
-	}
-	
-
 }

@@ -13,16 +13,7 @@ public abstract class Text extends Item {
 
 	protected String label;
 	private String highlight;
-	
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[3];
-		spriteUsed[0]=this.getName()+"0-0";
-		spriteUsed[1]=this.getName()+"0-1";
-		spriteUsed[2]=this.getName()+"0-2";
-		return(spriteUsed);
-	}
-	
-	
+		
 	public String getSpriteID(int i) {
 		
 		return this.getName()+highlight+"-"+i;

@@ -9,12 +9,4 @@ public class You extends Property {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="You0";
-		spriteUsed[1]="You1";
-		return(spriteUsed);
-	}
-
 }

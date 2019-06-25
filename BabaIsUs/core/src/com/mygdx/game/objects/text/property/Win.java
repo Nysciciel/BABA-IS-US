@@ -9,12 +9,4 @@ public class Win extends Property {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Win0";
-		spriteUsed[1]="Win1";
-		return(spriteUsed);
-	}
-
 }
