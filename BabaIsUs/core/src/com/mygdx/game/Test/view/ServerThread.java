@@ -34,14 +34,16 @@ public class ServerThread extends Thread{
 	}
 
 	public boolean checkClient(){
-		if( server != null) {
+		if( server != null && server.isConnected()) {
 			this.clientUp = true;
+		}else{
+			this.clientUp = false;
 		}
 		return clientUp;
 	}
 
-	public void setClientUp(boolean state){
-		this.clientUp = state;
+	public void setConnection(boolean state){
+		this.server.setConnected(state);
 	}
 
 	public Server getServer(){

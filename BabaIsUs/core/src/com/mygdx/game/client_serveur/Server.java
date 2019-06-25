@@ -75,6 +75,7 @@ public class Server{
 			this.connected =true;
 			out = clientSocket.getOutputStream();
 			in = clientSocket.getInputStream();
+
 			Thread envoyer = new Thread(new Runnable() {
 				int msg;
 				@Override
@@ -91,9 +92,12 @@ public class Server{
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						};
+						}
 					}
 					try {
+						msg = 99;
+						out.write(msg);
+						out.flush();
 						out.close();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -112,7 +116,12 @@ public class Server{
 						while(connected) {
 							in.read(b);
 							callBackFunction.dataReceived(b[0]);
+							if(b[0] == 99){
+								System.out.println("connection fermée par le client");
+								connected = false;
+							}
 						}
+
 						in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -133,6 +142,10 @@ public class Server{
 
 	public boolean isConnected(){
 		return connected;
+	}
+
+	public void setConnected(boolean status){
+		connected = status;
 	}
 
 	public String getIp(){return ip;}

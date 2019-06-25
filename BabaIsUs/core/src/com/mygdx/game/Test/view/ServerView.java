@@ -69,7 +69,7 @@ public class ServerView implements Screen,ServerCallBack {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			parent.screenChoice(MainTest.MENU);
-			this.thread.setClientUp(false);
+			this.thread.setConnection(false);
 			this.thread.shutCO();
 			//this.thread.interrupt();
 		}

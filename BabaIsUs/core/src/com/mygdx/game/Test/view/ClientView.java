@@ -56,6 +56,12 @@ public class ClientView implements Screen,ServerCallBack {
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU);
+			try {
+				data.put(99);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			this.client.setConnected(false);
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			//lvl.endturn();

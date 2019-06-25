@@ -91,7 +91,12 @@ public class Client {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						};
+						}
+					}
+					try {
+						out.close();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				}
 			});
@@ -104,10 +109,16 @@ public class Client {
 					byte[] b = new byte[1];
 
 					try {
-						while(true) {
+						while(connected) {
 							in.read(b);
+							System.out.println("valeur passée " + b[0]);
 							callBackFunction.dataReceived(b[0]);
+							if(b[0] == 99){
+								System.out.println("connection fermée par le serveur");
+								connected = false;
+							}
 						}
+						in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -117,6 +128,13 @@ public class Client {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public boolean isConnected(){
+		return connected;
+	}
+
+	public void setConnected(boolean status){
+		connected = status;
 	}
 
 }
