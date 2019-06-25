@@ -90,7 +90,7 @@ public class Menu implements Screen {
         editor.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.EDITOR);
+                parent.screenChoice(MainTest.SELECT);
             }
         });
         multiplayer.addListener(new ChangeListener() {

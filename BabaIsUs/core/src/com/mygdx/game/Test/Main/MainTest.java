@@ -21,10 +21,13 @@ public class MainTest extends Game {
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
+    private EditorSelectView select;
    // private EndScreen endScreen;
     private ServerThread thread;
     private BlockingQueue<Integer> data;
     private ServerLevel level;
+    
+    private String currentFileName = null;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -34,6 +37,7 @@ public class MainTest extends Game {
     public final static int SERVER = 5;
     public final static int CLIENT = 6;
     public final static int LOADING = 7;
+    public final static int SELECT = 8;
     public static String ip_addr = null;
   //  public static ServerThread thread;
  //   public final static int ENDGAME = 3;
@@ -54,7 +58,7 @@ public class MainTest extends Game {
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 break;
             case EDITOR:
-                if(editorView == null) editorView = new EditorView(this);
+                editorView = new EditorView(this, currentFileName);
                 this.setScreen(editorView);
                 Stage stage2 = editorView.getStage();
                 Gdx.input.setInputProcessor(stage2);
@@ -98,6 +102,18 @@ public class MainTest extends Game {
                 Stage stage8 = loading.getStage();
                 Gdx.input.setInputProcessor(stage8);
                 break;
+            case SELECT:
+                select = new EditorSelectView(this);
+                this.setScreen(select);
+                Stage stage9 = select.getStage();
+                Gdx.input.setInputProcessor(stage9);
+                break;
         }
+        
+        
+    }
+    
+    public void setCurrentFileName(String name) {
+    	currentFileName = name;
     }
 }

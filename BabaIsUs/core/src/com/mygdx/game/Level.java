@@ -91,8 +91,8 @@ public class Level extends Actor{
 				String[] cell = lines.get(i).split(",");
 				for(int j=0 ; j<cell.length ;j++) {
 					String[] split = cell[j].split(" ");
+					ArrayList<Item> items = new ArrayList<Item>();
 					for(int k=0 ;k<split.length;k++) {
-						ArrayList<Item> items = new ArrayList<Item>();
 						locationMatrix[i][j] = new Location(items, this, j, i);
 						locationMatrix[i][j].add((Item) Class.forName(split[k].substring(0, split[k].length()-1)).getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
 

@@ -45,14 +45,14 @@ public class EditorView implements Screen {
     private TextButton resetSelect;
     private TextButton saveSelect;
  
+    private String file;
     
-    
-    Table table;
+    private Table table;
 
     // our constructor with a Box2DTutorial argument
-    public EditorView(MainTest mainTest) {
+    public EditorView(MainTest mainTest, String fileName) {
     		
-
+    	this.file = fileName;
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         this.editor = new DrawEditor(10,10);
@@ -154,7 +154,7 @@ public class EditorView implements Screen {
         		} else if(nom.equals("reset")) {
         			editor.clear();
         		}else if(nom.equals("save")) {
-        			FileManager.SaveLevel(editor.getLevel());
+        			FileManager.SaveLevel(editor.getLevel(),"Level/"+file);
         			parent.screenChoice(MainTest.MENU);
         		}else {
         			
@@ -210,7 +210,8 @@ public class EditorView implements Screen {
         objectList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
+        		System.out.println(nom);
         		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
@@ -220,7 +221,8 @@ public class EditorView implements Screen {
         propertyList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
+        		System.out.println(nom);
         		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
@@ -230,7 +232,8 @@ public class EditorView implements Screen {
         operatorList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
+        		System.out.println(nom);
         		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
@@ -240,7 +243,8 @@ public class EditorView implements Screen {
         item_textList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
+        		System.out.println(nom);
         		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
@@ -250,7 +254,8 @@ public class EditorView implements Screen {
         relationList.addListener(new InputListener() {
         	public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
         		String nom = event.getTarget().toString();
-        		nom = nom.substring(nom.indexOf(" ")+1);
+        		nom = nom.split(" ")[nom.split(" ").length-1];
+        		System.out.println(nom);
         		selectedItem = ObjectList.valueOf(nom);
         		return true;
         	}
@@ -272,7 +277,6 @@ public class EditorView implements Screen {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.EDITOR);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
