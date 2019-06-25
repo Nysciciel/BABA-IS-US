@@ -44,7 +44,6 @@ public class Server{
 					whatismyip.openStream()));
 
 			this.ip = inB.readLine(); //you get the IP as a String
-			System.out.println(ip);
 			MainTest.ip_addr = ip;
 
 			clientSocket = serveurSocket.accept();
@@ -53,21 +52,16 @@ public class Server{
 			DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
 			fis = new FileInputStream("level.txt");
 			byte[] buffer = new byte[4096];
-			System.out.println("debut d'envoie de fichier");
 			File file = new File("level.txt");
 			int length = (int)file.length();
-			System.out.println(length);
 			String hex = Integer.toString(length);
-			System.out.println(hex);
 			hex = hex.concat("f");
-			System.out.println(hex);
 			buffer = hex.getBytes();
 			dos.write(buffer);
 
 			while (fis.read(buffer) > 0) {
 				dos.write(buffer);
 			}
-			System.out.println("Fin d'envoi du fichier");
 			/*fis.close();
 				dos.close();
 			} catch (Exception e) {
@@ -85,9 +79,11 @@ public class Server{
 				int msg;
 				@Override
 				public void run() {
-					while(true){
+					while(connected){
 						try {
 							msg = data.take();
+							System.out.println("sent;"+msg);
+							System.out.println("");
 							out.write(msg);
 							out.flush();
 						} catch (InterruptedException e) {
@@ -96,6 +92,12 @@ public class Server{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						};
+					}
+					try {
+						out.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			});
@@ -107,10 +109,11 @@ public class Server{
 				public void run() {
 					byte[] b = new byte[1];
 					try {
-						while(true) {
+						while(connected) {
 							in.read(b);
 							callBackFunction.dataReceived(b[0]);
 						}
+						in.close();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
