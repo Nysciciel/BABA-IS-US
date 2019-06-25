@@ -1,7 +1,7 @@
 EmptySheet.png
 size: 32, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Empty0
   rotate: false

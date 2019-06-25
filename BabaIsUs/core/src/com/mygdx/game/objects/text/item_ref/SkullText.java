@@ -9,12 +9,4 @@ public class SkullText extends ItemRef {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="SkullText0";
-		spriteUsed[1]="SkullText1";
-		return(spriteUsed);
-	}
-
 }

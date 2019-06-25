@@ -9,12 +9,4 @@ public class Defeat extends Property {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Defeat0";
-		spriteUsed[1]="Defeat1";
-		return(spriteUsed);
-	}
-
 }

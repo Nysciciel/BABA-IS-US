@@ -14,12 +14,4 @@ public class Is extends Relation {
 	public boolean isIs(){
 		return true;
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Is0-0";
-		spriteUsed[1]="Is0-1";
-		return(spriteUsed);
-	}
-
 }

@@ -4,11 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Stack;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -35,6 +38,7 @@ public abstract class Item {
 
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
+	protected boolean isTextureOriented = false;
 
 	public Item(Location loc, int orientation) {
 		this.loc = loc;
@@ -232,9 +236,9 @@ public abstract class Item {
 	 * Loading the Atlas texture to set the parameter textureAtlas
 	 * Use the name of the current class to choose it and set a default texture if not found
 	 */
-	public void loadTextureAtlas(){
+	public void loadTextureAtlas() {
 		try{
-			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getClass().getSimpleName()+ "Sheet.txt"));
+			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getName()+ "Sheet.txt"));
 		}catch(Exception e){
 			textureAtlas = new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"));
 		}
@@ -245,23 +249,52 @@ public abstract class Item {
 	 * @param sb Sprite bash that has to be drawn
 	 */
 	public void render(Batch sb, float cellSize){
-		String[] spriteUsed = getSpriteUsed();
-		int length = spriteUsed.length;
-		TextureRegion[] spriteChosen = new TextureRegion[length];
-		for(int i=0;i<length;i++) {
-			spriteChosen[i] = textureAtlas.findRegion(spriteUsed[i]);
-		}
-		animation = new Animation(1/3f, spriteChosen);
+
+		Object[] spriteChosen = spriteChosen();
+		// C'est en réalité une TextureRegion[]
+		int length = spriteChosen.length;
+		
+		animation = new Animation(2f/(3f*(float)length), spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
 		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
 	}
 
+	public Object[] spriteChosen() {
+		
+		Stack<TextureRegion> spriteChoosing = new Stack<TextureRegion>();
+		
+		for(int i=0;i<3;i++) {
+			spriteChoosing.push(textureAtlas.findRegion(getSpriteID(i)));
+			
+			if (spriteChoosing.peek() == null && this.isText()) {
+				spriteChoosing.pop();
+				spriteChoosing.push(textureAtlas.findRegion(((Text)this).getSpriteIDNoH(i)));
+			}
+			if (spriteChoosing.peek() == null) {
+				spriteChoosing.pop();
+				//System.out.println(this.getSpriteID(i));
+				if (i == 0) {
+					spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
+				}
+				break;
+			}
+		}
+		return spriteChoosing.toArray();
+	}
+	
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[1];
 		spriteUsed[0]="Error0";
 		return(spriteUsed);
+	}
+	
+	public String getSpriteID(int i) {
+		if (isTextureOriented) {
+			return this.getName()+orientation+"-"+i;
+		}
+		return this.getName()+i;
 	}
 
 	/**
@@ -398,6 +431,4 @@ public abstract class Item {
 	public LogicHashtable getRuleTable() {
 		return loc.getLevel().getRuleTable();
 	}
-
-	public abstract String toString();
 }

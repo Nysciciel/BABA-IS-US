@@ -1,7 +1,7 @@
 RockTextSheet.png
 size: 64, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 RockText0
   rotate: false

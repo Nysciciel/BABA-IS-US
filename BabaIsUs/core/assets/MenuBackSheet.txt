@@ -1,7 +1,7 @@
 MenuBackSheet.png
 size: 640, 320
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 MenuBack0
   rotate: false
