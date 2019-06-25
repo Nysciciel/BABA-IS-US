@@ -54,25 +54,26 @@ public class Menu implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         //table.setDebug(true);
+        table.pad(200,0,0,0);
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        TextButton newLevel = new TextButton("new Level", skin);
-        TextButton editor = new TextButton("play Editor", skin);
+        TextButton newLevel = new TextButton("New Level", skin);
+        TextButton editor = new TextButton("Map Editor", skin);
         TextButton exit = new TextButton("Exit", skin);
         TextButton settings = new TextButton("Settings", skin);
         TextButton multiplayer = new TextButton("Multiplayer", skin);
 
-        table.add(newLevel).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(editor).fillX().uniformX();
+        table.add(newLevel).uniformX().fillX();
+        table.row().pad(12, 0, 12, 0);
+        table.add(multiplayer).uniformX().fillX();
         table.row();
-        table.add(multiplayer).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(settings).fillX().uniformX();
+        table.add(editor).fillX().uniformX().fillX();
+        table.row().pad(12, 0, 12, 0);
+        table.add(settings).fillX().uniformX().fillX();
         table.row();
-        table.add(exit).fillX().uniformX();
+        table.add(exit).fillX().uniformX().fillX();
 
         exit.addListener(new ChangeListener() {
             @Override
