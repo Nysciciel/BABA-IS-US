@@ -164,5 +164,6 @@ public class Menu implements Screen {
         // TODO Auto-generated method stub
         stage.dispose();
         this.textureAtlas.dispose();
+        this.textureAtlas2.dispose();
     }
 }
