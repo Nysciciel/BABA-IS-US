@@ -15,12 +15,14 @@ public class Client {
 	ServerCallBack callBackFunction;
 
 	public final static int FILE_SIZE = 6022386;
+	private boolean connected;
 
 	public Client(BlockingQueue<Integer> bq, ServerCallBack callBack, String ip_addr) {
 
 		final Socket clientSocket;
 		final InputStream in;
 		final OutputStream out;
+		this.connected = true;
 
 		int bytesRead;
 		int current = 0;
@@ -36,12 +38,12 @@ public class Client {
 
 			dis = new DataInputStream(clientSocket.getInputStream());
 			fos = new FileOutputStream("levelc.txt");
-			int filesize;
+			int filesize = 0;
 			byte[] buffer = new byte[4096];
 			byte[] b = new byte[1];
 			String hex = new String();
 			try {
-				while(true) {
+				while(connected) {
 					dis.read(b);
 					String buf = new String(b);
 					//System.out.println(buf);
@@ -79,7 +81,7 @@ public class Client {
 				int msg;
 				@Override
 				public void run() {
-					while(true){
+					while(connected){
 						try {
 							msg = data.take();
 							out.write(msg);

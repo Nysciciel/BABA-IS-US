@@ -57,11 +57,6 @@ public class ClientView implements Screen,ServerCallBack {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU);
 		}
-		try {
-			data.put(lvl.hashCode());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			//lvl.endturn();
 			try {
@@ -70,7 +65,7 @@ public class ClientView implements Screen,ServerCallBack {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+		else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
 			//lvl.reset();
 			try {
 				data.put(6);
@@ -78,7 +73,7 @@ public class ClientView implements Screen,ServerCallBack {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 			//lvl.rollback();
 			try {
 				data.put(4);
@@ -86,7 +81,7 @@ public class ClientView implements Screen,ServerCallBack {
 				e.printStackTrace();
 			}
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			//lvl.moveYou2(2);
 			//lvl.endturn();
 
@@ -97,7 +92,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			//lvl.moveYou2(1);
 			//lvl.endturn();
 
@@ -109,7 +104,7 @@ public class ClientView implements Screen,ServerCallBack {
 
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			//lvl.moveYou2(0);
 			//lvl.endturn();
 
@@ -120,7 +115,7 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			//lvl.moveYou2(3);
 			//lvl.endturn();
 
@@ -131,28 +126,59 @@ public class ClientView implements Screen,ServerCallBack {
 			}
 
 		}
-	/*	if(movePoto != -1) {
-			switch(movePoto) {
-			case(4):
-				lvl.rollback();
-				break;
-			case(5):
-				lvl.endturn();
-				break;
-			case(6):
-				lvl.reset();
-				break;
-			case(0):
-			case(1):
-			case(2):
-			case(3):
-				lvl.moveYou1(movePoto);
-				lvl.endturn();
-				break;
-			default:
-			}
-			movePoto = -1;
-		}*/
+        if (movePoto >= 20) {
+            movePoto = movePoto%20;
+            if (movePoto != -1) {
+                switch (movePoto) {
+                    case (4):
+                        lvl.rollback();
+                        break;
+                    case (5):
+                        lvl.endturn();
+                        break;
+                    case (6):
+                        lvl.reset();
+                        break;
+                    case (0):
+                    case (1):
+                    case (2):
+                    case (3):
+                        System.out.println(movePoto);
+                        lvl.moveYou2(movePoto);
+                        lvl.endturn();
+                        break;
+                    default:
+                }
+                movePoto = -1;
+            }
+        }else{
+            if (movePoto >= 10) {
+                movePoto = movePoto%10;
+                if (movePoto != -1) {
+                    switch (movePoto) {
+                        case (4):
+                            lvl.rollback();
+                            break;
+                        case (5):
+                            lvl.endturn();
+                            break;
+                        case (6):
+                            lvl.reset();
+                            break;
+                        case (0):
+                        case (1):
+                        case (2):
+                        case (3):
+                            System.out.println(movePoto);
+                            lvl.moveYou1(movePoto);
+                            lvl.endturn();
+                            break;
+                        default:
+                    }
+                    movePoto = -1;
+                }
+            }
+        }
 	}
 
 	@Override
@@ -195,56 +221,5 @@ public class ClientView implements Screen,ServerCallBack {
 	@Override
 	public void dataReceived(int dataS) {
 		movePoto = dataS;
-		if (movePoto > 10) {
-			movePoto = movePoto%10;
-			if (movePoto != -1) {
-				switch (movePoto) {
-					case (4):
-						lvl.rollback();
-						break;
-					case (5):
-						lvl.endturn();
-						break;
-					case (6):
-						lvl.reset();
-						break;
-					case (0):
-					case (1):
-					case (2):
-					case (3):
-						lvl.moveYou1(movePoto);
-						lvl.endturn();
-						break;
-					default:
-				}
-				movePoto = -1;
-			}
-		}
-
-		if (movePoto > 20) {
-			movePoto = movePoto%20;
-			if (movePoto != -1) {
-				switch (movePoto) {
-					case (4):
-						lvl.rollback();
-						break;
-					case (5):
-						lvl.endturn();
-						break;
-					case (6):
-						lvl.reset();
-						break;
-					case (0):
-					case (1):
-					case (2):
-					case (3):
-						lvl.moveYou2(movePoto);
-						lvl.endturn();
-						break;
-					default:
-				}
-				movePoto = -1;
-			}
-		}
 	}
 }

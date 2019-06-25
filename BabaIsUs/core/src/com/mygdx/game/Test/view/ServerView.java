@@ -64,13 +64,6 @@ public class ServerView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
-		shash = slvl.hashCode();
-		System.out.println(shash + " " + chash);
-		if(shash != chash){
-			System.out.println("c'est la merde");
-		}else{
-			System.out.println("on est good");
-		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			parent.screenChoice(MainTest.MENU);
@@ -79,12 +72,6 @@ public class ServerView implements Screen,ServerCallBack {
 			//this.thread.interrupt();
 		}
 		if(enabled) {
-			try {
-				data.put(slvl.hashCode());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
 				System.out.println(slvl.getLocationMatrix().hashCode());
@@ -175,10 +162,12 @@ public class ServerView implements Screen,ServerCallBack {
 					break;
 				default:
 				}
-				try {
-					data.put(movePoto+20);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				if(movePoto<=6 && movePoto>=0) {
+					try {
+						data.put(movePoto + 20);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 				movePoto = -1;
 			}
@@ -191,7 +180,7 @@ public class ServerView implements Screen,ServerCallBack {
 		parent.screenChoice(MainTest.SERVER);
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
             enabled =true;
@@ -229,16 +218,9 @@ public class ServerView implements Screen,ServerCallBack {
 		stage.dispose();
 		this.background.dispose();
 	}
-
 	@Override
 	public void dataReceived(int data) {
-		System.out.println("data : "+data);
-		if(data > 6){
-
-			chash = data;
-		}else{
-			movePoto = data;
-		}
+		movePoto = data;
 
 	}
 }
