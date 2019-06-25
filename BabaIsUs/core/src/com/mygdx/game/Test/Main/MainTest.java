@@ -27,7 +27,6 @@ public class MainTest extends Game {
     private BlockingQueue<Integer> data;
     private ServerLevel level;
     
-    private String currentFileName = null;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -47,24 +46,24 @@ public class MainTest extends Game {
         setScreen(menu);
     }
 
-    public void screenChoice(int screen){
+    public void screenChoice(int screen, String fileName){
         switch(screen){
             case MENU:
                 if(menu == null) menu = new Menu(this);
                 this.setScreen(menu);
                 Stage stage = menu.getStage();
                 Gdx.input.setInputProcessor(stage);
-                if(levelView != null) levelView.setLvl(new Level("Level.txt"));
+                if(levelView != null) levelView.setLvl(new Level("Level/Level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 break;
             case EDITOR:
-                editorView = new EditorView(this, currentFileName);
+                editorView = new EditorView(this, fileName);
                 this.setScreen(editorView);
                 Stage stage2 = editorView.getStage();
                 Gdx.input.setInputProcessor(stage2);
                 break;
             case LEVEL:
-                if(levelView == null) levelView = new LevelView(this);
+                if(levelView == null) levelView = new LevelView(this, fileName);
                 this.setScreen(levelView);
                 Stage stage3 = levelView.getStage();
                 Gdx.input.setInputProcessor(stage3);
@@ -113,7 +112,4 @@ public class MainTest extends Game {
         
     }
     
-    public void setCurrentFileName(String name) {
-    	currentFileName = name;
-    }
 }

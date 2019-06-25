@@ -84,25 +84,25 @@ public class Menu implements Screen {
         newLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.LEVEL);
+                parent.screenChoice(MainTest.LEVEL,null);
             }
         });
         editor.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.SELECT);
+                parent.screenChoice(MainTest.SELECT,null);
             }
         });
         multiplayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.MULTIPLAYER);
+                parent.screenChoice(MainTest.MULTIPLAYER,null);
             }
         });
         settings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.SETTINGS);
+                parent.screenChoice(MainTest.SETTINGS,null);
             }
         });
     }
@@ -110,7 +110,7 @@ public class Menu implements Screen {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.MENU);
+        parent.screenChoice(MainTest.MENU,null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

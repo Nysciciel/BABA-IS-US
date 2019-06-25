@@ -100,12 +100,12 @@ public class LoadingView implements Screen, ServerCallBack {
             table.setVisible(true);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU,null);
             this.thread.interrupt();
         }
 
         if(this.thread.checkClient()){
-            parent.screenChoice((MainTest.SERVER));
+            parent.screenChoice(MainTest.SERVER,null);
         }
 
 
@@ -114,7 +114,7 @@ public class LoadingView implements Screen, ServerCallBack {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.LOADING);
+        parent.screenChoice(MainTest.LOADING,null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

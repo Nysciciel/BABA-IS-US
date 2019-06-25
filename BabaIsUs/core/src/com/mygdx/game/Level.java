@@ -69,7 +69,7 @@ public class Level extends Actor{
 		this.ruleTable = new LogicHashtable();
 
 		try {
-			FileHandle file = Gdx.files.local(filename);
+			FileHandle file = Gdx.files.local("Level/"+filename);
 			Scanner scanner = new Scanner(file.read());
 			ArrayList <String> lines = new ArrayList <String>();
 			String[] taille = scanner.nextLine().split(" ");

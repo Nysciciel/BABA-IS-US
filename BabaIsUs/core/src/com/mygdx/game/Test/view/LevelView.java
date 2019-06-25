@@ -26,7 +26,7 @@ public class LevelView implements Screen,ServerCallBack {
     private Table table;
 
 
-    public LevelView(MainTest mainTest) {
+    public LevelView(MainTest mainTest, String fileName) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
@@ -34,7 +34,7 @@ public class LevelView implements Screen,ServerCallBack {
         table.setFillParent(true);
 
 
-        this.lvl = new Level("level.txt");
+        this.lvl = new Level(fileName);
         Gdx.input.setInputProcessor(stage);
         
         stage.addActor(table);
@@ -49,7 +49,7 @@ public class LevelView implements Screen,ServerCallBack {
     @Override
     public void show() {
         if(lvl == null){
-            lvl = new com.mygdx.game.Level("level.txt");
+            lvl = new com.mygdx.game.Level("Level/level.txt");
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             lvl.endturn();
@@ -80,7 +80,7 @@ public class LevelView implements Screen,ServerCallBack {
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU, null);
         }
     }
 
@@ -95,7 +95,7 @@ public class LevelView implements Screen,ServerCallBack {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.LEVEL);
+        parent.screenChoice(MainTest.LEVEL, null);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

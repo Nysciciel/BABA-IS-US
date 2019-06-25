@@ -9,13 +9,17 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Location;
 import com.mygdx.game.Test.Main.MainTest;
@@ -44,6 +48,9 @@ public class EditorView implements Screen {
     private TextButton clearSelect;
     private TextButton resetSelect;
     private TextButton saveSelect;
+    
+    private Slider sliderW;
+    private Slider sliderH;
  
     private String file;
     
@@ -55,7 +62,7 @@ public class EditorView implements Screen {
     	this.file = fileName;
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
-        this.editor = new DrawEditor(10,10);
+        this.editor = new DrawEditor(10,10,file);
         selectedItem = ObjectList.BABA;
         selectedOrientation = 0;
         
@@ -79,7 +86,10 @@ public class EditorView implements Screen {
         resetSelect = new TextButton("reset",skin);
         saveSelect = new TextButton("save",skin);
         
-        
+        sliderW = new Slider(5,20,1,true,skin);
+        sliderW.setValue(10);
+        sliderH = new Slider(5,20,1,true,skin);
+        sliderH.setValue(10);
         
         mainList.left();
         for(ItemTypeList object : ItemTypeList.values()) {
@@ -112,12 +122,14 @@ public class EditorView implements Screen {
         	}
         }
         
-        table.add(mainList).left().expandX().fill();
+        table.add(mainList).left().expandX().fill().colspan(2);
         table.row().pad(0, 0, 10, 0);
         table.add(objectList).left().expandX();
-        table.row().pad(0, 0, 0, 0);
-        table.add(editor).expand().colspan(3).fill();
-        
+        table.row().pad(0, 0, 0, 0).right();
+        table.add(editor).expandY().fill();
+
+        table.add(sliderW).fill().width(50);
+        table.add(sliderH).fill().width(50);
         
         stage.addActor(table);
         
@@ -152,7 +164,7 @@ public class EditorView implements Screen {
         			editor.clear();
         		}else if(nom.equals("save")) {
         			FileManager.SaveLevel(editor.getLevel(),"Level/"+file);
-        			parent.screenChoice(MainTest.MENU);
+        			parent.screenChoice(MainTest.MENU, null);
         		}else {
         			
         			switch(ItemTypeList.valueOf(nom)) {
@@ -259,13 +271,27 @@ public class EditorView implements Screen {
         	
         });
         
+        sliderW.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				editor.setLarg((int) sliderW.getValue());;
+			}      	
+        });
+        
+        sliderH.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				editor.setHaut((int) sliderH.getValue());;		
+			}      	
+        });
+        
     }
 
     @Override
     public void show() {
         // TODO Auto-generated method stub
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU);
+            parent.screenChoice(MainTest.MENU, null);
         }   
         
         
@@ -278,7 +304,6 @@ public class EditorView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        
     }
 
     @Override
