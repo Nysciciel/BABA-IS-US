@@ -225,9 +225,11 @@ public class Location {
 	}
 
 
-	public void render(Batch sb, float cellSize) {
+	public void render(Batch sb, float cellSize,int prio) {
 		for(Item i:items) {
-			i.render(sb, cellSize);
+			if((i.getPrio()+4*(i.getIntFloat()))==prio) {
+				i.render(sb, cellSize);
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ public abstract class Text extends Item {
 	public Text(Location loc, int orientation) {
 		super(loc, orientation);
 		highlight = "0";
+		prio=4;
 	}
 
 	protected String label;

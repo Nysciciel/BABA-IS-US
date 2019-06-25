@@ -35,6 +35,7 @@ public abstract class Item {
 	protected Texture texture;
 	protected int orientation;
 	protected Location loc;
+	protected int prio;
 
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
@@ -76,6 +77,21 @@ public abstract class Item {
 		}
 
 		return affirm.getTruth(this) && !restrict.getTruth(this);
+	}
+
+	public int getPrio(){
+		return(prio);
+	}
+
+	public void setPrio(int p){
+		prio=p;
+	}
+
+	public int getIntFloat(){
+		if(this.isFloat()) {
+			return (1);
+		}
+		return(0);
 	}
 
 	public boolean isPush() {
@@ -251,7 +267,7 @@ public abstract class Item {
 	public void render(Batch sb, float cellSize){
 
 		Object[] spriteChosen = spriteChosen();
-		// C'est en réalité une TextureRegion[]
+		// C'est en rï¿½alitï¿½ une TextureRegion[]
 		int length = spriteChosen.length;
 		
 		animation = new Animation(2f/(3f*(float)length), spriteChosen);

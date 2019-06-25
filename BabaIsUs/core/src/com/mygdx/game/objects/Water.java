@@ -8,6 +8,7 @@ public class Water extends Item {
 
 	public Water(Location loc, int orientation) {
 		super(loc, orientation);
+		prio=1;
 	}
 
 	private float fishTime = 2;

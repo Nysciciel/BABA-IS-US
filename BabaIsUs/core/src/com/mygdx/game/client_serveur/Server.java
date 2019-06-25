@@ -86,7 +86,7 @@ public class Server{
 							if(data.peek()==null) {
 								continue;
 							}
-							msg = (int)data.poll();
+							msg = (int) data.poll();
 							System.out.println("sent;"+msg);
 							System.out.println("");
 							out.write(msg);
