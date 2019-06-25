@@ -258,8 +258,7 @@ public abstract class Item {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		float a = 0.028f;
-		sb.draw(test,getAffichePos()[0]*cellSize-cellSize*a/2,getAffichePos()[1]*cellSize-cellSize*a/2,cellSize*(1+a),cellSize*(1+a));
+		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
 	}
 
 	public Object[] spriteChosen() {

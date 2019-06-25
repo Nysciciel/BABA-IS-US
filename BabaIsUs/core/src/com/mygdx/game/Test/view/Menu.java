@@ -32,9 +32,9 @@ public class Menu implements Screen {
         parent = mainTest;
 
         textureAtlas = new TextureAtlas(Gdx.files.internal("BackgroundMenu.txt"));
-        animation = new Animation(1/2f, textureAtlas.getRegions());
+        animation = new Animation(2/3f, textureAtlas.getRegions());
         textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
-        animation2 = new Animation(1/2f, textureAtlas2.getRegions());
+        animation2 = new Animation(2/3f, textureAtlas2.getRegions());
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);// setting the argument to our field.

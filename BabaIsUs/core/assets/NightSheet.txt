@@ -1,7 +1,7 @@
 NightSheet.png
 size: 400, 200
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Night1
   rotate: false
