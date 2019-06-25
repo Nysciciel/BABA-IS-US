@@ -255,7 +255,7 @@ public abstract class Item {
 		
 		for(int i=0;i<length;i++) {
 			spriteChoosing.push(textureAtlas.findRegion(spriteUsed[i]));
-			System.out.println(spriteUsed[i]);
+			//System.out.println(spriteUsed[i]);
 			if (spriteChoosing.peek() == null) {
 				spriteChoosing.pop();
 				if (i == 0) {
