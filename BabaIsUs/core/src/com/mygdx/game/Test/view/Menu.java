@@ -65,12 +65,23 @@ public class Menu implements Screen {
         TextButton settings = new TextButton("Settings", skin);
         TextButton multiplayer = new TextButton("Multiplayer", skin);
 
+        newLevel.setTransform(true);
+        newLevel.setScale(1.3f);
+        editor.setTransform(true);
+        editor.setScale(1.3f);
+        exit.setTransform(true);
+        exit.setScale(1.3f);
+        settings.setTransform(true);
+        settings.setScale(1.3f);
+        multiplayer.setTransform(true);
+        multiplayer.setScale(1.3f);
+
         table.add(newLevel).uniformX().fillX();
-        table.row().pad(12, 0, 12, 0);
+        table.row().pad(20 , 0, 20, 0);
         table.add(multiplayer).uniformX().fillX();
         table.row();
         table.add(editor).fillX().uniformX().fillX();
-        table.row().pad(12, 0, 12, 0);
+        table.row().pad(20, 0, 20, 0);
         table.add(settings).fillX().uniformX().fillX();
         table.row();
         table.add(exit).fillX().uniformX().fillX();
