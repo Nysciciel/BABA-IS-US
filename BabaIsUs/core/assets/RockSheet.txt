@@ -1,18 +1,46 @@
 RockSheet.png
-size: 64, 32
+size: 192, 32
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
-Rock0
+RockText0-0
   rotate: false
   xy: 0, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-Rock1
+RockText0-1
   rotate: false
   xy: 32, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+RockText0-2
+  rotate: false
+  xy: 64, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+RockText1-0
+  rotate: false
+  xy: 96, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+RockText1-1
+  rotate: false
+  xy: 128, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+RockText1-2
+  rotate: false
+  xy: 160, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
