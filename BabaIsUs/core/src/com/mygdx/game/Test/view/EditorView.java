@@ -272,7 +272,7 @@ public class EditorView implements Screen {
         parent.screenChoice(MainTest.EDITOR);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 3f));
         stage.draw();
         
     }

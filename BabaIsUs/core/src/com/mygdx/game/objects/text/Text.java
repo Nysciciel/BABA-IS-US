@@ -8,10 +8,11 @@ public abstract class Text extends Item {
 
 	public Text(Location loc, int orientation) {
 		super(loc, orientation);
+		highlight = "0";
 	}
 
 	protected String label;
-
+	private String highlight;
 	
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[3];
@@ -20,7 +21,18 @@ public abstract class Text extends Item {
 		spriteUsed[2]=this.getName()+"0-2";
 		return(spriteUsed);
 	}
-
+	
+	
+	public String getSpriteID(int i) {
+		
+		return this.getName()+highlight+"-"+i;
+	}
+	
+	public String getSpriteIDNoH(int i) {
+				
+		return this.getName()+i;
+	}
+	
 	public boolean isOperator() {
 		return false;
 	}
@@ -96,6 +108,9 @@ public abstract class Text extends Item {
 	}
 
 	public void highLight(boolean b) {
-		// TODO Highlight the text by changing the texture by a brighter one if b is true		
+		if (b)
+			highlight = "1";
+		else
+			highlight = "0";
 	};
 }

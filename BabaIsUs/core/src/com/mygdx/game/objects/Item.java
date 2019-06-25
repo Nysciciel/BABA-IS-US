@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
 
@@ -247,45 +248,51 @@ public abstract class Item {
 	 * @param sb Sprite bash that has to be drawn
 	 */
 	public void render(Batch sb, float cellSize){
-		String[] spriteUsed = getSpriteUsed();
+
 		
-		int length = spriteUsed.length;		
-		
-		Stack<TextureRegion> spriteChoosing = new Stack<TextureRegion>();
-		
-		for(int i=0;i<length;i++) {
-			spriteChoosing.push(textureAtlas.findRegion(spriteUsed[i]));
-			//System.out.println(spriteUsed[i]);
-			if (spriteChoosing.peek() == null) {
-				spriteChoosing.pop();
-				if (i == 0) {
-					try {
-						spriteChoosing.push(textureAtlas.findRegion("Error0"));
-					}
-					catch(Exception e){
-						spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
-						e.printStackTrace();
-					}
-				}
-				break;
-			}
-		}
 		//System.out.println(this.getName());
 		//System.out.println(spriteChoosing);
-		Object[] spriteChosen = spriteChoosing.toArray();
+		Object[] spriteChosen = spriteChosen();
 		// C'est en réalité une TextureRegion[]
 		
 		animation = new Animation(1/3f, spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
-		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
+		TextureRegion textureRegion = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
+		sb.draw(textureRegion, getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
 	}
 
+	public Object[] spriteChosen() {
+		
+		Stack<TextureRegion> spriteChoosing = new Stack<TextureRegion>();
+		
+		for(int i=0;i<3;i++) {
+			spriteChoosing.push(textureAtlas.findRegion(getSpriteID(i)));
+			
+			if (spriteChoosing.peek() == null && this.isText()) {
+				spriteChoosing.pop();
+				spriteChoosing.push(textureAtlas.findRegion(((Text)this).getSpriteIDNoH(i)));
+			}
+			if (spriteChoosing.peek() == null) {
+				spriteChoosing.pop();
+				//System.out.println(this.getSpriteID(i));
+				if (i == 0) {
+					spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
+				}
+				break;
+			}
+		}
+		return spriteChoosing.toArray();
+	}
+	
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[1];
 		spriteUsed[0]="Error0";
 		return(spriteUsed);
+	}
+	
+	public String getSpriteID(int i) {
+		return this.getName()+i;
 	}
 
 	/**

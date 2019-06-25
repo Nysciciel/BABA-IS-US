@@ -28,6 +28,16 @@ public class Wall extends Item {
 		return(spriteUsed);
 	}
 	
+	public String getSpriteID(int id) {
+		String s = "";
+		for(int i=0;i<=3;i++){
+			if(isNeighbourEqual(i)){
+				s += i;
+			}
+		}
+		return this.getName()+"-"+s+"-"+id;		
+	}
+	
 	@Override
 	public String toString() {
 		return "w";
