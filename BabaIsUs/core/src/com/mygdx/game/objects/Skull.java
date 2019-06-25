@@ -6,8 +6,8 @@ public class Skull extends Item{
 
 	public Skull(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
-	}
+		isTextureOriented =true;
+		}
 	
 	@Override
 	public boolean isDefeat() {

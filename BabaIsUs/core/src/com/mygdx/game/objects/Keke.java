@@ -6,7 +6,7 @@ public class Keke extends Item{
 
 	public Keke(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
+		isTextureOriented =true;
 	}
 
 	public String[] getSpriteUsed(){

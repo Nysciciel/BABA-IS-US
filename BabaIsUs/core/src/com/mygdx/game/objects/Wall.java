@@ -8,7 +8,6 @@ public class Wall extends Item {
 
 	public Wall(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void loadTextureAtlas(){

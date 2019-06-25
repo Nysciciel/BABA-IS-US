@@ -38,6 +38,7 @@ public abstract class Item {
 
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
+	protected boolean isTextureOriented = false;
 
 	public Item(Location loc, int orientation) {
 		this.loc = loc;
@@ -235,7 +236,7 @@ public abstract class Item {
 	 * Loading the Atlas texture to set the parameter textureAtlas
 	 * Use the name of the current class to choose it and set a default texture if not found
 	 */
-	public void loadTextureAtlas(){
+	public void loadTextureAtlas() {
 		try{
 			textureAtlas = new TextureAtlas(Gdx.files.internal(this.getName()+ "Sheet.txt"));
 		}catch(Exception e){
@@ -249,17 +250,16 @@ public abstract class Item {
 	 */
 	public void render(Batch sb, float cellSize){
 
-		
-		//System.out.println(this.getName());
-		//System.out.println(spriteChoosing);
 		Object[] spriteChosen = spriteChosen();
 		// C'est en réalité une TextureRegion[]
+		int length = spriteChosen.length;
 		
-		animation = new Animation(1/3f, spriteChosen);
+		animation = new Animation(2f/(3f*(float)length), spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
-		TextureRegion textureRegion = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		sb.draw(textureRegion, getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
+		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
+		float a = 0.028f;
+		sb.draw(test,getAffichePos()[0]*cellSize-cellSize*a/2,getAffichePos()[1]*cellSize-cellSize*a/2,cellSize*(1+a),cellSize*(1+a));
 	}
 
 	public Object[] spriteChosen() {
@@ -292,6 +292,9 @@ public abstract class Item {
 	}
 	
 	public String getSpriteID(int i) {
+		if (isTextureOriented) {
+			return this.getName()+orientation+"-"+i;
+		}
 		return this.getName()+i;
 	}
 

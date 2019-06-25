@@ -8,11 +8,7 @@ public class Baba extends Item{
 
 	public Baba(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
-	}
-
-	public void loadTextureAtlas(){
-		textureAtlas = new TextureAtlas(Gdx.files.internal("BabaFox" + "SheetU.txt"));
+		isTextureOriented = true;
 	}
 
 	public String[] getSpriteUsed(){

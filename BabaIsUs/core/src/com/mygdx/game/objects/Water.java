@@ -43,6 +43,29 @@ public class Water extends Item {
 	}
 	
 	@Override
+	public String getSpriteID(int id){
+		String s = "";
+		for(int i=0;i<=3;i++){
+			if(isNeighbourEqual(i)){
+				s += i;
+			}
+		}
+		double fishRand = Math.random();
+		if(fishRand<0.005 && fishTime>1){
+			fishTime = 0;
+		}
+		
+		if(s.equals("0123") && fishTime<0.6) {
+			fishTime += Gdx.graphics.getDeltaTime();
+			return "WaterFish-"+id;
+		}
+		else {
+			fishTime += Gdx.graphics.getDeltaTime();
+			return "Water-" + s + "-"+id;
+		}
+	}
+	
+	@Override
 	public String toString() {
 		return "a";
 	}

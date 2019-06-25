@@ -6,8 +6,7 @@ public class Rock extends Item {
 
 	public Rock(Location loc, int orientation) {
 		super(loc, orientation);
-		// TODO Auto-generated constructor stub
-	}
+		}
 
 	public String[] getSpriteUsed(){
 		String[] spriteUsed = new String[2];
