@@ -352,7 +352,7 @@ public class Level extends Actor{
 		Location[][] matrix = new Location[height][length];
 		for(int y=0; y < height; y++) {
 			for(int x=0; x < length; x++) {
-				System.out.println(x);
+				//System.out.println(x);
 				matrix[y][x] = locationMatrix[y][x].copy();
 			}
 		}

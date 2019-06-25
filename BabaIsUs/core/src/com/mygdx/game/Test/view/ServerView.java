@@ -69,7 +69,7 @@ public class ServerView implements Screen,ServerCallBack {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
 				try {
-					data.put(5);
+					data.put(15);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -77,7 +77,7 @@ public class ServerView implements Screen,ServerCallBack {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
 				slvl.reset();
 				try {
-					data.put(6);
+					data.put(16);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -85,7 +85,7 @@ public class ServerView implements Screen,ServerCallBack {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				slvl.rollback();
 				try {
-					data.put(4);
+					data.put(14);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -95,7 +95,7 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(2);
+					data.put(12);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -106,7 +106,7 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(1);
+					data.put(11);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -118,7 +118,7 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(0);
+					data.put(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -129,7 +129,7 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.put(3);
+					data.put(13);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -154,6 +154,11 @@ public class ServerView implements Screen,ServerCallBack {
 					slvl.endturn();
 					break;
 				default:
+				}
+				try {
+					data.put(movePoto+20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 				movePoto = -1;
 			}

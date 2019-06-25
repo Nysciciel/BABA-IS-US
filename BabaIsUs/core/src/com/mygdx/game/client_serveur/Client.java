@@ -44,7 +44,7 @@ public class Client {
 				while(true) {
 					dis.read(b);
 					String buf = new String(b);
-					System.out.println(buf);
+					//System.out.println(buf);
 					hex = hex.concat(buf);
 					System.out.println(hex);
 					System.out.println("");
