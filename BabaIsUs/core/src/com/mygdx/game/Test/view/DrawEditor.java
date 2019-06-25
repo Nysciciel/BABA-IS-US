@@ -52,8 +52,7 @@ public class DrawEditor extends Actor{
     	} else {
     		try {
     			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
-    		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-    				| NoSuchMethodException | SecurityException e) {
+    		} catch (Exception e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
