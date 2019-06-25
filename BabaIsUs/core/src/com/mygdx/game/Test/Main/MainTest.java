@@ -58,7 +58,7 @@ public class MainTest extends Game {
                 this.setScreen(menu);
                 Stage stage = menu.getStage();
                 Gdx.input.setInputProcessor(stage);
-                if(levelView != null) levelView.setLvl(new Level("level.txt"));
+                //if(levelView != null) levelView.setLvl(new Level("level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 if(!reloaded) {
                     loading = new LoadingView(this) ;

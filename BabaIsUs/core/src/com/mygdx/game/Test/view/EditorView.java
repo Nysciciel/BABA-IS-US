@@ -101,7 +101,6 @@ public class EditorView implements Screen {
         
         
         
-        
         for(ObjectList object : ObjectList.values()) {
         	switch(object.getItemType()) {
         	case ITEM_TEXT:
