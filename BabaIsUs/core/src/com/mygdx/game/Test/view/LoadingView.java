@@ -79,6 +79,7 @@ public class LoadingView implements Screen, ServerCallBack {
         return thread;
     }
 
+
     @Override
     public void show() {
         // TODO Auto-generated method stub

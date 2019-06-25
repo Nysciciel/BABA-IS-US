@@ -21,6 +21,7 @@ public class MainTest extends Game {
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
+    private boolean reloaded;
    // private EndScreen endScreen;
     private ServerThread thread;
     private BlockingQueue<Integer> data;
@@ -52,6 +53,10 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage);
                 if(levelView != null) levelView.setLvl(new Level("Level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
+                if(!reloaded) {
+                    loading = new LoadingView(this) ;
+                    reloaded = true;
+                }
                 break;
             case EDITOR:
                 if(editorView == null) editorView = new EditorView(this);
@@ -93,6 +98,8 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage7);
                 break;
             case LOADING:
+                System.out.println("je suis en loading");
+                reloaded = false;
                 if(loading == null) loading = new LoadingView(this);
                 this.setScreen(loading);
                 Stage stage8 = loading.getStage();

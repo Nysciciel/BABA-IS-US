@@ -84,6 +84,10 @@ public class MultiplayerView implements Screen {
             }
         });
 
+      /*  if(Gdx.input.isKeyJustPressed((Input.Keys.ENTER))){
+            okBut.act(float delta);
+        }*/
+
         okBut.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
