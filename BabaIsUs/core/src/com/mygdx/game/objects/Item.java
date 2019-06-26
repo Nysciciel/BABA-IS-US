@@ -327,7 +327,7 @@ public abstract class Item {
 	 */
 	public float[] getAffichePos(){
 		float a,b;
-		if(animationChrono<0.2){
+		if(animationChrono<0.19){
 			switch(orientation){
 				case(0):
 					a=getX()+1-animationChrono*5;

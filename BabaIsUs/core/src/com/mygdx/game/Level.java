@@ -42,8 +42,6 @@ public class Level extends Actor{
 	private LogicHashtable ruleTable;
 	private ArrayList<Class> props;
 	private int hash;
-
-	//private ArrayList<Location[][]> history;
 	private HistoryStack historyStack;
 
 	public Level(int length,int height) {
@@ -83,8 +81,6 @@ public class Level extends Actor{
 			}
 
 			scanner.close();
-
-			//history = new ArrayList<Location[][]>();
 			
 			this.rules = new RuleSet();
 
@@ -123,9 +119,6 @@ public class Level extends Actor{
 				}
 			}
 
-
-			//history.add(this.matrixCopy());
-
 			updateRules();
 
 
@@ -148,21 +141,6 @@ public class Level extends Actor{
 	public TurnStack getTurnStack() {
 		return historyStack.peek();		
 	}
-	
-	/*
-	public LevelView(int hauteur, int largeur) {
-		this.height = hauteur;
-		this.length = largeur;
-
-		items = new ArrayList[height][length];
-
-		for (int index1 = 0; index1 < height; index1++) {
-			for (int index2 = 0; index2 < length; index2++) {
-				items[height - 1 - index1][index2] = new ArrayList<Item>();
-				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
-			}
-		}
-	}*/
 
 	public void readRules() {
 
@@ -363,7 +341,6 @@ public class Level extends Actor{
 			}
 		}
 		updateRules();
-		//history.add(this.matrixCopy());
 	}
 
 	public void rollback() {
@@ -376,20 +353,7 @@ public class Level extends Actor{
 		return locationMatrix;
 	}
 
-	public Location[][] matrixCopy(){
-		Location[][] matrix = new Location[height][length];
-		for(int y=0; y < height; y++) {
-			for(int x=0; x < length; x++) {
-				matrix[y][x] = locationMatrix[y][x].copy();
-			}
-		}
-		return matrix;
-	}
-
 	public void reset() {
-		//locationMatrix = history.get(0);
-		//history = new ArrayList<Location[][]>();
-		//history.add(this.matrixCopy());
 		updateRules();
 	}
 

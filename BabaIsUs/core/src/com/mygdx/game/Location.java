@@ -457,9 +457,10 @@ public class Location {
 				
 				for (Class c : afterTransform) {
 					try {
-						newItems.add((Item)c.getConstructors()[0].newInstance(this,item.getOrientation()));
+						Item newItem = (Item)c.getConstructors()[0].newInstance(this,item.getOrientation());
+						newItems.add(newItem);
 						// TODO : born
-						addChange(new Born(item, this));
+						addChange(new Born(newItem, this));
 						
 					} catch (Exception e) {
 						e.printStackTrace();
