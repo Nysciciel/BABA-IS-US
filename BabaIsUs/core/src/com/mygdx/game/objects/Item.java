@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.history.Born;
+import com.mygdx.game.history.Change;
+import com.mygdx.game.history.Death;
+import com.mygdx.game.history.HistoryStack;
+import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
@@ -162,8 +167,6 @@ public abstract class Item {
 		}
 		
 		for (Class c : getRuleTable().getProps()) {
-			// TODO :  getSimpleName wrong for Text objects ?
-			// TODO : verify order !!!!!!!!
 			Logic affirm;
 			Logic restrict;
 			boolean affirmBoolean;
@@ -211,6 +214,9 @@ public abstract class Item {
 	 */
 	public void goforward() {
 
+		// TODO : kill
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		
 		animationChrono = 0;
 		loc.del(this);
 
@@ -226,6 +232,9 @@ public abstract class Item {
 
 		loc = loc.next(orientation);
 		loc.add(this);
+		
+		// TODO : born
+		addChange(new Born(this, this.loc));
 	}
 
 	/**
@@ -233,11 +242,17 @@ public abstract class Item {
 	 * useful for when a push&pull chain is getting pushed
 	 */
 	public void advance() {
-
+		
+		// TODO : kill
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		
 		animationChrono = 0;
 		loc.del(this);
 		loc = loc.next(orientation);
 		loc.add(this);
+		
+		// TODO : born
+		addChange(new Born(this, this.loc));
 	}
 
 	public boolean isEmpty() {
@@ -299,12 +314,6 @@ public abstract class Item {
 		return spriteChoosing.toArray();
 	}
 	
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[1];
-		spriteUsed[0]="Error0";
-		return(spriteUsed);
-	}
-	
 	public String getSpriteID(int i) {
 		if (isTextureOriented) {
 			return this.getName()+orientation+"-"+i;
@@ -354,7 +363,15 @@ public abstract class Item {
 	}
 
 	public void orient(int direction) {
-		orientation = direction;
+		// TODO : kill + reborn with new direction
+		
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		setOrientation(direction);
+		addChange(new Born(this, this.loc));
+	}
+	
+	public void setOrientation(int orientation) {
+		this.orientation = orientation;
 	}
 
 	public boolean hasMoved() {
@@ -437,6 +454,14 @@ public abstract class Item {
 	 */
 	public String getRefName() {
 		return getName();
+	}
+	
+	private TurnStack getTurnStack() {
+		return this.loc.getTurnStack();
+	}
+	
+	private void addChange(Change change) {
+		getTurnStack().push(change);
 	}
 
 	/**

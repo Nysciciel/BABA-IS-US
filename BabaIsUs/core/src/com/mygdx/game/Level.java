@@ -7,6 +7,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.history.HistoryStack;
+import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.ItemRef;
 import com.mygdx.game.objects.text.Text;
@@ -41,7 +43,8 @@ public class Level extends Actor{
 	private ArrayList<Class> props;
 	private int hash;
 
-	private ArrayList<Location[][]> history;
+	//private ArrayList<Location[][]> history;
+	private HistoryStack historyStack;
 
 	public Level(int length,int height) {
 		super();
@@ -49,6 +52,7 @@ public class Level extends Actor{
 		this.length = length;
 		this.rules = new RuleSet();
 		this.hash = 0;
+		this.historyStack = new HistoryStack();
 
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -65,6 +69,7 @@ public class Level extends Actor{
 		props = new ArrayList<Class>();
 
 		this.ruleTable = new LogicHashtable();
+		this.historyStack = new HistoryStack();
 
 		try {
 			FileHandle file = Gdx.files.local("Level/"+filename);
@@ -79,7 +84,8 @@ public class Level extends Actor{
 
 			scanner.close();
 
-			history = new ArrayList<Location[][]>();
+			//history = new ArrayList<Location[][]>();
+			
 			this.rules = new RuleSet();
 
 
@@ -118,7 +124,7 @@ public class Level extends Actor{
 			}
 
 
-			history.add(this.matrixCopy());
+			//history.add(this.matrixCopy());
 
 			updateRules();
 
@@ -128,11 +134,21 @@ public class Level extends Actor{
 			System.out.println("Error while loading level");
 			e.printStackTrace();
 		}
-
-
-
 	}
 
+	public void addTurnStack() {
+		
+		if (historyStack.empty())
+			historyStack.push(new TurnStack());
+		else if (!historyStack.peek().isEmpty()) {
+			historyStack.push(new TurnStack());
+		}
+	}
+	
+	public TurnStack getTurnStack() {
+		return historyStack.peek();		
+	}
+	
 	/*
 	public LevelView(int hauteur, int largeur) {
 		this.height = hauteur;
@@ -187,7 +203,6 @@ public class Level extends Actor{
 			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 	}
-
 
 	public void interpretRules() {
 
@@ -244,6 +259,7 @@ public class Level extends Actor{
 	}
 
 	public void moveYou1(int direction) {
+		this.addTurnStack();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -268,6 +284,7 @@ public class Level extends Actor{
 	}
 
 	public void moveYou2(int direction) {
+		this.addTurnStack();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -346,15 +363,12 @@ public class Level extends Actor{
 			}
 		}
 		updateRules();
-		history.add(this.matrixCopy());
+		//history.add(this.matrixCopy());
 	}
 
 	public void rollback() {
-		if (history.size()>1) {
-			locationMatrix = history.get(history.size()-2);
-			locationMatrix = this.matrixCopy();
-			history.remove(history.size()-1);
-		}
+		if (!historyStack.empty())
+			historyStack.unStack();
 		updateRules();
 	}
 
@@ -373,9 +387,9 @@ public class Level extends Actor{
 	}
 
 	public void reset() {
-		locationMatrix = history.get(0);
-		history = new ArrayList<Location[][]>();
-		history.add(this.matrixCopy());
+		//locationMatrix = history.get(0);
+		//history = new ArrayList<Location[][]>();
+		//history.add(this.matrixCopy());
 		updateRules();
 	}
 
@@ -409,5 +423,10 @@ public class Level extends Actor{
 			}
 		}
 		return hash;
+	}
+
+	public void fakeTurn() {
+		this.addTurnStack();
+		this.endturn();
 	}
 }
