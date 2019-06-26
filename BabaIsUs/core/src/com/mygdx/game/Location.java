@@ -244,7 +244,7 @@ public class Location {
 			if(i.isDefeat()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((i.isYou1() || i.isYou2()) && (isFloat == j.isFloat())) {
+					if((j.isYou1() || j.isYou2()) && (isFloat == j.isFloat())) {
 						if(toKill.indexOf(j)==-1) {
 							toKill.add(j);
 						}
@@ -356,7 +356,7 @@ public class Location {
 			if(i.isWin()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((i.isYou1() || i.isYou2()) && (isFloat != j.isFloat())) {
+					if((j.isYou1() || j.isYou2()) && (isFloat == j.isFloat())) {
 						System.out.println("YOU WIN MOTHERFUCKER");;
 					}
 				}

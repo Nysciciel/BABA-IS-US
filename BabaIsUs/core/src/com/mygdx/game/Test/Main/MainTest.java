@@ -22,7 +22,7 @@ public class MainTest extends Game {
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
-    private boolean reloaded;
+    private boolean reloaded = true;
     private EditorSelectView editorSelect;
     private LevelSelectView levelSelect;
    // private EndScreen endScreen;
@@ -61,10 +61,11 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage);
                 //if(levelView != null) levelView.setLvl(new Level("level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
-                if(!reloaded) {
-                    loading = new LoadingView(this) ;
-                    reloaded = true;
-                }
+                //if(!reloaded) {
+                //    loading = new LoadingView(this) ;
+                //    server = new ServerView(this,thread,data,null);
+                //    reloaded = true;
+                //}
                 break;
             case EDITOR:
                 editorView = new EditorView(this, fileName);
@@ -91,10 +92,11 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage5);
                 break;
             case SERVER:
+                reloaded = false;
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(server == null) server = new ServerView(this,thread,data);
+                if(server == null) server = new ServerView(this,thread,data,"level.txt");
                 this.setScreen(server);
                 Stage stage6 = server.getStage();
                 Gdx.input.setInputProcessor(stage6);

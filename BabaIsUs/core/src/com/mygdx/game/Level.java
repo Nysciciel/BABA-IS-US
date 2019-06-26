@@ -191,7 +191,6 @@ public class Level extends Actor{
 	public void interpretRules() {
 
 		ruleTable = new LogicHashtable(rules, props);
-		//System.out.println(ruleTable);
 
 	}
 

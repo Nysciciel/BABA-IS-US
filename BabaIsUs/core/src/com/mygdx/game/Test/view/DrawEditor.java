@@ -64,6 +64,7 @@ public class DrawEditor extends Actor{
     	
     	if(object == ObjectList.EMPTY) {
     		loc.getItems().clear();
+    		loc.getItems().add(new Empty(loc, 0));
     	} else {
     		try {
     			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
