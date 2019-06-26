@@ -43,6 +43,7 @@ public class Level extends Actor{
 	private ArrayList<Class> props;
 	private int hash;
 	private HistoryStack historyStack;
+	private boolean isPlayed = false;
 
 	public Level(int length,int height) {
 		super();
@@ -194,6 +195,10 @@ public class Level extends Actor{
 
 		ruleTable = new LogicHashtable(rules, props);
 
+	}
+	
+	public void setPlayed() {
+		isPlayed = true;
 	}
 
 	public void updateRules() {
@@ -401,5 +406,9 @@ public class Level extends Actor{
 	public void fakeTurn() {
 		this.addTurnStack();
 		this.endturn();
+	}
+
+	public boolean isPlayed() {
+		return isPlayed;
 	}
 }

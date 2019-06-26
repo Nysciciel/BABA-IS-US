@@ -41,13 +41,14 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.setFillParent(true);
-
-
+        
         this.lvl = new Level(fileName);
+        lvl.setPlayed();
 
         texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
         stage.addActor(table);
-        table.add(lvl).expand().fill();
+        table.add(lvl).expand().fill().center().right();
+        
         Gdx.input.setInputProcessor(this);
 
     }
@@ -79,7 +80,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        stage.getBatch().draw(texture,0,0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+        stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
         stage.getBatch().end();
         stage.draw();
     }
