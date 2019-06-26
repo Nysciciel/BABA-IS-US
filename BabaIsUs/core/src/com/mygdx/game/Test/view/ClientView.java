@@ -139,6 +139,7 @@ public class ClientView implements Screen,ServerCallBack {
 
 		}
 		while(actions.peek()!=null) {
+			System.out.println(actions);
 			movePoto = actions.poll();
 			if (movePoto >= 20) {
 				movePoto = movePoto%20;
@@ -146,10 +147,10 @@ public class ClientView implements Screen,ServerCallBack {
 					switch (movePoto) {
 					case (4):
 						lvl.rollback();
-					break;
+						break;
 					case (5):
 						lvl.endturn();
-					break;
+						break;
 					case (6):
 						lvl.reset();
 					break;
@@ -158,9 +159,9 @@ public class ClientView implements Screen,ServerCallBack {
 					case (2):
 					case (3):
 						System.out.println(movePoto);
-					lvl.moveYou2(movePoto);
-					lvl.endturn();
-					break;
+						lvl.moveYou2(movePoto);
+						lvl.endturn();
+						break;
 					default:
 					}
 					movePoto = -1;
