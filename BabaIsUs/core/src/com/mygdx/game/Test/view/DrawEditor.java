@@ -83,12 +83,7 @@ public class DrawEditor extends Actor{
     	//super.draw(batch,parentAlpha);
     	
     	drawRepere(batch);
-    	
-    	for(int i=0 ; i < height ; i++) {
-        	for(int j=0 ; j < width ; j++) {
-        		lvl.render(batch,(int) Math.min(this.getWidth()/width, this.getHeight()/height));
-            }
-        }
+    	lvl.render(batch,(int) Math.min(this.getWidth()/width, this.getHeight()/height));
     	
     	
     }
