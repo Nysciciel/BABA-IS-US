@@ -125,6 +125,7 @@ public class Server{
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
 								connected = false;
+								break;
 							}
 						}
 

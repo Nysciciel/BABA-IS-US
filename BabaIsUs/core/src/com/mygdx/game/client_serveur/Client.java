@@ -11,6 +11,9 @@ import java.util.concurrent.BlockingQueue;
 
 
 
+
+
+
 public class Client {
 
 	BlockingQueue<Integer> data;
@@ -48,7 +51,9 @@ public class Client {
 				while(connected) {
 					dis.read(b);
 					String buf = new String(b);
-					hex = hex.concat(buf);
+					if(isInteger(buf)) {
+						hex = hex.concat(buf);
+					}
 					if(hex.contains("f")) {
 						filesize = Integer.parseInt(hex.substring(0, hex.length()-1));
 						break;
@@ -136,6 +141,17 @@ public class Client {
 
 	public void setConnected(boolean status){
 		connected = status;
+	}
+
+
+	public boolean isInteger( String input ) {
+		try {
+			Integer.parseInt( input );
+			return true;
+		}
+		catch( Exception e ) {
+			return false;
+		}
 	}
 
 }
