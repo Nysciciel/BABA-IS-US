@@ -68,6 +68,7 @@ public class MainTest extends Game {
                  //   this.level = null;
                 	System.out.println("j'aime bien cet endroit");
                     loading = null ;
+                    clientView = null;
                 //    server = new ServerView(this,thread,data,null);
                     reloaded = true;
                 }
