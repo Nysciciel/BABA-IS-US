@@ -354,6 +354,7 @@ public class Level extends Actor{
 	}
 
 	public void reset() {
+		historyStack.unFill();
 		updateRules();
 	}
 

@@ -11,4 +11,9 @@ public class HistoryStack extends Stack<TurnStack> {
 		}
 	}
 
+	public void unFill() {
+		while (!this.empty())
+			this.unStack();
+	}
+
 }

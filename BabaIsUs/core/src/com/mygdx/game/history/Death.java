@@ -17,6 +17,7 @@ public class Death extends Change {
 		item.setOrientation(orientation);
 		location.add(item);
 		item.setLocation(location);
+		item.cancelAnimation();
 	}
 
 }

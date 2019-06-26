@@ -353,6 +353,10 @@ public abstract class Item {
 		float[] tab={a,b};
 		return(tab);
 	}
+	
+	public void cancelAnimation() {
+		animationChrono = 1;
+	}
 
 	protected int getY() {
 		return loc.getY();
