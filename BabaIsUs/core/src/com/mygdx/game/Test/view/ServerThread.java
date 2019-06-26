@@ -58,6 +58,7 @@ public class ServerThread extends Thread{
 	public void shutCO(){
 		try {
 			server.getSocket().close();
+			System.out.println("connection fermee threadsocket");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

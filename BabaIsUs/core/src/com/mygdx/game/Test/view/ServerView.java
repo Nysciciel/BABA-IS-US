@@ -71,10 +71,13 @@ public class ServerView implements Screen,ServerCallBack {
 	public void show() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			parent.screenChoice(MainTest.MENU,null);
+
+            System.out.println("connection fermee avant setconnected");
 			this.server.setConnected(false);
+            System.out.println("connection fermee apres setconnected");
+            this.thread.getStatus();
 			this.thread.shutCO();
-			this.thread.getState();
+            parent.screenChoice(MainTest.MENU,null);
 			//this.thread.interrupt();
 		}
 		if(enabled) {

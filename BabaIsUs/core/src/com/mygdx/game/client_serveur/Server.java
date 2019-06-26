@@ -100,6 +100,7 @@ public class Server{
 						out.write(msg);
 						out.flush();
 						out.close();
+						System.out.println("connection fermee serveur envoyee");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -123,6 +124,7 @@ public class Server{
 						}
 
 						in.close();
+						System.out.println("connection fermee serveur recevoir");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
