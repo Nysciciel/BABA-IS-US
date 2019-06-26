@@ -89,7 +89,7 @@ public class MultiplayerView implements Screen {
         host.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                parent.screenChoice(MainTest.LOADING,null);
+                parent.screenChoice(MainTest.MULTILEVELSELECT,null);
             }
         });
 
