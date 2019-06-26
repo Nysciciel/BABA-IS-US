@@ -36,6 +36,8 @@ public class ServerView implements Screen,ServerCallBack {
 	private int chash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
+	private Texture texture;
+
 	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data, String filename) {
 
 		parent = mainTest;     // setting the argument to our field.
@@ -60,6 +62,8 @@ public class ServerView implements Screen,ServerCallBack {
 		table.add(slvl).expand().fill();
 
 		stage.addActor(table);
+
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
 	}
 
 	public Stage getStage(){
@@ -207,6 +211,9 @@ public class ServerView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,0,0,slvl.getMatrixLength()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()),slvl.getMatrixHeight()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()));
+		stage.getBatch().end();
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
             enabled =true;
@@ -243,6 +250,7 @@ public class ServerView implements Screen,ServerCallBack {
 		// TODO Auto-generated method stub
 		stage.dispose();
 		this.background.dispose();
+		texture.dispose();
 	}
 	@Override
 	public void dataReceived(int data) {
