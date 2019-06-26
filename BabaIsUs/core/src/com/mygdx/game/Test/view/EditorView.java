@@ -87,9 +87,9 @@ public class EditorView implements Screen {
         saveSelect = new TextButton("save",skin);
         
         sliderW = new Slider(5,20,1,true,skin);
-        sliderW.setValue(10);
+        sliderW.setValue(editor.getLarg());
         sliderH = new Slider(5,20,1,true,skin);
-        sliderH.setValue(10);
+        sliderH.setValue(editor.getHaut());
         
         mainList.left();
         for(ItemTypeList object : ItemTypeList.values()) {

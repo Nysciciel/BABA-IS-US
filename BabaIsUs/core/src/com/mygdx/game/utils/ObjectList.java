@@ -17,6 +17,7 @@ public enum ObjectList {
 	ROCK(ItemTypeList.OBJECT,Rock.class),
 	SKULL(ItemTypeList.OBJECT,Skull.class),
 	WALLTEXT(ItemTypeList.ITEM_TEXT,WallText.class),
+	FLAGTEXT(ItemTypeList.ITEM_TEXT,FlagText.class),
 	ROCKTEXT(ItemTypeList.ITEM_TEXT,RockText.class),
 	BABATEXT(ItemTypeList.ITEM_TEXT,BabaText.class),
 	KEKETEXT(ItemTypeList.ITEM_TEXT,KekeText.class),
