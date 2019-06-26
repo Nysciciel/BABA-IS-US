@@ -62,4 +62,9 @@ public class ServerThread extends Thread{
 			e.printStackTrace();
 		}
 	}
+
+	public void getStatus(){
+		System.out.println("this Thread state : " + this.getState());
+		this.server.getThreadStatus();
+	}
 }

@@ -39,7 +39,7 @@ public class Client {
 			clientSocket = new Socket(ip_addr,5000);
 
 			dis = new DataInputStream(clientSocket.getInputStream());
-			fos = new FileOutputStream("Level\\levelc.txt");
+			fos = new FileOutputStream("Level/levelc.txt");
 			int filesize = 0;
 			byte[] buffer = new byte[4096];
 			byte[] b = new byte[1];
@@ -79,6 +79,7 @@ public class Client {
 					while(connected){
 						try {
 							msg = data.take();
+							System.out.println("valeur envoyee "+msg);
 							out.write(msg);
 							out.flush();
 						} catch (InterruptedException e) {

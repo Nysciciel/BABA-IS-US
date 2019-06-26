@@ -9,6 +9,7 @@ import com.mygdx.game.objects.text.relation.*;
 
 public enum ObjectList {
 	BABA(ItemTypeList.OBJECT,Baba.class),
+	FLAG(ItemTypeList.OBJECT,Flag.class),
 	KEKE(ItemTypeList.OBJECT,Keke.class),
 	WALL(ItemTypeList.OBJECT,Wall.class),
 	WATER(ItemTypeList.OBJECT,Water.class),
