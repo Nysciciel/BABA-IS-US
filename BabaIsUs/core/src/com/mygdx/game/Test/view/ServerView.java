@@ -12,6 +12,8 @@ import com.mygdx.game.Level;
 import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
+
+import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
@@ -34,6 +36,8 @@ public class ServerView implements Screen,ServerCallBack {
 	private int chash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
+	private Texture texture;
+
 	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data, String filename) {
 
 		parent = mainTest;     // setting the argument to our field.
@@ -51,12 +55,15 @@ public class ServerView implements Screen,ServerCallBack {
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
 		this.slvl = new com.mygdx.game.ServerLevel(filename);
 		this.thread = thread;
+		this.server = this.thread.getServer();
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);
 
 		table.add(slvl).expand().fill();
 
 		stage.addActor(table);
+
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
 	}
 
 	public Stage getStage(){
@@ -71,10 +78,14 @@ public class ServerView implements Screen,ServerCallBack {
 	public void show() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			parent.screenChoice(MainTest.MENU,null);
-			this.server.setConnected(false);
-			this.thread.shutCO();
+
+            System.out.println("connection fermee avant setconnected");
 			this.thread.getStatus();
+			this.server.setConnected(false);
+            System.out.println("connection fermee apres setconnected");
+            this.thread.getStatus();
+			this.thread.shutCO();
+            parent.screenChoice(MainTest.MENU,null);
 			//this.thread.interrupt();
 		}
 		if(enabled) {
@@ -168,6 +179,15 @@ public class ServerView implements Screen,ServerCallBack {
 					slvl.moveYou2(movePoto);
 				slvl.endturn();
 				break;
+				case (99):
+					parent.screenChoice(MainTest.MENU,null);
+					try {
+						server.getSocket().close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				break;
 				default:
 				}
 				try {
@@ -191,6 +211,9 @@ public class ServerView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,0,0,slvl.getMatrixLength()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()),slvl.getMatrixHeight()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()));
+		stage.getBatch().end();
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
             enabled =true;
@@ -227,6 +250,7 @@ public class ServerView implements Screen,ServerCallBack {
 		// TODO Auto-generated method stub
 		stage.dispose();
 		this.background.dispose();
+		texture.dispose();
 	}
 	@Override
 	public void dataReceived(int data) {

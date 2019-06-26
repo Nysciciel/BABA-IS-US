@@ -142,6 +142,14 @@ public class Level extends Actor{
 		return historyStack.peek();		
 	}
 
+	public int getIntLength(){
+		return(length);
+	}
+
+	public int getIntHeight(){
+		return(height);
+	}
+
 	public void readRules() {
 
 		rules = new RuleSet();

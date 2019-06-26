@@ -23,7 +23,7 @@ public class Server{
 	private Thread envoyer;
 	private Thread recevoir;
 
-	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack) {
+	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack, String filename) {
 
 		this.data = bq;
 		//this.lvl = level;
@@ -53,7 +53,7 @@ public class Server{
 
 			//try {
 			DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
-			File file = new File("Level\\level.txt");
+			File file = new File("Level\\" + filename);
 			fis = new FileInputStream(file);
 			byte[] buffer = new byte[4096];
 			int length = (int)file.length();
@@ -100,8 +100,14 @@ public class Server{
 						out.write(msg);
 						out.flush();
 						out.close();
+						System.out.println("connection fermee serveur envoyee");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
+						try {
+							out.close();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
 						e.printStackTrace();
 					}
 				}
@@ -119,10 +125,12 @@ public class Server{
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
 								connected = false;
+								break;
 							}
 						}
 
 						in.close();
+						System.out.println("connection fermee serveur recevoir");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -153,7 +161,7 @@ public class Server{
 	}
 
 	public void getThreadStatus(){
-		System.out.println("envoyer status : " + envoyer.getState() + "recevoir status : " + recevoir.getState());
+		System.out.println("envoyer status : " + envoyer.getState() + " recevoir status : " + recevoir.getState());
 	}
 
 

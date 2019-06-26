@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -29,6 +30,8 @@ public class ClientView implements Screen,ServerCallBack {
 	private int hash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
+	private Texture texture;
+
 
 	public ClientView(MainTest mainTest, String ip_addr) {
 
@@ -52,6 +55,7 @@ public class ClientView implements Screen,ServerCallBack {
 		}else{
 			noCo = true;
 		}
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
 	}
 
 	public Stage getStage(){
@@ -67,6 +71,11 @@ public class ClientView implements Screen,ServerCallBack {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU,null);
 			//this.thread.getState();
+			try {
+				data.put(99);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -152,8 +161,8 @@ public class ClientView implements Screen,ServerCallBack {
 						lvl.endturn();
 						break;
 					case (6):
-						lvl.reset();
-					break;
+							lvl.reset();
+							break;
 					case (0):
 					case (1):
 					case (2):
@@ -161,6 +170,9 @@ public class ClientView implements Screen,ServerCallBack {
 						System.out.println(movePoto);
 						lvl.moveYou2(movePoto);
 						lvl.endturn();
+						break;
+					case (19):
+						parent.screenChoice(MainTest.MENU,null);
 						break;
 					default:
 					}
@@ -204,6 +216,9 @@ public class ClientView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,0,0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().end();
 		stage.draw();
 	}
 
@@ -232,6 +247,7 @@ public class ClientView implements Screen,ServerCallBack {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		stage.dispose();
+		texture.dispose();
 	}
 
 	@Override

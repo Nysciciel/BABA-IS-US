@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,6 +32,8 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     private BlockingQueue<Integer> data;
     private Table table;
 
+    private Texture texture;
+
 
     public LevelView(MainTest mainTest, String fileName) {
 
@@ -42,7 +45,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
         this.lvl = new Level(fileName);
 
-
+        texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
         stage.addActor(table);
         table.add(lvl).expand().fill();
         Gdx.input.setInputProcessor(this);
@@ -75,6 +78,9 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().begin();
+        stage.getBatch().draw(texture,0,0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+        stage.getBatch().end();
         stage.draw();
     }
 
@@ -103,6 +109,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     public void dispose() {
         // TODO Auto-generated method stub
         stage.dispose();
+        texture.dispose();
     }
 
     @Override
@@ -119,7 +126,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     		case Keys.SPACE:
     			lvl.fakeTurn();
     			break;
-    		case Keys.Z:
+    		case Keys.E:
     			lvl.rollback();
     			break;
     		case Keys.R:
@@ -141,6 +148,22 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     			lvl.moveYou1(3);
                 lvl.endturn();
     			break;
+                case Keys.D:
+                    lvl.moveYou2(2);
+                    lvl.endturn();
+                    break;
+                case Keys.Z:
+                    lvl.moveYou2(1);
+                    lvl.endturn();
+                    break;
+                case Keys.Q:
+                    lvl.moveYou2(0);
+                    lvl.endturn();
+                    break;
+                case Keys.S:
+                    lvl.moveYou2(3);
+                    lvl.endturn();
+                    break;
     		case Keys.ESCAPE:
     			parent.screenChoice(MainTest.MENU, null);
     			break;
