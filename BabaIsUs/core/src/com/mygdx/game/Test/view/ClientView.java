@@ -167,7 +167,7 @@ public class ClientView implements Screen,ServerCallBack {
 						lvl.moveYou2(movePoto);
 						lvl.endturn();
 						break;
-					case (99):
+					case (19):
 						parent.screenChoice(MainTest.MENU,null);
 						break;
 					default:

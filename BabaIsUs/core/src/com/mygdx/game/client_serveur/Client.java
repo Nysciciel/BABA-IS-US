@@ -114,7 +114,11 @@ public class Client {
 						}
 						in.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						try {
+							in.close();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
 					}
 				}
 			});

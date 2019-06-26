@@ -103,6 +103,11 @@ public class Server{
 						System.out.println("connection fermee serveur envoyee");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
+						try {
+							out.close();
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
 						e.printStackTrace();
 					}
 				}
