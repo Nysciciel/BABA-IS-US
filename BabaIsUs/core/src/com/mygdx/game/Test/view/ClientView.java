@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -29,6 +30,8 @@ public class ClientView implements Screen,ServerCallBack {
 	private int hash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
+	private Texture texture;
+
 
 	public ClientView(MainTest mainTest, String ip_addr) {
 
@@ -52,6 +55,7 @@ public class ClientView implements Screen,ServerCallBack {
 		}else{
 			noCo = true;
 		}
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
 	}
 
 	public Stage getStage(){
@@ -204,6 +208,9 @@ public class ClientView implements Screen,ServerCallBack {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,0,0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().end();
 		stage.draw();
 	}
 
@@ -232,6 +239,7 @@ public class ClientView implements Screen,ServerCallBack {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		stage.dispose();
+		texture.dispose();
 	}
 
 	@Override
