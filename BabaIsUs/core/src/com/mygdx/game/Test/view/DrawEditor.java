@@ -72,20 +72,25 @@ public class DrawEditor extends Actor{
     public void setItem(ObjectList object, int x, int y, int direction) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
-    	float size = Math.min(ratioWidth, ratioHeight);
-    	Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
-    	
-    	if(object == ObjectList.EMPTY) {
-    		loc.getItems().clear();
-    		loc.getItems().add(new Empty(loc, 0));
+    	int size = (int)Math.min(ratioWidth, ratioHeight);
+    	if(((int)(y/size) < 0)||((int)(y/size) >= lvl.getMatrixHeight())||((int)(x/size) < 0)||((int)(x/size) >= lvl.getMatrixLength())){
+    		
     	} else {
-    		try {
-    			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
-    		} catch (Exception e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+    		Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
+        	
+        	if(object == ObjectList.EMPTY) {
+        		loc.getItems().clear();
+        		loc.getItems().add(new Empty(loc, 0));
+        	} else {
+        		try {
+        			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
+        		} catch (Exception e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
     	}
+    	
     	
  
     }
