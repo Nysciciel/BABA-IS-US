@@ -109,7 +109,7 @@ public class MainTest extends Game {
                 break;
             case LOADING:
                 reloaded = false;
-                if(loading == null) loading = new LoadingView(this);
+                if(loading == null) loading = new LoadingView(this,fileName);
                 this.setScreen(loading);
                 Stage stage8 = loading.getStage();
                 Gdx.input.setInputProcessor(stage8);
