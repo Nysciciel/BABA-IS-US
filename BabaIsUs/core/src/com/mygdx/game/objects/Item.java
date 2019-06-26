@@ -35,6 +35,7 @@ public abstract class Item {
 	protected Texture texture;
 	protected int orientation;
 	protected Location loc;
+	protected int prio;
 
 	protected boolean hasMoved = false;
 	protected boolean hasShifted = false;
@@ -76,6 +77,21 @@ public abstract class Item {
 		}
 
 		return affirm.getTruth(this) && !restrict.getTruth(this);
+	}
+
+	public int getPrio(){
+		return(prio);
+	}
+
+	public void setPrio(int p){
+		prio=p;
+	}
+
+	public int getIntFloat(){
+		if(this.isFloat()) {
+			return (1);
+		}
+		return(0);
 	}
 
 	public boolean isPush() {
@@ -251,9 +267,9 @@ public abstract class Item {
 	public void render(Batch sb, float cellSize){
 
 		Object[] spriteChosen = spriteChosen();
-		// C'est en réalité une TextureRegion[]
+		// C'est en rï¿½alitï¿½ une TextureRegion[]
 		int length = spriteChosen.length;
-		
+
 		animation = new Animation(2f/(3f*(float)length), spriteChosen);
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
@@ -274,7 +290,6 @@ public abstract class Item {
 			}
 			if (spriteChoosing.peek() == null) {
 				spriteChoosing.pop();
-				//System.out.println(this.getSpriteID(i));
 				if (i == 0) {
 					spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
 				}
@@ -307,24 +322,24 @@ public abstract class Item {
 			switch(orientation){
 				case(0):
 					a=getX()+1-animationChrono*5;
-					b=getY();
+					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(1):
 					a=getX();
-					b=getY()-1+animationChrono*5;
+					b=getY()-1+animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(2):
 					a=getX()-1+animationChrono*5;
-					b=getY();
+					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				default:
 					a=getX();
-					b=getY()+1-animationChrono*5;
+					b=getY()+1-animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 			}
 		}else {
 			a=getX();
-			b=getY();
+			b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 		}
 		float[] tab={a,b};
 		return(tab);

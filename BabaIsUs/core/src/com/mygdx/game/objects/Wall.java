@@ -8,6 +8,7 @@ public class Wall extends Item {
 
 	public Wall(Location loc, int orientation) {
 		super(loc, orientation);
+		prio=2;
 	}
 
 	public void loadTextureAtlas(){
