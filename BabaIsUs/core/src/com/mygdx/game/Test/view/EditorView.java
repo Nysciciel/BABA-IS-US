@@ -93,13 +93,13 @@ public class EditorView implements Screen {
         
         mainList.left();
         for(ItemTypeList object : ItemTypeList.values()) {
+        	
         	mainList.add(new TextButton(object.toString(),skin)).fill().width(100).uniformX();
+        	
         }
         mainList.add(clearSelect).expandX().right();
         mainList.add(resetSelect).fill().uniformX();
         mainList.add(saveSelect).fill().uniformX();
-        
-        
         
         for(ObjectList object : ObjectList.values()) {
         	switch(object.getItemType()) {

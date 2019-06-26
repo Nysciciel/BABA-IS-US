@@ -106,7 +106,7 @@ public class DrawEditor extends Actor{
     public void drawRepere(Batch batch) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
-    	float size = Math.min(ratioWidth, ratioHeight);
+    	int size = (int)Math.min(ratioWidth, ratioHeight);
     	batch.end();
     	shapeRenderer.begin(ShapeType.Line);
     	shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1);
