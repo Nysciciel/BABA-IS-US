@@ -410,6 +410,7 @@ public class Level extends Actor{
 	public void fakeTurn() {
 		this.addTurnStack();
 		this.endturn();
+	}
 
 	
 	public void win() {
