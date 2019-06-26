@@ -81,7 +81,7 @@ public class Level extends Actor{
 
 			history = new ArrayList<Location[][]>();
 			this.rules = new RuleSet();
-			
+
 
 			locationMatrix = new Location[height][length];
 
@@ -91,13 +91,13 @@ public class Level extends Actor{
 					String[] split = cell[j].split(" ");
 					ArrayList<Item> items = new ArrayList<Item>();
 					for(int k=0 ;k<split.length;k++) {
-	
+
 						locationMatrix[i][j] = new Location(items, this, j, i);
 						String classname = split[k].substring(0, split[k].length()-1);
 						Class clazz = Class.forName(classname);
 						locationMatrix[i][j].add((Item) clazz.getConstructor(Location.class , int.class).newInstance(locationMatrix[i][j] , Integer.parseInt(split[k].substring(split[k].length()-1))));
-						
-						
+
+
 						if(classname.contains("text")) {
 							if (classname.contains("item_ref")) {
 								String desired_name = "com.mygdx.game.objects"+classname.substring(classname.lastIndexOf('.'),classname.length()-4);
@@ -116,7 +116,7 @@ public class Level extends Actor{
 					}
 				}
 			}
-			
+
 
 			history.add(this.matrixCopy());
 
@@ -192,7 +192,6 @@ public class Level extends Actor{
 	public void interpretRules() {
 
 		ruleTable = new LogicHashtable(rules, props);
-		//System.out.println(ruleTable);
 
 	}
 
@@ -302,9 +301,11 @@ public class Level extends Actor{
 
 
 	public void render(Batch sb, float cellSize) {
-		for (int x = 0; x<length;x++) {
-			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].render(sb,cellSize);
+		for(int prio=1;prio<=8;prio++) {
+			for (int x = 0; x < length; x++) {
+				for (int y = 0; y < height; y++) {
+					locationMatrix[y][x].render(sb, cellSize,prio);
+				}
 			}
 		}
 	}

@@ -5,8 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,7 +28,6 @@ public class LoadingView implements Screen, ServerCallBack {
     private MainTest parent; // a field to store our orchestrator
     private com.mygdx.game.Level lvl;
     private Stage stage;
-    private Texture background;
 
     private ConcurrentLinkedQueue data;
     private com.mygdx.game.ServerLevel slvl;
@@ -42,12 +40,16 @@ public class LoadingView implements Screen, ServerCallBack {
     private String IP;
     private Skin skin;
 
+    private TextureAtlas textureAtlas;
+    private Animation animation;
+    private TextureAtlas textureAtlas2;
+    private Animation animation2;
+
     // our constructor with a Box2DTutorial argument
     public LoadingView(MainTest mainTest, String fileName) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
-        this.background = new Texture("Menu_background.jpg");
         Gdx.input.setInputProcessor(stage);
 
         this.data = new ConcurrentLinkedQueue();
@@ -62,6 +64,12 @@ public class LoadingView implements Screen, ServerCallBack {
         this.gameTitleGlyph = new GlyphLayout();
         this.gameTitleGlyph.setText(this.gameTitleText, Constants.LOADING_SCREEN);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
+
+        textureAtlas = new TextureAtlas(Gdx.files.internal("BackgroundMenu.txt"));
+        animation = new Animation(2/3f, textureAtlas.getRegions());
+        textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
+        animation2 = new Animation(2/3f, textureAtlas2.getRegions());
+
     }
 
     public Stage getStage(){
@@ -121,8 +129,16 @@ public class LoadingView implements Screen, ServerCallBack {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         //stage.getBatch().draw(this.gameTitleGlyph,Gdx.graphics.getWidth()/2 - this.gameTitleGlyph.width/2,Gdx.graphics.getHeight()/2);
+        float elapsedTime = parent.getElapsedTime();
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        parent.setElapsedTime(elapsedTime);
+        if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
+            parent.setElapsedTime(0);
+        }
+        stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime-Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         this.gameTitleText.draw(stage.getBatch(), this.gameTitleGlyph, Gdx.graphics.getWidth()/2 - this.gameTitleGlyph.width/2, Gdx.graphics.getHeight()/3);
         stage.getBatch().end();
         stage.draw();
@@ -153,7 +169,8 @@ public class LoadingView implements Screen, ServerCallBack {
     public void dispose() {
         // TODO Auto-generated method stub
         stage.dispose();
-        this.background.dispose();
+        this.textureAtlas.dispose();
+        this.textureAtlas2.dispose();
         this.gameTitleText.dispose();
     }
 

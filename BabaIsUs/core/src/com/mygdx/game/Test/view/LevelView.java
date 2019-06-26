@@ -115,11 +115,9 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     		switch(keycode) {
     		case Keys.ENTER:
     			lvl.endturn();
-                System.out.println(lvl.hashCode());
     			break;
     		case Keys.SPACE:
     			lvl.endturn();
-                System.out.println(lvl.hashCode());
     			break;
     		case Keys.Z:
     			lvl.rollback();

@@ -225,9 +225,11 @@ public class Location {
 	}
 
 
-	public void render(Batch sb, float cellSize) {
+	public void render(Batch sb, float cellSize,int prio) {
 		for(Item i:items) {
-			i.render(sb, cellSize);
+			if((i.getPrio()+4*(i.getIntFloat()))==prio) {
+				i.render(sb, cellSize);
+			}
 		}
 	}
 
@@ -242,7 +244,7 @@ public class Location {
 			if(i.isDefeat()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((i.isYou1() || i.isYou2()) && (isFloat == j.isFloat())) {
+					if((j.isYou1() || j.isYou2()) && (isFloat == j.isFloat())) {
 						if(toKill.indexOf(j)==-1) {
 							toKill.add(j);
 						}
@@ -354,7 +356,7 @@ public class Location {
 			if(i.isWin()) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
-					if((i.isYou1() || i.isYou2()) && (isFloat != j.isFloat())) {
+					if((j.isYou1() || j.isYou2()) && (isFloat == j.isFloat())) {
 						System.out.println("YOU WIN MOTHERFUCKER");;
 					}
 				}
