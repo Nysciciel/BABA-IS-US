@@ -22,6 +22,7 @@ public class ClientView implements Screen,ServerCallBack {
 	private Stage stage;
 	private Client client;
 	private Server server;
+	private boolean noCo = false;
 	private BlockingQueue<Integer> data;
 	private int movePoto;
 	private Table table;
@@ -40,13 +41,17 @@ public class ClientView implements Screen,ServerCallBack {
 
 		data = new ArrayBlockingQueue<Integer>(32);
 		client = new Client(data,this,ip_addr);
+		System.out.println(this.client.isConnected());
+		if(this.client.isConnected()) {
+			this.lvl = new com.mygdx.game.Level("levelc.txt");
+			Gdx.input.setInputProcessor(stage);
 
-		this.lvl = new com.mygdx.game.Level("levelc.txt");
-		Gdx.input.setInputProcessor(stage);
+			table.add(lvl).expand().fill();
 
-		table.add(lvl).expand().fill();
-
-		stage.addActor(table);
+			stage.addActor(table);
+		}else{
+			noCo = true;
+		}
 	}
 
 	public Stage getStage(){
@@ -55,6 +60,9 @@ public class ClientView implements Screen,ServerCallBack {
 
 	@Override
 	public void show() {
+		if(noCo){
+			parent.screenChoice(MainTest.MENU);
+		}
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU,null);

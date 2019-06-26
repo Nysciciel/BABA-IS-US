@@ -63,6 +63,7 @@ public class MainTest extends Game {
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 if(!reloaded) {
                     loading = new LoadingView(this) ;
+                    server = new ServerView(this,thread,data);
                     reloaded = true;
                 }
                 break;
@@ -91,6 +92,7 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage5);
                 break;
             case SERVER:
+                reloaded = false;
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
