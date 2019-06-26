@@ -39,7 +39,7 @@ public class Client {
 			clientSocket = new Socket(ip_addr,5000);
 
 			dis = new DataInputStream(clientSocket.getInputStream());
-			fos = new FileOutputStream("levelc.txt");
+			fos = new FileOutputStream("Level\\levelc.txt");
 			int filesize = 0;
 			byte[] buffer = new byte[4096];
 			byte[] b = new byte[1];
@@ -48,13 +48,9 @@ public class Client {
 				while(connected) {
 					dis.read(b);
 					String buf = new String(b);
-					//System.out.println(buf);
 					hex = hex.concat(buf);
-					System.out.println(hex);
-					System.out.println("");
 					if(hex.contains("f")) {
 						filesize = Integer.parseInt(hex.substring(0, hex.length()-1));
-						System.out.println(filesize);
 						break;
 					}
 				}
@@ -66,14 +62,11 @@ public class Client {
 			int read = 0;
 			int totalRead = 0;
 			int remaining = filesize;
-			System.out.println("debut d'enregistrement de fichier");
 			while((read = dis.read(buffer, 0, Math.min(buffer.length, remaining))) > 0) {
 				totalRead += read;
 				remaining -= read;
-				System.out.println("read " + totalRead + " bytes.");
 				fos.write(buffer, 0, read);
 			}
-			System.out.println("fin d'enregistrement de fichier");
 
 			fos.close();
 			out = clientSocket.getOutputStream();
@@ -113,10 +106,8 @@ public class Client {
 					try {
 						while(connected) {
 							in.read(b);
-							System.out.println("valeur passée " + b[0]);
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
-								System.out.println("connection fermée par le serveur");
 								connected = false;
 							}
 						}
@@ -128,7 +119,6 @@ public class Client {
 			});
 			recevoir.start();
 		}catch (UnknownHostException uh) {
-			System.out.println("Cette adresse n'existe pas");
 			connected = false;
 		}
 		catch (Exception e){
