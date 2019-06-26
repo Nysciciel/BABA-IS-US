@@ -126,7 +126,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     		case Keys.SPACE:
     			lvl.endturn();
     			break;
-    		case Keys.Z:
+    		case Keys.E:
     			lvl.rollback();
     			break;
     		case Keys.R:
@@ -148,6 +148,22 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     			lvl.moveYou1(3);
                 lvl.endturn();
     			break;
+                case Keys.D:
+                    lvl.moveYou2(2);
+                    lvl.endturn();
+                    break;
+                case Keys.Z:
+                    lvl.moveYou2(1);
+                    lvl.endturn();
+                    break;
+                case Keys.Q:
+                    lvl.moveYou2(0);
+                    lvl.endturn();
+                    break;
+                case Keys.S:
+                    lvl.moveYou2(3);
+                    lvl.endturn();
+                    break;
     		case Keys.ESCAPE:
     			parent.screenChoice(MainTest.MENU, null);
     			break;

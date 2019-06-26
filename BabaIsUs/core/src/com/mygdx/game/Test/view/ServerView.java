@@ -51,6 +51,7 @@ public class ServerView implements Screen,ServerCallBack {
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
 		this.slvl = new com.mygdx.game.ServerLevel(filename);
 		this.thread = thread;
+		this.server = this.thread.getServer();
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);
 
@@ -71,10 +72,14 @@ public class ServerView implements Screen,ServerCallBack {
 	public void show() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			parent.screenChoice(MainTest.MENU,null);
-			this.server.setConnected(false);
-			this.thread.shutCO();
+
+            System.out.println("connection fermee avant setconnected");
 			this.thread.getStatus();
+			this.server.setConnected(false);
+            System.out.println("connection fermee apres setconnected");
+            this.thread.getStatus();
+			this.thread.shutCO();
+            parent.screenChoice(MainTest.MENU,null);
 			//this.thread.interrupt();
 		}
 		if(enabled) {
@@ -167,6 +172,9 @@ public class ServerView implements Screen,ServerCallBack {
 				case(3):
 					slvl.moveYou2(movePoto);
 				slvl.endturn();
+				break;
+				case (99):
+					parent.screenChoice(MainTest.MENU,null);
 				break;
 				default:
 				}

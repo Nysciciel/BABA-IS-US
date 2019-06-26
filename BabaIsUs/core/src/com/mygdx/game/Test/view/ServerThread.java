@@ -14,21 +14,23 @@ public class ServerThread extends Thread{
 	private boolean clientUp;
 	private Server server;
 	private String serverIp;
+	private String filename;
 
-	public ServerThread(ConcurrentLinkedQueue bq, ServerCallBack callBack){
+	public ServerThread(ConcurrentLinkedQueue bq, ServerCallBack callBack, String filename){
 		super();
 		this.server = null;
 		this.serverIp = null;
 		this.clientUp = false;
 		this.bq = bq;
 		this.callBack = callBack;
+		this.filename = filename;
 		//this.level = level;
 		this.start();
 
 	}
 
 	public void run() {
-		this.server = new Server(this.bq,this.callBack) ;
+		this.server = new Server(this.bq,this.callBack, this.filename) ;
 		/*do{
 			serverIp = this.server.getIp();
 		}while(serverIp == null);*/
@@ -58,6 +60,7 @@ public class ServerThread extends Thread{
 	public void shutCO(){
 		try {
 			server.getSocket().close();
+			System.out.println("connection fermee threadsocket");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

@@ -44,6 +44,8 @@ public class LoadingView implements Screen, ServerCallBack {
     private Animation animation;
     private TextureAtlas textureAtlas2;
     private Animation animation2;
+    
+    private String filename;
 
     // our constructor with a Box2DTutorial argument
     public LoadingView(MainTest mainTest, String fileName) {
@@ -53,7 +55,8 @@ public class LoadingView implements Screen, ServerCallBack {
         Gdx.input.setInputProcessor(stage);
 
         this.data = new ConcurrentLinkedQueue();
-        this.thread = new ServerThread(data,this);
+        this.filename = fileName;
+        this.thread = new ServerThread(data,this,filename);
         this.IP = " ";
 
 
@@ -110,12 +113,12 @@ public class LoadingView implements Screen, ServerCallBack {
             table.setVisible(true);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            parent.screenChoice(MainTest.MENU,null);
+            parent.screenChoice(MainTest.MENU,this.filename);
             this.thread.interrupt();
         }
 
         if(this.thread.checkClient()){
-            parent.screenChoice(MainTest.SERVER,null);
+            parent.screenChoice(MainTest.SERVER,filename);
         }
 
 
@@ -124,7 +127,7 @@ public class LoadingView implements Screen, ServerCallBack {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
-        parent.screenChoice(MainTest.LOADING,null);
+        parent.screenChoice(MainTest.LOADING,filename);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

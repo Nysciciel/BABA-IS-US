@@ -67,6 +67,11 @@ public class ClientView implements Screen,ServerCallBack {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			parent.screenChoice(MainTest.MENU,null);
 			//this.thread.getState();
+			try {
+				data.put(99);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -152,8 +157,8 @@ public class ClientView implements Screen,ServerCallBack {
 						lvl.endturn();
 						break;
 					case (6):
-						lvl.reset();
-					break;
+							lvl.reset();
+							break;
 					case (0):
 					case (1):
 					case (2):
@@ -161,6 +166,9 @@ public class ClientView implements Screen,ServerCallBack {
 						System.out.println(movePoto);
 						lvl.moveYou2(movePoto);
 						lvl.endturn();
+						break;
+					case (99):
+						parent.screenChoice(MainTest.MENU,null);
 						break;
 					default:
 					}
