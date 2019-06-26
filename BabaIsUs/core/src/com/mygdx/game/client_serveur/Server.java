@@ -53,9 +53,9 @@ public class Server{
 
 			//try {
 			DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
-			fis = new FileInputStream("level.txt");
+			File file = new File("Level\\level.txt");
+			fis = new FileInputStream(file);
 			byte[] buffer = new byte[4096];
-			File file = new File("level.txt");
 			int length = (int)file.length();
 			String hex = Integer.toString(length);
 			hex = hex.concat("f");
@@ -89,8 +89,6 @@ public class Server{
 								continue;
 							}
 							msg = (int) data.poll();
-							System.out.println("sent;"+msg);
-							System.out.println("");
 							out.write(msg);
 							out.flush();
 						} catch (Exception e) {
@@ -120,7 +118,6 @@ public class Server{
 							in.read(b);
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
-								System.out.println("connection fermée par le client");
 								connected = false;
 							}
 						}
