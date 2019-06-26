@@ -49,7 +49,7 @@ public class ServerView implements Screen,ServerCallBack {
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-		this.slvl = new com.mygdx.game.ServerLevel(filename);
+		this.slvl = new com.mygdx.game.ServerLevel(filename, parent);
 		this.thread = thread;
 		this.server = this.thread.getServer();
 		this.thread.getServer().setServerCallBack(this);

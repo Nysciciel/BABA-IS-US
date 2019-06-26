@@ -3,10 +3,13 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.ItemRef;
 import com.mygdx.game.objects.text.Text;
@@ -40,15 +43,17 @@ public class Level extends Actor{
 	private LogicHashtable ruleTable;
 	private ArrayList<Class> props;
 	private int hash;
+	private MainTest currentgame;
 
 	private ArrayList<Location[][]> history;
 
-	public Level(int length,int height) {
+	public Level(int length,int height, MainTest currentgame) {
 		super();
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
 		this.hash = 0;
+		this.currentgame = currentgame;
 
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -60,7 +65,9 @@ public class Level extends Actor{
 		}
 	}
 
-	public Level(String filename) {
+	public Level(String filename, MainTest currentgame) {
+		
+		this.currentgame = currentgame;
 
 		props = new ArrayList<Class>();
 
@@ -417,5 +424,9 @@ public class Level extends Actor{
 			}
 		}
 		return hash;
+	}
+	
+	public void win() {
+		this.currentgame.screenChoice(MainTest.MENU,null);
 	}
 }

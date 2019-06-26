@@ -357,7 +357,8 @@ public class Location {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
 					if((j.isYou1() || j.isYou2()) && (isFloat == j.isFloat())) {
-						System.out.println("YOU WIN MOTHERFUCKER");;
+						
+						lvl.win();
 					}
 				}
 			}
