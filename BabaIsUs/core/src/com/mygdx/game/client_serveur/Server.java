@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server{
 
-	ConcurrentLinkedQueue<Integer> data;
+	ConcurrentLinkedQueue<String> data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
 	private String ip;
@@ -87,7 +87,7 @@ public class Server{
 			in = clientSocket.getInputStream();
 
 			this.envoyer = new Thread(new Runnable() {
-				int msg;
+				String msg;
 				@Override
 				public void run() {
 					while(connected){
@@ -95,17 +95,16 @@ public class Server{
 							if(data.peek()==null) {
 								continue;
 							}
-							msg = (int) data.poll();
-							System.out.println(msg);
-							out.write(msg);
+							msg = data.poll();
+							out.write(msg.getBytes());
 							out.flush();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 					try {
-						msg = 99;
-						out.write(msg);
+						msg = "b99";
+						out.write(msg.getBytes());
 						out.flush();
 						out.close();
 						System.out.println("connection fermee serveur envoyee");

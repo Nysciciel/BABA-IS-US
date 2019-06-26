@@ -3,10 +3,15 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.history.HistoryStack;
+import com.mygdx.game.history.TurnStack;
+import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.ItemRef;
 import com.mygdx.game.objects.text.Text;
@@ -40,15 +45,19 @@ public class Level extends Actor{
 	private LogicHashtable ruleTable;
 	private ArrayList<Class> props;
 	private int hash;
+	private HistoryStack historyStack;
+	private MainTest currentgame;
 
 	private ArrayList<Location[][]> history;
 
-	public Level(int length,int height) {
+	public Level(int length,int height, MainTest currentgame) {
 		super();
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
 		this.hash = 0;
+		this.historyStack = new HistoryStack();
+		this.currentgame = currentgame;
 
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -60,11 +69,14 @@ public class Level extends Actor{
 		}
 	}
 
-	public Level(String filename) {
+	public Level(String filename, MainTest currentgame) {
+		
+		this.currentgame = currentgame;
 
 		props = new ArrayList<Class>();
 
 		this.ruleTable = new LogicHashtable();
+		this.historyStack = new HistoryStack();
 
 		try {
 			FileHandle file = Gdx.files.local("Level/"+filename);
@@ -78,8 +90,7 @@ public class Level extends Actor{
 			}
 
 			scanner.close();
-
-			history = new ArrayList<Location[][]>();
+			
 			this.rules = new RuleSet();
 
 
@@ -117,9 +128,6 @@ public class Level extends Actor{
 				}
 			}
 
-
-			history.add(this.matrixCopy());
-
 			updateRules();
 
 
@@ -128,25 +136,20 @@ public class Level extends Actor{
 			System.out.println("Error while loading level");
 			e.printStackTrace();
 		}
-
-
-
 	}
 
-	/*
-	public LevelView(int hauteur, int largeur) {
-		this.height = hauteur;
-		this.length = largeur;
-
-		items = new ArrayList[height][length];
-
-		for (int index1 = 0; index1 < height; index1++) {
-			for (int index2 = 0; index2 < length; index2++) {
-				items[height - 1 - index1][index2] = new ArrayList<Item>();
-				items[height - 1 - index1][index2].add(new Empty(this, index2, height - 1 - index1, 0));
-			}
+	public void addTurnStack() {
+		
+		if (historyStack.empty())
+			historyStack.push(new TurnStack());
+		else if (!historyStack.peek().isEmpty()) {
+			historyStack.push(new TurnStack());
 		}
-	}*/
+	}
+	
+	public TurnStack getTurnStack() {
+		return historyStack.peek();		
+	}
 
 	public int getIntLength(){
 		return(length);
@@ -195,7 +198,6 @@ public class Level extends Actor{
 			currentRules.buildNext(new ArrayList<Text>(), thereIsAnOnOrNearOrFacingOrAnd, thereIsANot);
 		}
 	}
-
 
 	public void interpretRules() {
 
@@ -252,6 +254,7 @@ public class Level extends Actor{
 	}
 
 	public void moveYou1(int direction) {
+		this.addTurnStack();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -276,6 +279,7 @@ public class Level extends Actor{
 	}
 
 	public void moveYou2(int direction) {
+		this.addTurnStack();
 		ArrayList<Location> found = new ArrayList<Location>();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
@@ -354,15 +358,11 @@ public class Level extends Actor{
 			}
 		}
 		updateRules();
-		//history.add(this.matrixCopy());
 	}
 
 	public void rollback() {
-		if (history.size()>1) {
-			locationMatrix = history.get(history.size()-2);
-			locationMatrix = this.matrixCopy();
-			history.remove(history.size()-1);
-		}
+		if (!historyStack.empty())
+			historyStack.unStack();
 		updateRules();
 	}
 
@@ -370,20 +370,8 @@ public class Level extends Actor{
 		return locationMatrix;
 	}
 
-	public Location[][] matrixCopy(){
-		Location[][] matrix = new Location[height][length];
-		for(int y=0; y < height; y++) {
-			for(int x=0; x < length; x++) {
-				matrix[y][x] = locationMatrix[y][x].copy();
-			}
-		}
-		return matrix;
-	}
-
 	public void reset() {
-		locationMatrix = history.get(0);
-		history = new ArrayList<Location[][]>();
-		history.add(this.matrixCopy());
+		historyStack.unFill();
 		updateRules();
 	}
 
@@ -417,5 +405,15 @@ public class Level extends Actor{
 			}
 		}
 		return hash;
+	}
+
+	public void fakeTurn() {
+		this.addTurnStack();
+		this.endturn();
+	}
+
+	
+	public void win() {
+		this.currentgame.screenChoice(MainTest.MENU,null);
 	}
 }
