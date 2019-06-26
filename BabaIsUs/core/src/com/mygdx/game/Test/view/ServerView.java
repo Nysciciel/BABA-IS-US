@@ -74,7 +74,7 @@ public class ServerView implements Screen,ServerCallBack {
 			parent.screenChoice(MainTest.MENU,null);
 			this.server.setConnected(false);
 			this.thread.shutCO();
-			this.thread.getState();
+			this.thread.getStatus();
 			//this.thread.interrupt();
 		}
 		if(enabled) {
