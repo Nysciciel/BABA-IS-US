@@ -43,7 +43,7 @@ public class LoadingView implements Screen, ServerCallBack {
     private Skin skin;
 
     // our constructor with a Box2DTutorial argument
-    public LoadingView(MainTest mainTest) {
+    public LoadingView(MainTest mainTest, String fileName) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());

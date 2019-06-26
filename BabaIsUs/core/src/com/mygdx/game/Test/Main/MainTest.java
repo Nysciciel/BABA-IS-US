@@ -61,7 +61,7 @@ public class MainTest extends Game {
                 //if(levelView != null) levelView.setLvl(new Level("level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
                 if(!reloaded) {
-                    loading = new LoadingView(this) ;
+                    //loading = new LoadingView(this,fileName) ;
                     reloaded = true;
                 }
                 break;
@@ -107,7 +107,7 @@ public class MainTest extends Game {
             case LOADING:
                 System.out.println("je suis en loading");
                 reloaded = false;
-                if(loading == null) loading = new LoadingView(this);
+                if(loading == null) loading = new LoadingView(this,fileName);
                 this.setScreen(loading);
                 Stage stage8 = loading.getStage();
                 Gdx.input.setInputProcessor(stage8);
