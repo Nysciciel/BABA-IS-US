@@ -46,7 +46,7 @@ public class ClientView implements Screen,ServerCallBack {
 		client = new Client(data,this,ip_addr);
 		System.out.println(this.client.isConnected());
 		if(this.client.isConnected()) {
-			this.lvl = new com.mygdx.game.Level("levelc.txt");
+			this.lvl = new com.mygdx.game.Level("levelc.txt", parent);
 			Gdx.input.setInputProcessor(stage);
 
 			table.add(lvl).expand().fill();
@@ -69,13 +69,13 @@ public class ClientView implements Screen,ServerCallBack {
 		}
 
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-			parent.screenChoice(MainTest.MENU,null);
-			//this.thread.getState();
+			
 			try {
 				data.put(99);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			parent.screenChoice(MainTest.MENU,null);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -148,7 +148,6 @@ public class ClientView implements Screen,ServerCallBack {
 
 		}
 		while(actions.peek()!=null) {
-			System.out.println(actions);
 			movePoto = actions.poll();
 			if (movePoto >= 20) {
 				movePoto = movePoto%20;

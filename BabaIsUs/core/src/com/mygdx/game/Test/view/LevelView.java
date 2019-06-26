@@ -43,7 +43,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         table.setFillParent(true);
 
 
-        this.lvl = new Level(fileName);
+        this.lvl = new Level(fileName, parent);
 
         texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
         stage.addActor(table);
@@ -60,7 +60,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     @Override
     public void show() {
         if(lvl == null){
-            lvl = new com.mygdx.game.Level("Level/level.txt");
+            lvl = new com.mygdx.game.Level("Level/level.txt", parent);
         }
     }
 

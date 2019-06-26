@@ -32,8 +32,6 @@ public class ServerView implements Screen,ServerCallBack {
 	private Texture background;
 	private int movePoto;
 	private Table table;
-	private int shash;
-	private int chash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
 	private Texture texture;
@@ -47,13 +45,11 @@ public class ServerView implements Screen,ServerCallBack {
 
 		//data = new ArrayBlockingQueue<Integer>(1);
 		this.data = data;
-		this.shash = 0;
-		this.chash = 0;
 		this.movePoto = -1;
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-		this.slvl = new com.mygdx.game.ServerLevel(filename);
+		this.slvl = new com.mygdx.game.ServerLevel(filename, parent);
 		this.thread = thread;
 		this.server = this.thread.getServer();
 		this.thread.getServer().setServerCallBack(this);
@@ -93,7 +89,8 @@ public class ServerView implements Screen,ServerCallBack {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				slvl.endturn();
 				try {
-					data.add(15);
+					data.add("b");
+					data.add("15");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -101,7 +98,8 @@ public class ServerView implements Screen,ServerCallBack {
 			else if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
 				slvl.reset();
 				try {
-					data.add(16);
+					data.add("b");
+					data.add("16");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -109,7 +107,8 @@ public class ServerView implements Screen,ServerCallBack {
 			else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
 				slvl.rollback();
 				try {
-					data.add(14);
+					data.add("b");
+					data.add("14");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -119,7 +118,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.add(12);
+					data.add("b");
+					data.add("12");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -129,7 +129,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.add(11);
+					data.add("b");
+					data.add("11");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -141,7 +142,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.add(10);
+					data.add("b");
+					data.add("10");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -152,7 +154,8 @@ public class ServerView implements Screen,ServerCallBack {
 				slvl.endturn();
 
 				try {
-					data.add(13);
+					data.add("b");
+					data.add("13");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -192,8 +195,8 @@ public class ServerView implements Screen,ServerCallBack {
 				}
 				try {
 					if(0<=movePoto && movePoto<=6) {
-
-						data.add(movePoto+20);
+						data.add("b");
+						data.add(Integer.toString(movePoto+20));
 						System.out.println("tosend:" + data);
 					}
 				} catch (Exception e) {
