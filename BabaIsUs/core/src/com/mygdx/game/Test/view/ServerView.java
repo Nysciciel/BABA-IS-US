@@ -12,6 +12,8 @@ import com.mygdx.game.Level;
 import com.mygdx.game.ServerLevel;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
+
+import java.io.IOException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 //import com.mygdx.game.states.MainMenu;
@@ -175,6 +177,12 @@ public class ServerView implements Screen,ServerCallBack {
 				break;
 				case (99):
 					parent.screenChoice(MainTest.MENU,null);
+					try {
+						server.getSocket().close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				break;
 				default:
 				}
