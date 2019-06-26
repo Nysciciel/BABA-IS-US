@@ -181,8 +181,6 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 				else
 					this.put(key, new LogicHashtable(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot));
 			}
-		
-		
 		}
 	}
 	
