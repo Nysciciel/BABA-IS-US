@@ -124,7 +124,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     			lvl.endturn();
     			break;
     		case Keys.SPACE:
-    			lvl.endturn();
+    			lvl.fakeTurn();
     			break;
     		case Keys.E:
     			lvl.rollback();

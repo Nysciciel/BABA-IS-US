@@ -2,6 +2,11 @@ package com.mygdx.game;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.history.Born;
+import com.mygdx.game.history.Change;
+import com.mygdx.game.history.Death;
+import com.mygdx.game.history.HistoryStack;
+import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;
 
@@ -133,7 +138,9 @@ public class Location {
 				if (next(direction).pleaseCanIGo(direction)) {
 					for(Item i:pushable) {
 						i.orient(direction);
+						// TODO : kill
 						i.advance();
+						// TODO : born
 						
 					}
 					return true;
@@ -163,7 +170,7 @@ public class Location {
 			items.add(item);
 		}
 	}
-
+	
 	public ArrayList<Item> move1(int direction) {
 		ArrayList<Item> yous = new ArrayList<Item>();
 		for(Item i:items) {
@@ -279,6 +286,8 @@ public class Location {
 			}
 		}
 		for(Item i:toKill) {
+			// TODO : kill
+			addChange(new Death(i, this, i.getOrientation()));
 			this.del(i);
 		}
 	}
@@ -443,13 +452,21 @@ public class Location {
 			if (afterTransform.isEmpty())
 				newItems.add(item);
 			else {
+				// TODO : kill
+				addChange(new Death(item, this, item.getOrientation()));
+				
 				for (Class c : afterTransform) {
 					try {
-						newItems.add((Item)c.getConstructors()[0].newInstance(this,item.getOrientation()));
+						Item newItem = (Item)c.getConstructors()[0].newInstance(this,item.getOrientation());
+						newItems.add(newItem);
+						// TODO : born
+						addChange(new Born(newItem, this));
+						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
+				 
 			}
 		}
 		items = newItems;
@@ -486,6 +503,14 @@ public class Location {
 
 	public Level getLevel() {
 		return lvl;
+	}
+	
+	public TurnStack getTurnStack() {
+		return lvl.getTurnStack();
+	}
+	
+	private void addChange(Change change) {
+		getTurnStack().push(change);
 	}
 
 	public int getX() {
