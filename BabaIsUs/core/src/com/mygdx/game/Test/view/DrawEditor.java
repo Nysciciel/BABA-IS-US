@@ -39,6 +39,8 @@ public class DrawEditor extends Actor{
         this.file = file;
         if(Gdx.files.internal("Level/"+file).exists()) {
         	lvl = new Level(file);
+        	this.width = lvl.getMatrixLength();
+        	this.height = lvl.getMatrixHeight();
         } else {
         	lvl = new Level(width,height);
         }
@@ -55,6 +57,17 @@ public class DrawEditor extends Actor{
     	this.height = H;
     	clear();
     }
+    
+    public int getHaut() {
+		return height;
+    	
+    }
+    
+    public int getLarg() {
+    	return width;
+    }
+    
+    
     
     public void setItem(ObjectList object, int x, int y, int direction) {
     	float ratioWidth = this.getWidth()/width;
@@ -84,8 +97,6 @@ public class DrawEditor extends Actor{
     	
     	drawRepere(batch);
     	lvl.render(batch,(int) Math.min(this.getWidth()/width, this.getHeight()/height));
-    	
-    	
     }
     
     public void clear() {

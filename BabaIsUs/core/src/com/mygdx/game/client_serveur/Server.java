@@ -23,7 +23,7 @@ public class Server{
 	private Thread envoyer;
 	private Thread recevoir;
 
-	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack) {
+	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack, String filename) {
 
 		this.data = bq;
 		//this.lvl = level;
@@ -53,7 +53,7 @@ public class Server{
 
 			//try {
 			DataOutputStream dos = new DataOutputStream(clientSocket.getOutputStream());
-			File file = new File("Level\\level.txt");
+			File file = new File("Level\\" + filename);
 			fis = new FileInputStream(file);
 			byte[] buffer = new byte[4096];
 			int length = (int)file.length();
