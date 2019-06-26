@@ -346,7 +346,7 @@ public class Level extends Actor{
 			}
 		}
 		updateRules();
-		history.add(this.matrixCopy());
+		//history.add(this.matrixCopy());
 	}
 
 	public void rollback() {

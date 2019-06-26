@@ -17,8 +17,8 @@ public class MainTest extends Game {
     private Menu menu;
     private EditorView editorView;
     private LevelView levelView;
-    private ServerView server;
-    private ClientView client;
+    private ServerView serverView;
+    private ClientView clientView;
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
@@ -59,13 +59,15 @@ public class MainTest extends Game {
                 this.setScreen(menu);
                 Stage stage = menu.getStage();
                 Gdx.input.setInputProcessor(stage);
-                //if(levelView != null) levelView.setLvl(new Level("level.txt"));
-                //if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
-                //if(!reloaded) {
-                //    loading = new LoadingView(this) ;
+                if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
+                if((serverView != null || clientView != null) && !reloaded) {
+                 //   this.thread = null;
+                 //   this.data = null;
+                 //   this.level = null;
+                    loading = null ;
                 //    server = new ServerView(this,thread,data,null);
-                //    reloaded = true;
-                //}
+                    reloaded = true;
+                }
                 break;
             case EDITOR:
                 editorView = new EditorView(this, fileName);
@@ -92,24 +94,32 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage5);
                 break;
             case SERVER:
-                reloaded = false;
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(server == null) server = new ServerView(this,thread,data,"level.txt");
-                this.setScreen(server);
-                Stage stage6 = server.getStage();
+                if(serverView == null) serverView = new ServerView(this,thread,data,"level.txt");
+                this.setScreen(serverView);
+                Stage stage6 = serverView.getStage();
                 Gdx.input.setInputProcessor(stage6);
                 break;
             case CLIENT:
-                if(client == null) client = new ClientView(this,ip_addr);
-                this.setScreen(client);
-                Stage stage7 = client.getStage();
+                if(clientView == null){
+                    clientView = new ClientView(this,ip_addr);
+                    reloaded = false;
+                }
+                this.setScreen(clientView);
+                Stage stage7 = clientView.getStage();
                 Gdx.input.setInputProcessor(stage7);
                 break;
             case LOADING:
-                reloaded = false;
-                if(loading == null) loading = new LoadingView(this,fileName);
+                if(loading == null) {
+                   // if(reloaded){
+                        loading = new LoadingView(this,fileName);
+                        serverView = null;
+                        clientView = null;
+                        reloaded = false;
+                    //}
+                }
                 this.setScreen(loading);
                 Stage stage8 = loading.getStage();
                 Gdx.input.setInputProcessor(stage8);

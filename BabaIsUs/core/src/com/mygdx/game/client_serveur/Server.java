@@ -155,7 +155,7 @@ public class Server{
 	}
 
 	public void getThreadStatus(){
-		System.out.println("envoyer status : " + envoyer.getState() + "recevoir status : " + recevoir.getState());
+		System.out.println("envoyer status : " + envoyer.getState() + " recevoir status : " + recevoir.getState());
 	}
 
 
