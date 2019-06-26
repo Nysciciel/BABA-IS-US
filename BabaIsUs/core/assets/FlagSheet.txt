@@ -1,7 +1,7 @@
 FlagSheet.png
 size: 96, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Flag0
   rotate: false
