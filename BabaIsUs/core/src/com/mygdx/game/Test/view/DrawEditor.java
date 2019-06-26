@@ -40,7 +40,7 @@ public class DrawEditor extends Actor{
         if(Gdx.files.internal("Level/"+file).exists()) {
         	lvl = new Level(file);
         	this.width = lvl.getMatrixLength();
-        	this.height = lvl.getMatrixLength();
+        	this.height = lvl.getMatrixHeight();
         } else {
         	lvl = new Level(width,height);
         }
