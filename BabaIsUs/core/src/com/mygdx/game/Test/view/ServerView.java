@@ -34,7 +34,7 @@ public class ServerView implements Screen,ServerCallBack {
 	private int chash;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
 
-	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data) {
+	public ServerView(MainTest mainTest, ServerThread thread, ConcurrentLinkedQueue data, String filename) {
 
 		parent = mainTest;     // setting the argument to our field.
 		stage = new Stage(new ScreenViewport());
@@ -49,7 +49,7 @@ public class ServerView implements Screen,ServerCallBack {
 		this.enabled = true;
 		this.background = new Texture("Menu_background.jpg");
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
-		this.slvl = new com.mygdx.game.ServerLevel("level.txt");
+		this.slvl = new com.mygdx.game.ServerLevel(filename);
 		this.thread = thread;
 		this.thread.getServer().setServerCallBack(this);
 		Gdx.input.setInputProcessor(stage);

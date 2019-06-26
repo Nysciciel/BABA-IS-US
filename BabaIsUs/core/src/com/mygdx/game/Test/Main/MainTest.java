@@ -22,7 +22,7 @@ public class MainTest extends Game {
     private Settings settings;
     private MultiplayerView multiplayerView;
     private LoadingView loading;
-    private boolean reloaded;
+    private boolean reloaded = true;
     private EditorSelectView editorSelect;
     private LevelSelectView levelSelect;
    // private EndScreen endScreen;
@@ -31,6 +31,7 @@ public class MainTest extends Game {
     private ConcurrentLinkedQueue data;
     private ServerLevel level;
 
+    private float elapsedTime;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -60,10 +61,11 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage);
                 //if(levelView != null) levelView.setLvl(new Level("level.txt"));
                 if(multiplayerView != null) multiplayerView.setStage(new Stage(new ScreenViewport()));
-                if(!reloaded) {
-                    loading = new LoadingView(this) ;
-                    reloaded = true;
-                }
+                //if(!reloaded) {
+                //    loading = new LoadingView(this) ;
+                //    server = new ServerView(this,thread,data,null);
+                //    reloaded = true;
+                //}
                 break;
             case EDITOR:
                 editorView = new EditorView(this, fileName);
@@ -90,10 +92,11 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage5);
                 break;
             case SERVER:
+                reloaded = false;
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(server == null) server = new ServerView(this,thread,data);
+                if(server == null) server = new ServerView(this,thread,data,"level.txt");
                 this.setScreen(server);
                 Stage stage6 = server.getStage();
                 Gdx.input.setInputProcessor(stage6);
@@ -105,7 +108,6 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage7);
                 break;
             case LOADING:
-                System.out.println("je suis en loading");
                 reloaded = false;
                 if(loading == null) loading = new LoadingView(this);
                 this.setScreen(loading);
@@ -127,6 +129,14 @@ public class MainTest extends Game {
         }
 
 
+    }
+
+    public void setElapsedTime(float t){
+        elapsedTime = t ;
+    }
+
+    public float getElapsedTime(){
+        return(elapsedTime);
     }
 
 }

@@ -5,6 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -18,14 +21,20 @@ public class MultiplayerView implements Screen {
 
     private MainTest parent; // a field to store our orchestrator
     private Stage stage;
-    private Texture background;
     private Skin skin;
+    private TextureAtlas textureAtlas;
+    private Animation animation;
+    private TextureAtlas textureAtlas2;
+    private Animation animation2;
     // our constructor with a Box2DTutorial argument
     public MultiplayerView(MainTest mainTest) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
-        this.background = new Texture("Menu_background.jpg");
+        textureAtlas = new TextureAtlas(Gdx.files.internal("BackgroundMenu.txt"));
+        animation = new Animation(2/3f, textureAtlas.getRegions());
+        textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
+        animation2 = new Animation(2/3f, textureAtlas2.getRegions());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("uiskin.json"));
     }
@@ -57,12 +66,21 @@ public class MultiplayerView implements Screen {
         address.setVisible(false);
         okBut.setVisible(false);
         table.add(host).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(20, 0, 20, 0);
         table.add(connect).fillX().uniformX();
         table.row();
+        table.row().pad(0,80,0,0);
         table.add(address);
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(20, 70, 20, 0);
         table.add(okBut);
+        table.row().pad(20, 70, 20, 0);
+
+        host.setTransform(true);
+        host.setScale(1.3f);
+        connect.setTransform(true);
+        connect.setScale(1.3f);
+        okBut.setTransform(true);
+        okBut.setScale(1.3f);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             parent.screenChoice(MainTest.MENU,null);
@@ -126,7 +144,15 @@ public class MultiplayerView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
-        stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+        float elapsedTime = parent.getElapsedTime();
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        parent.setElapsedTime(elapsedTime);
+        if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
+            parent.setElapsedTime(0);
+        }
+        stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime-Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         stage.getBatch().end();
         stage.draw();
     }
@@ -156,5 +182,7 @@ public class MultiplayerView implements Screen {
     public void dispose() {
         // TODO Auto-generated method stub
         stage.dispose();
+        this.textureAtlas.dispose();
+        this.textureAtlas2.dispose();
     }
 }

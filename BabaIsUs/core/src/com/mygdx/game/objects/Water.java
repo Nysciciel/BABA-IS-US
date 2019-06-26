@@ -6,12 +6,12 @@ import com.mygdx.game.*;
 
 public class Water extends Item {
 
+	private float fishTime = 2;
+
 	public Water(Location loc, int orientation) {
 		super(loc, orientation);
 		prio=1;
 	}
-
-	private float fishTime = 2;
 
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
@@ -26,7 +26,7 @@ public class Water extends Item {
 			}
 		}
 		double fishRand = Math.random();
-		if(fishRand<0.005 && fishTime>1){
+		if(fishRand<0.005 && fishTime>0.6){
 			fishTime = 0;
 		}
 		
@@ -35,7 +35,6 @@ public class Water extends Item {
 			return "WaterFish-"+id;
 		}
 		else {
-			fishTime += Gdx.graphics.getDeltaTime();
 			return "Water-" + s + "-"+id;
 		}
 	}

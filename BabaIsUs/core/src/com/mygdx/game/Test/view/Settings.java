@@ -22,7 +22,6 @@ public class Settings implements Screen {
     private Animation animation;
     private TextureAtlas textureAtlas2;
     private Animation animation2;
-    private float elapsedTime = 0;
 
     // our constructor with a Box2DTutorial argument
     public Settings(MainTest mainTest) {
@@ -57,9 +56,11 @@ public class Settings implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.getBatch().begin();
+        float elapsedTime = parent.getElapsedTime();
         elapsedTime += Gdx.graphics.getDeltaTime();
+        parent.setElapsedTime(elapsedTime);
         if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
-            elapsedTime=0;
+            parent.setElapsedTime(0);
         }
         stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));

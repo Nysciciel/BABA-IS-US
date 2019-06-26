@@ -3,7 +3,9 @@ package com.mygdx.game.client_serveur;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.nio.CharBuffer;
+import java.rmi.server.ExportException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
@@ -125,7 +127,11 @@ public class Client {
 				}
 			});
 			recevoir.start();
-		}catch (IOException e) {
+		}catch (UnknownHostException uh) {
+			System.out.println("Cette adresse n'existe pas");
+			connected = false;
+		}
+		catch (Exception e){
 			e.printStackTrace();
 		}
 	}
