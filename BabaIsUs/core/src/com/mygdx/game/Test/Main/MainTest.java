@@ -99,7 +99,7 @@ public class MainTest extends Game {
                 this.thread = loading.getThread();
                 this.data = loading.getData();
                 this.level = loading.getSlvl();
-                if(serverView == null) serverView = new ServerView(this,thread,data,"level.txt");
+                if(serverView == null) serverView = new ServerView(this,thread,data,fileName);
                 this.setScreen(serverView);
                 Stage stage6 = serverView.getStage();
                 Gdx.input.setInputProcessor(stage6);

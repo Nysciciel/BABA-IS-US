@@ -102,8 +102,12 @@ public class Server{
 						out.close();
 						System.out.println("connection fermee serveur envoyee");
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						try {
+							out.close();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
 			});
@@ -120,6 +124,7 @@ public class Server{
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
 								connected = false;
+								break;
 							}
 						}
 
