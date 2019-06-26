@@ -62,7 +62,7 @@ public class MultiSelectView implements Screen{
 
 		Table table1 = new Table();
 		table1.setFillParent(true);
-		table1.add(pane).fill().expand();
+		table1.add(pane).fill().expand().width(400);
 
 		stage.addActor(table1);
 
@@ -97,7 +97,9 @@ public class MultiSelectView implements Screen{
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		
 		stage.getBatch().begin();
-		elapsedTime += Gdx.graphics.getDeltaTime();
+		float elapsedTime = parent.getElapsedTime();
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        parent.setElapsedTime(elapsedTime);
 		if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
 			elapsedTime=0;
 		}
