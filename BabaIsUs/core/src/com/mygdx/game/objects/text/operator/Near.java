@@ -14,12 +14,4 @@ public class Near extends Operator {
 	public boolean isOn() {
 		return true;
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="Near0-0";
-		spriteUsed[1]="Near0-1";
-		return(spriteUsed);
-	}
-
 }

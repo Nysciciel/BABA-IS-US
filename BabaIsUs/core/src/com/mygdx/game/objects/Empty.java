@@ -13,16 +13,4 @@ public class Empty extends Item{
 	public boolean isEmpty() {
 		return true;
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[1];
-		spriteUsed[0]="Empty0";
-		return(spriteUsed);
-	}
-	
-	@Override
-	public String toString() {
-		return "e";
-	}
-
 }

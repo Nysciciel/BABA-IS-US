@@ -1,7 +1,7 @@
 ErrorSheet.png
 size: 32, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Error0
   rotate: false

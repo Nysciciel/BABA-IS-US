@@ -15,8 +15,9 @@ public class Water extends Item {
 	public void loadTextureAtlas(){
 		textureAtlas = new TextureAtlas(Gdx.files.internal("WaterSheetU.txt"));
 	}
-
-	public String[] getSpriteUsed(){
+	
+	@Override
+	public String getSpriteID(int id){
 		String s = "";
 		for(int i=0;i<=3;i++){
 			if(isNeighbourEqual(i)){
@@ -27,24 +28,14 @@ public class Water extends Item {
 		if(fishRand<0.005 && fishTime>1){
 			fishTime = 0;
 		}
+		
 		if(s.equals("0123") && fishTime<0.6) {
 			fishTime += Gdx.graphics.getDeltaTime();
-			String[] spriteUsed = new String[2];
-			spriteUsed[0]="WaterFish-0";
-			spriteUsed[1]="WaterFish-1";
-			return(spriteUsed);
-		}else {
+			return "WaterFish-"+id;
+		}
+		else {
 			fishTime += Gdx.graphics.getDeltaTime();
-			String[] spriteUsed = new String[2];
-			spriteUsed[0]="Water-" + s + "-0";
-			spriteUsed[1]="Water-" + s + "-1";
-			return(spriteUsed);
+			return "Water-" + s + "-"+id;
 		}
 	}
-	
-	@Override
-	public String toString() {
-		return "a";
-	}
-
 }

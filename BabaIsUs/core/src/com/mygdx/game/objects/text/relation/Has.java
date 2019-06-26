@@ -9,13 +9,4 @@ public class Has extends Relation {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public String[] getSpriteUsed(){
-		return null;
-	}
-	public float[] getAffichePos(){
-		return null;
-	}
-
-
 }

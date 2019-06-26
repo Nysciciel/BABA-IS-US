@@ -9,12 +9,4 @@ public class WaterText extends ItemRef {
 		super(loc, orientation);
 		// TODO Auto-generated constructor stub
 	}
-
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[2];
-		spriteUsed[0]="WaterText0";
-		spriteUsed[1]="WaterText1";
-		return(spriteUsed);
-	}
-
 }

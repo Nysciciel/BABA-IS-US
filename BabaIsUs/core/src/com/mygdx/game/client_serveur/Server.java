@@ -20,6 +20,8 @@ public class Server{
 	private String ip;
 	//private Level lvl;
 	private ServerSocket serveurSocket  ;
+	private Thread envoyer;
+	private Thread recevoir;
 
 	public Server(ConcurrentLinkedQueue bq, ServerCallBack callBack) {
 
@@ -77,7 +79,7 @@ public class Server{
 			out = clientSocket.getOutputStream();
 			in = clientSocket.getInputStream();
 
-			Thread envoyer = new Thread(new Runnable() {
+			this.envoyer = new Thread(new Runnable() {
 				int msg;
 				@Override
 				public void run() {
@@ -108,7 +110,7 @@ public class Server{
 			});
 			envoyer.start();
 
-			Thread recevoir= new Thread(new Runnable() {
+			this.recevoir= new Thread(new Runnable() {
 				CharBuffer msg ;
 				@Override
 				public void run() {
@@ -157,6 +159,10 @@ public class Server{
 
 	public ServerSocket getSocket(){
 		return serveurSocket;
+	}
+
+	public void getThreadStatus(){
+		System.out.println("envoyer status : " + envoyer.getState() + "recevoir status : " + recevoir.getState());
 	}
 
 

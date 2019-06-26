@@ -1,7 +1,7 @@
 Near.png
 size: 128, 32
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 Near0-0
   rotate: false

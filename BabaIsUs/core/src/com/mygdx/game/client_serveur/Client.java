@@ -86,6 +86,7 @@ public class Client {
 					while(connected){
 						try {
 							msg = data.take();
+							System.out.println("valeur envoyee "+msg);
 							out.write(msg);
 							out.flush();
 						} catch (InterruptedException e) {
