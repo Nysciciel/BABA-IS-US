@@ -290,7 +290,6 @@ public abstract class Item {
 			}
 			if (spriteChoosing.peek() == null) {
 				spriteChoosing.pop();
-				//System.out.println(this.getSpriteID(i));
 				if (i == 0) {
 					spriteChoosing.push((new TextureAtlas(Gdx.files.internal("ErrorSheet.txt"))).findRegion("Error0"));
 				}

@@ -132,12 +132,6 @@ public class Server{
 			recevoir.start();
 		}catch (IOException e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				serveurSocket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
