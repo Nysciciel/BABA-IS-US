@@ -54,8 +54,9 @@ public class Client {
 					if(isInteger(buf)) {
 						hex = hex.concat(buf);
 					}
-					if(hex.contains("f")) {
-						filesize = Integer.parseInt(hex.substring(0, hex.length()-1));
+					if(buf.contains("f")) {
+						filesize = Integer.parseInt(hex);
+						System.out.println("je passe en B.2.2");
 						break;
 					}
 				}
@@ -72,6 +73,7 @@ public class Client {
 				remaining -= read;
 				fos.write(buffer, 0, read);
 			}
+			System.out.println("total read:"+totalRead);
 
 			fos.close();
 			out = clientSocket.getOutputStream();
@@ -112,6 +114,7 @@ public class Client {
 					try {
 						while(connected) {
 							in.read(b);
+							System.out.println("received:"+b);
 							callBackFunction.dataReceived(b[0]);
 							if(b[0] == 99){
 								connected = false;

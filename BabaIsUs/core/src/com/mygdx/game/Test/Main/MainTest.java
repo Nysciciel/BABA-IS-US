@@ -68,6 +68,7 @@ public class MainTest extends Game {
                  //   this.level = null;
                 	System.out.println("j'aime bien cet endroit");
                     loading = null ;
+                    clientView = null; 
                 //    server = new ServerView(this,thread,data,null);
                     reloaded = true;
                 }
@@ -107,9 +108,9 @@ public class MainTest extends Game {
                 break;
             case CLIENT:
                 if(clientView == null){
+                	System.out.println("j'aime bien ce client ");
                     clientView = new ClientView(this,ip_addr);
                     reloaded = false;
-                    System.out.println("j'aime bien ce client ");
                 }
                 this.setScreen(clientView);
                 Stage stage7 = clientView.getStage();
