@@ -9,5 +9,6 @@ public class Baba extends Item{
 	public Baba(Location loc, int orientation) {
 		super(loc, orientation);
 		isTextureOriented = true;
+		prio = 3;
 	}
 }

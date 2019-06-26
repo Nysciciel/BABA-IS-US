@@ -173,6 +173,8 @@ public class LogicHashtable extends Hashtable<String, LogicHashtable> {
 			
 			
 			for (String key : keys.get(0)) {
+				if (key.equals("You1"))
+					key = "You";
 				if (this.containsKey(key)) {
 					this.get(key).map(keys.subList(1, keys.size()), on, near, facing, onNot, nearNot, facingNot);
 				}

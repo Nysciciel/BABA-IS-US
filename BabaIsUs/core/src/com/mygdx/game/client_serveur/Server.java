@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Server{
 
-	ConcurrentLinkedQueue data;
+	ConcurrentLinkedQueue<Integer> data;
 	ServerCallBack callBackFunction;
 	private boolean connected;
 	private String ip;
@@ -86,7 +86,7 @@ public class Server{
 							if(data.peek()==null) {
 								continue;
 							}
-							msg = (int)data.poll();
+							msg = (int) data.poll();
 							System.out.println("sent;"+msg);
 							System.out.println("");
 							out.write(msg);

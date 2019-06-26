@@ -31,6 +31,7 @@ public class MainTest extends Game {
     private ConcurrentLinkedQueue data;
     private ServerLevel level;
 
+    private float elapsedTime;
 
     public final static int MENU = 0;
     public final static int EDITOR = 1;
@@ -105,7 +106,6 @@ public class MainTest extends Game {
                 Gdx.input.setInputProcessor(stage7);
                 break;
             case LOADING:
-                System.out.println("je suis en loading");
                 reloaded = false;
                 if(loading == null) loading = new LoadingView(this);
                 this.setScreen(loading);
@@ -127,6 +127,14 @@ public class MainTest extends Game {
         }
 
 
+    }
+
+    public void setElapsedTime(float t){
+        elapsedTime = t ;
+    }
+
+    public float getElapsedTime(){
+        return(elapsedTime);
     }
 
 }

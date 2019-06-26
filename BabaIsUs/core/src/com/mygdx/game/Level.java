@@ -302,9 +302,11 @@ public class Level extends Actor{
 
 
 	public void render(Batch sb, float cellSize) {
-		for (int x = 0; x<length;x++) {
-			for (int y = 0; y<height;y++) {
-				locationMatrix[y][x].render(sb,cellSize);
+		for(int prio=1;prio<=8;prio++) {
+			for (int x = 0; x < length; x++) {
+				for (int y = 0; y < height; y++) {
+					locationMatrix[y][x].render(sb, cellSize,prio);
+				}
 			}
 		}
 	}
