@@ -247,7 +247,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 		// TODO Auto-generated method stub	
 		
 		if(parent.hasWon()){
-			parent.screenChoice(MainTest.MENU,null);
+			parent.screenChoice(MainTest.WIN,null);
 			parent.resetwin();
 		}
 		

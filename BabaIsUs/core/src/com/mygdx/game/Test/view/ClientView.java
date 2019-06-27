@@ -69,7 +69,7 @@ public class ClientView implements Screen,ServerCallBack {
 			parent.screenChoice(MainTest.MENU,null);
 		}
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) || parent.hasWon()){
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			
 			try {
 				data.put(99);
@@ -79,6 +79,18 @@ public class ClientView implements Screen,ServerCallBack {
 			parent.screenChoice(MainTest.MENU,null);
 			parent.resetwin();
 		}
+		
+		if( parent.hasWon()){
+			
+			try {
+				data.put(99);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			parent.screenChoice(MainTest.WIN,null);
+			parent.resetwin();
+		}
+		
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			//lvl.endturn();

@@ -26,11 +26,8 @@ public class MainTest extends Game {
 	private EditorSelectView editorSelect;
 	private LevelSelectView levelSelect;
 	private MultiSelectView multiLevelSelect;
-<<<<<<< HEAD
 	private boolean hasWon = false;
-=======
 	private WinView win;
->>>>>>> Client/Serveur
 	// private EndScreen endScreen;
 
 	private ServerThread thread;
