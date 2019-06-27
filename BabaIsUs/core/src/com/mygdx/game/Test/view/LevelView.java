@@ -246,6 +246,13 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 	public void render(float delta) {
 		// TODO Auto-generated method stub	
 		
+		if(parent.hasWon()){
+			parent.screenChoice(MainTest.MENU,null);
+			parent.resetwin();
+		}
+		
+		
+		
 		if (System.currentTimeMillis()-timeRef > moveTime) {
 			timeRef = System.currentTimeMillis();
 			if (keyPressed != -1 && Gdx.input.isKeyPressed(keyPressed)) {

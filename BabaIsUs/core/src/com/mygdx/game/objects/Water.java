@@ -26,7 +26,7 @@ public class Water extends Item {
 			}
 		}
 		double fishRand = Math.random();
-		if(fishRand<0.005 && fishTime>0.6){
+		if(fishRand<0.0005 && fishTime>0.6){
 			fishTime = 0;
 		}
 		
