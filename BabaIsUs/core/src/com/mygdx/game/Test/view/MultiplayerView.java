@@ -22,6 +22,7 @@ public class MultiplayerView implements Screen {
     private MainTest parent; // a field to store our orchestrator
     private Stage stage;
     private Skin skin;
+    private Skin skin2;
     private TextureAtlas textureAtlas;
     private Animation animation;
     private TextureAtlas textureAtlas2;
@@ -36,7 +37,8 @@ public class MultiplayerView implements Screen {
         textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
         animation2 = new Animation(2/3f, textureAtlas2.getRegions());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("Skins/freezing-ui.json"));
+        skin2 = new Skin(Gdx.files.internal("uiskin.json"));
     }
 
     public Stage getStage(){
@@ -61,7 +63,7 @@ public class MultiplayerView implements Screen {
 
         TextButton host = new TextButton("Host a game", skin);
         TextButton connect = new TextButton("Connect to an already existing game", skin);
-        final TextField address = new TextField("IP address", skin);
+        final TextField address = new TextField("", skin2);
         final TextButton okBut = new TextButton("OK", skin);
         address.setVisible(false);
         okBut.setVisible(false);

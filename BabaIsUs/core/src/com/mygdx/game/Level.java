@@ -422,6 +422,10 @@ public class Level extends Actor{
 	}
 
 	public void win() {
+<<<<<<< HEAD
 		this.currentgame.win();
+=======
+		this.currentgame.screenChoice(MainTest.WIN,null);
+>>>>>>> Client/Serveur
 	}
 }

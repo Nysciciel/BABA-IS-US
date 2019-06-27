@@ -26,6 +26,7 @@ public class Menu implements Screen {
     private TextureAtlas textureAtlas2;
     private Animation animation2;
     private Texture texture;
+    private Skin skin;
 
     // our constructor with a Box2DTutorial argument
     public Menu(MainTest mainTest) {
@@ -36,6 +37,8 @@ public class Menu implements Screen {
         textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
         animation2 = new Animation(2/3f, textureAtlas2.getRegions());
         texture = new Texture(Gdx.files.internal("BabaIsUsTitle.png"));
+
+        skin = new Skin(Gdx.files.internal("Skins/freezing-ui.json"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);// setting the argument to our field.
@@ -58,7 +61,7 @@ public class Menu implements Screen {
         table.pad(200,0,0,0);
         stage.addActor(table);
 
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+
 
         TextButton newLevel = new TextButton("Play", skin);
         TextButton editor = new TextButton("Map Editor", skin);

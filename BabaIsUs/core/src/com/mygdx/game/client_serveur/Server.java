@@ -57,13 +57,20 @@ public class Server{
 			fis = new FileInputStream(file);
 			byte[] buffer = new byte[4096];
 			int length = (int)file.length();
+			System.out.println("file length:"+length);
 			String hex = Integer.toString(length);
 			hex = hex.concat("f");
 			buffer = hex.getBytes();
 			dos.write(buffer);
 
-			while (fis.read(buffer) > 0) {
+			int tot=0;
+			int i;
+			i = fis.read(buffer,0,buffer.length);
+			while (i  > 0) {
+				tot +=i;
+				System.out.println("transmitted:"+tot);
 				dos.write(buffer);
+				i = fis.read(buffer,0,buffer.length);
 			}
 			/*fis.close();
 				dos.close();
@@ -88,7 +95,6 @@ public class Server{
 							if(data.peek()==null) {
 								continue;
 							}
-							
 							msg = data.poll();
 							out.write(msg.getBytes());
 							out.flush();
