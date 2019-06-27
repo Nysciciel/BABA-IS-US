@@ -1,6 +1,8 @@
 package com.mygdx.game.Test.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.mygdx.game.Level;
 import com.mygdx.game.Location;
+import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.item_ref.BabaText;
 import com.mygdx.game.objects.text.item_ref.RockText;
@@ -30,19 +33,23 @@ public class DrawEditor extends Actor{
 	private Level lvl;
 	private ShapeRenderer shapeRenderer;
 	private String file;
+	private MainTest parent;
 	
-    public DrawEditor(int width, int height, String file) {
+    public DrawEditor(int width, int height, String file, MainTest parent) {
+    	
+    	
     	
         super();
+        this.parent = parent;
         this.width = width;
         this.height = height;
         this.file = file;
         if(Gdx.files.internal("Level/"+file).exists()) {
-        	lvl = new Level(file);
+        	lvl = new Level(file,parent);
         	this.width = lvl.getMatrixLength();
         	this.height = lvl.getMatrixHeight();
         } else {
-        	lvl = new Level(width,height);
+        	lvl = new Level(width,height,parent);
         }
         shapeRenderer = new ShapeRenderer();
         
@@ -72,20 +79,25 @@ public class DrawEditor extends Actor{
     public void setItem(ObjectList object, int x, int y, int direction) {
     	float ratioWidth = this.getWidth()/width;
     	float ratioHeight = this.getHeight()/height;
-    	float size = Math.min(ratioWidth, ratioHeight);
-    	Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
-    	
-    	if(object == ObjectList.EMPTY) {
-    		loc.getItems().clear();
-    		loc.getItems().add(new Empty(loc, 0));
+    	int size = (int)Math.min(ratioWidth, ratioHeight);
+    	if(((int)(y/size) < 0)||((int)(y/size) >= lvl.getMatrixHeight())||((int)(x/size) < 0)||((int)(x/size) >= lvl.getMatrixLength())){
+    		
     	} else {
-    		try {
-    			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
-    		} catch (Exception e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
+    		Location loc = lvl.getLocationMatrix()[(int) (y/size)][(int) (x/size)];
+        	
+        	if(object == ObjectList.EMPTY) {
+        		loc.getItems().clear();
+        		loc.getItems().add(new Empty(loc, 0));
+        	} else {
+        		try {
+        			loc.add((Item) object.getClazz().getConstructor(Location.class, int.class).newInstance(loc,direction));
+        		} catch (Exception e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
     	}
+    	
     	
  
     }
@@ -100,7 +112,7 @@ public class DrawEditor extends Actor{
     }
     
     public void clear() {
-    	lvl = new Level(this.width,this.height);
+    	lvl = new Level(this.width,this.height, this.parent);
     }
     
     public void drawRepere(Batch batch) {

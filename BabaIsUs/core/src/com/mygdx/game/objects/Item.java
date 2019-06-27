@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.*;
+import com.mygdx.game.history.Born;
+import com.mygdx.game.history.Change;
+import com.mygdx.game.history.Death;
+import com.mygdx.game.history.HistoryStack;
+import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
@@ -162,8 +167,6 @@ public abstract class Item {
 		}
 		
 		for (Class c : getRuleTable().getProps()) {
-			// TODO :  getSimpleName wrong for Text objects ?
-			// TODO : verify order !!!!!!!!
 			Logic affirm;
 			Logic restrict;
 			boolean affirmBoolean;
@@ -211,6 +214,9 @@ public abstract class Item {
 	 */
 	public void goforward() {
 
+		// TODO : kill
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		
 		animationChrono = 0;
 		loc.del(this);
 
@@ -226,6 +232,9 @@ public abstract class Item {
 
 		loc = loc.next(orientation);
 		loc.add(this);
+		
+		// TODO : born
+		addChange(new Born(this, this.loc));
 	}
 
 	/**
@@ -233,11 +242,17 @@ public abstract class Item {
 	 * useful for when a push&pull chain is getting pushed
 	 */
 	public void advance() {
-
+		
+		// TODO : kill
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		
 		animationChrono = 0;
 		loc.del(this);
 		loc = loc.next(orientation);
 		loc.add(this);
+		
+		// TODO : born
+		addChange(new Born(this, this.loc));
 	}
 
 	public boolean isEmpty() {
@@ -274,7 +289,10 @@ public abstract class Item {
 		elapsedTime += Gdx.graphics.getDeltaTime();
 		animationChrono +=Gdx.graphics.getDeltaTime();
 		TextureRegion test = (TextureRegion) animation.getKeyFrame(elapsedTime, true);
-		sb.draw(test,getAffichePos()[0]*cellSize,getAffichePos()[1]*cellSize,cellSize,cellSize);
+		float offsetX = 0;
+		if (loc.getLevel().isPlayed())
+			offsetX = 48*(16-(loc.getLevel().getIntLength()/loc.getLevel().getIntHeight())*9);
+		sb.draw(test,getAffichePos()[0]*cellSize+offsetX,getAffichePos()[1]*cellSize,cellSize,cellSize);
 	}
 
 	public Object[] spriteChosen() {
@@ -299,12 +317,6 @@ public abstract class Item {
 		return spriteChoosing.toArray();
 	}
 	
-	public String[] getSpriteUsed(){
-		String[] spriteUsed = new String[1];
-		spriteUsed[0]="Error0";
-		return(spriteUsed);
-	}
-	
 	public String getSpriteID(int i) {
 		if (isTextureOriented) {
 			return this.getName()+orientation+"-"+i;
@@ -318,23 +330,24 @@ public abstract class Item {
 	 */
 	public float[] getAffichePos(){
 		float a,b;
-		if(animationChrono<0.2){
+		float threshold = 0.14f;
+		if(animationChrono<threshold){
 			switch(orientation){
 				case(0):
-					a=getX()+1-animationChrono*5;
+					a=getX()+1-animationChrono/threshold;
 					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(1):
 					a=getX();
-					b=getY()-1+animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
+					b=getY()-1+animationChrono/threshold+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(2):
-					a=getX()-1+animationChrono*5;
+					a=getX()-1+animationChrono/threshold;
 					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				default:
 					a=getX();
-					b=getY()+1-animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
+					b=getY()+1-animationChrono/threshold+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 			}
 		}else {
@@ -343,6 +356,10 @@ public abstract class Item {
 		}
 		float[] tab={a,b};
 		return(tab);
+	}
+	
+	public void cancelAnimation() {
+		animationChrono = 1;
 	}
 
 	protected int getY() {
@@ -354,7 +371,15 @@ public abstract class Item {
 	}
 
 	public void orient(int direction) {
-		orientation = direction;
+		// TODO : kill + reborn with new direction
+		
+		addChange(new Death(this, this.loc, this.getOrientation()));
+		setOrientation(direction);
+		addChange(new Born(this, this.loc));
+	}
+	
+	public void setOrientation(int orientation) {
+		this.orientation = orientation;
 	}
 
 	public boolean hasMoved() {
@@ -437,6 +462,14 @@ public abstract class Item {
 	 */
 	public String getRefName() {
 		return getName();
+	}
+	
+	private TurnStack getTurnStack() {
+		return this.loc.getTurnStack();
+	}
+	
+	private void addChange(Change change) {
+		getTurnStack().push(change);
 	}
 
 	/**

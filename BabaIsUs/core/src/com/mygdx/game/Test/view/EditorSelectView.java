@@ -6,6 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,12 +30,22 @@ public class EditorSelectView implements Screen{
 	 private ScrollPane pane;
 	 private TextField textField;
 	 
+	 private TextureAtlas textureAtlas;
+	    private Animation animation;
+	    private TextureAtlas textureAtlas2;
+	    private Animation animation2;
+	 
 	 private TextButton nouveau;
 	 
 	 public EditorSelectView(MainTest mainTest) {
 		 this.parent = mainTest;
 		 stage = new Stage(new ScreenViewport());
 		 Gdx.input.setInputProcessor(stage);
+		 
+		 textureAtlas = new TextureAtlas(Gdx.files.internal("BackgroundMenu.txt"));
+	     animation = new Animation(2/3f, textureAtlas.getRegions());
+	     textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
+	     animation2 = new Animation(2/3f, textureAtlas2.getRegions());
 		 
 		 table = new VerticalGroup();
 	     table.setFillParent(true);
@@ -56,11 +69,11 @@ public class EditorSelectView implements Screen{
 	     Table table1 = new Table();
 	     table1.setFillParent(true);
 	     table1.center().pad(100, 100, 100, 100);
-	     table1.add(textField).expandX().fill();
+	     table1.add(textField).expandX().fill().width(400);
 	     table1.row();
-	     table1.add(nouveau).expandX().fill();
+	     table1.add(nouveau).expandX().fill().width(400);
 	     table1.row();
-	     table1.add(pane).fill().expand();
+	     table1.add(pane).fill().expand().width(400);
 	     stage.addActor(table1);
 	     
 	     
@@ -107,13 +120,24 @@ public class EditorSelectView implements Screen{
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.getBatch().begin();
+        float elapsedTime = parent.getElapsedTime();
+        elapsedTime += Gdx.graphics.getDeltaTime();
+        parent.setElapsedTime(elapsedTime);
+        if(40*elapsedTime>Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth())){
+            parent.setElapsedTime(0);
+        }
+        stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime-Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().end();
         stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-		
+		stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	}
 
 	@Override

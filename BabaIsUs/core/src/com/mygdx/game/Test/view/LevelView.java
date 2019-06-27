@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,138 +24,263 @@ import java.util.concurrent.TimeUnit;
 
 public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
-    private MainTest parent; // a field to store our orchestrator
-    private Level lvl;
-    private Stage stage;
-    private Client client;
-    private Server server;
-    private BlockingQueue<Integer> data;
-    private Table table;
+	private MainTest parent; // a field to store our orchestrator
+	private Level lvl;
+	private Stage stage;
+	private Client client;
+	private Server server;
+	private BlockingQueue<Integer> data;
+	private Table table;
+	private int keyPressed = -1;
+	private Texture texture;
+	private long timeRef;
+	private int moveTime = 150;
+	private boolean hasMoved = false;
 
+	public LevelView(MainTest mainTest, String fileName) {
 
-    public LevelView(MainTest mainTest, String fileName) {
+		parent = mainTest;     // setting the argument to our field.
+		stage = new Stage(new ScreenViewport());
+		table = new Table();
+		table.setFillParent(true);
+		timeRef = System.currentTimeMillis();
 
-        parent = mainTest;     // setting the argument to our field.
-        stage = new Stage(new ScreenViewport());
-        table = new Table();
-        table.setFillParent(true);
+		this.lvl = new Level(fileName, parent);
 
+		lvl.setPlayed();
 
-        this.lvl = new Level(fileName);
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
+		stage.addActor(table);
+		table.add(lvl).expand().fill().center().right();
 
+		Gdx.input.setInputProcessor(this);
+	}
 
-        stage.addActor(table);
-        table.add(lvl).expand().fill();
-        Gdx.input.setInputProcessor(this);
+	public Stage getStage(){
+		return stage;
+	}
 
-    }
+	@Override
+	public void show() {
+		if(lvl == null){
+			lvl = new com.mygdx.game.Level("Level/level.txt", parent);
+		}
+	}
 
+	public Level getLvl(){
+		return lvl;
+	}
 
-    public Stage getStage(){
-        return stage;
-    }
+	public void setLvl(Level nlvl){
+		this.lvl = nlvl;
+	}
 
-    @Override
-    public void show() {
-        if(lvl == null){
-            lvl = new com.mygdx.game.Level("Level/level.txt");
-        }
-    }
+	@Override
+	public void render(float delta) {
+		// TODO Auto-generated method stub
 
-    public Level getLvl(){
-        return lvl;
-    }
+		if (keyPressed != -1 && (System.currentTimeMillis()-timeRef > moveTime)) {
+			keyAction(keyPressed);
+			timeRef = System.currentTimeMillis();
+		}    	
 
-    public void setLvl(Level nlvl){
-       this.lvl = nlvl;
-    }
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().end();
+		stage.draw();
+	}
 
-    @Override
-    public void render(float delta) {
-        // TODO Auto-generated method stub
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
-    }
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		stage.getViewport().update(width, height, true);
+	}
 
-    @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        stage.getViewport().update(width, height, true);
-    }
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		stage.dispose();
+		texture.dispose();
+	}
 
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-        stage.dispose();
-    }
-
-    @Override
-    public void dataReceived(int data) {
-    }
+	@Override
+	public void dataReceived(int data) {
+	}
 
 
 	@Override
 	public boolean keyDown(int keycode) {
-    		switch(keycode) {
-    		case Keys.ENTER:
-    			lvl.endturn();
-    			break;
-    		case Keys.SPACE:
-    			lvl.endturn();
-    			break;
-    		case Keys.Z:
-    			lvl.rollback();
-    			break;
-    		case Keys.R:
-    			lvl.reset();
-    			break;
-    		case Keys.RIGHT:
-    			lvl.moveYou1(2);
-                lvl.endturn();
-    			break;
-    		case Keys.UP:
-    			lvl.moveYou1(1);
-                lvl.endturn();
-    			break;
-    		case Keys.LEFT:
-    			lvl.moveYou1(0);
-                lvl.endturn();
-    			break;
-    		case Keys.DOWN:
-    			lvl.moveYou1(3);
-                lvl.endturn();
-    			break;
-    		case Keys.ESCAPE:
-    			parent.screenChoice(MainTest.MENU, null);
-    			break;
+
+		
+		switch(keycode) {
+		case Keys.ENTER:
+			lvl.fakeTurn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.SPACE:
+			lvl.fakeTurn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.E:
+			lvl.rollback();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.R:
+			lvl.reset();
+			break;
+		case Keys.RIGHT:
+			lvl.moveYou1(2);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.UP:
+			lvl.moveYou1(1);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.LEFT:
+			lvl.moveYou1(0);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.DOWN:
+			lvl.moveYou1(3);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.D:
+			lvl.moveYou2(2);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.Z:
+			lvl.moveYou2(1);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.Q:
+			lvl.moveYou2(0);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.S:
+			lvl.moveYou2(3);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.ESCAPE:
+			parent.screenChoice(MainTest.MENU, null);
+			break;
+		default:
+			return false;
+		}
 
 
-    		}
-    		return true;
+		timeRef = System.currentTimeMillis();
+		return true;
 	}
 
+	private boolean keyAction(int keycode) {
 
+
+
+		switch(keycode) {
+		case Keys.ENTER:
+			lvl.fakeTurn();
+			break;
+		case Keys.SPACE:
+			lvl.fakeTurn();
+			break;
+		case Keys.E:
+			lvl.rollback();
+			break;
+		case Keys.R:
+			lvl.reset();
+			break;
+		case Keys.RIGHT:
+			lvl.moveYou1(2);
+			lvl.endturn();
+			break;
+		case Keys.UP:
+			lvl.moveYou1(1);
+			lvl.endturn();
+			break;
+		case Keys.LEFT:
+			lvl.moveYou1(0);
+			lvl.endturn();
+			break;
+		case Keys.DOWN:
+			lvl.moveYou1(3);
+			lvl.endturn();
+			break;
+		case Keys.D:
+			lvl.moveYou2(2);
+			lvl.endturn();
+			break;
+		case Keys.Z:
+			lvl.moveYou2(1);
+			lvl.endturn();
+			break;
+		case Keys.Q:
+			lvl.moveYou2(0);
+			lvl.endturn();
+			break;
+		case Keys.S:
+			lvl.moveYou2(3);
+			lvl.endturn();
+			break;
+		case Keys.ESCAPE:
+			parent.screenChoice(MainTest.MENU, null);
+			break;
+		default:
+			return false;
+
+		}
+		return true;    	
+	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+
+		if (keycode == keyPressed) {
+			keyPressed = -1;
+			if (System.currentTimeMillis()-timeRef < moveTime) {
+				if (hasMoved) {
+					hasMoved = true;
+					return keyAction(keycode);
+				}
+			}
+			return true;
+		}
 		return false;
 	}
 

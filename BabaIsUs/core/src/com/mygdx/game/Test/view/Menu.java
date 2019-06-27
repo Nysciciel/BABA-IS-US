@@ -25,6 +25,7 @@ public class Menu implements Screen {
     private Animation animation;
     private TextureAtlas textureAtlas2;
     private Animation animation2;
+    private Texture texture;
 
     // our constructor with a Box2DTutorial argument
     public Menu(MainTest mainTest) {
@@ -34,6 +35,7 @@ public class Menu implements Screen {
         animation = new Animation(2/3f, textureAtlas.getRegions());
         textureAtlas2 = new TextureAtlas(Gdx.files.internal("NightSheet.txt"));
         animation2 = new Animation(2/3f, textureAtlas2.getRegions());
+        texture = new Texture(Gdx.files.internal("BabaIsUsTitle.png"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);// setting the argument to our field.
@@ -58,7 +60,7 @@ public class Menu implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        TextButton newLevel = new TextButton("New Level", skin);
+        TextButton newLevel = new TextButton("Play", skin);
         TextButton editor = new TextButton("Map Editor", skin);
         TextButton exit = new TextButton("Exit", skin);
         TextButton settings = new TextButton("Settings", skin);
@@ -135,6 +137,7 @@ public class Menu implements Screen {
         stage.getBatch().draw((TextureRegion) animation2.getKeyFrame(elapsedTime, true),0,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime,0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
         stage.getBatch().draw((TextureRegion) animation.getKeyFrame(elapsedTime, true),40*elapsedTime-Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),0,Math.max((420/170)*Gdx.graphics.getHeight(),Gdx.graphics.getWidth()),Math.max(Gdx.graphics.getHeight(),(170/420)*Gdx.graphics.getWidth()));
+        stage.getBatch().draw(texture,(Gdx.graphics.getWidth()-740)/2,Gdx.graphics.getHeight()-800);
         stage.getBatch().end();
         stage.draw();
     }
@@ -166,5 +169,6 @@ public class Menu implements Screen {
         stage.dispose();
         this.textureAtlas.dispose();
         this.textureAtlas2.dispose();
+        texture.dispose();
     }
 }
