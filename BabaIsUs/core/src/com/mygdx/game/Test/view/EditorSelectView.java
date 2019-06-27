@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.utils.ObjectList;
@@ -48,7 +49,6 @@ public class EditorSelectView implements Screen{
 	     animation2 = new Animation(2/3f, textureAtlas2.getRegions());
 		 
 		 table = new VerticalGroup();
-	     table.setFillParent(true);
 	     
 	     Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 	     
@@ -56,7 +56,7 @@ public class EditorSelectView implements Screen{
 	     
 	     FileHandle[] files = handle.list();
 	     
-	     table.center().fill().expand().space(20);
+	     table.center().fill().expand().space(20).top();
 	     textField = new TextField("",skin);
 	     nouveau = new TextButton("New",skin);
 	     for(FileHandle file : files) {
