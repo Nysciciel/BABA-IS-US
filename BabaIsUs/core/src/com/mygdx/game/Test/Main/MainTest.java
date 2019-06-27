@@ -2,6 +2,7 @@ package com.mygdx.game.Test.Main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
@@ -49,12 +50,19 @@ public class MainTest extends Game {
 	public final static int MULTILEVELSELECT = 10;
 	public final static int WIN= 11;
 	public static String ip_addr = null;
+	
+	private Music music;
 	//  public static ServerThread thread;
 	//   public final static int ENDGAME = 3;
 	@Override
 	public void create() {
 		menu = new Menu(this);
 		setScreen(menu);
+		
+		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/groove.mp3"));
+		music.setLooping(true);
+		music.play();
+
 	}
 
 	public void screenChoice(int screen, String fileName){

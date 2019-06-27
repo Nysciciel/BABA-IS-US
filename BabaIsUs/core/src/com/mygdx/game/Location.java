@@ -312,6 +312,7 @@ public class Location {
 			}
 		}
 		for(Item i:toKill) {
+			addChange(new Death(i, this, i.getOrientation()));
 			this.del(i);
 		}
 	}

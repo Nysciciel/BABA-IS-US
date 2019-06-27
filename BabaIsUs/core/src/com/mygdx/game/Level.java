@@ -366,9 +366,18 @@ public class Level extends Actor{
 	}
 
 	public void rollback() {
-		if (!historyStack.empty())
-			historyStack.unStack();
-		updateRules();
+		if (!historyStack.empty()) {
+			if (historyStack.peek().empty()) {
+				historyStack.pop();
+				rollback();
+			}
+			else {
+				historyStack.unStack();
+				updateRules();
+			}
+		}
+			
+		
 	}
 
 	public Location[][] getLocationMatrix(){

@@ -51,13 +51,15 @@ public class EditorSelectView implements Screen{
 		 table = new VerticalGroup();
 	     
 	     Skin skin = new Skin(Gdx.files.internal("Skins/freezing-ui.json"));
+	     Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
+
 	     
 	     FileHandle handle = new FileHandle("Level/");
 	     
 	     FileHandle[] files = handle.list();
 	     
 	     table.center().fill().expand().space(20).top();
-	     textField = new TextField("",skin);
+	     textField = new TextField("",skin2);
 	     nouveau = new TextButton("New",skin);
 	     for(FileHandle file : files) {
 	    	 table.addActor(new TextButton(file.name(),skin));
