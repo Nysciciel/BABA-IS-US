@@ -327,6 +327,7 @@ public class Level extends Actor{
 
 
 	public void endturn() {
+		updateRules();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].checkDeaths();
@@ -337,6 +338,7 @@ public class Level extends Actor{
 				locationMatrix[y][x].checkMove();
 			}
 		}
+		updateRules();
 		for (int x = 0; x<length;x++) {
 			for (int y = 0; y<height;y++) {
 				locationMatrix[y][x].checkDeaths();
@@ -420,6 +422,6 @@ public class Level extends Actor{
 	}
 
 	public void win() {
-		this.currentgame.screenChoice(MainTest.MENU,null);
+		this.currentgame.win();
 	}
 }

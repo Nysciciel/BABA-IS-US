@@ -161,7 +161,9 @@ public class EditorSelectView implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		stage.dispose();
+        this.textureAtlas.dispose();
+        this.textureAtlas2.dispose();
 	}
 	
 	public Stage getStage() {
