@@ -73,7 +73,7 @@ public class EditorSelectView implements Screen{
 	     table1.row();
 	     table1.add(nouveau).expandX().fill().width(400);
 	     table1.row();
-	     table1.add(pane).fill().expand().width(400).pad(50, 0, 50, 0);
+	     table1.add(pane).fill().expand().width(600).pad(50, 0, 50, 0);
 	     stage.addActor(table1);
 	     
 	     

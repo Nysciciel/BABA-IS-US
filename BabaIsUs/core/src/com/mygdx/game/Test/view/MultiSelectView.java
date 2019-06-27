@@ -62,7 +62,7 @@ public class MultiSelectView implements Screen{
 		Table table1 = new Table();
 		table1.setFillParent(true);
 		table1.center().pad(100, 100, 100, 100);
-		table1.add(pane).fill().expand().width(400).pad(50, 0, 50, 0);
+		table1.add(pane).fill().expand().width(600).pad(50, 0, 50, 0);
 
 		stage.addActor(table1);
 
