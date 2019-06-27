@@ -47,6 +47,7 @@ public class ClientView implements Screen,ServerCallBack {
 		System.out.println(this.client.isConnected());
 		if(this.client.isConnected()) {
 			this.lvl = new com.mygdx.game.Level("levelc.txt", parent);
+			lvl.setPlayed();
 			Gdx.input.setInputProcessor(stage);
 
 			table.add(lvl).expand().fill();
@@ -217,7 +218,7 @@ public class ClientView implements Screen,ServerCallBack {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.getBatch().begin();
-		stage.getBatch().draw(texture,0,0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
 		stage.getBatch().end();
 		stage.draw();
 	}

@@ -259,16 +259,19 @@ public class Location {
 				}
 			}
 
-
+			ArrayList<Item> toSink = new ArrayList<Item>();
 			if(i.isSink() && items.size()>1 ) {
 				boolean isFloat = i.isFloat();
 				for(Item j:items) {
 					if((isFloat == j.isFloat())) {
 						if(toKill.indexOf(j)==-1) {
-							toKill.add(j);
+							toSink.add(j);
 						}
 					}
 				}
+			}
+			if (toSink.size()>1) {
+				toKill.addAll(toSink);
 			}
 
 			if(i.isHot()) {

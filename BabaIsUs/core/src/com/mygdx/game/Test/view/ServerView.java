@@ -54,6 +54,7 @@ public class ServerView implements Screen,ServerCallBack {
 		this.background = new Texture("Menu_background.jpg");
 		//this.slvl = new com.mygdx.game.ServerLevel("level.txt");
 		this.slvl = new com.mygdx.game.ServerLevel(filename, parent);
+		slvl.setPlayed();
 		this.thread = thread;
 		this.server = this.thread.getServer();
 		this.thread.getServer().setServerCallBack(this);
@@ -220,7 +221,7 @@ public class ServerView implements Screen,ServerCallBack {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 60f));
 		stage.getBatch().begin();
-		stage.getBatch().draw(texture,0,0,slvl.getMatrixLength()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()),slvl.getMatrixHeight()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()));
+		stage.getBatch().draw(texture,48*(16-(slvl.getIntLength()/slvl.getIntHeight())*9),0,slvl.getMatrixLength()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()),slvl.getMatrixHeight()*Math.min(slvl.getWidth()/slvl.getIntLength(), slvl.getHeight()/slvl.getIntHeight()));
 		stage.getBatch().end();
 		/* if(server.isConnected()) {
             lvl.render(stage.getBatch());
