@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
+import com.mygdx.game.PressedKeyThread;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 
@@ -34,15 +35,15 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
     private Texture texture;
 
-
     public LevelView(MainTest mainTest, String fileName) {
 
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.setFillParent(true);
+
+        this.lvl = new Level(fileName, parent);
         
-        this.lvl = new Level(fileName);
         lvl.setPlayed();
 
         texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
@@ -61,7 +62,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     @Override
     public void show() {
         if(lvl == null){
-            lvl = new com.mygdx.game.Level("Level/level.txt");
+            lvl = new com.mygdx.game.Level("Level/level.txt", parent);
         }
     }
 
@@ -118,88 +119,89 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     }
 
 
-	@Override
-	public boolean keyDown(int keycode) {
-    		switch(keycode) {
-    		case Keys.ENTER:
-    			lvl.endturn();
-    			break;
-    		case Keys.SPACE:
-    			lvl.fakeTurn();
-    			break;
-    		case Keys.E:
-    			lvl.rollback();
-    			break;
-    		case Keys.R:
-    			lvl.reset();
-    			break;
-    		case Keys.RIGHT:
-    			lvl.moveYou1(2);
-                lvl.endturn();
-    			break;
-    		case Keys.UP:
-    			lvl.moveYou1(1);
-                lvl.endturn();
-    			break;
-    		case Keys.LEFT:
-    			lvl.moveYou1(0);
-                lvl.endturn();
-    			break;
-    		case Keys.DOWN:
-    			lvl.moveYou1(3);
-                lvl.endturn();
-    			break;
-                case Keys.D:
-                    lvl.moveYou2(2);
-                    lvl.endturn();
-                    break;
-                case Keys.Z:
-                    lvl.moveYou2(1);
-                    lvl.endturn();
-                    break;
-                case Keys.Q:
-                    lvl.moveYou2(0);
-                    lvl.endturn();
-                    break;
-                case Keys.S:
-                    lvl.moveYou2(3);
-                    lvl.endturn();
-                    break;
-    		case Keys.ESCAPE:
-    			parent.screenChoice(MainTest.MENU, null);
-    			break;
-
-
-    		}
-    		return true;
-	}
+    @Override
+    public boolean keyDown(int keycode) {
+    	return true;
+    }
 
 
 
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean keyUp(int keycode) {
+
+    	switch(keycode) {
+    	case Keys.ENTER:
+    		lvl.fakeTurn();
+    		break;
+    	case Keys.SPACE:
+    		lvl.fakeTurn();
+    		break;
+    	case Keys.E:
+    		lvl.rollback();
+    		break;
+    	case Keys.R:
+    		lvl.reset();
+    		break;
+    	case Keys.RIGHT:
+    		lvl.moveYou1(2);
+    		lvl.endturn();
+    		break;
+    	case Keys.UP:
+    		lvl.moveYou1(1);
+    		lvl.endturn();
+    		break;
+    	case Keys.LEFT:
+    		lvl.moveYou1(0);
+    		lvl.endturn();
+    		break;
+    	case Keys.DOWN:
+    		lvl.moveYou1(3);
+    		lvl.endturn();
+    		break;
+    	case Keys.D:
+    		lvl.moveYou2(2);
+    		lvl.endturn();
+    		break;
+    	case Keys.Z:
+    		lvl.moveYou2(1);
+    		lvl.endturn();
+    		break;
+    	case Keys.Q:
+    		lvl.moveYou2(0);
+    		lvl.endturn();
+    		break;
+    	case Keys.S:
+    		lvl.moveYou2(3);
+    		lvl.endturn();
+    		break;
+    	case Keys.ESCAPE:
+    		parent.screenChoice(MainTest.MENU, null);
+    		break;
+    	default:
+    		return false;
+    	}
+
+    	return true;
+    }
 
 
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean keyTyped(char character) {
+    	// TODO Auto-generated method stub
+    	return false;
+    }
 
 
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    	// TODO Auto-generated method stub
+    	return false;
+    }
 
 
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    	// TODO Auto-generated method stub
 		return false;
 	}
 

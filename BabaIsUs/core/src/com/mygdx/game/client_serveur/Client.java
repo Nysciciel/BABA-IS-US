@@ -54,8 +54,8 @@ public class Client {
 					if(isInteger(buf)) {
 						hex = hex.concat(buf);
 					}
-					if(hex.contains("f")) {
-						filesize = Integer.parseInt(hex.substring(0, hex.length()-1));
+					if(buf.contains("f")) {
+						filesize = Integer.parseInt(hex);
 						break;
 					}
 				}
@@ -84,7 +84,6 @@ public class Client {
 					while(connected){
 						try {
 							msg = data.take();
-							System.out.println("valeur envoyee "+msg);
 							out.write(msg);
 							out.flush();
 						} catch (InterruptedException e) {
@@ -112,9 +111,16 @@ public class Client {
 					try {
 						while(connected) {
 							in.read(b);
-							callBackFunction.dataReceived(b[0]);
-							if(b[0] == 99){
-								connected = false;
+							if (new String(b).equals("b")) {
+								in.read(b);
+								int i = Character.getNumericValue((char)b[0])*10;
+								in.read(b);
+								i+=Character.getNumericValue((char)b[0]);
+								callBackFunction.dataReceived(i);
+								if(i == 99){
+									connected = false;
+									break;
+								}
 							}
 						}
 						in.close();

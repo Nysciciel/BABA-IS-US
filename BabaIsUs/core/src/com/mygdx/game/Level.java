@@ -3,12 +3,15 @@ package com.mygdx.game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.history.HistoryStack;
 import com.mygdx.game.history.TurnStack;
+import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.ItemRef;
 import com.mygdx.game.objects.text.Text;
@@ -44,14 +47,18 @@ public class Level extends Actor{
 	private int hash;
 	private HistoryStack historyStack;
 	private boolean isPlayed = false;
+	private MainTest currentgame;
 
-	public Level(int length,int height) {
+	private ArrayList<Location[][]> history;
+
+	public Level(int length,int height, MainTest currentgame) {
 		super();
 		this.height = height;
 		this.length = length;
 		this.rules = new RuleSet();
 		this.hash = 0;
 		this.historyStack = new HistoryStack();
+		this.currentgame = currentgame;
 
 		locationMatrix = new Location[height][length];
 		for(int i = 0 ; i < height ; i++) {
@@ -63,7 +70,9 @@ public class Level extends Actor{
 		}
 	}
 
-	public Level(String filename) {
+	public Level(String filename, MainTest currentgame) {
+		
+		this.currentgame = currentgame;
 
 		props = new ArrayList<Class>();
 
@@ -410,5 +419,9 @@ public class Level extends Actor{
 
 	public boolean isPlayed() {
 		return isPlayed;
+	}
+
+	public void win() {
+		this.currentgame.screenChoice(MainTest.MENU,null);
 	}
 }

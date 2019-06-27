@@ -62,7 +62,7 @@ public class EditorView implements Screen {
     	this.file = fileName;
         parent = mainTest;     // setting the argument to our field.
         stage = new Stage(new ScreenViewport());
-        this.editor = new DrawEditor(10,10,file);
+        this.editor = new DrawEditor(10,10,file,parent);
         selectedItem = ObjectList.BABA;
         selectedOrientation = 0;
         
