@@ -56,7 +56,7 @@ public class EditorSelectView implements Screen{
 	     
 	     FileHandle[] files = handle.list();
 	     
-	     table.center().fill().expand().pad(100, 100, 100, 100).space(20);
+	     table.center().fill().expand().space(20);
 	     textField = new TextField("",skin);
 	     nouveau = new TextButton("New",skin);
 	     for(FileHandle file : files) {
@@ -73,7 +73,7 @@ public class EditorSelectView implements Screen{
 	     table1.row();
 	     table1.add(nouveau).expandX().fill().width(400);
 	     table1.row();
-	     table1.add(pane).fill().expand().width(400);
+	     table1.add(pane).fill().expand().width(400).pad(50, 0, 50, 0);
 	     stage.addActor(table1);
 	     
 	     
