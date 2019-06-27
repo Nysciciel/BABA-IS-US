@@ -17,6 +17,7 @@ import com.mygdx.game.Level;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 
+import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +37,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 	private long timeRef;
 	private int moveTime = 150;
 	private boolean hasMoved = false;
+	private Stack<Integer> actionStack;
 
 	public LevelView(MainTest mainTest, String fileName) {
 
@@ -44,7 +46,8 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 		table = new Table();
 		table.setFillParent(true);
 		timeRef = System.currentTimeMillis();
-
+		actionStack = new Stack<Integer>();
+		
 		this.lvl = new Level(fileName, parent);
 
 		lvl.setPlayed();
@@ -53,6 +56,7 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 		stage.addActor(table);
 		table.add(lvl).expand().fill().center().right();
 
+		timeRef = System.currentTimeMillis();
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -73,24 +77,6 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
 	public void setLvl(Level nlvl){
 		this.lvl = nlvl;
-	}
-
-	@Override
-	public void render(float delta) {
-		// TODO Auto-generated method stub
-
-		if (keyPressed != -1 && (System.currentTimeMillis()-timeRef > moveTime)) {
-			keyAction(keyPressed);
-			timeRef = System.currentTimeMillis();
-		}    	
-
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-		stage.getBatch().begin();
-		stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
-		stage.getBatch().end();
-		stage.draw();
 	}
 
 	@Override
@@ -132,70 +118,51 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 		
 		switch(keycode) {
 		case Keys.ENTER:
-			lvl.fakeTurn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.SPACE:
-			lvl.fakeTurn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.E:
-			lvl.rollback();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.R:
 			lvl.reset();
 			break;
 		case Keys.RIGHT:
-			lvl.moveYou1(2);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.UP:
-			lvl.moveYou1(1);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.LEFT:
-			lvl.moveYou1(0);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.DOWN:
-			lvl.moveYou1(3);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.D:
-			lvl.moveYou2(2);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.Z:
-			lvl.moveYou2(1);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.Q:
-			lvl.moveYou2(0);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.S:
-			lvl.moveYou2(3);
-			lvl.endturn();
 			keyPressed = keycode;
-			hasMoved = false;
+			actionStack.push(keycode);
 			break;
 		case Keys.ESCAPE:
 			parent.screenChoice(MainTest.MENU, null);
@@ -205,13 +172,11 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 		}
 
 
-		timeRef = System.currentTimeMillis();
+		
 		return true;
 	}
 
 	private boolean keyAction(int keycode) {
-
-
 
 		switch(keycode) {
 		case Keys.ENTER:
@@ -273,17 +238,41 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
 		if (keycode == keyPressed) {
 			keyPressed = -1;
-			if (System.currentTimeMillis()-timeRef < moveTime) {
-				if (hasMoved) {
-					hasMoved = true;
-					return keyAction(keycode);
-				}
-			}
-			return true;
 		}
 		return false;
 	}
 
+	@Override
+	public void render(float delta) {
+		// TODO Auto-generated method stub	
+		
+		if (System.currentTimeMillis()-timeRef > moveTime) {
+			timeRef = System.currentTimeMillis();
+			if (keyPressed != -1 && Gdx.input.isKeyPressed(keyPressed)) {
+				actionStack.push(keyPressed);
+			}
+			if (!actionStack.empty()) {
+				keyAction(actionStack.pop());
+				if (!actionStack.empty()) {
+					int last = actionStack.pop();
+					actionStack = new Stack<Integer>();
+					if (last != keyPressed)
+						actionStack.push(last);
+				}
+				else
+					actionStack = new Stack<Integer>();
+			}
+			
+		}
+
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().end();
+		stage.draw();
+	}
 
 	@Override
 	public boolean keyTyped(char character) {

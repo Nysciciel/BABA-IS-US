@@ -49,8 +49,6 @@ public class Level extends Actor{
 	private boolean isPlayed = false;
 	private MainTest currentgame;
 
-	private ArrayList<Location[][]> history;
-
 	public Level(int length,int height, MainTest currentgame) {
 		super();
 		this.height = height;
@@ -143,7 +141,7 @@ public class Level extends Actor{
 		
 		if (historyStack.empty())
 			historyStack.push(new TurnStack());
-		else if (!historyStack.peek().isEmpty()) {
+		else if (!historyStack.peek().empty()) {
 			historyStack.push(new TurnStack());
 		}
 	}
