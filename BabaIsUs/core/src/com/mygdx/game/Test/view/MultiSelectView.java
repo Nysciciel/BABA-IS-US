@@ -46,7 +46,7 @@ public class MultiSelectView implements Screen{
 		table = new VerticalGroup();
 		table.setFillParent(true);
 
-		Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		Skin skin = new Skin(Gdx.files.internal("Skins/freezing-ui.json"));
 
 		FileHandle handle = new FileHandle("Level/");
 

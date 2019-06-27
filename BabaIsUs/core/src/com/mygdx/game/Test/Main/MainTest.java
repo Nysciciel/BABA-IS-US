@@ -26,6 +26,7 @@ public class MainTest extends Game {
 	private EditorSelectView editorSelect;
 	private LevelSelectView levelSelect;
 	private MultiSelectView multiLevelSelect;
+	private WinView win;
 	// private EndScreen endScreen;
 
 	private ServerThread thread;
@@ -45,6 +46,7 @@ public class MainTest extends Game {
 	public final static int EDITORSELECT = 8;
 	public final static int LEVELSELECT = 9;
 	public final static int MULTILEVELSELECT = 10;
+	public final static int WIN= 11;
 	public static String ip_addr = null;
 	//  public static ServerThread thread;
 	//   public final static int ENDGAME = 3;
@@ -149,6 +151,12 @@ public class MainTest extends Game {
 			this.setScreen(multiLevelSelect);
 			Stage stage11 = multiLevelSelect.getStage();
 			Gdx.input.setInputProcessor(stage11);
+			break;
+		case WIN:
+			if(win == null) win = new WinView(this);
+			this.setScreen(win);
+			Stage stage12 = win.getStage();
+			Gdx.input.setInputProcessor(stage12);
 			break;
 		}
 	}

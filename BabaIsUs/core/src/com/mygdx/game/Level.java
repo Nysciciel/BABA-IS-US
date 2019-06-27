@@ -414,6 +414,6 @@ public class Level extends Actor{
 
 	
 	public void win() {
-		this.currentgame.screenChoice(MainTest.MENU,null);
+		this.currentgame.screenChoice(MainTest.WIN,null);
 	}
 }

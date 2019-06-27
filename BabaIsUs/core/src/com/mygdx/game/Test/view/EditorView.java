@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -56,6 +57,8 @@ public class EditorView implements Screen {
     
     private Table table;
 
+    private Texture texture;
+
     // our constructor with a Box2DTutorial argument
     public EditorView(MainTest mainTest, String fileName) {
     		
@@ -73,6 +76,7 @@ public class EditorView implements Screen {
         //table.setDebug(true);
         
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
         
         mainList = new Table();
         propertyList = new Table();
@@ -104,19 +108,19 @@ public class EditorView implements Screen {
         for(ObjectList object : ObjectList.values()) {
         	switch(object.getItemType()) {
         	case ITEM_TEXT:
-        		item_textList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		item_textList.add(new TextButton(object.toString(),skin)).fill().expandX();
         		break;
         	case OPERATOR:
-        		operatorList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		operatorList.add(new TextButton(object.toString(),skin)).fill().expandX();
         		break;
         	case OBJECT:
-        		objectList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		objectList.add(new TextButton(object.toString(),skin)).fill().expandX();
         		break;
         	case PROPERTY:
-        		propertyList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		propertyList.add(new TextButton(object.toString(),skin)).fill().expandX();
         		break;
         	case RELATION:
-        		relationList.add(new TextButton(object.toString(),skin)).fill().uniformX();
+        		relationList.add(new TextButton(object.toString(),skin)).fill().expandX();
         		break;
         	}
         }
@@ -311,7 +315,10 @@ public class EditorView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 3f));
-        stage.draw();
+		//stage.getBatch().begin();
+		//stage.getBatch().draw(texture,0,0,editor.getLarg()*Math.min(editor.getLarg()/lvl.getIntLength(), editor.getHaut()/editor.getHaut()),editor.getHaut()*Math.min(editor.getLarg()/editor.getLarg(), editor.getHaut()/editor.getHaut()));
+        //stage.getBatch().end();
+		stage.draw();
     }
 
     @Override

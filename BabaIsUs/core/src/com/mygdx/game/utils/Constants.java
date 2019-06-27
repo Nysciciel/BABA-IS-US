@@ -9,5 +9,6 @@ public class Constants {
 	
 	public final static String GAME_TITLE = "Baba Is Us";
 	public final static String LOADING_SCREEN = "Waiting for another player";
+	public final static String WIN_SCREEN = "You Win";
 	public final static int SPEED = 20;
 }
