@@ -45,6 +45,7 @@ public enum ObjectList {
 	WEAK(ItemTypeList.PROPERTY,Weak.class),
 	WIN(ItemTypeList.PROPERTY,Win.class),
 	YOU(ItemTypeList.PROPERTY,You.class),
+	YOU1(ItemTypeList.PROPERTY,You1.class),
 	YOU2(ItemTypeList.PROPERTY,You2.class),
 	HAS(ItemTypeList.RELATION,Has.class),
 	IS(ItemTypeList.RELATION,Is.class);
