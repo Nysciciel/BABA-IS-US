@@ -157,7 +157,7 @@ public class ClientView implements Screen,ServerCallBack {
 						lvl.rollback();
 						break;
 					case (5):
-						lvl.endturn();
+						lvl.fakeTurn();
 						break;
 					case (6):
 							lvl.reset();

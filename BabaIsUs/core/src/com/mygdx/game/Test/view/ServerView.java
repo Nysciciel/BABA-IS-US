@@ -33,6 +33,10 @@ public class ServerView implements Screen,ServerCallBack {
 	private int movePoto;
 	private Table table;
 	private ConcurrentLinkedQueue<Integer> actions = new ConcurrentLinkedQueue();
+	private int keyPressed = -1;
+	private long timeRef;
+	private int moveTime = 150;
+	private boolean hasMoved = false;
 
 	private Texture texture;
 
@@ -87,7 +91,7 @@ public class ServerView implements Screen,ServerCallBack {
 		if(enabled) {
 
 			if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-				slvl.endturn();
+				slvl.fakeTurn();
 				try {
 					data.add("b");
 					data.add("15");
@@ -170,7 +174,7 @@ public class ServerView implements Screen,ServerCallBack {
 					slvl.rollback();
 				break;
 				case(5):
-					slvl.endturn();
+					slvl.fakeTurn();
 				break;
 				case(6):
 					slvl.reset();

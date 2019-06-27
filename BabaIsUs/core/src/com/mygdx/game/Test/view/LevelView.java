@@ -24,229 +24,284 @@ import java.util.concurrent.TimeUnit;
 
 public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
-    private MainTest parent; // a field to store our orchestrator
-    private Level lvl;
-    private Stage stage;
-    private Client client;
-    private Server server;
-    private BlockingQueue<Integer> data;
-    private Table table;
-    private int keyPressed = -1;
-    private Texture texture;
+	private MainTest parent; // a field to store our orchestrator
+	private Level lvl;
+	private Stage stage;
+	private Client client;
+	private Server server;
+	private BlockingQueue<Integer> data;
+	private Table table;
+	private int keyPressed = -1;
+	private Texture texture;
 	private long timeRef;
 	private int moveTime = 150;
+	private boolean hasMoved = false;
 
-    public LevelView(MainTest mainTest, String fileName) {
+	public LevelView(MainTest mainTest, String fileName) {
 
-        parent = mainTest;     // setting the argument to our field.
-        stage = new Stage(new ScreenViewport());
-        table = new Table();
-        table.setFillParent(true);
-        timeRef = System.currentTimeMillis();
-        
-        this.lvl = new Level(fileName, parent);
-        
-        lvl.setPlayed();
+		parent = mainTest;     // setting the argument to our field.
+		stage = new Stage(new ScreenViewport());
+		table = new Table();
+		table.setFillParent(true);
+		timeRef = System.currentTimeMillis();
 
-        texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
-        stage.addActor(table);
-        table.add(lvl).expand().fill().center().right();
-        
-        Gdx.input.setInputProcessor(this);
-    }
+		this.lvl = new Level(fileName, parent);
+
+		lvl.setPlayed();
+
+		texture = new Texture(Gdx.files.internal("backgroundLevel.png"));
+		stage.addActor(table);
+		table.add(lvl).expand().fill().center().right();
+
+		Gdx.input.setInputProcessor(this);
+	}
 
 	public Stage getStage(){
-        return stage;
-    }
+		return stage;
+	}
 
-    @Override
-    public void show() {
-        if(lvl == null){
-            lvl = new com.mygdx.game.Level("Level/level.txt", parent);
-        }
-    }
+	@Override
+	public void show() {
+		if(lvl == null){
+			lvl = new com.mygdx.game.Level("Level/level.txt", parent);
+		}
+	}
 
-    public Level getLvl(){
-        return lvl;
-    }
+	public Level getLvl(){
+		return lvl;
+	}
 
-    public void setLvl(Level nlvl){
-       this.lvl = nlvl;
-    }
+	public void setLvl(Level nlvl){
+		this.lvl = nlvl;
+	}
 
-    @Override
-    public void render(float delta) {
-        // TODO Auto-generated method stub
-    	
-    	if (keyPressed != -1 && (System.currentTimeMillis()-timeRef > moveTime)) {
-    		keyAction(keyPressed);
-    		timeRef = System.currentTimeMillis();
-    	}    	
-    	
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.getBatch().begin();
-        stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
-        stage.getBatch().end();
-        stage.draw();
-    }
+	@Override
+	public void render(float delta) {
+		// TODO Auto-generated method stub
 
-    @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        stage.getViewport().update(width, height, true);
-    }
+		if (keyPressed != -1 && (System.currentTimeMillis()-timeRef > moveTime)) {
+			keyAction(keyPressed);
+			timeRef = System.currentTimeMillis();
+		}    	
 
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-    }
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		stage.getBatch().begin();
+		stage.getBatch().draw(texture,48*(16-(lvl.getIntLength()/lvl.getIntHeight())*9),0,lvl.getMatrixLength()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()),lvl.getMatrixHeight()*Math.min(lvl.getWidth()/lvl.getIntLength(), lvl.getHeight()/lvl.getIntHeight()));
+		stage.getBatch().end();
+		stage.draw();
+	}
 
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		stage.getViewport().update(width, height, true);
+	}
 
-    @Override
-    public void hide() {
-        // TODO Auto-generated method stub
-    }
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-        stage.dispose();
-        texture.dispose();
-    }
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+	}
 
-    @Override
-    public void dataReceived(int data) {
-    }
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		stage.dispose();
+		texture.dispose();
+	}
 
-    @Override
-    public boolean keyDown(int keycode) {
-    	
-    	switch(keycode) {
-    	case Keys.ENTER:
-    		break;
-    	case Keys.SPACE:
-    		break;
-    	case Keys.E:
-    		break;
-    	case Keys.RIGHT:
-    		break;
-    	case Keys.UP:
-    		break;
-    	case Keys.LEFT:
-    		break;
-    	case Keys.DOWN:
-    		break;
-    	case Keys.D:
-    		break;
-    	case Keys.Z:
-    		break;
-    	case Keys.Q:
-    		break;
-    	case Keys.S:
-    		break;
-    	default:
-    		return false;
-    	}
-    	
-    	keyPressed = keycode;
-    	timeRef = System.currentTimeMillis();
-    	return true;
-    }
-
-    private boolean keyAction(int keycode) {
-    	    	
-    	switch(keycode) {
-    	case Keys.ENTER:
-    		lvl.fakeTurn();
-    		break;
-    	case Keys.SPACE:
-    		lvl.fakeTurn();
-    		break;
-    	case Keys.E:
-    		lvl.rollback();
-    		break;
-    	case Keys.R:
-    		lvl.reset();
-    		break;
-    	case Keys.RIGHT:
-    		lvl.moveYou1(2);
-    		lvl.endturn();
-    		break;
-    	case Keys.UP:
-    		lvl.moveYou1(1);
-    		lvl.endturn();
-    		break;
-    	case Keys.LEFT:
-    		lvl.moveYou1(0);
-    		lvl.endturn();
-    		break;
-    	case Keys.DOWN:
-    		lvl.moveYou1(3);
-    		lvl.endturn();
-    		break;
-    	case Keys.D:
-    		lvl.moveYou2(2);
-    		lvl.endturn();
-    		break;
-    	case Keys.Z:
-    		lvl.moveYou2(1);
-    		lvl.endturn();
-    		break;
-    	case Keys.Q:
-    		lvl.moveYou2(0);
-    		lvl.endturn();
-    		break;
-    	case Keys.S:
-    		lvl.moveYou2(3);
-    		lvl.endturn();
-    		break;
-    	case Keys.ESCAPE:
-    		parent.screenChoice(MainTest.MENU, null);
-    		break;
-    	default:
-    		return false;
-    	}
-    	return true;    	
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-    	
-    	if (keycode == keyPressed) {
-    		keyPressed = -1;
-    		if (System.currentTimeMillis()-timeRef < moveTime)
-    			return keyAction(keycode);
-    		return true;
-    	}
-    	else
-    		return keyAction(keycode);    	
-    }
+	@Override
+	public void dataReceived(int data) {
+	}
 
 
-    @Override
-    public boolean keyTyped(char character) {
-    	// TODO Auto-generated method stub
-    	return false;
-    }
+	@Override
+	public boolean keyDown(int keycode) {
+
+		
+		switch(keycode) {
+		case Keys.ENTER:
+			lvl.fakeTurn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.SPACE:
+			lvl.fakeTurn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.E:
+			lvl.rollback();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.R:
+			lvl.reset();
+			break;
+		case Keys.RIGHT:
+			lvl.moveYou1(2);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.UP:
+			lvl.moveYou1(1);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.LEFT:
+			lvl.moveYou1(0);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.DOWN:
+			lvl.moveYou1(3);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.D:
+			lvl.moveYou2(2);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.Z:
+			lvl.moveYou2(1);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.Q:
+			lvl.moveYou2(0);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.S:
+			lvl.moveYou2(3);
+			lvl.endturn();
+			keyPressed = keycode;
+			hasMoved = false;
+			break;
+		case Keys.ESCAPE:
+			parent.screenChoice(MainTest.MENU, null);
+			break;
+		default:
+			return false;
+		}
 
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-    	// TODO Auto-generated method stub
-    	return false;
-    }
+		timeRef = System.currentTimeMillis();
+		return true;
+	}
+
+	private boolean keyAction(int keycode) {
 
 
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-    	// TODO Auto-generated method stub
+
+		switch(keycode) {
+		case Keys.ENTER:
+			lvl.fakeTurn();
+			break;
+		case Keys.SPACE:
+			lvl.fakeTurn();
+			break;
+		case Keys.E:
+			lvl.rollback();
+			break;
+		case Keys.R:
+			lvl.reset();
+			break;
+		case Keys.RIGHT:
+			lvl.moveYou1(2);
+			lvl.endturn();
+			break;
+		case Keys.UP:
+			lvl.moveYou1(1);
+			lvl.endturn();
+			break;
+		case Keys.LEFT:
+			lvl.moveYou1(0);
+			lvl.endturn();
+			break;
+		case Keys.DOWN:
+			lvl.moveYou1(3);
+			lvl.endturn();
+			break;
+		case Keys.D:
+			lvl.moveYou2(2);
+			lvl.endturn();
+			break;
+		case Keys.Z:
+			lvl.moveYou2(1);
+			lvl.endturn();
+			break;
+		case Keys.Q:
+			lvl.moveYou2(0);
+			lvl.endturn();
+			break;
+		case Keys.S:
+			lvl.moveYou2(3);
+			lvl.endturn();
+			break;
+		case Keys.ESCAPE:
+			parent.screenChoice(MainTest.MENU, null);
+			break;
+		default:
+			return false;
+
+		}
+		return true;    	
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+
+		if (keycode == keyPressed) {
+			keyPressed = -1;
+			if (System.currentTimeMillis()-timeRef < moveTime) {
+				if (hasMoved) {
+					hasMoved = true;
+					return keyAction(keycode);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
