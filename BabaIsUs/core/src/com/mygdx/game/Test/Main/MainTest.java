@@ -26,6 +26,7 @@ public class MainTest extends Game {
 	private EditorSelectView editorSelect;
 	private LevelSelectView levelSelect;
 	private MultiSelectView multiLevelSelect;
+	private boolean hasWon = false;
 	// private EndScreen endScreen;
 
 	private ServerThread thread;
@@ -71,6 +72,7 @@ public class MainTest extends Game {
 				clientView = null; 
 				//    server = new ServerView(this,thread,data,null);
 				reloaded = true;
+				resetwin();
 			}
 			break;
 		case EDITOR:
@@ -159,6 +161,16 @@ public class MainTest extends Game {
 
 	public float getElapsedTime(){
 		return(elapsedTime);
+	}
+	public boolean hasWon() {
+		return hasWon;
+	}
+	
+	public void win() {
+		hasWon = true;
+	}
+	public void resetwin() {
+		hasWon = false;
 	}
 
 }
