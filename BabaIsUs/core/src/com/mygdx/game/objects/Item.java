@@ -330,23 +330,24 @@ public abstract class Item {
 	 */
 	public float[] getAffichePos(){
 		float a,b;
-		if(animationChrono<0.19){
+		float threshold = 0.14f;
+		if(animationChrono<threshold){
 			switch(orientation){
 				case(0):
-					a=getX()+1-animationChrono*5;
+					a=getX()+1-animationChrono/threshold;
 					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(1):
 					a=getX();
-					b=getY()-1+animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
+					b=getY()-1+animationChrono/threshold+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				case(2):
-					a=getX()-1+animationChrono*5;
+					a=getX()-1+animationChrono/threshold;
 					b=getY()+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 				default:
 					a=getX();
-					b=getY()+1-animationChrono*5+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
+					b=getY()+1-animationChrono/threshold+getIntFloat()*0.1f*((float)Math.cos(5*elapsedTime));
 					break;
 			}
 		}else {

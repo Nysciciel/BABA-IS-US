@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Level;
-import com.mygdx.game.PressedKeyThread;
 import com.mygdx.game.Test.Main.MainTest;
 import com.mygdx.game.client_serveur.*;
 
@@ -32,8 +31,10 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     private Server server;
     private BlockingQueue<Integer> data;
     private Table table;
-
+    private int keyPressed = -1;
     private Texture texture;
+	private long timeRef;
+	private int moveTime = 150;
 
     public LevelView(MainTest mainTest, String fileName) {
 
@@ -41,7 +42,8 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         stage = new Stage(new ScreenViewport());
         table = new Table();
         table.setFillParent(true);
-
+        timeRef = System.currentTimeMillis();
+        
         this.lvl = new Level(fileName, parent);
         
         lvl.setPlayed();
@@ -51,11 +53,9 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
         table.add(lvl).expand().fill().center().right();
         
         Gdx.input.setInputProcessor(this);
-
     }
 
-
-    public Stage getStage(){
+	public Stage getStage(){
         return stage;
     }
 
@@ -77,6 +77,12 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     @Override
     public void render(float delta) {
         // TODO Auto-generated method stub
+    	
+    	if (keyPressed != -1 && (System.currentTimeMillis()-timeRef > moveTime)) {
+    		keyAction(keyPressed);
+    		timeRef = System.currentTimeMillis();
+    	}    	
+    	
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -121,14 +127,41 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+    	
+    	switch(keycode) {
+    	case Keys.ENTER:
+    		break;
+    	case Keys.SPACE:
+    		break;
+    	case Keys.E:
+    		break;
+    	case Keys.RIGHT:
+    		break;
+    	case Keys.UP:
+    		break;
+    	case Keys.LEFT:
+    		break;
+    	case Keys.DOWN:
+    		break;
+    	case Keys.D:
+    		break;
+    	case Keys.Z:
+    		break;
+    	case Keys.Q:
+    		break;
+    	case Keys.S:
+    		break;
+    	default:
+    		return false;
+    	}
+    	
+    	keyPressed = keycode;
+    	timeRef = System.currentTimeMillis();
     	return true;
     }
 
-
-
-    @Override
-    public boolean keyUp(int keycode) {
-
+    private boolean keyAction(int keycode) {
+    	    	
     	switch(keycode) {
     	case Keys.ENTER:
     		lvl.fakeTurn();
@@ -180,8 +213,20 @@ public class LevelView implements Screen,ServerCallBack, InputProcessor {
     	default:
     		return false;
     	}
+    	return true;    	
+    }
 
-    	return true;
+    @Override
+    public boolean keyUp(int keycode) {
+    	
+    	if (keycode == keyPressed) {
+    		keyPressed = -1;
+    		if (System.currentTimeMillis()-timeRef < moveTime)
+    			return keyAction(keycode);
+    		return true;
+    	}
+    	else
+    		return keyAction(keycode);    	
     }
 
 

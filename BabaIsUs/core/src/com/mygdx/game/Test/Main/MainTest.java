@@ -151,8 +151,6 @@ public class MainTest extends Game {
 			Gdx.input.setInputProcessor(stage11);
 			break;
 		}
-
-
 	}
 
 	public void setElapsedTime(float t){
