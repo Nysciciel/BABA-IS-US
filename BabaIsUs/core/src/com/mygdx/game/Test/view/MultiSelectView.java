@@ -44,7 +44,6 @@ public class MultiSelectView implements Screen{
 		animation2 = new Animation(2/3f, textureAtlas2.getRegions());
 
 		table = new VerticalGroup();
-		table.setFillParent(true);
 
 		Skin skin = new Skin(Gdx.files.internal("Skins/freezing-ui.json"));
 
@@ -52,7 +51,7 @@ public class MultiSelectView implements Screen{
 
 		FileHandle[] files = handle.list();
 
-		table.center().fill().expand().pad(100, 100, 100, 100).space(20);
+		table.center().fill().expand().space(20).top();
 		for(FileHandle file : files) {
 			table.addActor(new TextButton(file.name(),skin));
 		}
@@ -62,7 +61,8 @@ public class MultiSelectView implements Screen{
 
 		Table table1 = new Table();
 		table1.setFillParent(true);
-		table1.add(pane).fill().expand().width(400);
+		table1.center().pad(100, 100, 100, 100);
+		table1.add(pane).fill().expand().width(400).pad(50, 0, 50, 0);
 
 		stage.addActor(table1);
 
