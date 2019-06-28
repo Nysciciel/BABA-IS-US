@@ -1,4 +1,5 @@
 package com.mygdx.game.objects;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,18 +8,13 @@ import com.mygdx.game.*;
 import com.mygdx.game.history.Born;
 import com.mygdx.game.history.Change;
 import com.mygdx.game.history.Death;
-import com.mygdx.game.history.HistoryStack;
 import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.text.Text;
 import com.mygdx.game.rule.Logic;
 import com.mygdx.game.rule.LogicHashtable;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Stack;
-
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.utils.Constants;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 

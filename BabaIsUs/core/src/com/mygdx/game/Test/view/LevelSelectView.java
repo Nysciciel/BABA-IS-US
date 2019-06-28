@@ -1,7 +1,6 @@
 package com.mygdx.game.Test.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Test.Main.MainTest;
@@ -60,6 +58,7 @@ public class LevelSelectView implements Screen{
 
 
 		pane = new ScrollPane(table);
+		//pane.layout();
 
 		Table table1 = new Table();
 		table1.setFillParent(true);
@@ -67,8 +66,9 @@ public class LevelSelectView implements Screen{
 		table1.add(pane).fill().expand().width(600).pad(50, 0, 50, 0);
 
 		stage.addActor(table1);
-
-		table.addListener(new InputListener() {
+		
+		//stage.act();
+		table1.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				String nom = event.getTarget().toString();
 				nom = nom.split(" ")[nom.split(" ").length-1];

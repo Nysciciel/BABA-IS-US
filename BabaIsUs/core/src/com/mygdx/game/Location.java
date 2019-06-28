@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.history.Born;
 import com.mygdx.game.history.Change;
 import com.mygdx.game.history.Death;
-import com.mygdx.game.history.HistoryStack;
 import com.mygdx.game.history.TurnStack;
 import com.mygdx.game.objects.*;
 import com.mygdx.game.objects.text.Text;

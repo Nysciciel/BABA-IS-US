@@ -59,7 +59,7 @@ public class MainTest extends Game {
 		menu = new Menu(this);
 		setScreen(menu);
 		
-		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/groove.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("Sound/8bit_1.mp3"));
 		music.setLooping(true);
 		music.play();
 
