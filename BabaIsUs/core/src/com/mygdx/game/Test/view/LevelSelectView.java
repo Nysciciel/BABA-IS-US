@@ -68,7 +68,7 @@ public class LevelSelectView implements Screen{
 		stage.addActor(table1);
 		
 		//stage.act();
-		table1.addListener(new InputListener() {
+		table.addListener(new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				String nom = event.getTarget().toString();
 				nom = nom.split(" ")[nom.split(" ").length-1];
